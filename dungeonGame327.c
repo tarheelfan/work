@@ -8,7 +8,6 @@ void playGame(void);
 void closeGame(void);
 
 int main (int argc, char* argv[]){
-    printf("test");
     initGame();
     return 0;
 }
