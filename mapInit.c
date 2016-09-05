@@ -5,7 +5,7 @@
 #include <stdlib.h>
 
 int const x = 80;
-int const y = 24;
+int const y = 21;
 
 
 
@@ -17,7 +17,7 @@ int const y = 24;
 };
 
  struct Map{
-    char grid[24][80];
+    char grid[21][80];
 };
 static Room* createRoom(void);
 static void initRooms(Map *m);
@@ -25,10 +25,12 @@ static void printGrid(Map *m);
 int initMap(void);
 static void initBorder(Map *m);
 static int collides(Room *r,Room *ma,int s);
+static void waitFor (unsigned int secs);
+static int contains(Room *r,Room *ro);
 
 static void initBorder(Map *m){
     int count;
-    
+     srand(time(NULL));
     for(count=0;count<80;count++){
         (*m).grid[count][0]='|';
     }
@@ -39,7 +41,7 @@ static void initBorder(Map *m){
         (*m).grid[0][count] = '-';
     }
     for(count=0;count<80;count++){
-        (*m).grid[23][count]='-';Map *map;
+        (*m).grid[20][count]='-';Map *map;
     map = (struct Map*)malloc(sizeof(struct Map));
     }
 }
@@ -59,6 +61,7 @@ static void initRooms(Map *m){
                  break;
             }    
             Room *p = createRoom();
+            //printf("%i\n",(*p).topLeft[0]);
             int a;
             int col =0;
             for(a=0;a<size;a++){
@@ -81,11 +84,21 @@ static void initRooms(Map *m){
     int er;
     for(er=0;er<7;er++){
         Room *temp = array[er];
+    
 
-    (*m).grid[(*temp).topLeft[0]][(*temp).topLeft[1]]='X';
-    (*m).grid[(*temp).topright[0]][(*temp).topright[1]]='X';
-    (*m).grid[(*temp).bottomLeft[0]][(*temp).bottomLeft[1]]='X';
-    (*m).grid[(*temp).bottomRight[0]][(*temp).bottomRight[1]]='X';
+    int coun;
+    int height = (*temp).bottomLeft[0]-(*temp).topLeft[0];
+    int width = (*temp).topright[1]-(*temp).topLeft[1];
+    int co;
+    int co2;
+    for(co=0;co<height;co++){
+        for(co2=0;co2<width;co2++){
+            (*m).grid[(*temp).topLeft[0]+co][(*temp).topLeft[1]+co2]='.';
+        }
+    }  
+   
+    
+
     
     } 
     
@@ -97,62 +110,71 @@ static void initRooms(Map *m){
 
 }
 static int collides(Room *r,Room *ro, int s){
-    int x1 = (*ro).topLeft[0];
-    int x2 = (*ro).bottomLeft[0];
-    int y1 = (*ro).topLeft[1];
-    int y2 = (*ro).bottomLeft[1];
-
-
-
-    int roomX1 = (*r).topLeft[0];
-    int roomX2 = (*r).bottomLeft[0];
-    int roomY1 = (*r).topLeft[1];
-    int roomY2 = (*r).bottomLeft[1];
-    if(roomX1>x1 && x2<roomX1){
-        if(roomY1>y1 && y2<roomY1){
-            return 1;
-        }
-    }
-    if(roomX2>x1 && x2<roomX2){
-        if(roomY2>y1 && y2<roomY2){
-            return 1;
-        }
-    }
     
-     x1 = (*ro).topright[0];
-     x2 = (*ro).bottomRight[0];
-     y1 = (*ro).topright[1];
-     y2 = (*ro).bottomRight[1];
+   int var1 = contains(r,ro);
+   int var2 = contains(ro,r);
 
+   if(var1==1 || var2==1){
+       return 1;
+   }else{
+       return 0;
+   }
 
-
-     roomX1 = (*r).topright[0];
-     roomX2 = (*r).bottomRight[0];
-     roomY1 = (*r).topright[1];
-     roomY2 = (*r).bottomRight[1];
-    if(roomX1>x1 && x2<roomX1){
-        if(roomY1>y1 && y2<roomY1){
-            return 1;
-        }
-    }
-    if(roomX2>x1 && x2<roomX2){
-        if(roomY2>y1 && y2<roomY2){
-            return 1;
-        }
-    }
-    if(s==1){
-        return 0;
-    }
-    return collides(ro,r,1);
     
 }
+static int contains(Room *inside,Room *out){
+    int x1 = (*out).topLeft[0]-1;
+    int y1 = (*out).topLeft[1]-1;
+    int x2 = (*out).bottomRight[0]+1;
+    int y2 = (*out).bottomRight[1]+1;
+
+    int pointx1 = (*inside).topLeft[0];
+    int pointy1 = (*inside).topLeft[1];
+    int pointx2 = (*inside).bottomRight[0];
+    int pointy2 = (*inside).bottomRight[1];
+    
+    int pointx3 = (*inside).topright[0];
+    int pointy3 = (*inside).topright[1];
+
+    int pointx4 = (*inside).bottomLeft[0];
+    int pointy4 = (*inside).bottomLeft[1];
+
+    if(pointx1>=x1 && x2>=pointx1){
+        if(pointy1>=y1 && y2>=pointy1){
+            return 1;
+        }
+    }
+    if(pointx2>=x1 && x2>=pointx2){
+        if(pointy2>=y1 && y2>=pointy2){
+            return 1;
+        }
+    }
+    if(pointx3>=x1 && x2>=pointx3){
+        if(pointy3>=y1 && y2>=pointy3){
+            return 1;
+        }
+    }
+    if(pointx4>=x1 && x2>=pointx4){
+        if(pointy4>=y1 && y2>=pointy4){
+            return 1;
+        }
+    }
+    return 0;
+}
+
+
+static void waitFor (unsigned int secs) {
+    unsigned int retTime = time(0) + secs;   // Get finishing time.
+    while (time(0) < retTime);               // Loop until it arrives.
+}
+
 static Room* createRoom(void){
     char done ='n';
     Room *room;
     room = (struct Room*)malloc(sizeof(struct Room));
     while(done!='y'){
-         
-        srand(time(NULL));
+        //waitFor(1);
+        //srand(time(NULL));
         int height = rand();
         height = height % 7;
         if(height<5){
@@ -163,12 +185,12 @@ static Room* createRoom(void){
         if(width<5){
             width=width+5;
         }
-        int locx = rand() % 22;
+        int locx = rand() % 19;
         locx++;
         int locy = rand() % 78;
         locy++;
         if((width+locy)<78){
-            if((height+locx)<23){
+            if((height+locx)<19){
                 done='y';
             }
         }
@@ -202,7 +224,7 @@ static void printGrid(Map *m){
     int i;
     int j;
     
-    for(i=0;i<24;i++){
+    for(i=0;i<21;i++){
         for(j=0;j<80;j++){
             char temp = (*m).grid[i][j];
             if(!(temp=='-' || temp == '|' || temp=='X')){
