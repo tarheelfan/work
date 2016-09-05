@@ -14,6 +14,7 @@ int const y = 21;
     int topright[2];
     int bottomLeft[2];
     int bottomRight[2];
+    int connected;
 };
 
  struct Map{
@@ -27,6 +28,7 @@ static void initBorder(Map *m);
 static int collides(Room *r,Room *ma,int s);
 static void waitFor (unsigned int secs);
 static int contains(Room *r,Room *ro);
+static void connect(Map *m,Room *start,Room *end);
 
 static void initBorder(Map *m){
     int count;
@@ -82,33 +84,78 @@ static void initRooms(Map *m){
     }
 
     int er;
+    int myCount;
+    
     for(er=0;er<7;er++){
         Room *temp = array[er];
-    
+        
 
     int coun;
     int height = (*temp).bottomLeft[0]-(*temp).topLeft[0];
     int width = (*temp).topright[1]-(*temp).topLeft[1];
     int co;
     int co2;
+    
     for(co=0;co<height;co++){
         for(co2=0;co2<width;co2++){
             (*m).grid[(*temp).topLeft[0]+co][(*temp).topLeft[1]+co2]='.';
         }
     }  
-   
-    
+   }
+    int co;
+    for(co=0;co<7;co++){
+        Room *tem = array[co];
+        char don='f';
+        int incra=0;
+        while(don!='t'){
+            
+            if((*m).grid[(*tem).bottomLeft[0]+incra][(*tem).bottomLeft[1]+2]!='.'){
+                (*m).grid[(*tem).bottomLeft[0]+incra][(*tem).bottomLeft[1]+2]='#';
+            }
 
-    
-    } 
-    
-    
+            
+            incra++;
+            if(incra+(*tem).bottomLeft[0]>19){
+                don='t';
+            }
+        }
+        int q;
+        for(q=1;q<79;q++){
+            (*m).grid[19][q]='#';
+        }
+        char dona='f';
+        int incraa=0;
+        while(dona!='t'){
+            int start = (*tem).bottomLeft[1]-1;
+            if((*m).grid[(*tem).bottomLeft[0]-3][start-(incraa)]=='.'){
+                (*m).grid[(*tem).bottomLeft[0]-3][(*tem).bottomLeft[1]-incraa]='#';
+                dona='t';
+                break;
+            }
+            
+            if((*m).grid[(*tem).bottomLeft[0]-3][((*tem).bottomLeft[1])-(incraa)]=='|'){
+                dona='t';
+                break;
+            }
+
+            if((*m).grid[(*tem).bottomLeft[0]-3][(*tem).bottomLeft[1]-incraa]!='.'){
+                (*m).grid[(*tem).bottomLeft[0]-3][(*tem).bottomLeft[1]-incraa]='#';
+            }
+
+            
+            incraa++;
+        }
+        
+    }
     
     
 
 
 
 }
+
+
+
 static int collides(Room *r,Room *ro, int s){
     
    int var1 = contains(r,ro);
@@ -172,6 +219,7 @@ static Room* createRoom(void){
     char done ='n';
     Room *room;
     room = (struct Room*)malloc(sizeof(struct Room));
+    (*room).connected=0;
     while(done!='y'){
         //waitFor(1);
         //srand(time(NULL));
@@ -227,7 +275,7 @@ static void printGrid(Map *m){
     for(i=0;i<21;i++){
         for(j=0;j<80;j++){
             char temp = (*m).grid[i][j];
-            if(!(temp=='-' || temp == '|' || temp=='X')){
+            if(!(temp=='-' || temp == '|' || temp=='.' || temp=='#')){
                 temp=' ';
             }
             printf("%c",temp);
