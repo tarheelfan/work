@@ -9,7 +9,7 @@ int const y = 21;
 
 
 
- struct Room {
+struct Room {
     int topLeft[2];
     int topright[2];
     int bottomLeft[2];
@@ -17,12 +17,14 @@ int const y = 21;
     int connected;
 };
 
- struct Map{
+struct Map{
     char grid[21][80];
 };
+
+Map *m;
 static Room* createRoom(void);
 static void initRooms(Map *m);
-static void printGrid(Map *m);
+
 int initMap(void);
 static void initBorder(Map *m);
 static int collides(Room *r,Room *ma,int s);
@@ -147,7 +149,10 @@ static void initRooms(Map *m){
         }
         
     }
-    
+    int climb;
+    for(climb=1;climb<20;climb++){
+        (*m).grid[climb][2]='#';
+    }
     
 
 
@@ -259,16 +264,13 @@ static Room* createRoom(void){
     return room;
 }
 int initMap(void){
-    Map *map;
-    map = (struct Map*)malloc(sizeof(struct Map));
-    initBorder(map);
-    initRooms(map);
-    printGrid(map);
-    free(map);
+    m = (struct Map*)malloc(sizeof(struct Map));
+    initBorder(m);
+    initRooms(m);
     return 0;
 }
 
-static void printGrid(Map *m){
+ void printGrid(){
     int i;
     int j;
     
