@@ -22,6 +22,7 @@ struct Map{
 };
 
 Map *m;
+
 static Room* createRoom(void);
 static void initRooms(Map *m);
 
@@ -284,4 +285,17 @@ int initMap(void){
         }
         printf("%c\n",' ');
     }
+}
+
+void saveGame(){
+    FILE *f;
+    char *path = gentenv("PATH");
+    *path += ".rlg327/";
+    f = fopen(*path,"w");
+    if(!f){
+        fprint("could not write file");
+        return 1;
+    }
+
+
 }
