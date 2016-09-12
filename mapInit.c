@@ -3,7 +3,8 @@
 #include "mapInit.h"
 #include <time.h>
 #include <stdlib.h>
-
+#include <string.h>
+//4 bytes per room
 int const x = 80;
 int const y = 21;
 
@@ -19,40 +20,56 @@ struct Room {
 
 struct Map{
     char grid[21][80];
+    int hardness[21][80];
 };
 
 Map *m;
 
 static Room* createRoom(void);
-static void initRooms(Map *m);
-
+static void initRooms(void);
 int initMap(void);
-static void initBorder(Map *m);
+static void initBorder(void);
 static int collides(Room *r,Room *ma,int s);
 static void waitFor (unsigned int secs);
 static int contains(Room *r,Room *ro);
 static void connect(Map *m,Room *start,Room *end);
 
-static void initBorder(Map *m){
+static void initBorder(void){
     int count;
-     srand(time(NULL));
-    for(count=0;count<80;count++){
-        (*m).grid[count][0]='|';
+    srand(time(NULL));
+    int e;
+    int ein;
+    for(e=1;e<21;e++){
+        for(ein=1;ein<80;ein++){
+            (*m).hardness[e][ein]=(rand()%245)+1;
+        }
     }
-    for(count=0;count<80;count++){
-        (*m).grid[count][79]='|';
-    }
-    for(count=0;count<80;count++){
-        (*m).grid[0][count] = '-';
-    }
-    for(count=0;count<80;count++){
-        (*m).grid[20][count]='-';Map *map;
-    map = (struct Map*)malloc(sizeof(struct Map));
-    }
-}
-
-static void initRooms(Map *m){
     
+    
+    for(count=0;count<21;count++){
+        (*m).grid[20][count]='-';
+        (*m).hardness[20][count]=255;
+    
+    }
+    for(count=0;count<21;count++){
+        (*m).grid[count][0]='|';
+        (*m).hardness[count][0]=255;
+    }
+    for(count=0;count<21;count++){
+        (*m).grid[count][80]='|';
+        (*m).hardness[count][79]=255;
+    }
+   
+    for(count=0;count<21;count++){
+        (*m).grid[0][count] = '-';
+        (*m).hardness[0][count] = 255;
+    }
+    
+   
+}
+//h to be 32()
+//be 32 to h()
+static void initRooms(void){
     Room* array[7];
     int z;
     int size=0;
@@ -81,8 +98,6 @@ static void initRooms(Map *m){
                 size++;
                 done='t';
             }
-            
-
         }
     }
 
@@ -227,8 +242,6 @@ static Room* createRoom(void){
     room = (struct Room*)malloc(sizeof(struct Room));
     (*room).connected=0;
     while(done!='y'){
-        //waitFor(1);
-        //srand(time(NULL));
         int height = rand();
         height = height % 7;
         if(height<5){
@@ -248,10 +261,6 @@ static Room* createRoom(void){
                 done='y';
             }
         }
-        /*printf("width: %i\n",width);*/
-        /*printf("height: %i\n",height);*/
-        /*printf("locx: %i\n",locx);*/
-        /*printf("locy: %i\n",locy);*/
         (*room).topLeft[0]=locx;
         (*room).topLeft[1]=locy;
         (*room).topright[0]=locx;
@@ -266,8 +275,8 @@ static Room* createRoom(void){
 }
 int initMap(void){
     m = (struct Map*)malloc(sizeof(struct Map));
-    initBorder(m);
-    initRooms(m);
+    initBorder();
+    initRooms();
     return 0;
 }
 
@@ -287,15 +296,16 @@ int initMap(void){
     }
 }
 
-void saveGame(){
+int saveGame(){
     FILE *f;
-    char *path = gentenv("PATH");
-    *path += ".rlg327/";
-    f = fopen(*path,"w");
+    char *home = getenv("HOME");
+    char *message = strcat(home,".rlg327/");
+    f = fopen(message,"w");
     if(!f){
-        fprint("could not write file");
+      printf("could not write file");
         return 1;
     }
+    //fwrite(&s, sizeof (s), 5, f);
 
 
 }

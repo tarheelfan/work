@@ -9,8 +9,8 @@ void playGame(void);
 void closeGame(void);
 
 int main (int argc, char* argv[]){
-    char *save = "--help";
-    char *argv1 = argv[1];
+    //char *save = "--help";
+    //char *argv1 = argv[1];
     
     initGame();
     playGame();
@@ -26,7 +26,7 @@ void playGame(void){
     printGrid();
 }
 void closeGame(void){
-    if (strcmp(argv1, save) == 0){
-        saveGame();
-    }
+    //if (strcmp(argv1, save) == 0){
+        //saveGame();
+    //}
 }
