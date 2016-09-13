@@ -4,6 +4,7 @@
 #include <time.h>
 #include <stdlib.h>
 #include <string.h>
+#include <unistd.h>
 //4 bytes per room
 int const x = 80;
 int const y = 21;
@@ -21,18 +22,18 @@ struct Room {
 struct Map{
     char grid[21][80];
     int hardness[21][80];
+    Room *rooms[20];
 };
 
 Map *m;
-
+static int initMapFile(void);
 static Room* createRoom(void);
 static void initRooms(void);
 int initMap(void);
 static void initBorder(void);
 static int collides(Room *r,Room *ma,int s);
-static void waitFor (unsigned int secs);
 static int contains(Room *r,Room *ro);
-static void connect(Map *m,Room *start,Room *end);
+
 
 static void initBorder(void){
     int count;
@@ -41,26 +42,25 @@ static void initBorder(void){
     int ein;
     for(e=1;e<21;e++){
         for(ein=1;ein<80;ein++){
+            if((*m).grid[e][ein]=='.' || (*m).grid[e][ein]=='#'){
+              (*m).hardness[e][ein]=0;  
+            }
             (*m).hardness[e][ein]=(rand()%245)+1;
         }
     }
-    
-    
-    for(count=0;count<21;count++){
+    for(count=0;count<80;count++){
         (*m).grid[20][count]='-';
         (*m).hardness[20][count]=255;
-    
     }
     for(count=0;count<21;count++){
         (*m).grid[count][0]='|';
         (*m).hardness[count][0]=255;
     }
     for(count=0;count<21;count++){
-        (*m).grid[count][80]='|';
+        (*m).grid[count][79]='|';
         (*m).hardness[count][79]=255;
     }
-   
-    for(count=0;count<21;count++){
+   for(count=0;count<80;count++){
         (*m).grid[0][count] = '-';
         (*m).hardness[0][count] = 255;
     }
@@ -95,6 +95,7 @@ static void initRooms(void){
             }
             if(col==0){
                 array[size]= p; //might work lol
+                (*m).rooms[size]=p;
                 size++;
                 done='t';
             }
@@ -102,13 +103,13 @@ static void initRooms(void){
     }
 
     int er;
-    int myCount;
+    
     
     for(er=0;er<7;er++){
         Room *temp = array[er];
         
 
-    int coun;
+    
     int height = (*temp).bottomLeft[0]-(*temp).topLeft[0];
     int width = (*temp).topright[1]-(*temp).topLeft[1];
     int co;
@@ -229,13 +230,18 @@ static int contains(Room *inside,Room *out){
     }
     return 0;
 }
-
-
-static void waitFor (unsigned int secs) {
-    unsigned int retTime = time(0) + secs;   // Get finishing time.
-    while (time(0) < retTime);               // Loop until it arrives.
+static Room* createRoomFile(int xUperLeft,int xSize,int yUperLeft,int ySize){
+    Room *r = malloc(sizeof(int)*9);
+    (*r).topLeft[0]=xUperLeft;
+    (*r).topLeft[1]=yUperLeft;
+    (*r).bottomLeft[0]=xUperLeft+xSize;
+    (*r).bottomLeft[1]=yUperLeft;
+    (*r).topright[0]=xUperLeft;
+    (*r).topright[1]=yUperLeft+ySize;
+    (*r).bottomRight[0]=xUperLeft+xSize;
+    (*r).bottomRight[1]=yUperLeft+ySize;
+    return r;
 }
-
 static Room* createRoom(void){
     char done ='n';
     Room *room;
@@ -275,15 +281,27 @@ static Room* createRoom(void){
 }
 int initMap(void){
     m = (struct Map*)malloc(sizeof(struct Map));
+    int c;
+    for(c=0;c<20;c++){
+        (*m).rooms[c]= malloc (sizeof(struct Room));
+    }
     initBorder();
     initRooms();
     return 0;
 }
-
+static int initMapFile(void){
+    m = (struct Map*)malloc(sizeof(struct Map));
+    int c;
+    for(c=0;c<20;c++){
+        (*m).rooms[c]= malloc (sizeof(struct Room));
+    }
+    initBorder();
+    return 0;
+}
+//Room *rooms[20];
  void printGrid(){
     int i;
     int j;
-    
     for(i=0;i<21;i++){
         for(j=0;j<80;j++){
             char temp = (*m).grid[i][j];
@@ -294,18 +312,129 @@ int initMap(void){
         }
         printf("%c\n",' ');
     }
+    
 }
 
 int saveGame(){
+   
     FILE *f;
     char *home = getenv("HOME");
-    char *message = strcat(home,".rlg327/");
-    f = fopen(message,"w");
+    strcat(home,"/.rlg327/");
+    strcat(home,"Dungeon");
+    f = fopen(home,"w");
     if(!f){
-      printf("could not write file");
+      printf("could not write file\n");
         return 1;
     }
-    //fwrite(&s, sizeof (s), 5, f);
+    char *title = "RLG327";
+    //unsigned char *version =(unsigned char*)"0";
+    unsigned int version = 0;
+    int sizeint=0;
+    sizeint = 1694 + sizeof((*m).rooms);
 
+    fwrite(title,sizeof(char),6,f);
+    fwrite(&version,sizeof(char),4,f);
+    fwrite(&sizeint,sizeof(char),4,f);//bug here
+    int qw;
+    int er;
+    int rowMajor[1680];
+    int counter=0;
+    for(qw=0;qw<21;qw++){
+        for(er=0;er<80;er++){
+            rowMajor[counter]=(*m).hardness[qw][er];
+            counter++;
+        }
+    }
+    fwrite(rowMajor,sizeof(char),1680,f);
+    char dungeons[sizeof((*m).rooms)] ="";
+    int iou;
+    for(iou=0;iou<sizeof((*m).rooms);iou++){
+        Room *t = (*m).rooms[iou];
+        char val = (*t).topLeft[0];
+        strcpy(dungeons,&val);
+        Room *q = (*m).rooms[iou];
+        int dif = (*q).bottomLeft[0]-(*q).topLeft[0];
+        int intsizz = dif;
+        char charsize = intsizz;
+        strcpy(dungeons,&charsize);
+        Room *wer = (*m).rooms[iou];
+        int yloc = (*wer).topLeft[1];
+        char ylocchar = yloc;
+        strcpy(dungeons,&ylocchar);
+        Room *pl =(*m).rooms[iou];
+        int ysize = (*pl).topright[1]-(*pl).topLeft[1];
+        char charysize = ysize;
+        strcpy(dungeons,&charysize);
+    
+    }
+    fwrite(dungeons,sizeof(char),4*sizeof((*m).rooms),f);
+    fclose(f);
+    return 0;
+}
 
+int loadGame(){
+    FILE *f;
+    char title[6];
+    char version[4];
+    char size[4];
+    char rowMajor[1680];
+    char *home = getenv("HOME");
+    strcat(home,"/.rlg327/");
+    strcat(home,"Dungeon");
+    f= fopen(home,"r");
+    fread(title,sizeof(char),6,f);
+    fread(version,sizeof(char),4,f);
+    fread(size,sizeof(char),4,f);
+    fread(rowMajor,sizeof(char),1680,f);
+    int sizeInt = atoi(size);
+    sizeInt=sizeInt-1694;
+    int sizeIndex = sizeInt;
+    sizeInt=sizeInt/4;
+    initMapFile();
+    char buffer[sizeIndex];
+    fread(buffer,sizeof(char),4*sizeIndex,f);
+    int q;
+    int counter=0;
+    for(q=0;q<sizeInt;q++,counter=counter+4){
+        (*m).rooms[sizeInt]=createRoomFile((buffer[counter]),(buffer[counter+1]),(buffer[counter+2]),(buffer[counter+3]));
+    }
+    int y;
+    int o;
+    for(y=0;y<21;y++){
+        for(o=0;o<80;o++){
+            (*m).hardness[y][o]=rowMajor[y*o];
+        }
+        
+    }
+    initBorder();
+    for(y=0;y<21;y++){
+        for(o=0;o<80;o++){
+            if((*m).hardness[y][o]==0){
+                (*m).grid[y][o]='#';
+            }
+            
+        }
+        int az;
+        for(az=0;az<sizeInt;az++){
+            Room *temp;temp = (*m).rooms[az];
+            
+            int num = (*temp).topLeft[0];
+            int num2 = (*temp).topLeft[1];
+            (*m).grid[num][num2]='.';
+
+            num = (*temp).topright[0];
+            num2 = (*temp).topright[1];
+            (*m).grid[num][num2]='.';
+
+            num = (*temp).bottomLeft[0];
+            num2 = (*temp).bottomLeft[1];
+            (*m).grid[num][num2]='.';
+
+            num =(*temp).bottomRight[0];
+            num2=(*temp).bottomRight[1];
+            (*m).grid[num][num2]='.';
+            
+        }
+}
+return 0;
 }

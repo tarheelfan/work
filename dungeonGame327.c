@@ -2,31 +2,52 @@
 #include "mapInit.h"
 #include <string.h>
 
-void initGame(void);
 
+int load=0;
+int save=0;
 void initGame(void);
 void playGame(void);
 void closeGame(void);
 
 int main (int argc, char* argv[]){
-    //char *save = "--help";
-    //char *argv1 = argv[1];
     
+    int x;
+    int eval;
+    for(x=1;x<argc;x++){
+        eval=strcmp(argv[x],"--save");
+        if(eval==0){
+            save=1;
+        eval=strcmp(argv[x],"--load");
+        if(eval==0){
+            load=1;
+        }
+        }
+    }
     initGame();
     playGame();
-    closeGame();
+    
+    
+    
+    
     return 0;
 }
 
 void initGame(void){
-    initMap();
+
+    if(load){
+        loadGame();
+    }else{
+        initMap();
+    }
     
 }
 void playGame(void){
+    
     printGrid();
+   
 }
 void closeGame(void){
-    //if (strcmp(argv1, save) == 0){
-        //saveGame();
-    //}
+    if(save){
+        saveGame();
+    }
 }
