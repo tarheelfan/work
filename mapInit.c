@@ -22,9 +22,35 @@ struct Room {
 struct Map{
     char grid[21][80];
     int hardness[21][80];
-    Room *rooms[20];
+    Room *rooms;
 };
+/* turn this into package */
+typedef struct {
+  int *array;
+  size_t used;
+  size_t size;
+} Array;
 
+void initArray(Array *a, size_t initialSize) {
+  a->array = (int *)malloc(initialSize * sizeof(int));
+  a->used = 0;
+  a->size = initialSize;
+}
+
+void insertArray(Array *a, int element) {
+  if (a->used == a->size) {
+    a->size *= 2;
+    a->array = (int *)realloc(a->array, a->size * sizeof(int));
+  }
+  a->array[a->used++] = element;
+}
+
+void freeArray(Array *a) {
+  free(a->array);
+  a->array = NULL;
+  a->used = a->size = 0;
+}
+/*                            */
 Map *m;
 static int initMapFile(void);
 static Room* createRoom(void);
@@ -95,7 +121,7 @@ static void initRooms(void){
             }
             if(col==0){
                 array[size]= p; //might work lol
-                (*m).rooms[size]=p;
+                (*m).rooms[size]=*p;
                 size++;
                 done='t';
             }
@@ -230,16 +256,16 @@ static int contains(Room *inside,Room *out){
     }
     return 0;
 }
-static Room* createRoomFile(int xUperLeft,int xSize,int yUperLeft,int ySize){
-    Room *r = malloc(sizeof(int)*9);
-    (*r).topLeft[0]=xUperLeft;
-    (*r).topLeft[1]=yUperLeft;
-    (*r).bottomLeft[0]=xUperLeft+xSize;
-    (*r).bottomLeft[1]=yUperLeft;
-    (*r).topright[0]=xUperLeft;
-    (*r).topright[1]=yUperLeft+ySize;
-    (*r).bottomRight[0]=xUperLeft+xSize;
-    (*r).bottomRight[1]=yUperLeft+ySize;
+static Room createRoomFile(int xUperLeft,int xSize,int yUperLeft,int ySize){
+    Room r;
+    r.topLeft[0]=xUperLeft;
+    r.topLeft[1]=yUperLeft;
+    r.bottomLeft[0]=xUperLeft+xSize;
+    r.bottomLeft[1]=yUperLeft;
+    r.topright[0]=xUperLeft;
+    r.topright[1]=yUperLeft+ySize;
+    r.bottomRight[0]=xUperLeft+xSize;
+    r.bottomRight[1]=yUperLeft+ySize;
     return r;
 }
 static Room* createRoom(void){
@@ -281,20 +307,13 @@ static Room* createRoom(void){
 }
 int initMap(void){
     m = (struct Map*)malloc(sizeof(struct Map));
-    int c;
-    for(c=0;c<20;c++){
-        (*m).rooms[c]= malloc (sizeof(struct Room));
-    }
     initBorder();
     initRooms();
     return 0;
 }
 static int initMapFile(void){
     m = (struct Map*)malloc(sizeof(struct Map));
-    int c;
-    for(c=0;c<20;c++){
-        (*m).rooms[c]= malloc (sizeof(struct Room));
-    }
+    (*m).rooms= (Room*)calloc(30,sizeof(Room));
     initBorder();
     return 0;
 }
@@ -335,34 +354,24 @@ int saveGame(){
     fwrite(title,sizeof(char),6,f);
     fwrite(&version,sizeof(char),4,f);
     fwrite(&sizeint,sizeof(char),4,f);//bug here
-    int qw;
-    int er;
-    int rowMajor[1680];
-    int counter=0;
-    for(qw=0;qw<21;qw++){
-        for(er=0;er<80;er++){
-            rowMajor[counter]=(*m).hardness[qw][er];
-            counter++;
-        }
-    }
-    fwrite(rowMajor,sizeof(char),1680,f);
+    fwrite((*m).hardness,sizeof(char),1680,f);
     char dungeons[sizeof((*m).rooms)] ="";
     int iou;
     for(iou=0;iou<sizeof((*m).rooms);iou++){
-        Room *t = (*m).rooms[iou];
-        char val = (*t).topLeft[0];
+        Room t = (*m).rooms[iou];
+        char val = t.topLeft[0];
         strcpy(dungeons,&val);
-        Room *q = (*m).rooms[iou];
-        int dif = (*q).bottomLeft[0]-(*q).topLeft[0];
+        Room q = (*m).rooms[iou];
+        int dif = q.bottomLeft[0]-q.topLeft[0];
         int intsizz = dif;
         char charsize = intsizz;
         strcpy(dungeons,&charsize);
-        Room *wer = (*m).rooms[iou];
-        int yloc = (*wer).topLeft[1];
+        Room wer = (*m).rooms[iou];
+        int yloc = wer.topLeft[1];
         char ylocchar = yloc;
         strcpy(dungeons,&ylocchar);
-        Room *pl =(*m).rooms[iou];
-        int ysize = (*pl).topright[1]-(*pl).topLeft[1];
+        Room pl =(*m).rooms[iou];
+        int ysize = pl.topright[1]-pl.topLeft[1];
         char charysize = ysize;
         strcpy(dungeons,&charysize);
     
@@ -372,32 +381,36 @@ int saveGame(){
     return 0;
 }
 
+int size;
 int loadGame(){
     FILE *f;
     char title[6];
     char version[4];
-    char size[4];
     char rowMajor[1680];
     char *home = getenv("HOME");
     strcat(home,"/.rlg327/");
     strcat(home,"Dungeon");
     f= fopen(home,"r");
+    if(!f){
+        printf("cant open file");
+        return 1;
+    }
     fread(title,sizeof(char),6,f);
     fread(version,sizeof(char),4,f);
-    fread(size,sizeof(char),4,f);
+    fread(&size,sizeof(char),4,f);
     fread(rowMajor,sizeof(char),1680,f);
-    int sizeInt = atoi(size);
-    sizeInt=sizeInt-1694;
-    int sizeIndex = sizeInt;
-    sizeInt=sizeInt/4;
+    size=size/4;
     initMapFile();
-    char buffer[sizeIndex];
-    fread(buffer,sizeof(char),4*sizeIndex,f);
+    char *dat;
+    dat = (char*)calloc(size,4);
+    fread(dat,sizeof(char),4*size,f);
+    int backup =size;
     int q;
     int counter=0;
-    for(q=0;q<sizeInt;q++,counter=counter+4){
-        (*m).rooms[sizeInt]=createRoomFile((buffer[counter]),(buffer[counter+1]),(buffer[counter+2]),(buffer[counter+3]));
+    for(q=0;q<size;q++,counter=counter+4){
+        (*m).rooms[size]=createRoomFile((dat[counter]),(dat[counter+1]),(dat[counter+2]),(dat[counter+3]));
     }
+    printf("%d",(*m).rooms[2].topLeft[1]);
     int y;
     int o;
     for(y=0;y<21;y++){
@@ -414,27 +427,32 @@ int loadGame(){
             }
             
         }
+    }
         int az;
-        for(az=0;az<sizeInt;az++){
-            Room *temp;temp = (*m).rooms[az];
+        //size
+        for(az=0;az<4;az++){
+            Room temp;
+            temp = (*m).rooms[az];
             
-            int num = (*temp).topLeft[0];
-            int num2 = (*temp).topLeft[1];
+            int num = temp.topLeft[0];
+            int num2 = temp.topLeft[1];
             (*m).grid[num][num2]='.';
 
-            num = (*temp).topright[0];
-            num2 = (*temp).topright[1];
+            num = temp.topright[0];
+            num2 = temp.topright[1];
             (*m).grid[num][num2]='.';
 
-            num = (*temp).bottomLeft[0];
-            num2 = (*temp).bottomLeft[1];
+            num = temp.bottomLeft[0];
+            num2 = temp.bottomLeft[1];
             (*m).grid[num][num2]='.';
 
-            num =(*temp).bottomRight[0];
-            num2=(*temp).bottomRight[1];
+            num =temp.bottomRight[0];
+            num2=temp.bottomRight[1];
             (*m).grid[num][num2]='.';
             
         }
-}
+        fclose(f);
 return 0;
 }
+
+

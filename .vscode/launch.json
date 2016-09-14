@@ -6,7 +6,7 @@
             "type": "cppdbg",
             "request": "launch",
             "targetArchitecture": "x64",
-            "program": "enter program name, for example ${workspaceRoot}/a.out",
+            "program": "${workspaceRoot}/ShaneDrafahl",
             "args": [],
             "stopAtEntry": false,
             "cwd": "${workspaceRoot}",

@@ -10,19 +10,20 @@ void playGame(void);
 void closeGame(void);
 
 int main (int argc, char* argv[]){
-    
+
     int x;
     int eval;
     for(x=1;x<argc;x++){
         eval=strcmp(argv[x],"--save");
         if(eval==0){
             save=1;
+        }
         eval=strcmp(argv[x],"--load");
         if(eval==0){
             load=1;
         }
         }
-    }
+    
     initGame();
     playGame();
     
@@ -34,11 +35,11 @@ int main (int argc, char* argv[]){
 
 void initGame(void){
 
-    if(load){
+   // if(load){
         loadGame();
-    }else{
-        initMap();
-    }
+   // }else{
+   //     initMap();
+    //}
     
 }
 void playGame(void){
@@ -47,7 +48,8 @@ void playGame(void){
    
 }
 void closeGame(void){
-    if(save){
-        saveGame();
-    }
+    //if(save){
+
+        //saveGame();
+    //}
 }
