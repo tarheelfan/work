@@ -5,6 +5,9 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+#include <endian.h>
+#include <stdint.h>
+#include <sys/stat.h>
 //4 bytes per room
 int const x = 80;
 int const y = 21;
@@ -59,7 +62,7 @@ int initMap(void);
 static void initBorder(void);
 static int collides(Room *r,Room *ma,int s);
 static int contains(Room *r,Room *ro);
-
+static void addRoom(Room r);
 
 static void initBorder(void){
     int count;
@@ -92,6 +95,23 @@ static void initBorder(void){
     }
     
    
+}
+/* int topLeft[2];
+    int topright[2];
+    int bottomLeft[2];
+    int bottomRight[2];*/
+void static addRoom(Room r){
+    int x;
+    int y;
+    int xStart = r.topLeft[0];
+    int yStart = r.topLeft[1];
+    int xHeight = r.bottomLeft[0]-r.topLeft[0];
+    int yHeight = r.topright[1] - r.topLeft[1];
+    for(x=xStart;x<xHeight+xStart;x++){
+        for(y=yStart;y<yHeight+yStart;y++){
+            (*m).grid[x][y]='.';
+        }
+    }
 }
 //h to be 32()
 //be 32 to h()
@@ -335,7 +355,7 @@ static int initMapFile(void){
 }
 
 int saveGame(){
-   
+   printf("I should not see this");
     FILE *f;
     char *home = getenv("HOME");
     strcat(home,"/.rlg327/");
@@ -380,78 +400,71 @@ int saveGame(){
     fclose(f);
     return 0;
 }
+struct roomModel {
+    int x;
+    int x_size;
+    int y;
+    int y_size;
+};
+
 
 int size;
 int loadGame(){
+    m = (struct Map*)malloc(sizeof(struct Map));
+    initBorder();
     FILE *f;
     char title[6];
-    char version[4];
-    char rowMajor[1680];
-    char *home = getenv("HOME");
+    int version; 
+    char *home;
+    home = (char*) malloc(sizeof(char)*100);
+    strcpy(home,getenv("HOME"));
     strcat(home,"/.rlg327/");
     strcat(home,"Dungeon");
+    
     f= fopen(home,"r");
     if(!f){
         printf("cant open file");
         return 1;
     }
-    fread(title,sizeof(char),6,f);
-    fread(version,sizeof(char),4,f);
-    fread(&size,sizeof(char),4,f);
-    fread(rowMajor,sizeof(char),1680,f);
-    size=size/4;
-    initMapFile();
-    char *dat;
-    dat = (char*)calloc(size,4);
-    fread(dat,sizeof(char),4*size,f);
-    int backup =size;
-    int q;
-    int counter=0;
-    for(q=0;q<size;q++,counter=counter+4){
-        (*m).rooms[size]=createRoomFile((dat[counter]),(dat[counter+1]),(dat[counter+2]),(dat[counter+3]));
-    }
-    printf("%d",(*m).rooms[2].topLeft[1]);
-    int y;
-    int o;
-    for(y=0;y<21;y++){
-        for(o=0;o<80;o++){
-            (*m).hardness[y][o]=rowMajor[y*o];
+    
+    unsigned char hardnessModel[21][80];
+    fread(title,1,6,f);
+    fread(&version,4,1,f);
+    fread(&size,4,1,f);
+    version=be32toh(version);
+    
+    fread(hardnessModel,1,21*80,f);
+    size = be32toh(size);
+    int max = (size-1694)/4;
+    int c;
+    //initMapFile();
+    int t;
+    int j;
+    for(t=0;t<21;t++){
+        for(j=0;j<80;j++){
+            if(hardnessModel[t][j]==0){
+                (*m).grid[t][j]='#';
+            }
         }
+    }
+     int a;
+    for (a=0; a<max; a++){
+        uint8_t topLeftX;
+        uint8_t xWidth;
+        uint8_t topLeftY;
+        uint8_t yWidth;
+        fread(&topLeftX, sizeof(topLeftX), 1, f);
+        fread(&xWidth, sizeof(xWidth), 1, f);
+        fread(&topLeftY, sizeof(topLeftY), 1, f);
+        fread(&yWidth, sizeof(yWidth), 1, f);
+        //Room r = createRoomFile(topLeftX,xWidth,topLeftY,yWidth);
+        Room r = createRoomFile(topLeftY,yWidth,topLeftX,xWidth);
+        addRoom(r);
         
     }
-    initBorder();
-    for(y=0;y<21;y++){
-        for(o=0;o<80;o++){
-            if((*m).hardness[y][o]==0){
-                (*m).grid[y][o]='#';
-            }
-            
-        }
-    }
-        int az;
-        //size
-        for(az=0;az<4;az++){
-            Room temp;
-            temp = (*m).rooms[az];
-            
-            int num = temp.topLeft[0];
-            int num2 = temp.topLeft[1];
-            (*m).grid[num][num2]='.';
-
-            num = temp.topright[0];
-            num2 = temp.topright[1];
-            (*m).grid[num][num2]='.';
-
-            num = temp.bottomLeft[0];
-            num2 = temp.bottomLeft[1];
-            (*m).grid[num][num2]='.';
-
-            num =temp.bottomRight[0];
-            num2=temp.bottomRight[1];
-            (*m).grid[num][num2]='.';
-            
-        }
-        fclose(f);
+    fclose(f);
+    
+    
 return 0;
 }
 
