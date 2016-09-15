@@ -119,13 +119,15 @@ static void initRooms(void){
         char done ='f';
         while(done!='t'){
             if(z==0){
-                array[z]=createRoom();// *array[z]=createRoom();
+                Room *r = createRoom();
+                array[z]=r;// *array[z]=createRoom();
+                 (*m).rooms[0]=*r;
                  done='t';
                  size++;
                  break;
             }    
             Room *p = createRoom();
-            //printf("%i\n",(*p).topLeft[0]);
+            
             int a;
             int col =0;
             for(a=0;a<size;a++){
@@ -213,7 +215,19 @@ static void initRooms(void){
         (*m).grid[climb][2]='#';
     }
     
-
+int a;
+int g;
+for(a=0;a<21;a++){
+    for(g=0;g<80;g++){
+        char temp = (*m).grid[21][80];
+        if(temp=='.' || temp=='#'){
+            (*m).hardness[21][80]=0;
+        }
+        if(temp=='|' || temp=='-'){
+            (*m).hardness[21][80]=255;
+        }
+    }
+}
 
 
 }
@@ -324,6 +338,17 @@ int initMap(void){
     m = (struct Map*)malloc(sizeof(struct Map));
     initBorder();
     initRooms();
+    int c;
+    int f;
+    for(c=0;c<21;c++){
+        for(f=0;f<80;f++){
+            char temp = (*m).grid[c][f];
+            if(temp=='.' || temp=='#'){
+                (*m).hardness[c][f]=0;
+            }
+
+        }
+    }
     return 0;
 }
 static int initMapFile(void){
@@ -371,17 +396,22 @@ int saveGame(){
     
     int a;
 
+        
     for (a=0; a<(*m).numOfRooms; a++){
-        uint8_t topLeftX =  (*m).rooms[a].topLeft[0];
-        uint8_t xWidth = (*m).rooms[a].bottomLeft[0]-(*m).rooms[a].topLeft[0];
-        uint8_t topLeftY = (*m).rooms[a].topLeft[0];
-        uint8_t yWidth = (*m).rooms[a].topright[1]-(*m).rooms[a].topLeft[1];
-        fwrite(&topLeftX, sizeof(topLeftX), 1, f);
-        fwrite(&xWidth, sizeof(xWidth), 1, f);
-        fwrite(&topLeftY, sizeof(topLeftY), 1, f);
-        fwrite(&yWidth, sizeof(yWidth), 1, f);
-        //Room r = createRoomFile(topLeftX,xWidth,topLeftY,yWidth);
-        Room r = createRoomFile(topLeftY,yWidth,topLeftX,xWidth);
+         
+        int topLeftX; 
+        int xWidth;
+        int topLeftY;
+        int yWidth;
+         topLeftY =  (*m).rooms[a].topLeft[1];
+         yWidth = (*m).rooms[a].bottomLeft[0]-(*m).rooms[a].topLeft[0];
+         topLeftX = (*m).rooms[a].topLeft[0];
+         xWidth = (*m).rooms[a].topright[1]-(*m).rooms[a].topLeft[1];
+        fwrite(&topLeftY, 1, 1, f);
+        fwrite(&xWidth, 1, 1, f);
+        fwrite(&topLeftX, 1, 1, f);
+        fwrite(&yWidth, 1, 1, f);
+        //Room r = createRoomFile(topLeftY,yWidth,topLeftX,xWidth);
         
     }
 
@@ -414,7 +444,7 @@ int loadGame(){
     fread(&size,4,1,f);
     version=be32toh(version);
     
-    fread(hardnessModel,1,21*80,f);
+    fread(hardnessModel,1,1680,f);
     int az;
     int hg;
     for(az=0;az<21;az++){

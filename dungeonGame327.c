@@ -35,11 +35,11 @@ int main (int argc, char* argv[]){
 
 void initGame(void){
 
-   // if(load){
+    if(load){
         loadGame();
-   // }else{
-      // initMap();
-    //}
+    }else{
+      initMap();
+    }
     
 }
 void playGame(void){
