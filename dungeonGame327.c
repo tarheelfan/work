@@ -26,7 +26,7 @@ int main (int argc, char* argv[]){
     
     initGame();
     playGame();
-    
+    closeGame();
     
     
     
@@ -38,7 +38,7 @@ void initGame(void){
    // if(load){
         loadGame();
    // }else{
-   //     initMap();
+      // initMap();
     //}
     
 }
@@ -50,6 +50,6 @@ void playGame(void){
 void closeGame(void){
     //if(save){
 
-        //saveGame();
+        saveGame();
     //}
 }

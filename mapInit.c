@@ -8,7 +8,6 @@
 #include <endian.h>
 #include <stdint.h>
 #include <sys/stat.h>
-//4 bytes per room
 int const x = 80;
 int const y = 21;
 
@@ -19,13 +18,13 @@ struct Room {
     int topright[2];
     int bottomLeft[2];
     int bottomRight[2];
-    int connected;
 };
 
 struct Map{
     char grid[21][80];
-    int hardness[21][80];
-    Room *rooms;
+    unsigned char hardness[21][80];
+    Room rooms[100];
+    int numOfRooms;
 };
 /* turn this into package */
 typedef struct {
@@ -96,10 +95,6 @@ static void initBorder(void){
     
    
 }
-/* int topLeft[2];
-    int topright[2];
-    int bottomLeft[2];
-    int bottomRight[2];*/
 void static addRoom(Room r){
     int x;
     int y;
@@ -117,6 +112,7 @@ void static addRoom(Room r){
 //be 32 to h()
 static void initRooms(void){
     Room* array[7];
+    (*m).numOfRooms=7;
     int z;
     int size=0;
     for(z=0;z<7;z++){
@@ -292,7 +288,6 @@ static Room* createRoom(void){
     char done ='n';
     Room *room;
     room = (struct Room*)malloc(sizeof(struct Room));
-    (*room).connected=0;
     while(done!='y'){
         int height = rand();
         height = height % 7;
@@ -333,11 +328,9 @@ int initMap(void){
 }
 static int initMapFile(void){
     m = (struct Map*)malloc(sizeof(struct Map));
-    (*m).rooms= (Room*)calloc(30,sizeof(Room));
     initBorder();
     return 0;
 }
-//Room *rooms[20];
  void printGrid(){
     int i;
     int j;
@@ -355,7 +348,6 @@ static int initMapFile(void){
 }
 
 int saveGame(){
-   printf("I should not see this");
     FILE *f;
     char *home = getenv("HOME");
     strcat(home,"/.rlg327/");
@@ -366,46 +358,37 @@ int saveGame(){
         return 1;
     }
     char *title = "RLG327";
-    //unsigned char *version =(unsigned char*)"0";
-    unsigned int version = 0;
-    int sizeint=0;
-    sizeint = 1694 + sizeof((*m).rooms);
-
-    fwrite(title,sizeof(char),6,f);
-    fwrite(&version,sizeof(char),4,f);
-    fwrite(&sizeint,sizeof(char),4,f);//bug here
-    fwrite((*m).hardness,sizeof(char),1680,f);
-    char dungeons[sizeof((*m).rooms)] ="";
-    int iou;
-    for(iou=0;iou<sizeof((*m).rooms);iou++){
-        Room t = (*m).rooms[iou];
-        char val = t.topLeft[0];
-        strcpy(dungeons,&val);
-        Room q = (*m).rooms[iou];
-        int dif = q.bottomLeft[0]-q.topLeft[0];
-        int intsizz = dif;
-        char charsize = intsizz;
-        strcpy(dungeons,&charsize);
-        Room wer = (*m).rooms[iou];
-        int yloc = wer.topLeft[1];
-        char ylocchar = yloc;
-        strcpy(dungeons,&ylocchar);
-        Room pl =(*m).rooms[iou];
-        int ysize = pl.topright[1]-pl.topLeft[1];
-        char charysize = ysize;
-        strcpy(dungeons,&charysize);
+    int version = 0;
+    version = htobe32(version);
+    int sizeint;
+    sizeint = 1694;
+    sizeint = sizeint + 4 * (*m).numOfRooms;
+    sizeint = htobe32(sizeint);
+    fwrite(title,1,6,f);
+    fwrite(&version,4,1,f);
+    fwrite(&sizeint,4,1,f);
+    fwrite((*m).hardness,1,1680,f);
     
+    int a;
+
+    for (a=0; a<(*m).numOfRooms; a++){
+        uint8_t topLeftX =  (*m).rooms[a].topLeft[0];
+        uint8_t xWidth = (*m).rooms[a].bottomLeft[0]-(*m).rooms[a].topLeft[0];
+        uint8_t topLeftY = (*m).rooms[a].topLeft[0];
+        uint8_t yWidth = (*m).rooms[a].topright[1]-(*m).rooms[a].topLeft[1];
+        fwrite(&topLeftX, sizeof(topLeftX), 1, f);
+        fwrite(&xWidth, sizeof(xWidth), 1, f);
+        fwrite(&topLeftY, sizeof(topLeftY), 1, f);
+        fwrite(&yWidth, sizeof(yWidth), 1, f);
+        //Room r = createRoomFile(topLeftX,xWidth,topLeftY,yWidth);
+        Room r = createRoomFile(topLeftY,yWidth,topLeftX,xWidth);
+        
     }
-    fwrite(dungeons,sizeof(char),4*sizeof((*m).rooms),f);
+
     fclose(f);
     return 0;
 }
-struct roomModel {
-    int x;
-    int x_size;
-    int y;
-    int y_size;
-};
+
 
 
 int size;
@@ -420,13 +403,11 @@ int loadGame(){
     strcpy(home,getenv("HOME"));
     strcat(home,"/.rlg327/");
     strcat(home,"Dungeon");
-    
     f= fopen(home,"r");
     if(!f){
         printf("cant open file");
         return 1;
     }
-    
     unsigned char hardnessModel[21][80];
     fread(title,1,6,f);
     fread(&version,4,1,f);
@@ -434,10 +415,15 @@ int loadGame(){
     version=be32toh(version);
     
     fread(hardnessModel,1,21*80,f);
+    int az;
+    int hg;
+    for(az=0;az<21;az++){
+        for(hg=0;hg<80;hg++){
+            (*m).hardness[az][hg]=hardnessModel[az][hg];
+        }
+    }
     size = be32toh(size);
     int max = (size-1694)/4;
-    int c;
-    //initMapFile();
     int t;
     int j;
     for(t=0;t<21;t++){
@@ -447,7 +433,8 @@ int loadGame(){
             }
         }
     }
-     int a;
+    int a;
+    (*m).numOfRooms=0;
     for (a=0; a<max; a++){
         uint8_t topLeftX;
         uint8_t xWidth;
@@ -457,11 +444,14 @@ int loadGame(){
         fread(&xWidth, sizeof(xWidth), 1, f);
         fread(&topLeftY, sizeof(topLeftY), 1, f);
         fread(&yWidth, sizeof(yWidth), 1, f);
-        //Room r = createRoomFile(topLeftX,xWidth,topLeftY,yWidth);
         Room r = createRoomFile(topLeftY,yWidth,topLeftX,xWidth);
-        addRoom(r);
+        (*m).rooms[a]=r;
+        (*m).numOfRooms=(*m).numOfRooms+1;
         
+        addRoom(r);
     }
+    
+
     fclose(f);
     
     
