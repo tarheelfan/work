@@ -1,0 +1,109 @@
+commit ca955489
+Author: Shane P Drafahl <drafahls@gmail.com>
+Date:   Wed Sep 14 21:37:11 2016 -0500
+
+    finnal bug fixes
+
+commit 0ced654d
+Author: Shane P Drafahl <drafahls@gmail.com>
+Date:   Wed Sep 14 19:15:01 2016 -0500
+
+    bug fixes
+
+commit bdc2e70c
+Author: Shane P Drafahl <drafahls@gmail.com>
+Date:   Wed Sep 14 11:41:28 2016 -0500
+
+    fixed bugs enabling the ability to load files
+
+commit 62fa69f2
+Author: Shane P Drafahl <drafahls@gmail.com>
+Date:   Tue Sep 13 22:16:12 2016 -0500
+
+    bug fixes
+
+commit 610948f9
+Author: Shane P Drafahl <drafahls@gmail.com>
+Date:   Tue Sep 13 17:32:16 2016 -0500
+
+    fixed some compiler issues
+
+commit 2b06bc45
+Author: Shane P Drafahl <drafahls@gmail.com>
+Date:   Mon Sep 12 15:39:08 2016 -0500
+
+    Removed warnings and added hardness to map
+
+commit 1d8a0d1d
+Author: Shane P Drafahl <drafahls@gmail.com>
+Date:   Mon Sep 12 00:10:42 2016 -0500
+
+    started on saveGame function
+
+commit 0134f07c
+Author: Shane P Drafahl <drafahls@gmail.com>
+Date:   Sun Sep 11 21:50:04 2016 -0500
+
+    Added left path and made print grid public
+
+commit 11590f5f
+Author: Shane P Drafahl <drafahls@gmail.com>
+Date:   Sun Sep 11 19:21:12 2016 -0500
+
+    Made print grid public
+
+commit 2113ed65
+Author: Shane P Drafahl <drafahls@gmail.com>
+Date:   Sun Sep 11 18:01:07 2016 -0500
+
+    Added Connected path on left side of map
+
+commit a10fc5cf
+Author: Shane P Drafahl <drafahls@gmail.com>
+Date:   Mon Sep 5 15:27:00 2016 -0500
+
+    I have added paths in order to connect the different rooms together
+
+commit a8e88d12
+Author: Shane Drafahl <sdrafahl@iastate.edu>
+Date:   Mon Sep 5 00:22:01 2016 -0500
+
+    Create README.md
+
+commit 5cba6a85
+Author: Shane P Drafahl <drafahls@gmail.com>
+Date:   Mon Sep 5 00:20:32 2016 -0500
+
+    Modified collides function to make it work correctly, I also changed the Rooms to . from X, Also a few minor touches like correcting the size of the dungeo
+
+commit 784b9470
+Author: Shane P Drafahl <drafahls@gmail.com>
+Date:   Sun Sep 4 01:22:43 2016 -0500
+
+    I did some work on initRooms and created the colides function that remains untested, currently does not display correct info but without memory issues or c
+
+commit 4632272b
+Author: Shane P Drafahl <drafahls@gmail.com>
+Date:   Sat Sep 3 14:29:53 2016 -0500
+
+    added function initRooms and createRoom, initRooms currently just inserts one room into the grid for testing purposes for the function createRoom
+
+commit 71a61276
+Author: Shane P Drafahl <drafahls@gmail.com>
+Date:   Fri Sep 2 11:51:43 2016 -0500
+
+    fixed some bugs with the display grid function
+
+commit 6815eaa1
+Author: Shane P Drafahl <drafahls@gmail.com>
+Date:   Fri Sep 2 00:49:47 2016 -0500
+
+    Created Makefile, created dungeonGame327.c source file that will run the game, I also created mapInit.c and mapInit.h file to
+    encapsulate dungeon map code in a library for the main program to use
+
+commit 9f84d9a7
+Author: Shane P Drafahl <drafahls@gmail.com>
+Date:   Fri Sep 2 00:45:49 2016 -0500
+
+    Added git ignore file
+

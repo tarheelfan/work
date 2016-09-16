@@ -7,3 +7,5 @@ This program works by a main method that controls the entire program and then ea
 The mapinit.c file and its respective header files is responsible for generating the map.
 
 The cleanSlate.bash is a bash file that removes object files and compiled binaries.  
+
+This program has two switches on it, one is --save and the other is --load , these functions will load or save a file from your home file in a directory called .rlg327 in a file called Dungeon
