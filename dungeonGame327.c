@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include "mapInit.h"
 #include <string.h>
-
+#include "binheap.h"
 
 int load=0;
 int save=0;
