@@ -48,8 +48,8 @@ void playGame(void){
    
 }
 void closeGame(void){
-    //if(save){
+    if(save){
 
         saveGame();
-    //}
+    }
 }
