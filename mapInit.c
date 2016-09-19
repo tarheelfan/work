@@ -13,19 +13,7 @@ int const y = 21;
 
 
 
-struct Room {
-    int topLeft[2];
-    int topright[2];
-    int bottomLeft[2];
-    int bottomRight[2];
-};
 
-struct Map{
-    char grid[21][80];
-    unsigned char hardness[21][80];
-    Room rooms[100];
-    int numOfRooms;
-};
 /* turn this into package */
 typedef struct {
   int *array;
@@ -244,8 +232,6 @@ static int collides(Room *r,Room *ro, int s){
    }else{
        return 0;
    }
-
-    
 }
 static int contains(Room *inside,Room *out){
     int x1 = (*out).topLeft[0]-1;
@@ -301,7 +287,7 @@ static Room createRoomFile(int xUperLeft,int xSize,int yUperLeft,int ySize){
 static Room* createRoom(void){
     char done ='n';
     Room *room;
-    room = (struct Room*)malloc(sizeof(struct Room));
+    room = (Room*)malloc(sizeof( Room));
     while(done!='y'){
         int height = rand();
         height = height % 7;
@@ -335,7 +321,7 @@ static Room* createRoom(void){
     return room;
 }
 int initMap(void){
-    m = (struct Map*)malloc(sizeof(struct Map));
+    m = (Map*)malloc(sizeof(Map));
     initBorder();
     initRooms();
     int c;
@@ -352,7 +338,7 @@ int initMap(void){
     return 0;
 }
 static int initMapFile(void){
-    m = (struct Map*)malloc(sizeof(struct Map));
+    m = (Map*)malloc(sizeof(Map));
     initBorder();
     return 0;
 }
@@ -423,7 +409,7 @@ int saveGame(){
 
 int size;
 int loadGame(){
-    m = (struct Map*)malloc(sizeof(struct Map));
+    m = (Map*)malloc(sizeof(Map));
     initBorder();
     FILE *f;
     char title[6];

@@ -43,13 +43,10 @@ void initGame(void){
     
 }
 void playGame(void){
-    
     printGrid();
-   
 }
 void closeGame(void){
     if(save){
-
         saveGame();
     }
 }
