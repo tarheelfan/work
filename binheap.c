@@ -10,10 +10,10 @@ struct binheap_node {
   uint32_t index;
 };
 
-static void percolate_up(binheap_t *h, uint32_t index)
+static void percolate_up(heap_t *h, uint32_t index)
 {
   uint32_t parent;
-  binheap_node_t *tmp;
+  heap_node_t *tmp;
 
   for (parent = (index - 1) / 2;
        index && h->compare(h->array[index]->datum, h->array[parent]->datum) < 0;
@@ -26,7 +26,7 @@ static void percolate_up(binheap_t *h, uint32_t index)
   } 
 }
 
-static void percolate_down(binheap_t *h, uint32_t index)
+static void percolate_down(heap_t *h, uint32_t index)
 {
   uint32_t child;
   void *tmp;
@@ -48,7 +48,7 @@ static void percolate_down(binheap_t *h, uint32_t index)
   }
 }
 
-static void heapify(binheap_t *h)
+static void heapify(heap_t *h)
 {
   uint32_t i;
 
@@ -58,7 +58,7 @@ static void heapify(binheap_t *h)
   percolate_down(h, 0);
 }
 
-void binheap_init(binheap_t *h,
+void binheap_init(heap_t *h,
                   int32_t (*compare)(const void *key, const void *with),
                   void (*datum_delete)(void *))
 {
@@ -70,7 +70,7 @@ void binheap_init(binheap_t *h,
   h->array = calloc(h->array_size, sizeof (*h->array));
 }
 
-void binheap_init_from_array(binheap_t *h,
+void binheap_init_from_array(heap_t *h,
                              void *array,
                              uint32_t size,
                              uint32_t nmemb,
@@ -96,7 +96,7 @@ void binheap_init_from_array(binheap_t *h,
   heapify(h);
 }
 
-void binheap_delete(binheap_t *h)
+void binheap_delete(heap_t *h)
 {
   uint32_t i;
 
@@ -109,11 +109,31 @@ void binheap_delete(binheap_t *h)
   free(h->array);
   memset(h, 0, sizeof (*h));
 }
-
-binheap_node_t *binheap_insert(binheap_t *h, void *v)
+int heap_decrease_key_no_replace(heap_t *h, heap_node_t *n)
 {
-  binheap_node_t **tmp;
-  binheap_node_t *retval;
+  /* No tests that the value hasn't actually increased.  Change *
+   * occurs in place, so the check is not possible here.  The   *
+   * user is completely responsible for ensuring that they      *
+   * don't fubar the queue.                                     */
+
+  heap_node_t *p;
+
+  p = n->parent;
+
+  if (p && (h->compare(n->datum, p->datum) < 0)) {
+    heap_cut(h, n, p);
+    heap_cascading_cut(h, p);
+  }
+  if (h->compare(n->datum, h->min->datum) < 0) {
+    h->min = n;
+  }
+
+  return 0;
+}
+heap_node_t *binheap_insert(heap_t *h, void *v)
+{
+  heap_node_t **tmp;
+  heap_node_t *retval;
 
   if (h->size == h->array_size) {
     h->array_size *= 2;
@@ -135,12 +155,12 @@ binheap_node_t *binheap_insert(binheap_t *h, void *v)
   return retval;
 }
 
-void *binheap_peek_min(binheap_t *h)
+void *binheap_peek_min(heap_t *h)
 {
   return h->size ? h->array[0]->datum : NULL;
 }
 
-void *binheap_remove_min(binheap_t *h)
+void *binheap_remove_min(heap_t *h)
 {
   void *tmp;
 
@@ -157,12 +177,12 @@ void *binheap_remove_min(binheap_t *h)
   return tmp;
 }
 
-void binheap_decrease_key(binheap_t *h, binheap_node_t *n)
+void binheap_decrease_key(heap_t *h, heap_node_t *n)
 {
   percolate_up(h, n->index);
 }
 
-uint32_t binheap_is_empty(binheap_t *h)
+uint32_t binheap_is_empty(heap_t *h)
 {
   return !h->size;
 }
@@ -178,11 +198,11 @@ int32_t compare_int(const void *key, const void *with)
 
 int main(int argc, char *argv[])
 {
-  binheap_t h;
+  heap_t h;
   int32_t a[1024];
   int32_t i, j, r;
   int32_t parent, child;
-  binheap_node_t *nodes[1024];
+  heap_node_t *nodes[1024];
 
   for (i = 0; i < 1024; i++) {
     a[i] = 1024 - i;

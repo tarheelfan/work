@@ -1,3 +1,4 @@
+#include "binheap.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include "mapInit.h"
@@ -8,41 +9,40 @@
 #include <endian.h>
 #include <stdint.h>
 #include <sys/stat.h>
+#include <limits.h>
 int const x = 80;
 int const y = 21;
+#define DUNGEON_X 80
+#define DUNGEON_Y 21
+#define mappair(pair) ((*m).grid[pair[dim_y]][pair[dim_x]])
+#define mapxy(x, y) ((*m).grid[y][x])
+#define hardnesspair(pair) ((*m).hardness[pair[dim_y]][pair[dim_x]])
+#define hardnessxy(x, y) ((*m).hardness[y][x])
 
 
 
-
-/* turn this into package */
-typedef struct {
-  int *array;
-  size_t used;
-  size_t size;
-} Array;
-
-void initArray(Array *a, size_t initialSize) {
-  a->array = (int *)malloc(initialSize * sizeof(int));
-  a->used = 0;
-  a->size = initialSize;
-}
-
-void insertArray(Array *a, int element) {
-  if (a->used == a->size) {
-    a->size *= 2;
-    a->array = (int *)realloc(a->array, a->size * sizeof(int));
-  }
-  a->array[a->used++] = element;
-}
-
-void freeArray(Array *a) {
-  free(a->array);
-  a->array = NULL;
-  a->used = a->size = 0;
-}
-/*                            */
+struct corridor_path {
+  heap_node_t *hn;
+  uint8_t pos[2];
+  uint8_t from[2];
+  int32_t cost;
+};
+typedef enum dim {
+  dim_x,
+  dim_y,
+  num_dims
+} dim_t;
+typedef enum __attribute__ ((__packed__)) terrain_type {
+  ter_debug,
+  ter_wall,
+  ter_wall_immutable,
+  ter_floor,
+  ter_floor_room,
+  ter_floor_hall,
+} terrain_type_t;
+typedef int16_t pair_t[num_dims];
 Map *m;
-static int initMapFile(void);
+
 static Room* createRoom(void);
 static void initRooms(void);
 int initMap(void);
@@ -83,6 +83,7 @@ static void initBorder(void){
     
    
 }
+
 void static addRoom(Room r){
     int x;
     int y;
@@ -96,8 +97,124 @@ void static addRoom(Room r){
         }
     }
 }
-//h to be 32()
-//be 32 to h()
+static int32_t corridor_path_cmp(const void *key, const void *with) {
+  return ((corridor_path_t *) key)->cost - ((corridor_path_t *) with)->cost;
+}
+static void analyzeDistances(void){
+   //static void dijkstra_corridor(dungeon_t *d, pair_t from, pair_t to)
+   //typedef int16_t pair_t[num_dims];
+   static corridor_path_t path[DUNGEON_Y][DUNGEON_X], *p;
+   static uint32_t initialized = 0;
+   heap_t h;
+    uint32_t x, y;
+   pair_t from;
+   from[dim_x]=(*m).pcX;
+   from[dim_y]=(*m).pcY;
+   pair_t to;
+   int x_;
+   int y_;
+   for(y_=0;y_<21;y_++){
+       for(x_=0;x_<80;x_++){
+           to[dim_x]=x_;
+           to[dim_y]=y_;
+           if (!initialized) {
+    for (y = 0; y < DUNGEON_Y; y++) {
+      for (x = 0; x < DUNGEON_X; x++) {
+        path[y][x].pos[dim_y] = y;
+        path[y][x].pos[dim_x] = x;
+      }
+    }
+    initialized = 1;
+  }
+  
+  for (y = 0; y < DUNGEON_Y; y++) {
+    for (x = 0; x < DUNGEON_X; x++) {
+      path[y][x].cost = INT_MAX;
+    }
+  }
+
+  path[from[dim_y]][from[dim_x]].cost = 0;
+
+  binheap_init(&h, corridor_path_cmp, NULL);
+
+  for (y = 0; y < DUNGEON_Y; y++) {
+    for (x = 0; x < DUNGEON_X; x++) {
+      if ((*m).grid[x][y] != 255) {
+        path[y][x].hn = binheap_insert(&h, &path[y][x]);
+      } else {
+        path[y][x].hn = NULL;
+      }
+    }
+  }
+
+  while ((p = binheap_remove_min(&h))) {
+    p->hn = NULL;
+
+    if ((p->pos[dim_y] == to[dim_y]) && p->pos[dim_x] == to[dim_x]) {
+      for (x = to[dim_x], y = to[dim_y];
+           (x != from[dim_x]) || (y != from[dim_y]);
+           p = &path[y][x], x = p->from[dim_x], y = p->from[dim_y]) {
+        if ((*m).grid[x][y] != ter_floor_room) {
+          (*m).grid[x][y] = ter_floor_hall;
+          hardnessxy(x, y) = 0;
+        }
+      }
+      binheap_delete(&h);
+      return;
+    }
+
+    if ((path[p->pos[dim_y] - 1][p->pos[dim_x]    ].hn) &&
+        (path[p->pos[dim_y] - 1][p->pos[dim_x]    ].cost >
+         p->cost + hardnesspair(p->pos))) {
+      path[p->pos[dim_y] - 1][p->pos[dim_x]    ].cost =
+        p->cost + hardnesspair(p->pos);
+      path[p->pos[dim_y] - 1][p->pos[dim_x]    ].from[dim_y] = p->pos[dim_y];
+      path[p->pos[dim_y] - 1][p->pos[dim_x]    ].from[dim_x] = p->pos[dim_x];
+      heap_decrease_key_no_replace(&h, path[p->pos[dim_y] - 1]
+                                           [p->pos[dim_x]    ].hn);
+    }
+    if ((path[p->pos[dim_y]    ][p->pos[dim_x] - 1].hn) &&
+        (path[p->pos[dim_y]    ][p->pos[dim_x] - 1].cost >
+         p->cost + hardnesspair(p->pos))) {
+      path[p->pos[dim_y]    ][p->pos[dim_x] - 1].cost =
+        p->cost + hardnesspair(p->pos);
+      path[p->pos[dim_y]    ][p->pos[dim_x] - 1].from[dim_y] = p->pos[dim_y];
+      path[p->pos[dim_y]    ][p->pos[dim_x] - 1].from[dim_x] = p->pos[dim_x];
+      heap_decrease_key_no_replace(&h, path[p->pos[dim_y]    ]
+                                           [p->pos[dim_x] - 1].hn);
+    }
+    if ((path[p->pos[dim_y]    ][p->pos[dim_x] + 1].hn) &&
+        (path[p->pos[dim_y]    ][p->pos[dim_x] + 1].cost >
+         p->cost + hardnesspair(p->pos))) {
+      path[p->pos[dim_y]    ][p->pos[dim_x] + 1].cost =
+        p->cost + hardnesspair(p->pos);
+      path[p->pos[dim_y]    ][p->pos[dim_x] + 1].from[dim_y] = p->pos[dim_y];
+      path[p->pos[dim_y]    ][p->pos[dim_x] + 1].from[dim_x] = p->pos[dim_x];
+      heap_decrease_key_no_replace(&h, path[p->pos[dim_y]    ]
+                                           [p->pos[dim_x] + 1].hn);
+    }
+    if ((path[p->pos[dim_y] + 1][p->pos[dim_x]    ].hn) &&
+        (path[p->pos[dim_y] + 1][p->pos[dim_x]    ].cost >
+         p->cost + hardnesspair(p->pos))) {
+      path[p->pos[dim_y] + 1][p->pos[dim_x]    ].cost =
+        p->cost + hardnesspair(p->pos);
+      path[p->pos[dim_y] + 1][p->pos[dim_x]    ].from[dim_y] = p->pos[dim_y];
+      path[p->pos[dim_y] + 1][p->pos[dim_x]    ].from[dim_x] = p->pos[dim_x];
+      heap_decrease_key_no_replace(&h, path[p->pos[dim_y] + 1]
+                                           [p->pos[dim_x]    ].hn);
+    }
+  }
+       }
+   }
+
+  
+  
+  
+
+  
+
+
+}
 static void initRooms(void){
     Room* array[7];
     (*m).numOfRooms=7;
@@ -335,13 +452,10 @@ int initMap(void){
 
         }
     }
+    analyzeDistances();
     return 0;
 }
-static int initMapFile(void){
-    m = (Map*)malloc(sizeof(Map));
-    initBorder();
-    return 0;
-}
+
  void printGrid(){
     int i;
     int j;
@@ -425,12 +539,13 @@ int loadGame(){
         return 1;
     }
     unsigned char hardnessModel[21][80];
-    fread(title,1,6,f);
-    fread(&version,4,1,f);
-    fread(&size,4,1,f);
+    int res;
+    res = fread(title,1,6,f);
+    res = fread(&version,4,1,f);
+    res = fread(&size,4,1,f);
     version=be32toh(version);
     
-    fread(hardnessModel,1,1680,f);
+    res = fread(hardnessModel,1,1680,f);
     int az;
     int hg;
     for(az=0;az<21;az++){
@@ -456,10 +571,13 @@ int loadGame(){
         uint8_t xWidth;
         uint8_t topLeftY;
         uint8_t yWidth;
-        fread(&topLeftX, sizeof(topLeftX), 1, f);
-        fread(&xWidth, sizeof(xWidth), 1, f);
-        fread(&topLeftY, sizeof(topLeftY), 1, f);
-        fread(&yWidth, sizeof(yWidth), 1, f);
+        res = fread(&topLeftX, sizeof(topLeftX), 1, f);
+        res = fread(&xWidth, sizeof(xWidth), 1, f);
+        res = fread(&topLeftY, sizeof(topLeftY), 1, f);
+        res = fread(&yWidth, sizeof(yWidth), 1, f);
+        if(res==-666){
+            printf("0");
+        }
         Room r = createRoomFile(topLeftY,yWidth,topLeftX,xWidth);
         (*m).rooms[a]=r;
         (*m).numOfRooms=(*m).numOfRooms+1;
@@ -469,7 +587,7 @@ int loadGame(){
     
 
     fclose(f);
-    
+    analyzeDistances();
     
 return 0;
 }

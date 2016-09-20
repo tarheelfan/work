@@ -1,4 +1,4 @@
-
+#include "binheap.h"
 typedef struct {
     int topLeft[2];
     int topright[2];
@@ -12,7 +12,10 @@ typedef struct {
     unsigned char hardness[21][80];
     Room rooms[100];
     int numOfRooms;
+    int pcX;
+    int pcY;
 }Map;
+typedef struct corridor_path corridor_path_t;
 int initMap(void);
 void printGrid(void);
 int saveGame(void);

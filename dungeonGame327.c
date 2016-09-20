@@ -10,7 +10,6 @@ void playGame(void);
 void closeGame(void);
 
 int main (int argc, char* argv[]){
-
     int x;
     int eval;
     for(x=1;x<argc;x++){
@@ -22,25 +21,19 @@ int main (int argc, char* argv[]){
         if(eval==0){
             load=1;
         }
-        }
-    
+    }
     initGame();
     playGame();
     closeGame();
-    
-    
-    
     return 0;
 }
 
 void initGame(void){
-
     if(load){
         loadGame();
     }else{
       initMap();
     }
-    
 }
 void playGame(void){
     printGrid();
