@@ -1,4 +1,4 @@
-#include "binheap.h"
+#include "heap.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include "mapInit.h"
@@ -21,26 +21,10 @@ int const y = 21;
 
 
 
-struct corridor_path {
-  heap_node_t *hn;
-  uint8_t pos[2];
-  uint8_t from[2];
-  int32_t cost;
-};
-typedef enum dim {
-  dim_x,
-  dim_y,
-  num_dims
-} dim_t;
-typedef enum __attribute__ ((__packed__)) terrain_type {
-  ter_debug,
-  ter_wall,
-  ter_wall_immutable,
-  ter_floor,
-  ter_floor_room,
-  ter_floor_hall,
-} terrain_type_t;
-typedef int16_t pair_t[num_dims];
+
+
+
+
 Map *m;
 
 static Room* createRoom(void);
@@ -97,124 +81,73 @@ void static addRoom(Room r){
         }
     }
 }
-static int32_t corridor_path_cmp(const void *key, const void *with) {
-  return ((corridor_path_t *) key)->cost - ((corridor_path_t *) with)->cost;
+struct myarray{
+    distanceCell[1680];
+    int size;
 }
+/*
+typedef struct{
+    int distance;
+    int xloc;
+    int yloc;
+}distanceCell;*/
 static void analyzeDistances(void){
-   //static void dijkstra_corridor(dungeon_t *d, pair_t from, pair_t to)
-   //typedef int16_t pair_t[num_dims];
-   static corridor_path_t path[DUNGEON_Y][DUNGEON_X], *p;
-   static uint32_t initialized = 0;
-   heap_t h;
-    uint32_t x, y;
-   pair_t from;
-   from[dim_x]=(*m).pcX;
-   from[dim_y]=(*m).pcY;
-   pair_t to;
-   int x_;
-   int y_;
-   for(y_=0;y_<21;y_++){
-       for(x_=0;x_<80;x_++){
-           to[dim_x]=x_;
-           to[dim_y]=y_;
-           if (!initialized) {
-    for (y = 0; y < DUNGEON_Y; y++) {
-      for (x = 0; x < DUNGEON_X; x++) {
-        path[y][x].pos[dim_y] = y;
-        path[y][x].pos[dim_x] = x;
-      }
-    }
-    initialized = 1;
-  }
-  
-  for (y = 0; y < DUNGEON_Y; y++) {
-    for (x = 0; x < DUNGEON_X; x++) {
-      path[y][x].cost = INT_MAX;
-    }
-  }
-
-  path[from[dim_y]][from[dim_x]].cost = 0;
-
-  binheap_init(&h, corridor_path_cmp, NULL);
-
-  for (y = 0; y < DUNGEON_Y; y++) {
-    for (x = 0; x < DUNGEON_X; x++) {
-      if ((*m).grid[x][y] != 255) {
-        path[y][x].hn = binheap_insert(&h, &path[y][x]);
-      } else {
-        path[y][x].hn = NULL;
-      }
-    }
-  }
-
-  while ((p = binheap_remove_min(&h))) {
-    p->hn = NULL;
-
-    if ((p->pos[dim_y] == to[dim_y]) && p->pos[dim_x] == to[dim_x]) {
-      for (x = to[dim_x], y = to[dim_y];
-           (x != from[dim_x]) || (y != from[dim_y]);
-           p = &path[y][x], x = p->from[dim_x], y = p->from[dim_y]) {
-        if ((*m).grid[x][y] != ter_floor_room) {
-          (*m).grid[x][y] = ter_floor_hall;
-          hardnessxy(x, y) = 0;
+    myarray arr;
+    myarray->size=0;
+    int xPre;
+    int yPre;
+    for(xPre=0;xPre<80;xPre++){
+        for(yPre=0;yPre<21;yPre++){
+            distanceCell pass;
+            pass->distance=1000;
+            pass->yloc=yPre;/* 1000 will represent infinity */
+            pass->xloc=xPre; 
+            (*m).distanceGrid[yPre][xPre]=pass; 
         }
-      }
-      binheap_delete(&h);
-      return;
     }
+    int pcXl;
+    int pcYl;
+    pcXl=(*m).pcX;
+    pcYl=(*m).pcY;
+    distanceCell root;
+    root->distance=0;
+    root->xloc=(*m).pcX;
+    root->yloc=(*m).pcY;
+    arr->distanceCell[arr->size]=root;
+    arr->size++;
+    while(arr->size>0){
+        distanceCell temp;
+        temp = arr->distanceCell[arr->size-1];
+        arr->size=arr->size-1;
+        if((*m).grid[temp->yloc-1][temp->xloc]=='.'){/* top */
+            if((*m).grid[temp->yloc-1][temp->xloc]=='#'){
+                int tempx = temp->xloc;
+                int tempy = temp->yloc;
+                if((*m).distanceGrid[tempy-1][tempx]->distance==1000){
+                    (*m).sitanceGrid[tempy-1][tempx]->distance=temp->distance+1;
+                    arr->distanceCell[arr->size]=(*m).distanceGrid[tempy-1][tempx];
 
-    if ((path[p->pos[dim_y] - 1][p->pos[dim_x]    ].hn) &&
-        (path[p->pos[dim_y] - 1][p->pos[dim_x]    ].cost >
-         p->cost + hardnesspair(p->pos))) {
-      path[p->pos[dim_y] - 1][p->pos[dim_x]    ].cost =
-        p->cost + hardnesspair(p->pos);
-      path[p->pos[dim_y] - 1][p->pos[dim_x]    ].from[dim_y] = p->pos[dim_y];
-      path[p->pos[dim_y] - 1][p->pos[dim_x]    ].from[dim_x] = p->pos[dim_x];
-      heap_decrease_key_no_replace(&h, path[p->pos[dim_y] - 1]
-                                           [p->pos[dim_x]    ].hn);
-    }
-    if ((path[p->pos[dim_y]    ][p->pos[dim_x] - 1].hn) &&
-        (path[p->pos[dim_y]    ][p->pos[dim_x] - 1].cost >
-         p->cost + hardnesspair(p->pos))) {
-      path[p->pos[dim_y]    ][p->pos[dim_x] - 1].cost =
-        p->cost + hardnesspair(p->pos);
-      path[p->pos[dim_y]    ][p->pos[dim_x] - 1].from[dim_y] = p->pos[dim_y];
-      path[p->pos[dim_y]    ][p->pos[dim_x] - 1].from[dim_x] = p->pos[dim_x];
-      heap_decrease_key_no_replace(&h, path[p->pos[dim_y]    ]
-                                           [p->pos[dim_x] - 1].hn);
-    }
-    if ((path[p->pos[dim_y]    ][p->pos[dim_x] + 1].hn) &&
-        (path[p->pos[dim_y]    ][p->pos[dim_x] + 1].cost >
-         p->cost + hardnesspair(p->pos))) {
-      path[p->pos[dim_y]    ][p->pos[dim_x] + 1].cost =
-        p->cost + hardnesspair(p->pos);
-      path[p->pos[dim_y]    ][p->pos[dim_x] + 1].from[dim_y] = p->pos[dim_y];
-      path[p->pos[dim_y]    ][p->pos[dim_x] + 1].from[dim_x] = p->pos[dim_x];
-      heap_decrease_key_no_replace(&h, path[p->pos[dim_y]    ]
-                                           [p->pos[dim_x] + 1].hn);
-    }
-    if ((path[p->pos[dim_y] + 1][p->pos[dim_x]    ].hn) &&
-        (path[p->pos[dim_y] + 1][p->pos[dim_x]    ].cost >
-         p->cost + hardnesspair(p->pos))) {
-      path[p->pos[dim_y] + 1][p->pos[dim_x]    ].cost =
-        p->cost + hardnesspair(p->pos);
-      path[p->pos[dim_y] + 1][p->pos[dim_x]    ].from[dim_y] = p->pos[dim_y];
-      path[p->pos[dim_y] + 1][p->pos[dim_x]    ].from[dim_x] = p->pos[dim_x];
-      heap_decrease_key_no_replace(&h, path[p->pos[dim_y] + 1]
-                                           [p->pos[dim_x]    ].hn);
-    }
-  }
-       }
-   }
+                }
 
-  
-  
-  
+            }
+        } 
+         if((*m).grid[temp->yloc+1][temp->xloc]=='.'){/* bottom */
+            if((*m).grid[temp->yloc+1][temp->xloc]=='#'){
+                tempx = temp->xloc;
+                tempy = temp->yloc;
+                if((*m).distanceGrid[tempy+1][tempx]->distance==1000){
+                    (*m).sitanceGrid[tempy+1][tempx]->distance=temp->distance+1;
+                    arr->distanceCell[arr->size]=(*m).distanceGrid[tempy-1][tempx];
+                    
+                }
 
-  
+            }
+        } 
 
+    }
 
 }
+
 static void initRooms(void){
     Room* array[7];
     (*m).numOfRooms=7;
