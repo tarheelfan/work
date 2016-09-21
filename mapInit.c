@@ -26,7 +26,7 @@ int const y = 21;
 
 
 Map *m;
-
+static void analyzeDistances(void);
 static Room* createRoom(void);
 static void initRooms(void);
 int initMap(void);
@@ -82,26 +82,21 @@ void static addRoom(Room r){
     }
 }
 struct myarray{
-    distanceCell[1680];
+   distanceCell distanceCell[1680];
     int size;
-}
-/*
-typedef struct{
-    int distance;
-    int xloc;
-    int yloc;
-}distanceCell;*/
+};
+
 static void analyzeDistances(void){
-    myarray arr;
-    myarray->size=0;
+    struct myarray arr;
+    arr.size=0;
     int xPre;
     int yPre;
     for(xPre=0;xPre<80;xPre++){
         for(yPre=0;yPre<21;yPre++){
             distanceCell pass;
-            pass->distance=1000;
-            pass->yloc=yPre;/* 1000 will represent infinity */
-            pass->xloc=xPre; 
+            pass.distance=1000;
+            pass.yloc=yPre;/* 1000 will represent infinity */
+            pass.xloc=xPre; 
             (*m).distanceGrid[yPre][xPre]=pass; 
         }
     }
@@ -109,45 +104,113 @@ static void analyzeDistances(void){
     int pcYl;
     pcXl=(*m).pcX;
     pcYl=(*m).pcY;
-    distanceCell root;
-    root->distance=0;
-    root->xloc=(*m).pcX;
-    root->yloc=(*m).pcY;
-    arr->distanceCell[arr->size]=root;
-    arr->size++;
-    while(arr->size>0){
+    distanceCell root = (*m).distanceGrid[pcYl][pcXl];
+    arr.distanceCell[arr.size]=root;
+    arr.size++;
+    int tempx;
+    int tempy;
+    while(arr.size>0){
+        
         distanceCell temp;
-        temp = arr->distanceCell[arr->size-1];
-        arr->size=arr->size-1;
-        if((*m).grid[temp->yloc-1][temp->xloc]=='.'){/* top */
-            if((*m).grid[temp->yloc-1][temp->xloc]=='#'){
-                int tempx = temp->xloc;
-                int tempy = temp->yloc;
-                if((*m).distanceGrid[tempy-1][tempx]->distance==1000){
-                    (*m).sitanceGrid[tempy-1][tempx]->distance=temp->distance+1;
-                    arr->distanceCell[arr->size]=(*m).distanceGrid[tempy-1][tempx];
-
-                }
-
+        temp = arr.distanceCell[arr.size-1];
+        arr.size=arr.size-1;
+        
+        
+        if((*m).grid[temp.yloc-1][temp.xloc]=='.' || (*m).grid[temp.yloc-1][temp.xloc]=='#'){/* top */
+                tempx = temp.xloc;
+                tempy = temp.yloc;
+                if((*m).distanceGrid[tempy-1][tempx].distance==1000){
+                    (*m).distanceGrid[tempy-1][tempx].distance=temp.distance+1;
+                    arr.distanceCell[arr.size]=(*m).distanceGrid[tempy-1][tempx];
+                    arr.size++;
             }
         } 
-         if((*m).grid[temp->yloc+1][temp->xloc]=='.'){/* bottom */
-            if((*m).grid[temp->yloc+1][temp->xloc]=='#'){
-                tempx = temp->xloc;
-                tempy = temp->yloc;
-                if((*m).distanceGrid[tempy+1][tempx]->distance==1000){
-                    (*m).sitanceGrid[tempy+1][tempx]->distance=temp->distance+1;
-                    arr->distanceCell[arr->size]=(*m).distanceGrid[tempy-1][tempx];
+         if((*m).grid[temp.yloc+1][temp.xloc]=='.' || (*m).grid[temp.yloc+1][temp.xloc]=='#'){/* bottom */
+                tempx = temp.xloc;
+                tempy = temp.yloc;
+                if((*m).distanceGrid[tempy+1][tempx].distance==1000){
+                    (*m).distanceGrid[tempy+1][tempx].distance=temp.distance+1;
+                    arr.distanceCell[arr.size]=(*m).distanceGrid[tempy+1][tempx];
+                    arr.size++;
+                }
+        } 
+         if((*m).grid[temp.yloc][temp.xloc+1]=='.' || (*m).grid[temp.yloc][temp.xloc+1]=='#'){/* right */
+                tempx = temp.xloc;
+                tempy = temp.yloc;
+                if((*m).distanceGrid[tempy][tempx+1].distance==1000){
+                    (*m).distanceGrid[tempy][tempx+1].distance=temp.distance+1;
+                    arr.distanceCell[arr.size]=(*m).distanceGrid[tempy][tempx+1];
+                    arr.size++;
                     
                 }
 
-            }
+            
         } 
+         if((*m).grid[temp.yloc][temp.xloc-1]=='.' || (*m).grid[temp.yloc][temp.xloc-1]=='#'){/* left */
+            
+                tempx = temp.xloc;
+                tempy = temp.yloc;
+                if((*m).distanceGrid[tempy][tempx-1].distance==1000){
+                    (*m).distanceGrid[tempy][tempx-1].distance=temp.distance+1;
+                    arr.distanceCell[arr.size]=(*m).distanceGrid[tempy][tempx-1];
+                    arr.size++;
+                    
+                }
 
+            
+        }
+        if((*m).grid[temp.yloc-1][temp.xloc+1]=='.' || (*m).grid[temp.yloc-1][temp.xloc+1]=='#'){/* top right */
+            
+                tempx = temp.xloc;
+                tempy = temp.yloc;
+                if((*m).distanceGrid[tempy-1][tempx+1].distance==1000){
+                    (*m).distanceGrid[tempy-1][tempx+1].distance=temp.distance+1;
+                    arr.distanceCell[arr.size]=(*m).distanceGrid[tempy-1][tempx+1];
+                    arr.size++;
+                    
+                }
+
+            
+        }
+        if((*m).grid[temp.yloc-1][temp.xloc-1]=='.' || (*m).grid[temp.yloc-1][temp.xloc-1]=='#'){/* top left */
+           
+                tempx = temp.xloc;
+                tempy = temp.yloc;
+                if((*m).distanceGrid[tempy-1][tempx-1].distance==1000){
+                    (*m).distanceGrid[tempy-1][tempx-1].distance=temp.distance+1;
+                    arr.distanceCell[arr.size]=(*m).distanceGrid[tempy-1][tempx-1];
+                    arr.size++;
+                   
+                }
+
+            
+        }
+        if((*m).grid[temp.yloc+1][temp.xloc-1]=='.' || (*m).grid[temp.yloc+1][temp.xloc-1]=='#'){/* bottomLeft left */
+            
+                tempx = temp.xloc;
+                tempy = temp.yloc;
+                if((*m).distanceGrid[tempy+1][tempx-1].distance==1000){
+                    (*m).distanceGrid[tempy+1][tempx-1].distance=temp.distance+1;
+                    arr.distanceCell[arr.size]=(*m).distanceGrid[tempy+1][tempx-1];
+                    arr.size++;
+                    
+                }
+
+            
+        }
+        if((*m).grid[temp.yloc+1][temp.xloc+1]=='.' || (*m).grid[temp.yloc+1][temp.xloc+1]=='#'){/* bottom right */
+            
+                tempx = temp.xloc;
+                tempy = temp.yloc;
+                if((*m).distanceGrid[tempy+1][tempx+1].distance==1000){
+                    (*m).distanceGrid[tempy+1][tempx+1].distance=temp.distance+1;
+                    arr.distanceCell[arr.size]=(*m).distanceGrid[tempy+1][tempx+1];
+                    arr.size++;
+                    
+                }
+        }
     }
-
 }
-
 static void initRooms(void){
     Room* array[7];
     (*m).numOfRooms=7;
@@ -374,6 +437,16 @@ int initMap(void){
     m = (Map*)malloc(sizeof(Map));
     initBorder();
     initRooms();
+    int done=0;
+    while(!done){
+        int xrand = rand()%80;
+        int yrand = rand()%21;
+        if((*m).grid[yrand][xrand]=='.'){
+            (*m).pcX=xrand;
+            (*m).pcY=yrand;
+            done=1;
+        } 
+    }
     int c;
     int f;
     for(c=0;c<21;c++){
@@ -525,4 +598,32 @@ int loadGame(){
 return 0;
 }
 
+void printDistanceGrid(){
+    int er;
+    int yu;
+    for(er=0;er<21;er++){
+        for(yu=0;yu<80;yu++){
+            int val = (*m).distanceGrid[er][yu].distance;
+            if(val==1000){
+                printf(" ");
+            }else{
+                int counter;
+                char base='0';
+                for(counter=0;counter<val;counter++){
+                    base++;
+                }
+                if(val==0){
+                    printf("@");
+                }
+                if(base>62){
+                    printf("%c",base);
+                }else{
+                    printf("%i",val);
+                }
+                
+            }
+        }
+        printf("\n");
+    }
+}
 

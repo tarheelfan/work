@@ -26,3 +26,4 @@ int initMap(void);
 void printGrid(void);
 int saveGame(void);
 int loadGame(void);
+void printDistanceGrid(void);
