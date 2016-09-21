@@ -81,14 +81,12 @@ void static addRoom(Room r){
         }
     }
 }
-struct myarray{
-   distanceCell distanceCell[1680];
-    int size;
-};
+
+int32_t compare_cell(const void *key,const void *with){
+  return (*(const distanceCell *) key).distance - (*(const distanceCell *) with).distance;
+}
 
 static void analyzeDistances(void){
-    struct myarray arr;
-    arr.size=0;
     int xPre;
     int yPre;
     for(xPre=0;xPre<80;xPre++){
@@ -100,29 +98,34 @@ static void analyzeDistances(void){
             (*m).distanceGrid[yPre][xPre]=pass; 
         }
     }
+    (*m).distanceGrid[(*m).pcY][(*m).pcX].distance=0;
+    binheap_t heap;
+    binheap_init(&heap,compare_cell,free);
     int pcXl;
     int pcYl;
     pcXl=(*m).pcX;
     pcYl=(*m).pcY;
     distanceCell root = (*m).distanceGrid[pcYl][pcXl];
-    arr.distanceCell[arr.size]=root;
-    arr.size++;
+
+    binheap_insert(&heap,&root);
     int tempx;
     int tempy;
-    while(arr.size>0){
+    while(!binheap_is_empty(&heap)){
         
         distanceCell temp;
-        temp = arr.distanceCell[arr.size-1];
-        arr.size=arr.size-1;
+        temp =*(distanceCell*) binheap_remove_min(&heap);
         
+        printf("Cursor is at: %d\n and %d\n",temp.xloc, temp.yloc);
         
         if((*m).grid[temp.yloc-1][temp.xloc]=='.' || (*m).grid[temp.yloc-1][temp.xloc]=='#'){/* top */
+                
                 tempx = temp.xloc;
                 tempy = temp.yloc;
                 if((*m).distanceGrid[tempy-1][tempx].distance==1000){
                     (*m).distanceGrid[tempy-1][tempx].distance=temp.distance+1;
-                    arr.distanceCell[arr.size]=(*m).distanceGrid[tempy-1][tempx];
-                    arr.size++;
+                    distanceCell temp = (*m).distanceGrid[tempy-1][tempx];
+                    binheap_insert(&heap, &temp);
+                    
             }
         } 
          if((*m).grid[temp.yloc+1][temp.xloc]=='.' || (*m).grid[temp.yloc+1][temp.xloc]=='#'){/* bottom */
@@ -130,8 +133,8 @@ static void analyzeDistances(void){
                 tempy = temp.yloc;
                 if((*m).distanceGrid[tempy+1][tempx].distance==1000){
                     (*m).distanceGrid[tempy+1][tempx].distance=temp.distance+1;
-                    arr.distanceCell[arr.size]=(*m).distanceGrid[tempy+1][tempx];
-                    arr.size++;
+                    distanceCell temp1 = (*m).distanceGrid[tempy+1][tempx];
+                    binheap_insert(&heap,&temp1);
                 }
         } 
          if((*m).grid[temp.yloc][temp.xloc+1]=='.' || (*m).grid[temp.yloc][temp.xloc+1]=='#'){/* right */
@@ -139,9 +142,8 @@ static void analyzeDistances(void){
                 tempy = temp.yloc;
                 if((*m).distanceGrid[tempy][tempx+1].distance==1000){
                     (*m).distanceGrid[tempy][tempx+1].distance=temp.distance+1;
-                    arr.distanceCell[arr.size]=(*m).distanceGrid[tempy][tempx+1];
-                    arr.size++;
-                    
+                    distanceCell temp2 = (*m).distanceGrid[tempy][tempx+1];
+                    binheap_insert(&heap,&temp2);
                 }
 
             
@@ -152,8 +154,8 @@ static void analyzeDistances(void){
                 tempy = temp.yloc;
                 if((*m).distanceGrid[tempy][tempx-1].distance==1000){
                     (*m).distanceGrid[tempy][tempx-1].distance=temp.distance+1;
-                    arr.distanceCell[arr.size]=(*m).distanceGrid[tempy][tempx-1];
-                    arr.size++;
+                    distanceCell temp3 = (*m).distanceGrid[tempy][tempx-1];
+                    binheap_insert(&heap,&temp3);
                     
                 }
 
@@ -165,8 +167,8 @@ static void analyzeDistances(void){
                 tempy = temp.yloc;
                 if((*m).distanceGrid[tempy-1][tempx+1].distance==1000){
                     (*m).distanceGrid[tempy-1][tempx+1].distance=temp.distance+1;
-                    arr.distanceCell[arr.size]=(*m).distanceGrid[tempy-1][tempx+1];
-                    arr.size++;
+                    distanceCell temp4 = (*m).distanceGrid[tempy-1][tempx+1];
+                    binheap_insert(&heap,&temp4);
                     
                 }
 
@@ -178,9 +180,8 @@ static void analyzeDistances(void){
                 tempy = temp.yloc;
                 if((*m).distanceGrid[tempy-1][tempx-1].distance==1000){
                     (*m).distanceGrid[tempy-1][tempx-1].distance=temp.distance+1;
-                    arr.distanceCell[arr.size]=(*m).distanceGrid[tempy-1][tempx-1];
-                    arr.size++;
-                   
+                    distanceCell temp5 = (*m).distanceGrid[tempy-1][tempx-1];
+                   binheap_insert(&heap,&temp5);
                 }
 
             
@@ -191,8 +192,8 @@ static void analyzeDistances(void){
                 tempy = temp.yloc;
                 if((*m).distanceGrid[tempy+1][tempx-1].distance==1000){
                     (*m).distanceGrid[tempy+1][tempx-1].distance=temp.distance+1;
-                    arr.distanceCell[arr.size]=(*m).distanceGrid[tempy+1][tempx-1];
-                    arr.size++;
+                    distanceCell temp6 = (*m).distanceGrid[tempy+1][tempx-1];
+                    binheap_insert(&heap,&temp6);
                     
                 }
 
@@ -204,8 +205,8 @@ static void analyzeDistances(void){
                 tempy = temp.yloc;
                 if((*m).distanceGrid[tempy+1][tempx+1].distance==1000){
                     (*m).distanceGrid[tempy+1][tempx+1].distance=temp.distance+1;
-                    arr.distanceCell[arr.size]=(*m).distanceGrid[tempy+1][tempx+1];
-                    arr.size++;
+                    distanceCell temp7 = (*m).distanceGrid[tempy+1][tempx+1];
+                    binheap_insert(&heap,&temp7);
                     
                 }
         }
@@ -471,7 +472,12 @@ int initMap(void){
             if(!(temp=='-' || temp == '|' || temp=='.' || temp=='#')){
                 temp=' ';
             }
-            printf("%c",temp);
+            if((*m).pcX==j && (*m).pcY==i){
+                printf("@");
+            }else{
+                printf("%c",temp);
+            }
+            
         }
         printf("%c\n",' ');
     }
@@ -615,10 +621,10 @@ void printDistanceGrid(){
                 if(val==0){
                     printf("@");
                 }
-                if(base>62){
-                    printf("%c",base);
+                if(base<62){
+                    printf("%c ,",base);
                 }else{
-                    printf("%i",val);
+                    printf("%i ,",val);
                 }
                 
             }

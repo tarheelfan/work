@@ -16,8 +16,9 @@ typedef struct binheap {
   uint32_t array_size;
   int32_t (*compare)(const void *key, const void *with);
   void (*datum_delete)(void *);
-} binheap_t;
 
+} binheap_t;
+int32_t compare_cell(const void *key,const void *with);
 void binheap_init(binheap_t *h,
                   int32_t (*compare)(const void *key, const void *with),
                   void (*datum_delete)(void *));

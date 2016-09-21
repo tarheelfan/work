@@ -164,6 +164,7 @@ void binheap_decrease_key(binheap_t *h, binheap_node_t *n)
 
 uint32_t binheap_is_empty(binheap_t *h)
 {
+  //return h->size;
   return !h->size;
 }
 
