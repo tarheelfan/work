@@ -34,6 +34,7 @@ static void initBorder(void);
 static int collides(Room *r,Room *ma,int s);
 static int contains(Room *r,Room *ro);
 static void addRoom(Room r);
+static char getAsci(int num);
 
 static void initBorder(void){
     int count;
@@ -440,6 +441,32 @@ static Room* createRoom(void){
    
     return room;
 }
+
+static char getAsci(int num){
+    char asci;
+    if(num>=0 && num<=26){
+        num = num%26;
+        asci='a';
+        int x;
+        for(x=0;x<num;x++){
+            asci++;
+        }
+        return asci;
+    }else{
+        if(num>26 && num<=52){
+            num= num%26;
+            asci='A';
+            int x;
+            for(x=0;x<num;x++){
+                asci++;
+            }
+            return asci;
+        }else{
+            return num;
+        }
+    }
+}
+
 int initMap(void){
     m = (Map*)malloc(sizeof(Map));
     initBorder();
@@ -618,34 +645,7 @@ int loadGame(){
 return 0;
 }
 
-/*void printDistanceGrid(){
-    int er;
-    int yu;
-    for(er=0;er<21;er++){
-        for(yu=0;yu<80;yu++){
-            int val = (*m).distanceGrid[er][yu].distance;
-            if(val==1000){
-                printf(" ");
-            }else{
-                int counter;
-                char base='0';
-                for(counter=0;counter<val;counter++){
-                    base++;
-                }
-                if(val==0){
-                    printf("@");
-                }
-                //if(base<62){
-                   // printf("%c ,",base);
-                //}else{
-                   printf("%i,",val);
-                //}
-                
-            }
-        }
-        printf("\n");
-    }
-}*/
+
 
 void printDistanceGrid(){
     int i;
@@ -664,7 +664,7 @@ void printDistanceGrid(){
                 if(num==1000){
                     printf("%c",' ');
                 }else{
-                    printf("%i",num);
+                    printf("%c",getAsci(num));
                 }
                 
             }
