@@ -444,7 +444,7 @@ static Room* createRoom(void){
 
 static char getAsci(int num){
     char asci;
-    if(num>=0 && num<=26){
+    if(num>=0 && num<26){
         num = num%26;
         asci='a';
         int x;
@@ -453,7 +453,7 @@ static char getAsci(int num){
         }
         return asci;
     }else{
-        if(num>26 && num<=52){
+        if(num>=26 && num<52){
             num= num%26;
             asci='A';
             int x;
@@ -461,9 +461,6 @@ static char getAsci(int num){
                 asci++;
             }
             return asci;
-        }else{
-            return num;
-        }
     }
 }
 
