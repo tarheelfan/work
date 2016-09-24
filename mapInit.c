@@ -117,7 +117,7 @@ static void analyzeDistances(void){
         temp =(distanceCell*) binheap_remove_min(&heap);
         tempx = (*temp).xloc;
         tempy = (*temp).yloc;
-        printf("Cursor is at: %d\n and %d\n",(*temp).xloc, (*temp).yloc);
+        
         int nextVal =(*m).distanceGrid[tempy][tempx].distance+1;
         if((*m).grid[(*temp).yloc-1][(*temp).xloc]=='.' || (*m).grid[(*temp).yloc-1][(*temp).xloc]=='#'){/* top */
                 if((*m).distanceGrid[tempy-1][tempx].distance==1000){
@@ -444,7 +444,8 @@ static Room* createRoom(void){
 
 static char getAsci(int num){
     char asci;
-    if(num>=0 && num<26){
+    if(num>=10 && num<36){
+        num = num-10;
         num = num%26;
         asci='a';
         int x;
@@ -453,7 +454,7 @@ static char getAsci(int num){
         }
         return asci;
     }else{
-        if(num>=26 && num<52){
+            num=num-10;
             num= num%26;
             asci='A';
             int x;
@@ -461,8 +462,9 @@ static char getAsci(int num){
                 asci++;
             }
             return asci;
-    }
+        }
 }
+
 
 int initMap(void){
     m = (Map*)malloc(sizeof(Map));
@@ -661,7 +663,13 @@ void printDistanceGrid(){
                 if(num==1000){
                     printf("%c",' ');
                 }else{
-                    printf("%c",getAsci(num));
+                    if(num<10){
+                        printf("%i",num);
+                    }
+                    if(num<52 && num>9){
+                        printf("%c",getAsci(num));
+                    }
+                    
                 }
                 
             }
