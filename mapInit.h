@@ -14,7 +14,7 @@ typedef struct{
 
 typedef struct {
     char grid[21][80];
-    distanceCell distanceGrid[21][80];
+    distanceCell distanceGrid[30][100];
     unsigned char hardness[21][80];
     Room rooms[100];
     int numOfRooms;
@@ -27,3 +27,4 @@ void printGrid(void);
 int saveGame(void);
 int loadGame(void);
 void printDistanceGrid(void);
+void printDistanceGridPlus();

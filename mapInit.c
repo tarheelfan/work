@@ -27,6 +27,7 @@ int const y = 21;
 
 
 Map *m;
+static int getWeight(int num);
 static void analyzeDistances(void);
 static Room* createRoom(void);
 static void initRooms(void);
@@ -38,6 +39,7 @@ static void addRoom(Room r);
 static char getAsci(int num);
 static void analyzeDistancesPlus(void);
 
+
 static void initBorder(void){
     int count;
     srand(time(NULL));
@@ -48,7 +50,8 @@ static void initBorder(void){
             if((*m).grid[e][ein]=='.' || (*m).grid[e][ein]=='#'){
               (*m).hardness[e][ein]=0;  
             }
-            (*m).hardness[e][ein]=(rand()%245)+1;
+            (*m).hardness[e][ein]=(rand()%243)+2;
+            //(*m).hardness[e][ein]=2;
         }
     }
     for(count=0;count<80;count++){
@@ -70,6 +73,19 @@ static void initBorder(void){
     
    
 }
+static int getWeight(int num){
+    if(num<85){
+        return 1;
+    }
+    if(num<171){
+        return 2;
+    }
+    if(num<255){
+        return 3;
+    }
+    return 10000;
+}
+
 
 void static addRoom(Room r){
     int x;
@@ -90,14 +106,14 @@ int32_t compare_cell(const void *key,const void *with){
 }
 
 
-static void analyzeDistancesPlus(void){
-    int xPre;
-    int yPre;
+static void analyzeDistancesPlus(void){//x loc 17 loc 6
+    int xPre=0;
+    int yPre=0;
 
-    for(xPre=0;xPre<80;xPre++){
-        for(yPre=0;yPre<21;yPre++){
+    for(xPre=1;xPre<79;xPre++){
+        for(yPre=1;yPre<20;yPre++){
             distanceCell pass;
-            pass.distance=1000;
+            pass.distance=10000;
             pass.yloc=yPre;/* 1000 will represent infinity */
             pass.xloc=xPre; 
             (*m).distanceGrid[yPre][xPre]=pass; 
@@ -129,9 +145,9 @@ static void analyzeDistancesPlus(void){
 
 
         if((*m).grid[(*temp).yloc-1][(*temp).xloc]!='-' || (*m).grid[(*temp).yloc-1][(*temp).xloc]!='|'){/* top */
-                alt = (*m).hardness[tempy-1][tempx];
+                
+                alt = getWeight((*m).hardness[tempy-1][tempx]);
                 alt = alt + (*m).distanceGrid[tempy][tempx].distance;
-                alt++;
                 if((*m).distanceGrid[tempy-1][tempx].distance>alt){
                     (*m).distanceGrid[tempy-1][tempx].distance=alt;
                     distanceCell *temp0;
@@ -142,7 +158,7 @@ static void analyzeDistancesPlus(void){
         } 
          if((*m).grid[(*temp).yloc+1][(*temp).xloc]!='-' || (*m).grid[(*temp).yloc+1][(*temp).xloc]!='|'){/* bottom */
                 
-                alt = (*m).hardness[tempy+1][tempx]+(*m).distanceGrid[tempy][tempx].distance+1; 
+                alt = getWeight((*m).hardness[tempy+1][tempx])+(*m).distanceGrid[tempy][tempx].distance; 
                 if((*m).distanceGrid[tempy+1][tempx].distance>alt){
                     (*m).distanceGrid[tempy+1][tempx].distance=(*temp).distance+1;
                     distanceCell *temp1;
@@ -152,7 +168,7 @@ static void analyzeDistancesPlus(void){
         } 
          if((*m).grid[(*temp).yloc][(*temp).xloc+1]!='-' || (*m).grid[(*temp).yloc][(*temp).xloc+1]!='|'){/* right */
                 
-                alt = (*m).hardness[tempy][tempx+1]+(*m).distanceGrid[tempy][tempx].distance+1;
+                alt = getWeight((*m).hardness[tempy][tempx+1])+(*m).distanceGrid[tempy][tempx].distance;
                 if((*m).distanceGrid[tempy][tempx+1].distance>alt){
                     (*m).distanceGrid[tempy][tempx+1].distance=(*temp).distance+1;
                     distanceCell *temp2;
@@ -163,7 +179,7 @@ static void analyzeDistancesPlus(void){
          if((*m).grid[(*temp).yloc][(*temp).xloc-1]!='-' || (*m).grid[(*temp).yloc][(*temp).xloc-1]!='|'){/* left */
                 
                 
-                 alt = (*m).hardness[tempy][tempx]+(*m).distanceGrid[tempy][tempx].distance+1;
+                 alt = getWeight((*m).hardness[tempy][tempx])+(*m).distanceGrid[tempy][tempx].distance;
                 if((*m).distanceGrid[tempy][tempx-1].distance>alt){
                     (*m).distanceGrid[tempy][tempx-1].distance=alt;
                     distanceCell *temp3;
@@ -174,7 +190,7 @@ static void analyzeDistancesPlus(void){
         if((*m).grid[(*temp).yloc-1][(*temp).xloc+1]!='-' || (*m).grid[(*temp).yloc-1][(*temp).xloc+1]!='|'){/* top right */
             
                 
-                alt = (*m).hardness[tempy-1][tempx+1]+(*m).distanceGrid[tempy][tempx].distance+1;
+                alt = getWeight((*m).hardness[tempy-1][tempx+1])+(*m).distanceGrid[tempy][tempx].distance;
                 if((*m).distanceGrid[tempy-1][tempx+1].distance>alt){
                     (*m).distanceGrid[tempy-1][tempx+1].distance=alt;
                     distanceCell *temp4;
@@ -188,7 +204,7 @@ static void analyzeDistancesPlus(void){
         if((*m).grid[(*temp).yloc-1][(*temp).xloc-1]!='-' || (*m).grid[(*temp).yloc-1][(*temp).xloc-1]=='|'){/* top left */
            
                 
-                 alt = (*m).hardness[tempy-1][tempx-1]+(*m).distanceGrid[tempy][tempx].distance+1;
+                 alt = getWeight((*m).hardness[tempy-1][tempx-1])+(*m).distanceGrid[tempy][tempx].distance;
                 if((*m).distanceGrid[tempy-1][tempx-1].distance>alt){
                     (*m).distanceGrid[tempy-1][tempx-1].distance=alt;
                     distanceCell *temp5;
@@ -201,7 +217,7 @@ static void analyzeDistancesPlus(void){
         if((*m).grid[(*temp).yloc+1][(*temp).xloc-1]!='-' || (*m).grid[(*temp).yloc+1][(*temp).xloc-1]!='|'){/* bottomLeft left */
             
                 
-                 alt = (*m).hardness[tempy+1][tempx-1]+(*m).distanceGrid[tempy][tempx].distance+1;
+                 alt = getWeight((*m).hardness[tempy+1][tempx-1])+(*m).distanceGrid[tempy][tempx].distance;
                 if((*m).distanceGrid[tempy+1][tempx-1].distance>alt){
                     (*m).distanceGrid[tempy+1][tempx-1].distance=alt;
                     distanceCell *temp6;
@@ -215,7 +231,7 @@ static void analyzeDistancesPlus(void){
         if((*m).grid[(*temp).yloc+1][(*temp).xloc+1]!='-' || (*m).grid[(*temp).yloc+1][(*temp).xloc+1]!='|'){/* bottom right */
             
                 
-                 alt = (*m).hardness[tempy+1][tempx+1]+(*m).distanceGrid[tempy][tempx].distance+1;
+                 alt = getWeight((*m).hardness[tempy+1][tempx+1])+(*m).distanceGrid[tempy][tempx].distance;
                 if((*m).distanceGrid[tempy+1][tempx+1].distance>alt){
                     (*m).distanceGrid[tempy+1][tempx+1].distance=alt;
                     distanceCell *temp7;
@@ -812,21 +828,56 @@ void printDistanceGrid(){
             if((*m).pcX==j && (*m).pcY==i){
                 printf("@");
             }else{
+                if((*m).grid[i][j]=='.' || (*m).grid[i][j]=='#'){
+
+                    int num = (*m).distanceGrid[i][j].distance;
+                        if(num<10){
+                            printf("%i",num);
+                        }
+                        if(num<62 && num>9){
+                            printf("%c",getAsci(num));
+                        }
+                    
+            }else{
+                printf("%c",' ');
+        }
+        }
+            
+    }
+        printf("%c\n",' ');
+}
+    
+}
+void printDistanceGridPlus(){
+    int i;
+    int j;
+    for(i=1;i<20;i++){
+        for(j=1;j<79;j++){
+            char temp = (*m).grid[i][j];
+            if((*m).pcX==j && (*m).pcY==i){
+                printf("@");
+            }else{
                 
                 int num = (*m).distanceGrid[i][j].distance;
 
-                if(num==1000){
+                if(num==10000){
 
-                    printf("%c",' ');
+                    printf("%c",(*m).grid[i][j]);
                 }else{
                     if(num<10){
                         printf("%i",num);
+                    }else{
+                        if(num<62 && num>9){
+                        printf("%c",getAsci(num));
+                            }else{
+                            char sample = (*m).grid[i][j];
+                            if(sample!='.' && sample!='#'){
+                                sample=' ';
+                            }
+                        printf("%c",sample);
+                        }
                     }
 
-                    if(num<62 && num>9){
-                        printf("%c",getAsci(num));
-                    }
-                    
                 }
                 
             }
