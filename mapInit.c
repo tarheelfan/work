@@ -8,7 +8,7 @@
 #include <unistd.h>
 #include <endian.h>
 #include <stdint.h>
-#include <sys/resource.h> 
+
 #include <sys/stat.h>
 #include <limits.h>
 int const x = 80;
@@ -37,6 +37,7 @@ static int contains(Room *r,Room *ro);
 static void addRoom(Room r);
 static char getAsci(int num);
 static void analyzeDistancesPlus(void);
+
 static void initBorder(void){
     int count;
     srand(time(NULL));
@@ -87,10 +88,12 @@ void static addRoom(Room r){
 int32_t compare_cell(const void *key,const void *with){
   return (*(const distanceCell *) key).distance - (*(const distanceCell *) with).distance;
 }
+
+
 static void analyzeDistancesPlus(void){
-    
-    int xPre=0;
-    int yPre=0;
+    int xPre;
+    int yPre;
+
     for(xPre=0;xPre<80;xPre++){
         for(yPre=0;yPre<21;yPre++){
             distanceCell pass;
@@ -119,9 +122,12 @@ static void analyzeDistancesPlus(void){
         tempx = (*temp).xloc;
         tempy = (*temp).yloc;
         int alt;
+
         //if(tempy<22 && tempx<81 && tempy>-1 && tempx>-1){
 
         
+
+
         if((*m).grid[(*temp).yloc-1][(*temp).xloc]!='-' || (*m).grid[(*temp).yloc-1][(*temp).xloc]!='|'){/* top */
                 alt = (*m).hardness[tempy-1][tempx];
                 alt = alt + (*m).distanceGrid[tempy][tempx].distance;
@@ -218,9 +224,15 @@ static void analyzeDistancesPlus(void){
                     
                 }
         }
+
        // }
     }
 }
+
+    
+
+
+
 static void analyzeDistances(void){
     int xPre;
     int yPre;
@@ -251,8 +263,11 @@ static void analyzeDistances(void){
         temp =(distanceCell*) binheap_remove_min(&heap);
         tempx = (*temp).xloc;
         tempy = (*temp).yloc;
-        
+
         int nextVal =(*m).distanceGrid[tempy][tempx].distance+1;
+
+        //int nextVal =(*m).distanceGrid[tempy][tempx].distance+1;
+
         if((*m).grid[(*temp).yloc-1][(*temp).xloc]=='.' || (*m).grid[(*temp).yloc-1][(*temp).xloc]=='#'){/* top */
                 if((*m).distanceGrid[tempy-1][tempx].distance==1000){
                     (*m).distanceGrid[tempy-1][tempx].distance=(*temp).distance+1;
@@ -722,7 +737,7 @@ int loadGame(){
     res = fread(title,1,6,f);
     res = fread(&version,4,1,f);
     res = fread(&size,4,1,f);
-    version=be32toh(version);
+   
     
     res = fread(hardnessModel,1,1680,f);
     int az;
@@ -774,7 +789,11 @@ int loadGame(){
         } 
     }
     fclose(f);
+
     analyzeDistances();
+
+    //analyzeDistances();
+
     
 return 0;
 }
@@ -795,12 +814,15 @@ void printDistanceGrid(){
             }else{
                 
                 int num = (*m).distanceGrid[i][j].distance;
+
                 if(num==1000){
+
                     printf("%c",' ');
                 }else{
                     if(num<10){
                         printf("%i",num);
                     }
+
                     if(num<62 && num>9){
                         printf("%c",getAsci(num));
                     }
