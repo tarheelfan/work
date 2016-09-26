@@ -1,3 +1,106 @@
+commit c260c6d3
+Author: Shane P Drafahl <sdrafahl@iastate.edu>
+Date:   Mon Sep 26 14:27:12 2016 -0500
+
+    Finall touches
+
+commit e29abcb4
+Author: Shane P Drafahl <sdrafahl@iastate.edu>
+Date:   Sun Sep 25 16:15:14 2016 -0500
+
+    reconfigured printing functions and search algorithm with correct weights and added function static int getWeight(int num)
+
+commit 7f8b0420
+Merge: 7ac7953f 0da293b8
+Author: Shane P Drafahl <sdrafahl@iastate.edu>
+Date:   Sun Sep 25 02:25:58 2016 -0500
+
+    merge
+
+commit 7ac7953f
+Author: Shane P Drafahl <sdrafahl@iastate.edu>
+Date:   Sun Sep 25 02:17:46 2016 -0500
+
+    moved stuff around
+
+commit 0da293b8
+Author: Shane P Drafahl <sdrafahl@iastate.edu>
+Date:   Sun Sep 25 00:11:03 2016 -0500
+
+    Did some work on analyzeDistancesPlus
+
+commit fa3f6ed3
+Author: Shane P Drafahl <sdrafahl@iastate.edu>
+Date:   Sat Sep 24 15:43:14 2016 -0500
+
+    Distances are correct for non tunnling monseters
+
+commit fa5288a1
+Author: Shane P Drafahl <sdrafahl@iastate.edu>
+Date:   Sat Sep 24 15:07:01 2016 -0500
+
+    added function getAsci(int num)
+
+commit 945beec8
+Author: Shane P Drafahl <sdrafahl@iastate.edu>
+Date:   Fri Sep 23 22:03:31 2016 -0500
+
+    started working on correct assci rendering
+
+commit 26c26bc2
+Author: Shane P Drafahl <sdrafahl@iastate.edu>
+Date:   Fri Sep 23 19:23:39 2016 -0500
+
+    modification to asci rendering function
+
+commit 3e95fa25
+Author: Shane P Drafahl <sdrafahl@iastate.edu>
+Date:   Wed Sep 21 10:19:52 2016 -0500
+
+    able to print most distances but mising entire rooms and doesnt seem to get data from the heap, I also noticed that the initial cursor from the heap never 
+
+commit 22fd0451
+Author: Shane P Drafahl <sdrafahl@iastate.edu>
+Date:   Wed Sep 21 00:00:44 2016 -0500
+
+    wrote most of BFS and function to print the graph with distances
+
+commit 47493966
+Author: Shane P Drafahl <sdrafahl@iastate.edu>
+Date:   Tue Sep 20 12:06:16 2016 -0500
+
+    changed code for analyzeDistance in new direction
+
+commit c20aa7f5
+Author: Shane P Drafahl <sdrafahl@iastate.edu>
+Date:   Tue Sep 20 00:51:23 2016 -0500
+
+    removed compiler issues, might change code out so commiting now
+
+commit 8b41d94f
+Author: Shane P Drafahl <sdrafahl@iastate.edu>
+Date:   Mon Sep 19 14:34:28 2016 -0500
+
+    added distanceGrid
+
+commit 9376c5f8
+Author: Shane P Drafahl <drafahls@gmail.com>
+Date:   Mon Sep 19 00:08:20 2016 -0500
+
+    Added binheap library
+
+commit af3f67c3
+Author: Shane P Drafahl <drafahls@gmail.com>
+Date:   Sun Sep 18 23:49:13 2016 -0500
+
+    some basic changes
+
+commit d45c7c3c
+Author: Shane P Drafahl <drafahls@gmail.com>
+Date:   Fri Sep 16 16:26:06 2016 -0500
+
+    removed comments
+
 commit ca955489
 Author: Shane P Drafahl <drafahls@gmail.com>
 Date:   Wed Sep 14 21:37:11 2016 -0500
@@ -106,4 +209,3 @@ Author: Shane P Drafahl <drafahls@gmail.com>
 Date:   Fri Sep 2 00:45:49 2016 -0500
 
     Added git ignore file
-
