@@ -826,7 +826,7 @@ void printDistanceGrid(){
                 temp=' ';
             }
             if((*m).pcX==j && (*m).pcY==i){
-                printf("@");
+                printf("0");
             }else{
                 if((*m).grid[i][j]=='.' || (*m).grid[i][j]=='#'){
 
@@ -855,7 +855,7 @@ void printDistanceGridPlus(){
         for(j=1;j<79;j++){
             char temp = (*m).grid[i][j];
             if((*m).pcX==j && (*m).pcY==i){
-                printf("@");
+                printf("0");
             }else{
                 
                 int num = (*m).distanceGrid[i][j].distance;
