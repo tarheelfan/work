@@ -20,12 +20,6 @@ int const y = 21;
 #define hardnesspair(pair) ((*m).hardness[pair[dim_y]][pair[dim_x]])
 #define hardnessxy(x, y) ((*m).hardness[y][x])
 
-
-
-
-
-
-
 Map *m;
 static int getWeight(int num);
 static void analyzeDistances(void);
@@ -806,8 +800,8 @@ int loadGame(){
     }
     fclose(f);
 
-    analyzeDistances();
-
+    //analyzeDistances();
+    analyzeDistancesPlus();
     //analyzeDistances();
 
     
