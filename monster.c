@@ -222,17 +222,67 @@ void deconstructor(Monster *m){
     int unsigned temp = mon->characteristics;
     return (8 & temp);
 }
- 
+/*checks outside of grid so unknown effect!!!*/
 void performAction(Monster *mon){
     scanArea(mon);
-    if(mon->thePlayer){
+    int done=0;
+    while(!done){
+        if(mon->thePlayer){
         int control = rand();%8;
         switch(control){
-
-            
-
+            case 0:/*Move Up*/
+            if(m->grid[mon->yloc-1][mon->xloc]==('#'||'.')){
+                if(!moveUp(mon)){
+                    done=1;
+                }
+            }
+            case 1:/*Move Down*/
+            if(m->grid[mon->yloc+1][mon->xloc]==('#'||'.')){
+                if(!moveDown(mon)){
+                    done=1;
+                }
+            }
+            case 2:/*Move Right*/
+            if(m->grid[mon->yloc][mon->xloc+1]==('#'||'.')){
+                if(!moveRight(mon)){
+                    done=1;
+                }
+            }
+            case 3:/*Move Left*/
+             if(m->grid[mon->yloc][mon->xloc-1]==('#'||'.')){
+                if(!moveLeft(mon)){
+                    done=1;
+                }
+            }
+            case 4:/*Move TopRight*/
+            if(m->grid[mon->yloc-1][mon->xloc+1]==('#'||'.')){
+                if(!moveTopRight(mon)){
+                    done=1;
+                }
+            }
+            case 5:/*Move TopLeft*/
+            if(m->grid[mon->yloc-1][mon->xloc-1]==('#'||'.')){
+                if(!moveTopLeft(mon)){
+                    done=1;
+                }
+            }
+            case 6:/*Move BottomRight*/
+             if(m->grid[mon->yloc1+1][mon->xloc+1]==('#'||'.')){
+                if(!moveBottomRight(mon)){
+                    done=1;
+                }
+            }
+            case 7:/*Move BottomLeft*/
+             if(m->grid[mon->yloc+1][mon->xloc-1]==('#'||'.')){
+                if(!moveBottomLeft(mon)){
+                    done=1;
+                }
+            }
         }
     }
+    
+    }
+    
     
     if(mon->patrolMode){
 
