@@ -13,10 +13,14 @@ struct Monster{
      int dragon=0;
      int other=0;
      unsigned int characteristics : 1; /*Intel,Telapath,Tunneling,Erratic*/
+     int alive;
      int xloc;
      int yloc;
      int modelNumber;
      int speed;
+     int patrolMode;
+     int searchLocationX;
+     int searchLocationY;
      int (* moveUp)();
      int (* moveDown)();
      int (* moveRight)();
@@ -29,6 +33,9 @@ struct Monster{
      int (* isTelapathic)();
      int (* canTunnle)();
      int (* isErratic)();
+     void (* performAction)();
+     void (* scanArea)();
+     void (* deconstructor)();
 }
 /*Fields for Library*/
 static int maxMonsters;
@@ -45,12 +52,15 @@ void initMonsterLib(Map *map, int numOfMax){
 /*Constructor*/
 Monster MonsterInit(Map *map,int x,int y,int isPlayer){
     
+
     Monster *monster;
     monster = malloc(sizeof(Monster));
    if(isPlayer){
         monster->thePlayer=1;   
         monster->speed=10;
     }else{
+    monster->patrolMode=1;
+    monster->alive=1;
     monster->characteristics = rand()%17;
     int typeSwitch = rand()%3;
     monster->characteristics = rand();
@@ -67,7 +77,12 @@ Monster MonsterInit(Map *map,int x,int y,int isPlayer){
     monster->isTelapathic = isTelapathic;
     monster->canTunnle = canTunnle;
     monster->isErratic = isErratic;
+    monster->performAction=performAction;
+    monster->deconstructor = deconstructor;
+    monster->scanArea=scanArea;
     monster->yloc=y;
+    monster->searchLocationY=y;
+    monster->searchLocationX=x;
     monster->xloc=x;
     if(!isPlayer){
         int spee = rand()%21;
@@ -80,13 +95,13 @@ Monster MonsterInit(Map *map,int x,int y,int isPlayer){
     numOfMonsters++;
     }
 }
+/*Deconstructor*/
+void deconstructor(Monster *m){
+    free(m);
+}
 /*Public Functions For Monsters*/
 
-/*moveUp
-    returns 1 if attempting to move to immutable area
-    returns 0 is move is successful
-*/
-static int moveUp(Monster *mon){
+ int moveUp(Monster *mon){
     int ytemp = (*mon).yloc;
     if(ytemp==1){
         return 1;
@@ -97,7 +112,7 @@ static int moveUp(Monster *mon){
     (*mon).yloc=ytemp-1;
     return 0;
 }
-static int moveDown(Monster *mon){
+ int moveDown(Monster *mon){
     int ytemp = (*mon).yloc;
     if(ytemp==19){
         return 1;
@@ -108,7 +123,7 @@ static int moveDown(Monster *mon){
     (*mon).yloc=ytemp+1;
     return 0;
 }
-static int moveRight(Monster *mon){
+ int moveRight(Monster *mon){
     int ytemp = (*mon).yloc;
     int xtemp = (*mon).xloc;
     if(xtemp==78){
@@ -119,7 +134,7 @@ static int moveRight(Monster *mon){
     (*mon).xloc=xtemp+1;
     return 0;
 }
-static int moveLeft(Monster *mon){
+ int moveLeft(Monster *mon){
     int ytemp = (*mon).yloc;
     int xtemp = (*mon).xloc;
     if(xtemp==1){
@@ -130,7 +145,7 @@ static int moveLeft(Monster *mon){
     (*mon).xloc=xtemp-1;
     return 0;
 }
-static int moveTopRight(Monster *mon){
+ int moveTopRight(Monster *mon){
     int ytemp = (*mon).yloc;
     int xtemp = (*mon).xloc;
     if(xtemp==78){
@@ -145,7 +160,7 @@ static int moveTopRight(Monster *mon){
     (*mon).yloc=ytemp-1;
     return 0;
 }
-static int moveTopLeft(Monster *mon){
+ int moveTopLeft(Monster *mon){
     int ytemp = (*mon).yloc;
     int xtemp = (*mon).xloc;
     if(xtemp==1){
@@ -160,7 +175,7 @@ static int moveTopLeft(Monster *mon){
     (*mon).yloc=ytemp-1;
     return 0;
 }
-static int moveBottomLeft(Monster *mon){
+ int moveBottomLeft(Monster *mon){
     int ytemp = (*mon).yloc;
     int xtemp = (*mon).xloc;
     if(xtemp==1){
@@ -175,7 +190,7 @@ static int moveBottomLeft(Monster *mon){
     (*mon).yloc=ytemp+1;
     return 0;
 }
-static int moveBottomRight(Monster *mon){
+ int moveBottomRight(Monster *mon){
     int ytemp = (*mon).yloc;
     int xtemp = (*mon).xloc;
     if(xtemp==78){
@@ -190,9 +205,6 @@ static int moveBottomRight(Monster *mon){
     (*mon).yloc=ytemp+1;
     return 0;
 }
-/*Intel,Telapath,Tunneling,Erratic
-monster->characteristics = rand()%17;
-*/
  int isIntelegent(Monster *mon){
     int unsigned temp = mon->characteristics;
     return temp >>> 3;
@@ -210,7 +222,199 @@ monster->characteristics = rand()%17;
     int unsigned temp = mon->characteristics;
     return (3<< temp) >>>3;
 }
+ 
+void performAction(Monster *mon){
 
+}
+void scanArea(Monster *mon){
+    int xhere = mon->xloc;
+    int yhere = mon->yloc;
+    
+    /*Monster Looks Forward*/
+    int done=0;
+    int ytemp = yhere;
+    while(!done){
+        ytemp++;
+        if(m->grid[ytemp][xhere])==('.'||'#'){
+            if(hasMonster(ytemp,xhere)){
+                Monster temp = getMonster(ytemp,xhere);
+                if(temp.thePlayer){
+                    done=1;
+                    mon->searchLocationY=ytemp;
+                }
+            }
+        }else{
+            done=1;
+        }
+    }
+    /*Monster Looks Behind*/
+    done=0;
+    ytemp = yhere;
+    while(!done){
+        ytemp--;
+        if(m->grid[ytemp][xhere])==('.'||'#'){
+            if(hasMonster(ytemp,xhere)){
+                Monster temp = getMonster(ytemp,xhere);
+                if(temp.thePlayer){
+                    done=1;
+                    mon->patrolMode=0;
+                    mon->searchLocationY=ytemp;
+                }
+            }
+        }else{
+            done=1;
+        }
+    }
+    /*Monster Looks Right*/
+    done=0;
+    int xtemp = xhere;
+    while(!done){
+        xtemp++;
+        if(m->grid[ytemp][xhere])==('.'||'#'){
+            if(hasMonster(ytemp,xhere)){
+                Monster temp = getMonster(ytemp,xhere);
+                if(temp.thePlayer){
+                    mon->patrolMode=0;
+                    done=1;
+                    mon->searchLocationY=xtemp;
+                }
+            }
+        }else{
+            done=1;
+        }
+    }
+    /*Monster Looks Left*/
+    done=0;
+    xtemp = xhere;
+    while(!done){
+        xtemp--;
+        if(m->grid[ytemp][xhere])==('.'||'#'){
+            if(hasMonster(ytemp,xhere)){
+                Monster temp = getMonster(ytemp,xhere);
+                if(temp.thePlayer){
+                    mon->patrolMode=0;
+                    done=1;
+                    mon->searchLocationY=xtemp;
+                }
+            }
+        }else{
+            done=1;
+        }
+    }
+    /*Check Angles*/
+    /*Top Left Angle*/
+    short angle;
+    done=0;
+    for(angle=.5;angle<90;angle=angle+.1){
+        short error = -1;
+        int y = yhere;
+        int x =xhere;
+        while(!done){
+            x++
+
+            if(m->grid[y][x])==('.'||'#'){
+            if(hasMonster(y,x)){
+                Monster temp = getMonster(ytemp,xhere);
+                if(temp.thePlayer){
+                    done=1;
+                    mon->patrolMode=0;
+                    mon->searchLocationY=y;
+                    mon->searchLocationX=x;
+                }
+            }
+        }else{
+            done=1;
+        }
+         error = error + angle;
+        if(error>0.0){
+            y=y+1;
+            error=error-1;
+        }
+        }
+        
+    }
+     for(angle=.5;angle<90;angle=angle+.1){
+        while(!done){
+            x--
+
+            if(m->grid[y][x])==('.'||'#'){
+            if(hasMonster(y,x)){
+                Monster temp = getMonster(ytemp,xhere);
+                if(temp.thePlayer){
+                    done=1;
+                    mon->patrolMode=0;
+                    mon->searchLocationY=y;
+                    mon->searchLocationX=x;
+                }
+            }
+        }else{
+            done=1;
+        }
+         error = error + angle;
+        if(error>0.0){
+            y=y+1;
+            error=error-1;
+        }
+        }
+        
+    }
+     for(angle=.5;angle<90;angle=angle+.1){
+        short error = -1;
+        int y = yhere;
+        int x =xhere;
+        while(!done){
+            x--;
+
+            if(m->grid[y][x])==('.'||'#'){
+            if(hasMonster(y,x)){
+                Monster temp = getMonster(ytemp,xhere);
+                if(temp.thePlayer){
+                    done=1;
+                    mon->patrolMode=0;
+                    mon->searchLocationY=y;
+                    mon->searchLocationX=x;
+                }
+            }
+        }else{
+            done=1;
+        }
+         error = error + angle;
+        if(error>0.0){
+            y=y-1;
+            error=error-1;
+        }
+        }
+        
+    }
+    for(angle=.5;angle<90;angle=angle+.1){
+        short error = -1;
+        int y = yhere;
+        int x =xhere;
+        while(!done){
+            x++;
+
+            if(m->grid[y][x])==('.'||'#'){
+            if(hasMonster(y,x)){
+                Monster temp = getMonster(ytemp,xhere);
+                if(temp.thePlayer){
+                    done=1;
+                    mon->patrolMode=0;
+                    mon->searchLocationY=y;
+                    mon->searchLocationX=x;
+                }
+            }
+        }else{
+            done=1;
+        }
+         error = error + angle;
+        if(error>0.0){
+            y=y-1;
+            error=error-1;
+        }
+        }
+        
+    }            
+}
 
 /*Functions for Library*/
 int hasMonster(int yl, int xl){

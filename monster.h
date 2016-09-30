@@ -1,3 +1,4 @@
+typedef struct Monster;
 void initMonsterLib(Map *map);
 void MonsterInit(Map *map,);
 Monster getMonster(yl,xl);
@@ -14,4 +15,6 @@ Monster getMonster(yl,xl);
  int canTunnle(Monster *mon);
  int isErratic(Monster *mon);
 int hasMonster(int xl, int yl);
-typedef struct Monster;
+void deconstructor(Monster *m);
+void performAction(Monster *mon);
+void scanArea(Monster *mon);
