@@ -61,7 +61,7 @@ Monster MonsterInit(Map *map,int x,int y,int isPlayer){
     }else{
     monster->patrolMode=1;
     monster->alive=1;
-    monster->characteristics = rand()%17;
+    monster->characteristics = rand()%16;
     int typeSwitch = rand()%3;
     monster->characteristics = rand();
     monster->moveUp=moveUp;
@@ -207,24 +207,37 @@ void deconstructor(Monster *m){
 }
  int isIntelegent(Monster *mon){
     int unsigned temp = mon->characteristics;
-    return temp >>> 3;
+    return 1 & temp
 
 }
  int isTelapathic(Monster *mon){
     int unsigned temp = mon->characteristics;
-    return (1 << temp)>>>3;
+    return (2 & temp);
 }
  int canTunnle(Monster *mon){
     int unsigned temp = mon->characteristics;
-    return (2 << temp) >>> 3;
+    return 4 & temp;
 }
  int isErratic(Monster *mon){
     int unsigned temp = mon->characteristics;
-    return (3<< temp) >>>3;
+    return (8 & temp);
 }
  
 void performAction(Monster *mon){
+    scanArea(mon);
+    if(mon->thePlayer){
+        int control = rand();%8;
+        switch(control){
 
+            
+
+        }
+    }
+    
+    if(mon->patrolMode){
+
+    }
+    
 }
 void scanArea(Monster *mon){
     int xhere = mon->xloc;
@@ -342,7 +355,7 @@ void scanArea(Monster *mon){
                 Monster temp = getMonster(ytemp,xhere);
                 if(temp.thePlayer){
                     done=1;
-                    mon->patrolMode=0;
+                    mon->patrolMode=0;796f752e6167652b2b3b	
                     mon->searchLocationY=y;
                     mon->searchLocationX=x;
                 }
