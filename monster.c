@@ -3,6 +3,8 @@
 #include <time.h>
 #include <stdlib.h>
 
+#define Intelligent 0x00000001
+
 
 /*Public Class Monster */
 struct Monster{
@@ -10,10 +12,7 @@ struct Monster{
      int bigPeople=0;
      int dragon=0;
      int other=0;
-     int intelligence;
-     int telepathy;
-     int tunneling;
-     int erratic;
+     unsigned int characteristics : 1; /*Intel,Telapath,Tunneling,Erratic*/
      int xloc;
      int yloc;
      int modelNumber;
@@ -26,7 +25,10 @@ struct Monster{
      int (* moveTopLeft)();
      int (* moveBottomLeft)();
      int (* moveBottomRight)();
-
+     int (* isIntelegent)();
+     int (* isTelapathic)();
+     int (* canTunnle)();
+     int (* isErratic)();
 }
 /*Fields for Library*/
 static int maxMonsters;
@@ -39,7 +41,6 @@ void initMonsterLib(Map *map, int numOfMax){
     srand(time(NULL));
     maxMonsters = numOfMax;
     m=map;
-    
 }
 /*Constructor*/
 Monster MonsterInit(Map *map,int x,int y,int isPlayer){
@@ -50,23 +51,9 @@ Monster MonsterInit(Map *map,int x,int y,int isPlayer){
         monster->thePlayer=1;   
         monster->speed=10;
     }else{
-
-    
+    monster->characteristics = rand()%17;
     int typeSwitch = rand()%3;
-    switch (typeSwitch){
-        case 0:
-            monster->bigPeople=1;
-        case 1: 
-            monster->dragon=1;
-        case 2:
-            monster->other=1;
-        default:
-            monster->other=1;
-    }
-    monster->intelligence =rand()%2;
-    monster->telepathy = rand()%2;
-    monster->tunneling = rand()%2;
-    monster->erratic = rand()%2;
+    monster->characteristics = rand();
     monster->moveUp=moveUp;
     monster->moveDown=moveDown;
     monster->moveRight =moveRight;
@@ -76,13 +63,20 @@ Monster MonsterInit(Map *map,int x,int y,int isPlayer){
     monster->moveBottomLeft = moveBottomLeft;
     monster->moveBottomRight = moveBottomRight;
     monster->modelNumber=numOfMonsters;
+    monster->isIntelegent = isIntelegent;
+    monster->isTelapathic = isTelapathic;
+    monster->canTunnle = canTunnle;
+    monster->isErratic = isErratic;
     monster->yloc=y;
     monster->xloc=x;
-    int spee = rand()%21;
+    if(!isPlayer){
+        int spee = rand()%21;
     if(spee<5){
         spee=spee+5;
     }
     monster->speed= spee;
+    }
+    
     numOfMonsters++;
     }
 }
@@ -196,6 +190,28 @@ static int moveBottomRight(Monster *mon){
     (*mon).yloc=ytemp+1;
     return 0;
 }
+/*Intel,Telapath,Tunneling,Erratic
+monster->characteristics = rand()%17;
+*/
+ int isIntelegent(Monster *mon){
+    int unsigned temp = mon->characteristics;
+    return temp >>> 3;
+
+}
+ int isTelapathic(Monster *mon){
+    int unsigned temp = mon->characteristics;
+    return (1 << temp)>>>3;
+}
+ int canTunnle(Monster *mon){
+    int unsigned temp = mon->characteristics;
+    return (2 << temp) >>> 3;
+}
+ int isErratic(Monster *mon){
+    int unsigned temp = mon->characteristics;
+    return (3<< temp) >>>3;
+}
+
+
 /*Functions for Library*/
 int hasMonster(int yl, int xl){
     if(yl>21 || 0>yl){
