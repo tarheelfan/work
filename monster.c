@@ -821,7 +821,7 @@ void scanArea(Monster *mon){
     int ytemp = yhere;
     while(!done){
         ytemp++;
-        if(m->grid[ytemp][xhere])==('.'||'#'){
+        if(m->grid[ytemp][xhere])==(('.'||'#') && ytemp>0){
             if(hasMonster(ytemp,xhere)){
                 Monster temp = getMonster(ytemp,xhere);
                 if(temp.thePlayer){
@@ -838,7 +838,7 @@ void scanArea(Monster *mon){
     ytemp = yhere;
     while(!done){
         ytemp--;
-        if(m->grid[ytemp][xhere])==('.'||'#'){
+        if(m->grid[ytemp][xhere])==(('.'||'#') && ytemp<20){
             if(hasMonster(ytemp,xhere)){
                 Monster temp = getMonster(ytemp,xhere);
                 if(temp.thePlayer){
@@ -856,7 +856,7 @@ void scanArea(Monster *mon){
     int xtemp = xhere;
     while(!done){
         xtemp++;
-        if(m->grid[ytemp][xhere])==('.'||'#'){
+        if(m->grid[ytemp][xhere])==(('.'||'#') && xtemp<79){
             if(hasMonster(ytemp,xhere)){
                 Monster temp = getMonster(ytemp,xhere);
                 if(temp.thePlayer){
@@ -874,7 +874,7 @@ void scanArea(Monster *mon){
     xtemp = xhere;
     while(!done){
         xtemp--;
-        if(m->grid[ytemp][xhere])==('.'||'#'){
+        if(m->grid[ytemp][xhere])==(('.'||'#') && xtemp>0){
             if(hasMonster(ytemp,xhere)){
                 Monster temp = getMonster(ytemp,xhere);
                 if(temp.thePlayer){
@@ -888,7 +888,6 @@ void scanArea(Monster *mon){
         }
     }
     /*Check Angles*/
-    /*Top Left Angle*/
     short angle;
     done=0;
     for(angle=.5;angle<90;angle=angle+.1){
@@ -898,7 +897,7 @@ void scanArea(Monster *mon){
         while(!done){
             x++
 
-            if(m->grid[y][x])==('.'||'#'){
+            if(m->grid[y][x])==(('.'||'#') && xtemp<79 && xtemp>0 && ytemp>0 && ytemp<20){
             if(hasMonster(y,x)){
                 Monster temp = getMonster(ytemp,xhere);
                 if(temp.thePlayer){
@@ -923,7 +922,7 @@ void scanArea(Monster *mon){
         while(!done){
             x--
 
-            if(m->grid[y][x])==('.'||'#'){
+            if(m->grid[y][x])==(('.'||'#') && xtemp<79 && xtemp>0 && ytemp>0 && ytemp<20){
             if(hasMonster(y,x)){
                 Monster temp = getMonster(ytemp,xhere);
                 if(temp.thePlayer){
@@ -951,7 +950,7 @@ void scanArea(Monster *mon){
         while(!done){
             x--;
 
-            if(m->grid[y][x])==('.'||'#'){
+            if(m->grid[y][x])==(('.'||'#') && xtemp<79 && xtemp>0 && ytemp>0 && ytemp<20){
             if(hasMonster(y,x)){
                 Monster temp = getMonster(ytemp,xhere);
                 if(temp.thePlayer){
@@ -979,7 +978,7 @@ void scanArea(Monster *mon){
         while(!done){
             x++;
 
-            if(m->grid[y][x])==('.'||'#'){
+            if(m->grid[y][x])==(('.'||'#') && xtemp<79 && xtemp>0 && ytemp>0 && ytemp<20){
             if(hasMonster(y,x)){
                 Monster temp = getMonster(ytemp,xhere);
                 if(temp.thePlayer){
