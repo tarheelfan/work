@@ -8,7 +8,6 @@
 #include <unistd.h>
 #include <endian.h>
 #include <stdint.h>
-
 #include <sys/stat.h>
 #include <limits.h>
 int const x = 80;
@@ -64,8 +63,6 @@ static void initBorder(void){
         (*m).grid[0][count] = '-';
         (*m).hardness[0][count] = 255;
     }
-    
-   
 }
 static int getWeight(int num){
     if(num<85){
@@ -126,18 +123,12 @@ static void analyzeDistancesPlus(void){//x loc 17 loc 6
     int tempx;
     int tempy;
     while(!binheap_is_empty(&heap)){
-        
         distanceCell *temp;
         temp =(distanceCell*) binheap_remove_min(&heap);
         tempx = (*temp).xloc;
         tempy = (*temp).yloc;
         int alt;
-
         //if(tempy<22 && tempx<81 && tempy>-1 && tempx>-1){
-
-        
-
-
         if((*m).grid[(*temp).yloc-1][(*temp).xloc]!='-' || (*m).grid[(*temp).yloc-1][(*temp).xloc]!='|'){/* top */
                 
                 alt = getWeight((*m).hardness[tempy-1][tempx]);
@@ -373,7 +364,6 @@ static void analyzeDistances(void){
                     distanceCell *temp7;
                     temp7 = &(*m).distanceGrid[tempy+1][tempx+1];
                     binheap_insert(&heap,temp7);
-                    
                 }
         }
     }
