@@ -1,8 +1,11 @@
 All: mapInit.c
 	gcc -Wall -g -O -c mapInit.c
 	gcc -Wall -g -O -c heap.c
+	gcc -Wall -g -O -c heap2.c
+	gcc -Wall -g -O -c monster.c
+	ar -cvq heap2.a heap2.o
 	ar -cvq heap.a heap.o
-	ar -cvq gameMap.a mapInit.o
-	gcc -static -Wall -ggdb dungeonGame327.c -o ShaneDrafahl gameMap.a heap.a 
+	ar -cvq gameMap.a mapInit.o monster.o
+	gcc -static -Wall -ggdb dungeonGame327.c -o ShaneDrafahl gameMap.a heap.a heap2.a 
 Clean: ShaneDrafahl gameMap.a mapInit.o
 	bash cleanSlate.bash
