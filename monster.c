@@ -47,6 +47,7 @@ struct Monster{
      int xloc;
      int yloc;
      int modelNumber;
+     unsigned int roundVal;
      int speed;
      int patrolMode;
      int searchLocationX;
@@ -72,12 +73,21 @@ static int maxMonsters;
 static Map *m;
 static Monster* monsterArray[21][80] = {NULL};
 static int numOfMonsters;
+int pcx;
+int pcy;
 
 /*Library Static Funcitons*/
 void initMonsterLib(Map *map, int numOfMax){
     srand(time(NULL));
     maxMonsters = numOfMax;
     m=map;
+    map->monsterArray[21][80] = &monsterArray[21][80]
+}
+int getPCX(){
+    return pcx;
+}
+int getPCY(){
+    return pcy;
 }
 /*Constructor*/
 Monster MonsterInit(Map *map,int x,int y,int isPlayer){
@@ -86,10 +96,14 @@ Monster MonsterInit(Map *map,int x,int y,int isPlayer){
     if(isPlayer){
         monster->thePlayer=1;   
         monster->speed=10;
+        monster->roundVal=10;
+        pcx = x;
+        pxy = y;
     }else{
     initList(monster->list);
     monster->thePlayer=0;
     monster->bigPeople=0;
+    
     monster->dragon=0;
     monster->other=0;
     monster->patrolMode=1;
@@ -131,9 +145,12 @@ Monster MonsterInit(Map *map,int x,int y,int isPlayer){
     
     if(!isPlayer){
         int spee = rand()%21;
+        spee = 100 / spee;
+
     if(spee<5){
         spee=spee+5;
     }
+    monster->roundVal=spee;
     monster->speed= spee;
     }
     

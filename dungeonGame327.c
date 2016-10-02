@@ -21,15 +21,13 @@ int main (int argc, char* argv[]){
         }
         eval=strcmp(argv[x],"--nummon");
         if(eval==0){
-            if(x+1>argc){
-                printf("Please enter a value after the command --nummon");
-                return 1;
-            }
             char* numberOfCritters = argv[x+1];
             numberOfCreatures = atoi(numberOfCritters);
             if(numberOfCreatures>=1680){
                 printf("What are you even doing bro");
                 return 1;
+            }else{
+                
             }
         }
     }
@@ -46,10 +44,7 @@ void initGame(void){
     }
 }
 void playGame(void){
-    printGrid();
-    //printDistanceGrid();
-    printDistanceGrid();
-    printDistanceGridPlus();
+    playGame();
 }
 void closeGame(void){
     if(save){

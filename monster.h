@@ -18,3 +18,5 @@ int hasMonster(int xl, int yl);
 void deconstructor(Monster *m);
 void performAction(Monster *mon);
 void scanArea(Monster *mon);
+int getPCX();
+int getPCY();

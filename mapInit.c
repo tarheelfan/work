@@ -10,6 +10,7 @@
 #include <stdint.h>
 #include <sys/stat.h>
 #include <limits.h>
+#include "monster.h"
 int const x = 80;
 int const y = 21;
 #define DUNGEON_X 80
@@ -20,19 +21,74 @@ int const y = 21;
 #define hardnessxy(x, y) ((*m).hardness[y][x])
 
 Map *m;
+int numberOfMonster;
 static int getWeight(int num);
 static void analyzeDistances(void);
 static Room* createRoom(void);
 static void initRooms(void);
 int initMap(void);
 static void initBorder(void);
+struct xy;
 static int collides(Room *r,Room *ma,int s);
 static int contains(Room *r,Room *ro);
 static void addRoom(Room r);
+static xy getCoords();
 static char getAsci(int num);
 static void analyzeDistancesPlus(void);
 
-
+int32_t compare_monster(const void *key,const void *with){
+  return (*(const Monster *) key).roundVal - (*(const Monster *) with).roundVal;
+}
+void playGame(){
+    int done = 0;
+    binheap_t heap;
+    binheap_init(&heap,compare_monster,free);
+        initMonsterLib(m, numberOfMonster);
+        /*Setup Monsters*/
+        int x;
+        for(x=0;x<numberOfMonster;x++){
+            Monster *monster;
+            struct *xy;
+            xy = getCoords;
+            int isPlay=0;
+            if(!x){
+                isPlay=1;
+            }
+            monster = MonsterInit(m,xy->x,xy->y,isPlay);
+            binheap_insert(&heap,monster);
+        }
+    while(!done){
+        Monster *tem;
+        tem = binheap_remove_min(&heap);
+        if(tem->thePlayer){
+            if(tem->!alive){
+                printf("DEAD");
+                return;
+            }
+        }
+        performAction(tem);
+        analyzeDistancesPlus();
+        printGrid();
+    }
+}
+struct xy{
+    int x;
+    int y;
+}
+static *xy getCoords(){
+    struct xy;
+    int y;
+    int x;
+    for(y=1;y<20;y++){
+        for(x=1;x<79;x++){
+            if((*m).grid[y][x]==('#'||'.')){
+                xy.x=x;
+                xy.y=y;
+                return &xy;
+            }
+        }
+    }
+} 
 static void initBorder(void){
     int count;
     srand(time(NULL));
@@ -615,7 +671,8 @@ static char getAsci(int num){
 }
 
 
-int initMap(void){
+int initMap(int numOfMonster){
+    numberOfMonster=numOfMonster;
     m = (Map*)malloc(sizeof(Map));
     initBorder();
     initRooms();
@@ -654,10 +711,24 @@ int initMap(void){
             if(!(temp=='-' || temp == '|' || temp=='.' || temp=='#')){
                 temp=' ';
             }
-            if((*m).pcX==j && (*m).pcY==i){
+            if(getPCX() && getPCY){
                 printf("@");
             }else{
-                printf("%c",temp);
+                if(!m->monsterArray[i][j]){
+                    Monster *monj;
+                    monj = monsterArray[i][j];
+                    if(monj->bigPeople){
+                        printf("%c", 'P');
+                    }
+                    if(monj->dragon){
+                        printf("%c", 'D');
+                    }
+                    if(monj->other){
+                        printf("%c", 'p');
+                    }
+                }else{
+                    printf("%c",temp);
+                }
             }
             
         }

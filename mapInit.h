@@ -20,11 +20,13 @@ typedef struct {
     int numOfRooms;
     int pcX;
     int pcY;
+    Monster* monsterArray[21][80]
 }Map;
 typedef struct corridor_path corridor_path_t;
-int initMap(void);
+int initMap(int numOfMonster);
 void printGrid(void);
 int saveGame(void);
 int loadGame(void);
 void printDistanceGrid(void);
 void printDistanceGridPlus();
+void playGame();
