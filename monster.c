@@ -1,5 +1,4 @@
-#include "monster.h"
-#include "mapInit.h"
+#include "gameMap.h"
 #include <time.h>
 #include <stdlib.h>
 static void performWander(Monster *npc);
@@ -12,19 +11,15 @@ void reset(struct list);
 static void getDirectionsTunneling(Monster *npc);
 static void readDirections(Monster *mon);
 /*Public Class Monster */
-struct list{
-    int directions[1000];
-    int size;
+void initList(struct list dir){
+    dir.size=0;
 }
-void initList(struct list){
-    list.size=0;
+void addToList(struct list dir,int num){
+    dir.directions[list.size]=num;
+    dir.size++;
 }
-void addToList(struct list,int num){
-    list.directions[list.size]=num;
-    list.size++;
-}
-int removeFromList(struct list){
-    int num = list.directions[0];
+int removeFromList(struct list dir){
+    int num = dir.directions[0];
     int x;
     for(x=1;x<list.size;x++){
         list.directions[x-1]=list.directions[x];
@@ -35,39 +30,10 @@ int removeFromList(struct list){
 void reset(struct list){
     list.size=0;
 } 
-
-struct Monster{
-     struct list;
-     int thePlayer;
-     int bigPeople;
-     int dragon;
-     int other;
-     unsigned int characteristics : 4; /*Intel,Telapath,Tunneling,Erratic*/
-     int alive;
-     int xloc;
-     int yloc;
-     int modelNumber;
-     unsigned int roundVal;
-     int speed;
-     int patrolMode;
-     int searchLocationX;
-     int searchLocationY;
-     int (* moveUp)();
-     int (* moveDown)();
-     int (* moveRight)();
-     int (* moveLeft)();
-     int (* moveTopRight)();
-     int (* moveTopLeft)();
-     int (* moveBottomLeft)();
-     int (* moveBottomRight)();
-     int (* isIntelegent)();
-     int (* isTelapathic)();
-     int (* canTunnle)();
-     int (* isErratic)();
-     void (* performAction)();
-     void (* scanArea)();
-     void (* deconstructor)();
+int32_t compare_monster(const void *key,const void *with){
+  return (*(const Monster *) key).roundVal - (*(const Monster *) with).roundVal;
 }
+  
 /*Fields for Library*/
 static int maxMonsters;
 static Map *m;
@@ -156,6 +122,7 @@ Monster MonsterInit(Map *map,int x,int y,int isPlayer){
     
     numOfMonsters++;
     }
+return monster;
 }
 /*Deconstructor*/
 void deconstructor(Monster *m){
@@ -1559,6 +1526,6 @@ int hasMonster(int yl, int xl){
     }
     return 1;
 }
-Monster getMonster(yl,xl){
+Monster getMonster(int yl, int xl){
     return monsterArray[yl][xl];
 }

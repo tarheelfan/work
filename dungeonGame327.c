@@ -1,6 +1,6 @@
 #include "dungeonGame327.h"
 #include <stdio.h>
-#include "mapInit.h"
+#include "gameMap.h"
 #include <string.h>
 #include "heap.h"
 /*Switches*/

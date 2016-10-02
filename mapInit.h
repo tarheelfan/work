@@ -1,4 +1,5 @@
 #include "heap.h"
+#include "monster.h"
 typedef struct {
     int topLeft[2];
     int topright[2];

@@ -1,7 +1,7 @@
 #include "heap.h"
 #include <stdio.h>
 #include <stdlib.h>
-#include "mapInit.h"
+#include "gameMap.h"
 #include <time.h>
 #include <stdlib.h>
 #include <string.h>
@@ -10,7 +10,7 @@
 #include <stdint.h>
 #include <sys/stat.h>
 #include <limits.h>
-#include "monster.h"
+
 int const x = 80;
 int const y = 21;
 #define DUNGEON_X 80
@@ -23,22 +23,21 @@ int const y = 21;
 Map *m;
 int numberOfMonster;
 static int getWeight(int num);
-static void analyzeDistances(void);
 static Room* createRoom(void);
 static void initRooms(void);
-int initMap(void);
 static void initBorder(void);
 struct xy;
 static int collides(Room *r,Room *ma,int s);
 static int contains(Room *r,Room *ro);
 static void addRoom(Room r);
-static xy getCoords();
+static struct xy getCoords();
 static char getAsci(int num);
 static void analyzeDistancesPlus(void);
 
-int32_t compare_monster(const void *key,const void *with){
-  return (*(const Monster *) key).roundVal - (*(const Monster *) with).roundVal;
-}
+struct xy{
+    int x;
+    int y;
+};
 void playGame(){
     int done = 0;
     binheap_t heap;
@@ -47,21 +46,20 @@ void playGame(){
         /*Setup Monsters*/
         int x;
         for(x=0;x<numberOfMonster;x++){
-            Monster *monster;
-            struct *xy;
-            xy = getCoords;
+            struct xy coords;
+            coords = (getCoords());
             int isPlay=0;
             if(!x){
                 isPlay=1;
             }
-            monster = MonsterInit(m,xy->x,xy->y,isPlay);
-            binheap_insert(&heap,monster);
+            Monster monster = MonsterInit(m,coords.x,coords.y,isPlay);
+            binheap_insert(&heap,&monster);
         }
     while(!done){
         Monster *tem;
         tem = binheap_remove_min(&heap);
         if(tem->thePlayer){
-            if(tem->!alive){
+            if(!tem->alive){
                 printf("DEAD");
                 return;
             }
@@ -69,22 +67,20 @@ void playGame(){
         performAction(tem);
         analyzeDistancesPlus();
         printGrid();
+        sleep(3);
     }
 }
-struct xy{
-    int x;
-    int y;
-}
-static *xy getCoords(){
-    struct xy;
+
+static struct xy getCoords(){
+    struct xy coords;
     int y;
     int x;
     for(y=1;y<20;y++){
         for(x=1;x<79;x++){
             if((*m).grid[y][x]==('#'||'.')){
-                xy.x=x;
-                xy.y=y;
-                return &xy;
+                coords.x=x;
+                coords.y=y;
+                return coords;
             }
         }
     }
@@ -283,145 +279,6 @@ static void analyzeDistancesPlus(void){//x loc 17 loc 6
         }
 
        // }
-    }
-}
-
-    
-
-
-
-static void analyzeDistances(void){
-    int xPre;
-    int yPre;
-    for(xPre=0;xPre<80;xPre++){
-        for(yPre=0;yPre<21;yPre++){
-            distanceCell pass;
-            pass.distance=1000;
-            pass.yloc=yPre;/* 1000 will represent infinity */
-            pass.xloc=xPre; 
-            (*m).distanceGrid[yPre][xPre]=pass; 
-        }
-    }
-    (*m).distanceGrid[(*m).pcY][(*m).pcX].distance=0;
-    binheap_t heap;
-    binheap_init(&heap,compare_cell,free);
-    int pcXl;
-    int pcYl;
-    pcXl=(*m).pcX;
-    pcYl=(*m).pcY;
-    distanceCell root = (*m).distanceGrid[pcYl][pcXl];
-    root.distance=0;
-    binheap_insert(&heap,&root);
-    int tempx;
-    int tempy;
-    while(!binheap_is_empty(&heap)){
-        
-        distanceCell *temp;
-        temp =(distanceCell*) binheap_remove_min(&heap);
-        tempx = (*temp).xloc;
-        tempy = (*temp).yloc;
-
-        int nextVal =(*m).distanceGrid[tempy][tempx].distance+1;
-
-        //int nextVal =(*m).distanceGrid[tempy][tempx].distance+1;
-
-        if((*m).grid[(*temp).yloc-1][(*temp).xloc]=='.' || (*m).grid[(*temp).yloc-1][(*temp).xloc]=='#'){/* top */
-                if((*m).distanceGrid[tempy-1][tempx].distance==1000){
-                    (*m).distanceGrid[tempy-1][tempx].distance=(*temp).distance+1;
-                    distanceCell *temp0;
-                     temp0 = &(*m).distanceGrid[tempy-1][tempx];
-                    binheap_insert(&heap, temp0);
-                    
-            }
-        } 
-         if((*m).grid[(*temp).yloc+1][(*temp).xloc]=='.' || (*m).grid[(*temp).yloc+1][(*temp).xloc]=='#'){/* bottom */
-                tempx = (*temp).xloc;
-                tempy = (*temp).yloc;
-                if((*m).distanceGrid[tempy+1][tempx].distance==1000){
-                    (*m).distanceGrid[tempy+1][tempx].distance=(*temp).distance+1;
-                    distanceCell *temp1;
-                    temp1 = &(*m).distanceGrid[tempy+1][tempx];
-                    binheap_insert(&heap,temp1);
-                }
-        } 
-         if((*m).grid[(*temp).yloc][(*temp).xloc+1]=='.' || (*m).grid[(*temp).yloc][(*temp).xloc+1]=='#'){/* right */
-                tempx = (*temp).xloc;
-                tempy = (*temp).yloc;
-                if((*m).distanceGrid[tempy][tempx+1].distance==1000){
-                    (*m).distanceGrid[tempy][tempx+1].distance=(*temp).distance+1;
-                    distanceCell *temp2;
-                    temp2 = &(*m).distanceGrid[tempy][tempx+1];
-                    binheap_insert(&heap,temp2);
-                }
-
-            
-        } 
-         if((*m).grid[(*temp).yloc][(*temp).xloc-1]=='.' || (*m).grid[(*temp).yloc][(*temp).xloc-1]=='#'){/* left */
-            
-                tempx = (*temp).xloc;
-                tempy = (*temp).yloc;
-                if((*m).distanceGrid[tempy][tempx-1].distance==1000){
-                    (*m).distanceGrid[tempy][tempx-1].distance=(*temp).distance+1;
-                    distanceCell *temp3;
-                    temp3 = &(*m).distanceGrid[tempy][tempx-1];
-                    binheap_insert(&heap,temp3);
-                    
-                }
-
-            
-        }
-        if((*m).grid[(*temp).yloc-1][(*temp).xloc+1]=='.' || (*m).grid[(*temp).yloc-1][(*temp).xloc+1]=='#'){/* top right */
-            
-                tempx = (*temp).xloc;
-                tempy = (*temp).yloc;
-                if((*m).distanceGrid[tempy-1][tempx+1].distance==1000){
-                    (*m).distanceGrid[tempy-1][tempx+1].distance=(*temp).distance+1;
-                    distanceCell *temp4;
-                    temp4 = &(*m).distanceGrid[tempy-1][tempx+1];
-                    binheap_insert(&heap,temp4);
-                    
-                }
-
-            
-        }
-        if((*m).grid[(*temp).yloc-1][(*temp).xloc-1]=='.' || (*m).grid[(*temp).yloc-1][(*temp).xloc-1]=='#'){/* top left */
-           
-                tempx = (*temp).xloc;
-                tempy = (*temp).yloc;
-                if((*m).distanceGrid[tempy-1][tempx-1].distance==1000){
-                    (*m).distanceGrid[tempy-1][tempx-1].distance=(*temp).distance+1;
-                    distanceCell *temp5;
-                    temp5 = &(*m).distanceGrid[tempy-1][tempx-1];
-                   binheap_insert(&heap,temp5);
-                }
-
-            
-        }
-        if((*m).grid[(*temp).yloc+1][(*temp).xloc-1]=='.' || (*m).grid[(*temp).yloc+1][(*temp).xloc-1]=='#'){/* bottomLeft left */
-            
-                tempx = (*temp).xloc;
-                tempy = (*temp).yloc;
-                if((*m).distanceGrid[tempy+1][tempx-1].distance==1000){
-                    (*m).distanceGrid[tempy+1][tempx-1].distance=(*temp).distance+1;
-                    distanceCell *temp6;
-                    temp6 = &(*m).distanceGrid[tempy+1][tempx-1];
-                    binheap_insert(&heap,temp6);
-                    
-                }
-
-            
-        }
-        if((*m).grid[(*temp).yloc+1][(*temp).xloc+1]=='.' || (*m).grid[(*temp).yloc+1][(*temp).xloc+1]=='#'){/* bottom right */
-            
-                tempx = (*temp).xloc;
-                tempy = (*temp).yloc;
-                if((*m).distanceGrid[tempy+1][tempx+1].distance==1000){
-                    (*m).distanceGrid[tempy+1][tempx+1].distance=(*temp).distance+1;
-                    distanceCell *temp7;
-                    temp7 = &(*m).distanceGrid[tempy+1][tempx+1];
-                    binheap_insert(&heap,temp7);
-                }
-        }
     }
 }
 static void initRooms(void){

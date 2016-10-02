@@ -1,4 +1,5 @@
-typedef struct Monster;
+#include "mapInit.h"
+typedef struct Monster Monster;
 void initMonsterLib(Map *map);
 void MonsterInit(Map *map,);
 Monster getMonster(yl,xl);
