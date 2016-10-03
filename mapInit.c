@@ -84,6 +84,7 @@ static struct xy getCoords(){
             }
         }
     }
+    return coords;
 } 
 static void initBorder(void){
     int count;
@@ -531,6 +532,7 @@ static char getAsci(int num){
 int initMap(int numOfMonster){
     numberOfMonster=numOfMonster;
     m = (Map*)malloc(sizeof(Map));
+   
     initBorder();
     initRooms();
     int done=0;
@@ -568,22 +570,23 @@ int initMap(int numOfMonster){
             if(!(temp=='-' || temp == '|' || temp=='.' || temp=='#')){
                 temp=' ';
             }
-            if(getPCX() && getPCY){
+            if(getPCX() && getPCY()){
                 printf("@");
             }else{
-                if(!m->monsterArray[i][j]){
-                    Monster *monj;
-                    monj = monsterArray[i][j];
-                    if(monj->bigPeople){
+               Monster tempMon = getMonster(i,j);
+                //if(temp){
+                    if(tempMon.bigPeople){
                         printf("%c", 'P');
                     }
-                    if(monj->dragon){
+                    if(tempMon.dragon){
                         printf("%c", 'D');
                     }
-                    if(monj->other){
+                    if(tempMon.other){
                         printf("%c", 'p');
-                    }
-                }else{
+                    }else{
+
+                    
+                //}else{
                     printf("%c",temp);
                 }
             }
@@ -765,7 +768,7 @@ void printDistanceGridPlus(){
     int j;
     for(i=1;i<20;i++){
         for(j=1;j<79;j++){
-            char temp = (*m).grid[i][j];
+            
             if((*m).pcX==j && (*m).pcY==i){
                 printf("0");
             }else{

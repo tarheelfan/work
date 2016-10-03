@@ -56,7 +56,7 @@ typedef struct {
     int numOfRooms;
     int pcX;
     int pcY;
-    Monster* monsterArray[21][80];
+    
 }Map;
 typedef struct corridor_path corridor_path_t;
 int initMap(int numOfMonster);
@@ -69,7 +69,7 @@ void playGame();
 
 void initMonsterLib(Map *map, int numOfMax);
 Monster MonsterInit(Map *map,int x,int y,int isPlayer);
-Monster getMonster(int yl,int xl);
+Monster getMonster(int y,int x);
  int moveUp(Monster *mon);
  int moveDown(Monster *mon);
  int moveRight(Monster *mon);
@@ -89,4 +89,4 @@ void scanArea(Monster *mon);
 int getPCX();
 int getPCY();
 int32_t compare_monster(const void *key,const void *with);
-
+Monster getMonster(int y,int x);

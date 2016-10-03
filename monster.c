@@ -10,25 +10,26 @@ static void getDirections(Monster *npc);
 void reset(struct list);
 static void getDirectionsTunneling(Monster *npc);
 static void readDirections(Monster *mon);
+
 /*Public Class Monster */
 void initList(struct list dir){
     dir.size=0;
 }
 void addToList(struct list dir,int num){
-    dir.directions[list.size]=num;
+    dir.directions[dir.size]=num;
     dir.size++;
 }
 int removeFromList(struct list dir){
     int num = dir.directions[0];
     int x;
-    for(x=1;x<list.size;x++){
-        list.directions[x-1]=list.directions[x];
+    for(x=1;x<dir.size;x++){
+        dir.directions[x-1]=dir.directions[x];
     }
-    list.size--;
+    dir.size--;
     return num;
 }
-void reset(struct list){
-    list.size=0;
+void reset(struct list dir){
+    dir.size=0;
 } 
 int32_t compare_monster(const void *key,const void *with){
   return (*(const Monster *) key).roundVal - (*(const Monster *) with).roundVal;
@@ -43,11 +44,14 @@ int pcx;
 int pcy;
 
 /*Library Static Funcitons*/
+Monster getMonster(int y,int x){
+    return monsterArray[y][x];
+}
 void initMonsterLib(Map *map, int numOfMax){
     srand(time(NULL));
     maxMonsters = numOfMax;
     m=map;
-    map->monsterArray[21][80] = &monsterArray[21][80]
+    
 }
 int getPCX(){
     return pcx;
@@ -1512,7 +1516,6 @@ void scanArea(Monster *mon){
         
     }            
 }
-
 /*Functions for Library*/
 int hasMonster(int yl, int xl){
     if(yl>21 || 0>yl){
@@ -1526,6 +1529,4 @@ int hasMonster(int yl, int xl){
     }
     return 1;
 }
-Monster getMonster(int yl, int xl){
-    return monsterArray[yl][xl];
-}
+
