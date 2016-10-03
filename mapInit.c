@@ -66,6 +66,8 @@ void playGame(){
         }
         performAction(tem);
         analyzeDistancesPlus();
+        tem->roundVal= tem->roundVal + tem->speed;
+        binheap_insert(&heap,tem);
         printGrid();
         sleep(3);
     }

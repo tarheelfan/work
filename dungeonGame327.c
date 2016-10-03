@@ -3,6 +3,8 @@
 #include "gameMap.h"
 #include <string.h>
 #include "heap.h"
+#include <stdlib.h>
+#include <string.h>
 /*Switches*/
 int load=0;
 int save=0;
@@ -32,7 +34,7 @@ int main (int argc, char* argv[]){
         }
     }
     initGame();
-    playGame();
+    StartGame();
     closeGame();
     return 0;
 }
@@ -40,10 +42,10 @@ void initGame(void){
     if(load){
         loadGame();
     }else{
-      initMap();
+      initMap(numberOfCreatures);
     }
 }
-void playGame(void){
+void StartGame(void){
     playGame();
 }
 void closeGame(void){

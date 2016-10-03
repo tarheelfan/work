@@ -1,3 +1,3 @@
 void initGame(void);
-void playGame(void);
+void StartGame(void);
 void closeGame(void);
