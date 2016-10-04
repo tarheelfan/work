@@ -42,7 +42,8 @@ void initGame(void){
     if(load){
         loadGame();
     }else{
-      initMap(numberOfCreatures);
+      /*initMap(numberOfCreatures);For Testing Purposes*/
+      initMap(5);
     }
 }
 void StartGame(void){
@@ -53,3 +54,8 @@ void closeGame(void){
         saveGame();
     }
 }
+/*TODO:
+1.WRITE CODE TO HANDLE NO INPUT OF MONSTERS
+2.Tie Break
+
+*/

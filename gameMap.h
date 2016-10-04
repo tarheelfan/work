@@ -50,13 +50,13 @@ typedef struct{
 
 typedef struct {
     char grid[21][80];
-    distanceCell distanceGrid[30][100];
+    distanceCell distanceGrid[21][80];
+    distanceCell nonTunnelingDistanceGrid[21][80];
     unsigned char hardness[21][80];
     Room rooms[100];
     int numOfRooms;
     int pcX;
     int pcY;
-    
 }Map;
 typedef struct corridor_path corridor_path_t;
 int initMap(int numOfMonster);
@@ -68,8 +68,7 @@ void printDistanceGridPlus();
 void playGame();
 
 void initMonsterLib(Map *map, int numOfMax);
-Monster MonsterInit(Map *map,int x,int y,int isPlayer);
-Monster getMonster(int y,int x);
+Monster* MonsterInit(Map *map,int x,int y,int isPlayer);
  int moveUp(Monster *mon);
  int moveDown(Monster *mon);
  int moveRight(Monster *mon);
@@ -89,4 +88,6 @@ void scanArea(Monster *mon);
 int getPCX();
 int getPCY();
 int32_t compare_monster(const void *key,const void *with);
-Monster getMonster(int y,int x);
+static void analyzeDistances(void);
+extern Monster* monsterArray[21][80];
+extern Map *m;
