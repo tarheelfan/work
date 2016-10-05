@@ -43,7 +43,7 @@ void initGame(void){
         loadGame();
     }else{
       /*initMap(numberOfCreatures);For Testing Purposes*/
-      initMap(5);
+      initMap(10);
     }
 }
 void StartGame(void){

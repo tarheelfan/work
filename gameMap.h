@@ -53,6 +53,7 @@ typedef struct {
     distanceCell distanceGrid[21][80];
     distanceCell nonTunnelingDistanceGrid[21][80];
     unsigned char hardness[21][80];
+    Monster *thePlayer;
     Room rooms[100];
     int numOfRooms;
     int pcX;
@@ -88,6 +89,7 @@ void scanArea(Monster *mon);
 int getPCX();
 int getPCY();
 int32_t compare_monster(const void *key,const void *with);
-static void analyzeDistances(void);
+void analyzeDistances(void);
+Room* pointContains(int y,int x);
 extern Monster* monsterArray[21][80];
 extern Map *m;

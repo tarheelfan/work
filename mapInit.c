@@ -59,20 +59,32 @@ void playGame(){
             }
             Monster *monster;
             monster = MonsterInit(m,coords.x,coords.y,isPlay);
+            
+            if(!x){
+                m->thePlayer=monster;
+            }
+           
             binheap_insert(&heap,monster);
         }
     while(!done){
+       
         Monster *tem;
         tem = (Monster*)binheap_remove_min(&heap);
         if((*tem).thePlayer){
             if(!tem->alive){
                 printf("DEAD");
                 return;
+            }else{
+                if(binheap_peek_min(&heap)==NULL){
+                    printf("VICTORY");
+                    return;
+                }
             }
         }
-        performAction(tem);
+        
         analyzeDistances();
         analyzeDistancesPlus();
+        performAction(tem);
         tem->roundVal= tem->roundVal + tem->speed;
         if((*tem).alive){
             binheap_insert(&heap,tem);
@@ -80,6 +92,7 @@ void playGame(){
             deconstructor(tem);
         }
         printGrid();
+        //printDistanceGridPlus();
         usleep(1);
         sleep(1);
         if(system ("clear")==1){
@@ -184,14 +197,11 @@ static void analyzeDistancesPlus(void){//x loc 17 loc 6
             (*m).distanceGrid[yPre][xPre]=pass; 
         }
     }
-    (*m).distanceGrid[(*m).pcY][(*m).pcX].distance=0;
+    (*m).distanceGrid[(*m).thePlayer->yloc][(*m).thePlayer->xloc].distance=0;
     binheap_t heap;
     binheap_init(&heap,compare_cell,free);
-    int pcXl;
-    int pcYl;
-    pcXl=(*m).pcX;
-    pcYl=(*m).pcY;
-    distanceCell root = (*m).distanceGrid[pcYl][pcXl];
+    
+    distanceCell root = (*m).distanceGrid[(*m).thePlayer->yloc][(*m).thePlayer->xloc];
     root.distance=0;
     binheap_insert(&heap,&root);
     int tempx;
@@ -426,7 +436,25 @@ for(a=0;a<21;a++){
 }
 
 
-
+Room* pointContains(int y,int x){
+    int xt;
+     Room *temp;
+    int number = m->numOfRooms;
+    for(xt=0;xt<number;xt++){
+       
+        temp = &(m->rooms[xt]);
+        if(y>=temp->topLeft[2]){
+            if(y<=temp->bottomLeft[2]){
+                if(x>=temp->topLeft[1]){
+                    if(x<=temp->topright[1]){
+                        return temp; 
+                    }
+                }
+            }
+        }
+    }
+    return NULL;
+}
 static int collides(Room *r,Room *ro, int s){
     
    int var1 = contains(r,ro);
@@ -549,7 +577,7 @@ static char getAsci(int num){
         }
 }
 /*nonTunnelingDistanceGrid - gonna use this*/
-static void analyzeDistances(void){
+ void analyzeDistances(void){
     int xPre;
     int yPre;
     for(xPre=0;xPre<80;xPre++){
@@ -561,14 +589,10 @@ static void analyzeDistances(void){
             (*m).nonTunnelingDistanceGrid[yPre][xPre]=pass; 
         }
     }
-    (*m).nonTunnelingDistanceGrid[(*m).pcY][(*m).pcX].distance=0;
+    (*m).nonTunnelingDistanceGrid[(*m).thePlayer->yloc][(*m).thePlayer->xloc].distance=0;
     binheap_t heap;
     binheap_init(&heap,compare_cell,free);
-    int pcXl;
-    int pcYl;
-    pcXl=(*m).pcX;
-    pcYl=(*m).pcY;
-    distanceCell root = (*m).nonTunnelingDistanceGrid[pcYl][pcXl];
+    distanceCell root = (*m).nonTunnelingDistanceGrid[(*m).thePlayer->yloc][(*m).thePlayer->xloc];
     root.distance=0;
     binheap_insert(&heap,&root);
     int tempx;
@@ -580,7 +604,6 @@ static void analyzeDistances(void){
         tempx = (*temp).xloc;
         tempy = (*temp).yloc;
         
-        int nextVal =(*m).nonTunnelingDistanceGrid[tempy][tempx].distance+1;
         if((*m).grid[(*temp).yloc-1][(*temp).xloc]=='.' || (*m).grid[(*temp).yloc-1][(*temp).xloc]=='#'){/* top */
                 if((*m).nonTunnelingDistanceGrid[tempy-1][tempx].distance==1000){
                     (*m).nonTunnelingDistanceGrid[tempy-1][tempx].distance=(*temp).distance+1;
@@ -693,8 +716,6 @@ int initMap(int numOfMonster){
         int xrand = rand()%80;
         int yrand = rand()%21;
         if((*m).grid[yrand][xrand]=='.'){
-            (*m).pcX=xrand;
-            (*m).pcY=yrand;
             done=1;
         } 
     }
@@ -710,7 +731,7 @@ int initMap(int numOfMonster){
         }
     }
     //analyzeDistances();
-    analyzeDistancesPlus();
+    //analyzeDistancesPlus();
     return 0;
 }
 
@@ -718,7 +739,6 @@ int initMap(int numOfMonster){
     int i;
     int j;
     for(i=0;i<21;i++){
-        int skip=0;
         for(j=0;j<80;j++){
             char temp = (*m).grid[i][j];
             if(!(temp=='-' || temp == '|' || temp=='.' || temp=='#')){
@@ -730,15 +750,15 @@ int initMap(int numOfMonster){
                 if(tempMon!=NULL){
                     if(tempMon->bigPeople){
                         printf("%c", 'P');
-                        skip=1;
+                        ;
                     }
                     if(tempMon->dragon){
                         printf("%c", 'D');
-                        skip=1;
+                        
                     }
                     if(tempMon->thePlayer){
                         printf("%c",'@');
-                        skip=1;
+                        
                     }
                     if(tempMon->other){
                         printf("%c", 'p');
@@ -869,15 +889,14 @@ int loadGame(){
         int xrand = rand()%80;
         int yrand = rand()%21;
         if((*m).grid[yrand][xrand]=='.'){
-            (*m).pcX=xrand;
-            (*m).pcY=yrand;
+            
             done=1;
         } 
     }
     fclose(f);
 
     //analyzeDistances();
-    analyzeDistancesPlus();
+    //analyzeDistancesPlus();
     //analyzeDistances();
 
     
@@ -895,7 +914,7 @@ void printDistanceGrid(){
             if(!(temp=='-' || temp == '|' || temp=='.' || temp=='#')){
                 temp=' ';
             }
-            if((*m).pcX==j && (*m).pcY==i){
+            if((*m).thePlayer->xloc==j && (*m).thePlayer->yloc==i){
                 printf("0");
             }else{
                 if((*m).grid[i][j]=='.' || (*m).grid[i][j]=='#'){
@@ -924,7 +943,7 @@ void printDistanceGridPlus(){
     for(i=1;i<20;i++){
         for(j=1;j<79;j++){
             
-            if((*m).pcX==j && (*m).pcY==i){
+            if((*m).thePlayer->yloc==j && (*m).thePlayer->yloc==i){
                 printf("0");
             }else{
                 
