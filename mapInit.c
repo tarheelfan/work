@@ -93,8 +93,8 @@ void playGame(){
         }
         printGrid();
         //printDistanceGridPlus();
-        usleep(1);
-        sleep(1);
+        usleep(.95);
+        sleep(.95);
         if(system ("clear")==1){
             printf("-=||=-");
         }
@@ -750,15 +750,12 @@ int initMap(int numOfMonster){
                 if(tempMon!=NULL){
                     if(tempMon->bigPeople){
                         printf("%c", 'P');
-                        ;
                     }
                     if(tempMon->dragon){
                         printf("%c", 'D');
-                        
                     }
                     if(tempMon->thePlayer){
                         printf("%c",'@');
-                        
                     }
                     if(tempMon->other){
                         printf("%c", 'p');
@@ -942,15 +939,11 @@ void printDistanceGridPlus(){
     int j;
     for(i=1;i<20;i++){
         for(j=1;j<79;j++){
-            
             if((*m).thePlayer->yloc==j && (*m).thePlayer->yloc==i){
                 printf("0");
             }else{
-                
                 int num = (*m).distanceGrid[i][j].distance;
-
                 if(num==10000){
-
                     printf("%c",(*m).grid[i][j]);
                 }else{
                     if(num<10){
