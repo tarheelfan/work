@@ -94,4 +94,6 @@ Room* pointContains(int y,int x);
 void performPCMove(void);
 extern Monster* monsterArray[21][80];
 extern Map *m;
-int NUMBER_OF_MONSTERS;
+extern int NUMBER_OF_MONSTERS;
+extern WINDOW *window;
+extern binheap_t heap;

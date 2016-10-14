@@ -33,7 +33,7 @@ static int contains(Room *r,Room *ro);
 static struct xy getCoords();
 static char getAsci(int num);
 static void analyzeDistancesPlus(void);
-
+binheap_t heap;
 WINDOW *window;
 struct xy{
     int x;
@@ -46,7 +46,6 @@ int32_t compare_monster(const void *key,const void *with){
 }
 void playGame(){
     int done = 0;
-    binheap_t heap;
     binheap_init(&heap,compare_monster,free);
         initMonsterLib(m, numberOfMonster);
         /*Setup Monsters*/
@@ -60,7 +59,7 @@ void playGame(){
             }
             Monster *monster;
             monster = MonsterInit(m,coords.x,coords.y,isPlay);
-            
+
             if(!x){
                 m->thePlayer=monster;
             }
@@ -181,17 +180,17 @@ static void analyzeDistancesPlus(void){//x loc 17 loc 6
         }
     }
     (*m).distanceGrid[(*m).thePlayer->yloc][(*m).thePlayer->xloc].distance=0;
-    binheap_t heap;
-    binheap_init(&heap,compare_cell,free);
+    binheap_t heapcell;
+    binheap_init(&heapcell,compare_cell,free);
     
     distanceCell root = (*m).distanceGrid[(*m).thePlayer->yloc][(*m).thePlayer->xloc];
     root.distance=0;
-    binheap_insert(&heap,&root);
+    binheap_insert(&heapcell,&root);
     int tempx;
     int tempy;
     while(!binheap_is_empty(&heap)){
         distanceCell *temp;
-        temp =(distanceCell*) binheap_remove_min(&heap);
+        temp =(distanceCell*) binheap_remove_min(&heapcell);
         tempx = (*temp).xloc;
         tempy = (*temp).yloc;
         int alt;
@@ -204,7 +203,7 @@ static void analyzeDistancesPlus(void){//x loc 17 loc 6
                     (*m).distanceGrid[tempy-1][tempx].distance=alt;
                     distanceCell *temp0;
                     temp0 = &(*m).distanceGrid[tempy-1][tempx];
-                    binheap_insert(&heap, temp0);
+                    binheap_insert(&heapcell, temp0);
                     
             }
         } 
@@ -215,7 +214,7 @@ static void analyzeDistancesPlus(void){//x loc 17 loc 6
                     (*m).distanceGrid[tempy+1][tempx].distance=(*temp).distance+1;
                     distanceCell *temp1;
                     temp1 = &(*m).distanceGrid[tempy+1][tempx];
-                    binheap_insert(&heap,temp1);
+                    binheap_insert(&heapcell,temp1);
                 }
         } 
          if((*m).grid[(*temp).yloc][(*temp).xloc+1]!='-' || (*m).grid[(*temp).yloc][(*temp).xloc+1]!='|'){/* right */
@@ -225,7 +224,7 @@ static void analyzeDistancesPlus(void){//x loc 17 loc 6
                     (*m).distanceGrid[tempy][tempx+1].distance=(*temp).distance+1;
                     distanceCell *temp2;
                     temp2 = &(*m).distanceGrid[tempy][tempx+1];
-                    binheap_insert(&heap,temp2);
+                    binheap_insert(&heapcell,temp2);
                 }
         } 
          if((*m).grid[(*temp).yloc][(*temp).xloc-1]!='-' || (*m).grid[(*temp).yloc][(*temp).xloc-1]!='|'){/* left */
@@ -236,7 +235,7 @@ static void analyzeDistancesPlus(void){//x loc 17 loc 6
                     (*m).distanceGrid[tempy][tempx-1].distance=alt;
                     distanceCell *temp3;
                     temp3 = &(*m).distanceGrid[tempy][tempx-1];
-                    binheap_insert(&heap,temp3);   
+                    binheap_insert(&heapcell,temp3);   
                 }
         }
         if((*m).grid[(*temp).yloc-1][(*temp).xloc+1]!='-' || (*m).grid[(*temp).yloc-1][(*temp).xloc+1]!='|'){/* top right */
@@ -247,7 +246,7 @@ static void analyzeDistancesPlus(void){//x loc 17 loc 6
                     (*m).distanceGrid[tempy-1][tempx+1].distance=alt;
                     distanceCell *temp4;
                     temp4 = &(*m).distanceGrid[tempy-1][tempx+1];
-                    binheap_insert(&heap,temp4);
+                    binheap_insert(&heapcell,temp4);
                     
                 }
 
@@ -261,7 +260,7 @@ static void analyzeDistancesPlus(void){//x loc 17 loc 6
                     (*m).distanceGrid[tempy-1][tempx-1].distance=alt;
                     distanceCell *temp5;
                     temp5 = &(*m).distanceGrid[tempy-1][tempx-1];
-                   binheap_insert(&heap,temp5);
+                   binheap_insert(&heapcell,temp5);
                 }
 
             
@@ -274,7 +273,7 @@ static void analyzeDistancesPlus(void){//x loc 17 loc 6
                     (*m).distanceGrid[tempy+1][tempx-1].distance=alt;
                     distanceCell *temp6;
                     temp6 = &(*m).distanceGrid[tempy+1][tempx-1];
-                    binheap_insert(&heap,temp6);
+                    binheap_insert(&heapcell,temp6);
                     
                 }
 
@@ -288,7 +287,7 @@ static void analyzeDistancesPlus(void){//x loc 17 loc 6
                     (*m).distanceGrid[tempy+1][tempx+1].distance=alt;
                     distanceCell *temp7;
                     temp7 = &(*m).distanceGrid[tempy+1][tempx+1];
-                    binheap_insert(&heap,temp7);
+                    binheap_insert(&heapcell,temp7);
                     
                 }
         }

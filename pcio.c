@@ -31,7 +31,7 @@ static int right(void);
 static int upRight(void);
 static int upStairs(void);
 static int downStairs(void);
-
+static void clearData();
 /*Global Data*/
 Monster* pc;
 int ch; /*command*/
@@ -79,7 +79,7 @@ void performPCMove(void){
                 /*Do Nothing*/
                 break;
             case LIST:
-                 
+
         }
     }
 }
@@ -109,7 +109,7 @@ static int right(void){
     int x = pc->xloc;
     int y = pc->yloc;
     if(m->grid[y][x+1] == '#' || m->grid[y][x+1] == '.' ){
-        return moveRight(pc);         
+        return moveRight(pc); static void clearData()        
     }
 }
 static int bottomRight(void){
@@ -144,6 +144,7 @@ static int upStairs(void){
     int x = pc->xloc;
     int y = pc->yloc;
     if(m->grid[y][x-1] == '<' ){
+        clearData();
         reInitMap(NUMBER_OF_MONSTERS);
         playGame();
         return 1;
@@ -154,9 +155,34 @@ static int downStairs(void){
     int x = pc->xloc;
     int y = pc->yloc;
     if(m->grid[y][x-1] == '>' ){
+        clearData();
         reInitMap(NUMBER_OF_MONSTERS);
         playGame();
         return 1;
     }
     return 0;
+}
+static void clearData(){
+    while(!binheap_is_empty(&heap)){
+        deconstructor(binheap_remove_min(&heap));
+    }
+    free(m);
+}
+
+static void displayEnemyStatus(void){
+    wrefresh(window);
+    Window monsterStats = newwin(21,100,0,0);
+    Monster* monsters[NUMBER_OF_MONSTERS];
+    Monster *tem;
+    int counter=0;
+    while(tem = (Monster*)binheap_remove_min(&heap)){
+        monsters[counter]=tem;
+        counter++;
+    }
+    int cou;
+    for(cou=0;cou<counter;cou++){
+        Monster *mo =monsters[cou];
+        mvwprintw(window,i,j,"P");
+    }
+
 }
