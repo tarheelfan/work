@@ -10,6 +10,7 @@
 #include <stdint.h>
 #include <sys/stat.h>
 #include <limits.h>
+#include <ncurses.h>
 
 int const x = 80;
 int const y = 21;
@@ -29,11 +30,11 @@ static void initBorder(void);
 struct xy;
 static int collides(Room *r,Room *ma,int s);
 static int contains(Room *r,Room *ro);
-static void addRoom(Room r);
 static struct xy getCoords();
 static char getAsci(int num);
 static void analyzeDistancesPlus(void);
 
+WINDOW *window;
 struct xy{
     int x;
     int y;
@@ -81,23 +82,21 @@ void playGame(){
                 }
             }
         }
-        
         analyzeDistances();
         analyzeDistancesPlus();
-        performAction(tem);
-        tem->roundVal= tem->roundVal + tem->speed;
+        if((*tem).alive){
+            performAction(tem);
+            tem->roundVal= tem->roundVal + tem->speed;
+        }
         if((*tem).alive){
             binheap_insert(&heap,tem);
         }else{
             deconstructor(tem);
         }
         printGrid();
-        //printDistanceGridPlus();
-        usleep(.95);
-        sleep(.95);
-        if(system ("clear")==1){
-            printf("-=||=-");
-        }
+        wrefresh(window);
+        clear();
+        
     }
 }
 
@@ -163,22 +162,6 @@ static int getWeight(int num){
     }
     return 10000;
 }
-
-
-void static addRoom(Room r){
-    int x;
-    int y;
-    int xStart = r.topLeft[0];
-    int yStart = r.topLeft[1];
-    int xHeight = r.bottomLeft[0]-r.topLeft[0];
-    int yHeight = r.topright[1] - r.topLeft[1];
-    for(x=xStart;x<xHeight+xStart;x++){
-        for(y=yStart;y<yHeight+yStart;y++){
-            (*m).grid[x][y]='.';
-        }
-    }
-}
-
 int32_t compare_cell(const void *key,const void *with){
   return (*(const distanceCell *) key).distance - (*(const distanceCell *) with).distance;
 }
@@ -212,7 +195,7 @@ static void analyzeDistancesPlus(void){//x loc 17 loc 6
         tempx = (*temp).xloc;
         tempy = (*temp).yloc;
         int alt;
-        //if(tempy<22 && tempx<81 && tempy>-1 && tempx>-1){
+        
         if((*m).grid[(*temp).yloc-1][(*temp).xloc]!='-' || (*m).grid[(*temp).yloc-1][(*temp).xloc]!='|'){/* top */
                 
                 alt = getWeight((*m).hardness[tempy-1][tempx]);
@@ -310,7 +293,7 @@ static void analyzeDistancesPlus(void){//x loc 17 loc 6
                 }
         }
 
-       // }
+       
     }
 }
 static void initRooms(void){
@@ -456,7 +439,6 @@ Room* pointContains(int y,int x){
     return NULL;
 }
 static int collides(Room *r,Room *ro, int s){
-    
    int var1 = contains(r,ro);
    int var2 = contains(ro,r);
 
@@ -504,18 +486,6 @@ static int contains(Room *inside,Room *out){
         }
     }
     return 0;
-}
-static Room createRoomFile(int xUperLeft,int xSize,int yUperLeft,int ySize){
-    Room r;
-    r.topLeft[0]=xUperLeft;
-    r.topLeft[1]=yUperLeft;
-    r.bottomLeft[0]=xUperLeft+xSize;
-    r.bottomLeft[1]=yUperLeft;
-    r.topright[0]=xUperLeft;
-    r.topright[1]=yUperLeft+ySize;
-    r.bottomRight[0]=xUperLeft+xSize;
-    r.bottomRight[1]=yUperLeft+ySize;
-    return r;
 }
 static Room* createRoom(void){
     char done ='n';
@@ -598,19 +568,16 @@ static char getAsci(int num){
     int tempx;
     int tempy;
     while(!binheap_is_empty(&heap)){
-        
         distanceCell *temp;
         temp =(distanceCell*) binheap_remove_min(&heap);
         tempx = (*temp).xloc;
         tempy = (*temp).yloc;
-        
         if((*m).grid[(*temp).yloc-1][(*temp).xloc]=='.' || (*m).grid[(*temp).yloc-1][(*temp).xloc]=='#'){/* top */
                 if((*m).nonTunnelingDistanceGrid[tempy-1][tempx].distance==1000){
                     (*m).nonTunnelingDistanceGrid[tempy-1][tempx].distance=(*temp).distance+1;
                     distanceCell *temp0;
-                     temp0 = &(*m).nonTunnelingDistanceGrid[tempy-1][tempx];
+                    temp0 = &(*m).nonTunnelingDistanceGrid[tempy-1][tempx];
                     binheap_insert(&heap, temp0);
-                    
             }
         } 
          if((*m).grid[(*temp).yloc+1][(*temp).xloc]=='.' || (*m).grid[(*temp).yloc+1][(*temp).xloc]=='#'){/* bottom */
@@ -632,8 +599,6 @@ static char getAsci(int num){
                     temp2 = &(*m).nonTunnelingDistanceGrid[tempy][tempx+1];
                     binheap_insert(&heap,temp2);
                 }
-
-            
         } 
          if((*m).grid[(*temp).yloc][(*temp).xloc-1]=='.' || (*m).grid[(*temp).yloc][(*temp).xloc-1]=='#'){/* left */
             
@@ -646,8 +611,6 @@ static char getAsci(int num){
                     binheap_insert(&heap,temp3);
                     
                 }
-
-            
         }
         if((*m).grid[(*temp).yloc-1][(*temp).xloc+1]=='.' || (*m).grid[(*temp).yloc-1][(*temp).xloc+1]=='#'){/* top right */
             
@@ -657,11 +620,8 @@ static char getAsci(int num){
                     (*m).nonTunnelingDistanceGrid[tempy-1][tempx+1].distance=(*temp).distance+1;
                     distanceCell *temp4;
                     temp4 = &(*m).nonTunnelingDistanceGrid[tempy-1][tempx+1];
-                    binheap_insert(&heap,temp4);
-                    
-                }
-
-            
+                    binheap_insert(&heap,temp4);   
+                }            
         }
         if((*m).grid[(*temp).yloc-1][(*temp).xloc-1]=='.' || (*m).grid[(*temp).yloc-1][(*temp).xloc-1]=='#'){/* top left */
            
@@ -673,8 +633,6 @@ static char getAsci(int num){
                     temp5 = &(*m).nonTunnelingDistanceGrid[tempy-1][tempx-1];
                    binheap_insert(&heap,temp5);
                 }
-
-            
         }
         if((*m).grid[(*temp).yloc+1][(*temp).xloc-1]=='.' || (*m).grid[(*temp).yloc+1][(*temp).xloc-1]=='#'){/* bottomLeft left */
             
@@ -699,13 +657,14 @@ static char getAsci(int num){
                     distanceCell *temp7;
                     temp7 = &(*m).nonTunnelingDistanceGrid[tempy+1][tempx+1];
                     binheap_insert(&heap,temp7);
-                    
                 }
         }
     }
 }
 
 int initMap(int numOfMonster){
+    initscr(); /*starts curses mode*/
+    window = newwin(21,80,0,0); /*Creates Window*/
     numberOfMonster=numOfMonster;
     m = (Map*)malloc(sizeof(Map));
    
@@ -730,8 +689,6 @@ int initMap(int numOfMonster){
 
         }
     }
-    //analyzeDistances();
-    //analyzeDistancesPlus();
     return 0;
 }
 
@@ -740,167 +697,35 @@ int initMap(int numOfMonster){
     int j;
     for(i=0;i<21;i++){
         for(j=0;j<80;j++){
-            char temp = (*m).grid[i][j];
-            if(!(temp=='-' || temp == '|' || temp=='.' || temp=='#')){
-                temp = ' ';
+            char temp[1];
+            temp[0] = (*m).grid[i][j];
+            if(!(temp[0]=='-' || temp[0] == '|' || temp[0]=='.' || temp[0]=='#')){
+                temp[0] = ' ';
             }
             Monster *tempMon;
             tempMon = monsterArray[i][j];
                
                 if(tempMon!=NULL){
                     if(tempMon->bigPeople){
-                        printf("%c", 'P');
+                        mvwprintw(window,i,j,"P");
                     }
                     if(tempMon->dragon){
-                        printf("%c", 'D');
+                        mvwprintw(window,i,j,"D");
                     }
                     if(tempMon->thePlayer){
-                        printf("%c",'@');
+                        mvwprintw(window,i,j,"@");
                     }
                     if(tempMon->other){
-                        printf("%c", 'p');
+                        mvwprintw(window,i,j,"p");
                     }
             }else{
-                printf("%c",temp);
+                mvwprintw(window,i,j,temp);
             }
             
         }
-        printf("%c",'\n');
+        //mvprintw(window,i,j,'\n');
     }
 }
- 
-int saveGame(){
-    FILE *f;
-    char *home = getenv("HOME");
-    strcat(home,"/.rlg327/");
-    strcat(home,"Dungeon");
-    f = fopen(home,"w");
-    if(!f){
-      printf("could not write file\n");
-        return 1;
-    }
-    char *title = "RLG327";
-    int version = 0;
-    version = htobe32(version);
-    int sizeint;
-    sizeint = 1694;
-    sizeint = sizeint + 4 * (*m).numOfRooms;
-    sizeint = htobe32(sizeint);
-    fwrite(title,1,6,f);
-    fwrite(&version,4,1,f);
-    fwrite(&sizeint,4,1,f);
-    fwrite((*m).hardness,1,1680,f);
-    
-    int a;
-
-        
-    for (a=0; a<(*m).numOfRooms; a++){
-         
-        int topLeftX; 
-        int xWidth;
-        int topLeftY;
-        int yWidth;
-         topLeftY =  (*m).rooms[a].topLeft[1];
-         yWidth = (*m).rooms[a].bottomLeft[0]-(*m).rooms[a].topLeft[0];
-         topLeftX = (*m).rooms[a].topLeft[0];
-         xWidth = (*m).rooms[a].topright[1]-(*m).rooms[a].topLeft[1];
-        fwrite(&topLeftY, 1, 1, f);
-        fwrite(&xWidth, 1, 1, f);
-        fwrite(&topLeftX, 1, 1, f);
-        fwrite(&yWidth, 1, 1, f);
-        //Room r = createRoomFile(topLeftY,yWidth,topLeftX,xWidth);
-        
-    }
-
-    fclose(f);
-    return 0;
-}
-
-
-
-int size;
-int loadGame(){
-    m = (Map*)malloc(sizeof(Map));
-    initBorder();
-    FILE *f;
-    char title[6];
-    int version; 
-    char *home;
-    home = (char*) malloc(sizeof(char)*100);
-    strcpy(home,getenv("HOME"));
-    strcat(home,"/.rlg327/");
-    strcat(home,"Dungeon");
-    f= fopen(home,"r");
-    if(!f){
-        printf("cant open file");
-        return 1;
-    }
-    unsigned char hardnessModel[21][80];
-    int res;
-    res = fread(title,1,6,f);
-    res = fread(&version,4,1,f);
-    res = fread(&size,4,1,f);
-   
-    
-    res = fread(hardnessModel,1,1680,f);
-    int az;
-    int hg;
-    for(az=0;az<21;az++){
-        for(hg=0;hg<80;hg++){
-            (*m).hardness[az][hg]=hardnessModel[az][hg];
-        }
-    }
-    size = be32toh(size);
-    int max = (size-1694)/4;
-    int t;
-    int j;
-    for(t=0;t<21;t++){
-        for(j=0;j<80;j++){
-            if(hardnessModel[t][j]==0){
-                (*m).grid[t][j]='#';
-            }
-        }
-    }
-    int a;
-    (*m).numOfRooms=0;
-    for (a=0; a<max; a++){
-        uint8_t topLeftX;
-        uint8_t xWidth;
-        uint8_t topLeftY;
-        uint8_t yWidth;
-        res = fread(&topLeftX, sizeof(topLeftX), 1, f);
-        res = fread(&xWidth, sizeof(xWidth), 1, f);
-        res = fread(&topLeftY, sizeof(topLeftY), 1, f);
-        res = fread(&yWidth, sizeof(yWidth), 1, f);
-        if(res==-666){
-            printf("0");
-        }
-        Room r = createRoomFile(topLeftY,yWidth,topLeftX,xWidth);
-        (*m).rooms[a]=r;
-        (*m).numOfRooms=(*m).numOfRooms+1;
-        
-        addRoom(r);
-    }
-    int done=0;
-    while(!done){
-        int xrand = rand()%80;
-        int yrand = rand()%21;
-        if((*m).grid[yrand][xrand]=='.'){
-            
-            done=1;
-        } 
-    }
-    fclose(f);
-
-    //analyzeDistances();
-    //analyzeDistancesPlus();
-    //analyzeDistances();
-
-    
-return 0;
-}
-
-
 
 void printDistanceGrid(){
     int i;
@@ -915,24 +740,20 @@ void printDistanceGrid(){
                 printf("0");
             }else{
                 if((*m).grid[i][j]=='.' || (*m).grid[i][j]=='#'){
-
                     int num = (*m).distanceGrid[i][j].distance;
                         if(num<10){
                             printf("%i",num);
                         }
                         if(num<62 && num>9){
                             printf("%c",getAsci(num));
-                        }
-                    
+                        }                    
             }else{
                 printf("%c",' ');
+            }
         }
-        }
-            
     }
         printf("%c\n",' ');
-}
-    
+    }
 }
 void printDistanceGridPlus(){
     int i;

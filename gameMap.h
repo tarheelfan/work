@@ -32,7 +32,7 @@ typedef struct{
      int (* canTunnle)();
      int (* isErratic)();
      void (* performAction)();
-     void (* scanArea)();
+   
      void (* deconstructor)();
 }Monster;
 typedef struct {
@@ -62,8 +62,6 @@ typedef struct {
 typedef struct corridor_path corridor_path_t;
 int initMap(int numOfMonster);
 void printGrid(void);
-int saveGame(void);
-int loadGame(void);
 void printDistanceGrid(void);
 void printDistanceGridPlus();
 void playGame();
@@ -85,7 +83,7 @@ Monster* MonsterInit(Map *map,int x,int y,int isPlayer);
 int hasMonster(int xl, int yl);
 void deconstructor(Monster *m);
 void performAction(Monster *mon);
-void scanArea(Monster *mon);
+int scanArea(Monster *mon);
 int getPCX();
 int getPCY();
 int32_t compare_monster(const void *key,const void *with);

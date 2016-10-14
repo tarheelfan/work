@@ -5,27 +5,21 @@
 #include "heap.h"
 #include <stdlib.h>
 #include <string.h>
+#include <ncurses.h>
 /*Switches*/
-int load=0;
-int save=0;
-int numberOfCreatures=0;
+int numberOfCreatures= 0;
+char* numberOfCritters = 0;
 int main (int argc, char* argv[]){
     int x;
     int eval;
+    
     for(x=1;x<argc;x++){
-        eval=strcmp(argv[x],"--save");
-        if(eval==0){
-            save=1;
-        }
-        eval=strcmp(argv[x],"--load");
-        if(eval==0){
-            load=1;
-        }
         eval=strcmp(argv[x],"--nummon");
         if(eval==0){
-            char* numberOfCritters = argv[x+1];
+            
+            numberOfCritters = argv[x+1];
             numberOfCreatures = atoi(numberOfCritters);
-            if(numberOfCreatures>=1680){
+            if(numberOfCreatures>=1680 || numberOfCreatures==0){
                 printf("What are you even doing bro");
                 return 1;
             }else{
@@ -33,28 +27,27 @@ int main (int argc, char* argv[]){
             }
         }
     }
-    initGame();
+    
+    if(initGame()){
+        return 1;
+    }
     StartGame();
     closeGame();
     return 0;
 }
-void initGame(void){
-    if(load){
-        loadGame();
-    }else{
-      initMap(numberOfCreatures);
-    }
+int initGame(void){
+      if(1){/*Code Changed for Purpose of Debugging*/
+        initMap(10);
+      }else{
+          printf("Need The Number of Monsters and --nummon command \n");
+          return 1;
+      }
+    return 0;
 }
 void StartGame(void){
     playGame();
 }
 void closeGame(void){
-    if(save){
-        saveGame();
-    }
+    endwin();
+    
 }
-/*TODO:
-1.WRITE CODE TO HANDLE NO INPUT OF MONSTERS
-2.Tie Break
-
-*/

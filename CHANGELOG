@@ -1,3 +1,123 @@
+commit 8d7bbc4d
+Author: Shane P Drafahl <sdrafahl@iastate.edu>
+Date:   Wed Oct 5 10:55:13 2016 -0500
+
+    almost ready for release, fixed some bugs,basic testing left to determine if everythin works correctly
+
+commit 060c8102
+Author: Shane P Drafahl <sdrafahl@iastate.edu>
+Date:   Wed Oct 5 01:02:19 2016 -0500
+
+    Fixed most bugs as far as I can tell,behavior is improved, I always tell the truth,Even when I lie.
+
+commit c69eca0b
+Author: Shane P Drafahl <sdrafahl@iastate.edu>
+Date:   Tue Oct 4 10:51:23 2016 -0500
+
+    Fixed the rendering of the game map, program demonstrates basic interaction
+
+commit 674575bf
+Author: Shane P Drafahl <sdrafahl@iastate.edu>
+Date:   Mon Oct 3 12:46:30 2016 -0500
+
+    compiler issues resolved, segmentation faults to fix
+
+commit d0a0d728
+Author: Shane P Drafahl <sdrafahl@iastate.edu>
+Date:   Sun Oct 2 20:42:52 2016 -0500
+
+    Did some bug fixes
+
+commit 056cdac8
+Author: Shane P Drafahl <sdrafahl@iastate.edu>
+Date:   Sun Oct 2 18:42:29 2016 -0500
+
+    Fixed some bugs and combined two .c files into gameMap.a library
+
+commit cf51b1f9
+Author: Shane P Drafahl <sdrafahl@iastate.edu>
+Date:   Sun Oct 2 02:25:11 2016 -0500
+
+    finnished with rough draft of code
+
+commit c1b14424
+Author: Shane P Drafahl <sdrafahl@iastate.edu>
+Date:   Sun Oct 2 00:08:55 2016 -0500
+
+    Makefile changes
+
+commit 8c00d898
+Author: Shane P Drafahl <sdrafahl@iastate.edu>
+Date:   Sat Oct 1 12:42:33 2016 -0500
+
+    Finnished most of monster.c file
+
+commit ac296339
+Author: Shane P Drafahl <sdrafahl@iastate.edu>
+Date:   Sat Oct 1 02:09:19 2016 -0500
+
+    Lots of work on monster.c file in general, working on adding paths for the smart monsters
+
+commit 8db9e7e1
+Author: Shane P Drafahl <sdrafahl@iastate.edu>
+Date:   Fri Sep 30 23:42:04 2016 -0500
+
+    upgraded scanning, you require more vespene gas
+
+commit b71445b3
+Author: Shane P Drafahl <sdrafahl@iastate.edu>
+Date:   Fri Sep 30 23:25:28 2016 -0500
+
+    Added proper tunnle algorithm
+
+commit 06957c21
+Author: Shane P Drafahl <sdrafahl@iastate.edu>
+Date:   Fri Sep 30 17:57:51 2016 -0500
+
+    Added kill functionality to movement functions
+
+commit c1df57e0
+Author: Shane P Drafahl <sdrafahl@iastate.edu>
+Date:   Thu Sep 29 23:39:50 2016 -0500
+
+    I got started on performAction function
+
+commit d54b09e4
+Author: Shane P Drafahl <sdrafahl@iastate.edu>
+Date:   Thu Sep 29 22:15:40 2016 -0500
+
+    Created scanArea function
+
+commit cffb8f09
+Author: Shane P Drafahl <sdrafahl@iastate.edu>
+Date:   Thu Sep 29 20:01:18 2016 -0500
+
+    Added second heap to program
+
+commit 11455507
+Author: Shane P Drafahl <sdrafahl@iastate.edu>
+Date:   Thu Sep 29 19:58:30 2016 -0500
+
+    Added some more functionality to the monster library
+
+commit d60a025f
+Author: Shane P Drafahl <sdrafahl@iastate.edu>
+Date:   Thu Sep 29 00:44:04 2016 -0500
+
+    Did some more work on monster.c
+
+commit 1dcc371e
+Author: Shane P Drafahl <sdrafahl@iastate.edu>
+Date:   Wed Sep 28 21:32:55 2016 -0500
+
+    Added monster.c and monster.h to be a new library for mapInit library
+
+commit 7779a6d3
+Author: Shane P Drafahl <sdrafahl@iastate.edu>
+Date:   Mon Sep 26 14:30:35 2016 -0500
+
+    updated changelog
+
 commit c260c6d3
 Author: Shane P Drafahl <sdrafahl@iastate.edu>
 Date:   Mon Sep 26 14:27:12 2016 -0500
@@ -209,3 +329,5 @@ Author: Shane P Drafahl <drafahls@gmail.com>
 Date:   Fri Sep 2 00:45:49 2016 -0500
 
     Added git ignore file
+(END)
+

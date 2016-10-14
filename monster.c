@@ -94,7 +94,7 @@ Monster* MonsterInit(Map *map,int x,int y,int isPlayer){
     monster->isErratic = isErratic;
     monster->performAction=performAction;
     monster->deconstructor = deconstructor;
-    monster->scanArea=scanArea;
+    
     monster->yloc=y;
     monster->searchLocationY=y;
     monster->searchLocationX=x;
@@ -165,6 +165,8 @@ void deconstructor(Monster *m){
             if(m->grid[ytemp-1][xtemp]!='.'){
             m->grid[ytemp-1][xtemp]='#'; 
             }
+        }else{
+            monsterArray[ytemp][xtemp]=mon;
         }
     }
     
@@ -201,6 +203,8 @@ void deconstructor(Monster *m){
             if(m->grid[ytemp+1][xtemp]!='.'){
             m->grid[ytemp+1][xtemp]='#'; /*y+1,x*/
             }
+        }else{
+            monsterArray[ytemp][xtemp]=mon;
         }
     }
     
@@ -236,6 +240,8 @@ void deconstructor(Monster *m){
             if(m->grid[ytemp][xtemp+1]!='.'){
             m->grid[ytemp][xtemp+1]='#'; /*y,x+1*/
             }
+        }else{
+            monsterArray[ytemp][xtemp]=mon;
         }
     }
     
@@ -273,6 +279,8 @@ void deconstructor(Monster *m){
             if(m->grid[ytemp][xtemp-1]!='.'){
             m->grid[ytemp][xtemp-1]='#'; /*y,x-1*/
             }
+        }else{
+            monsterArray[ytemp][xtemp]=mon;
         }
     }
     
@@ -312,6 +320,8 @@ void deconstructor(Monster *m){
             if(m->grid[ytemp-1][xtemp+1]!='.'){
             m->grid[ytemp-1][xtemp+1]='#'; /*y-1,x+1*/
             }
+        }else{
+            monsterArray[ytemp][xtemp]=mon;
         }
     }
     
@@ -351,6 +361,8 @@ void deconstructor(Monster *m){
             if(m->grid[ytemp-1][xtemp-1]!='.'){
             m->grid[ytemp-1][xtemp-1]='#'; /*y-1,x-1*/
             }
+        }else{
+            monsterArray[ytemp][xtemp]=mon;
         }
     }
     
@@ -390,6 +402,8 @@ void deconstructor(Monster *m){
             if(m->grid[ytemp][xtemp+1]!='.'){
             m->grid[ytemp][xtemp+1]='#'; /*y+1,x-1*/
             }
+        }else{
+            monsterArray[ytemp][xtemp]=mon;
         }
     }
     
@@ -429,6 +443,8 @@ void deconstructor(Monster *m){
             if(m->grid[ytemp+1][xtemp+1]!='.'){
             m->grid[ytemp+1][xtemp+1]='#'; /*y+1,x+1*/
             }
+        }else{
+            monsterArray[ytemp][xtemp]=mon;
         }
     }
     
@@ -453,7 +469,15 @@ void deconstructor(Monster *m){
 }
 
 void performAction(Monster *mon){
-    scanArea(mon);
+    int spoted = scanArea(mon);
+    if(spoted){
+        reset(mon->directions);
+         if(canTunnle(mon)){
+             getDirectionsTunneling(mon);
+         }else{
+             getDirections(mon);
+         }
+    }
     if(mon->thePlayer){
         performWander(mon);
         return;
@@ -473,24 +497,19 @@ void performAction(Monster *mon){
             return;
         }
     }
-    if(mon->patrolMode){
+    if(mon->patrolMode && !isIntelegent(mon)){
         performWander(mon);
         return;
     }else{
             if(isIntelegent(mon)){
-                if(!mon->patrolMode){
-                    if(canTunnle(mon)){
-                         reset(mon->directions);
-                         getDirectionsTunneling(mon);
-                        readDirections(mon);
-                         return;
-                    }else{
-                        reset(mon->directions);
-                        getDirections(mon);
+                if(!mon->patrolMode && mon->directions.size>0){
                         readDirections(mon);
                         return;
+                        }else{
+                            mon->patrolMode=1;
+                            performWander(mon);
+                            return;
                         }
-                        
                     }
                 }
                 int gottooX = mon->searchLocationX;
@@ -533,7 +552,7 @@ void performAction(Monster *mon){
                 }
 
             }
-        }
+        
 /*Helper Functions For Monsters */
 static void readDirections(Monster *mon){
      int switchValue = removeFromList(mon->directions);
@@ -1293,7 +1312,9 @@ static void moveNearestTunneling(Monster *npc){
                  bottomLeft =0;
                  bottom =0;
                  bottomRight=0;
-            }
+            
+        }
+            
     }
     /*TopRight*/
     if(xhere+1!=79 && yhere-1!=0){
@@ -1411,11 +1432,12 @@ static void moveNearestTunneling(Monster *npc){
     }
 }
 /*********************************/
-void scanArea(Monster *mon){
+int scanArea(Monster *mon){
     int xhere = mon->xloc;
     int yhere = mon->yloc;
     /*Monster Looks Forward*/
     int done=0;
+    int seen =0;
     int ytemp = yhere;
     while(!done){
         ytemp++;
@@ -1436,6 +1458,7 @@ void scanArea(Monster *mon){
                     mon->patrolMode=0;
                     done=1;
                     mon->searchLocationY=ytemp;
+                    seen=1;
                 }
             }
         }else{
@@ -1455,6 +1478,7 @@ void scanArea(Monster *mon){
                     done=1;
                     mon->patrolMode=0;
                     mon->searchLocationY=ytemp;
+                    seen=1;
                 }
             }
         }else{
@@ -1473,7 +1497,8 @@ void scanArea(Monster *mon){
                 if(temp->thePlayer){
                     mon->patrolMode=0;
                     done=1;
-                    mon->searchLocationY=xtemp;
+                    mon->searchLocationX=xtemp;
+                    seen=1;
                 }
             }
         }else{
@@ -1492,7 +1517,8 @@ void scanArea(Monster *mon){
                 if(temp->thePlayer){
                     mon->patrolMode=0;
                     done=1;
-                    mon->searchLocationY=xtemp;
+                    mon->searchLocationX=xtemp;
+                    seen=1;
                 }
             }
         }else{
@@ -1516,11 +1542,13 @@ void scanArea(Monster *mon){
                         mon->patrolMode=0;
                         mon->searchLocationY=y;
                         mon->searchLocationX=x;
+                        seen=1;
                 }
             }
         }
     }
     }
+return seen;
 }
 
 /*Functions for Library*/
