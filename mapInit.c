@@ -661,23 +661,34 @@ static char getAsci(int num){
         }
     }
 }
-
+int NUMBER_OF_MONSTERS;
 int initMap(int numOfMonster){
     initscr(); /*starts curses mode*/
+    
     window = newwin(21,80,0,0); /*Creates Window*/
     numberOfMonster=numOfMonster;
+    NUMBER_OF_MONSTERS = numberOfMonster;
     m = (Map*)malloc(sizeof(Map));
    
     initBorder();
     initRooms();
-    int done=0;
-    while(!done){
+    /*Stair Case Generation*/
+    int count = (rand()%5)+1;
+    int counter =0;
+    while(counter<count){
         int xrand = rand()%80;
         int yrand = rand()%21;
-        if((*m).grid[yrand][xrand]=='.'){
-            done=1;
+        if((*m).grid[yrand][xrand]=='.' || (*m).grid[yrand][xrand]=='#'){
+            int twoFacesCoin = rand()%2;
+            if(twoFacesCoin){
+                (*m).grid[yrand][xrand]='<'
+            }else{
+                (*m).grid[yrand][xrand]='>'
+            }
+            counter++;
         } 
     }
+    /****************************/
     int c;
     int f;
     for(c=0;c<21;c++){
@@ -691,7 +702,40 @@ int initMap(int numOfMonster){
     }
     return 0;
 }
+void reInitMap(int num_of_mon){
+     m = (Map*)malloc(sizeof(Map));
+   
+    initBorder();
+    initRooms();
+    /*Stair Case Generation*/
+    int count = (rand()%5)+1;
+    int counter =0;
+    while(counter<count){
+        int xrand = rand()%80;
+        int yrand = rand()%21;
+        if((*m).grid[yrand][xrand]=='.' || (*m).grid[yrand][xrand]=='#'){
+            int twoFacesCoin = rand()%2;
+            if(twoFacesCoin){
+                (*m).grid[yrand][xrand]='<'
+            }else{
+                (*m).grid[yrand][xrand]='>'
+            }
+            counter++;
+        } 
+    }
+    /****************************/
+    int c;
+    int f;
+    for(c=0;c<21;c++){
+        for(f=0;f<80;f++){
+            char temp = (*m).grid[c][f];
+            if(temp=='.' || temp=='#'){
+                (*m).hardness[c][f]=0;
+            }
 
+        }
+    }
+}
  void printGrid(){
     int i;
     int j;
@@ -699,7 +743,7 @@ int initMap(int numOfMonster){
         for(j=0;j<80;j++){
             char temp[1];
             temp[0] = (*m).grid[i][j];
-            if(!(temp[0]=='-' || temp[0] == '|' || temp[0]=='.' || temp[0]=='#')){
+            if(!(temp[0]=='-' || temp[0] == '|' || temp[0]=='.' || temp[0]=='#' || temp[0]=='<' || temp[0]=='>')){
                 temp[0] = ' ';
             }
             Monster *tempMon;
@@ -720,10 +764,8 @@ int initMap(int numOfMonster){
                     }
             }else{
                 mvwprintw(window,i,j,temp);
-            }
-            
+            }   
         }
-        //mvprintw(window,i,j,'\n');
     }
 }
 
