@@ -1,13 +1,13 @@
 
 #include <ncurses.h>
 #include "gameMap.h"
-
+#include <stdint.h>
+#include <stdlib.h>
 #define ESCAPE 27
 
 #define UP_STAIRS '<'
 #define DOWN_STAIRS '>'
-#define LIST ch == 'm'
-#define SCROLL_UP ch == KEY_UP
+#define SCROLL_UP KEY_UP
 #define SCROLL_DOWN KEY_DOWN
 #define QUIT 'Q'
 
@@ -22,14 +22,17 @@ static int upRight(void);
 static int upStairs(void);
 static int downStairs(void);
 static void clearData();
-static void displayEnemyStatus(void);
+static WINDOW* displayEnemyStatus(void);
 /*Global Data*/
 int ch; /*command*/
+Monster *pc;
+WINDOW *temppoint;
 /*******************/
 
 
-int performPCMove(void){    
+int performPCMove(Monster *pci){    
     int done = 0;
+    pc = pci;
     while(!done){
         ch = getch();
         switch(ch){
@@ -65,20 +68,21 @@ int performPCMove(void){
             case 4 : /*Left*/
                 done = left();
                 break;
-            case UP_STAIRS :
+            case '>' :
                 done = upStairs();
                 break;
-            case DOWN_STAIRS:
+            case '<':
                 done =downStairs();
                 break;
             case 5 : /*Rest*/
             case ' ':
                 /*Do Nothing*/
                 break;
-            case LIST:
-                displayEnemyStatus();
+            case 'm':
+                temppoint = displayEnemyStatus();
                 char userCommand = getch();
                 if(userCommand == ESCAPE){
+                    free(temppoint);
                     wrefresh(window);
                     clear();
                 }
@@ -87,67 +91,76 @@ int performPCMove(void){
                 return 1;
         }
     }
+    return 0;
 }
 
 static int upLeft(void){
-    int x = thePlayer->xloc;
-    int y = thePlayer->yloc;
+    int x = m->thePlayer->xloc;
+    int y = m->thePlayer->yloc;
     if(m->grid[y-1][x-1] == '#' || m->grid[y-1][x-1] == '.' ){
         return moveTopLeft(pc);
     }
+    return 0;
 }
 static int up(void){
-    int x = thePlayer->xloc;
-    int y = thePlayer->yloc;
+    int x = m->thePlayer->xloc;
+    int y = m->thePlayer->yloc;
     if(m->grid[y-1][x] == '#' || m->grid[y-1][x] == '.' ){
        return moveUp(pc);
     }
+    return 0;
 }
 static int upRight(void){
-    int x = thePlayer->xloc;
-    int y = thePlayer->yloc;
+    int x = m->thePlayer->xloc;
+    int y = m->thePlayer->yloc;
     if(m->grid[y-1][x+1] == '#' || m->grid[y-1][x+1] == '.' ){
         return moveTopRight(pc);         
     }
+    return 0;
 }
 static int right(void){
-    int x = thePlayer->xloc;
-    int y = thePlayer->yloc;
+    int x = m->thePlayer->xloc;
+    int y = m->thePlayer->yloc;
     if(m->grid[y][x+1] == '#' || m->grid[y][x+1] == '.' ){
         return moveRight(pc);        
     }
+    return 0;
 }
 static int bottomRight(void){
-    int x = thePlayer->xloc;
-    int y = thePlayer->yloc;
+    int x = m->thePlayer->xloc;
+    int y = m->thePlayer->yloc;
     if(m->grid[y+1][x+1] == '#' || m->grid[y+1][x+1] == '.' ){
         return moveBottomRight(pc);         
     }
+    return 0;
 }
 static int bottom(void){
-    int x = thePlayer->xloc;
-    int y = thePlayer->yloc;
+    int x = m->thePlayer->xloc;
+    int y = m->thePlayer->yloc;
     if(m->grid[y+1][x] == '#' || m->grid[y+1][x] == '.' ){
         return moveDown(pc);         
     }
+    return 0;
 }
 static int bottomLeft(void){
-    int x = thePlayer->xloc;
-    int y = thePlayer->yloc;
+    int x = m->thePlayer->xloc;
+    int y = m->thePlayer->yloc;
     if(m->grid[y+1][x-1] == '#' || m->grid[y+1][x-1] == '.' ){
         return moveBottomLeft(pc);         
     }
+    return 0;
 }
 static int left(void){
-   int x = thePlayer->xloc;
-    int y = thePlayer->yloc;
+   int x = m->thePlayer->xloc;
+    int y = m->thePlayer->yloc;
     if(m->grid[y][x-1] == '#' || m->grid[y][x-1] == '.' ){
         return moveLeft(pc);         
     }
+    return 0;
 }
 static int upStairs(void){
-    int x = thePlayer->xloc;
-    int y = thePlayer->yloc;
+    int x = m->thePlayer->xloc;
+    int y = m->thePlayer->yloc;
     if(m->grid[y][x-1] == '<' ){
         clearData();
         reInitMap(NUMBER_OF_MONSTERS);
@@ -157,8 +170,8 @@ static int upStairs(void){
     return 0;
 }
 static int downStairs(void){
-    int x = thePlayer->xloc;
-    int y = thePlayer->yloc;
+    int x = m->thePlayer->xloc;
+    int y = m->thePlayer->yloc;
     if(m->grid[y][x-1] == '>' ){
         clearData();
         reInitMap(NUMBER_OF_MONSTERS);
@@ -174,13 +187,15 @@ static void clearData(){
     free(m);
 }
 
-static void displayEnemyStatus(void){
+static WINDOW* displayEnemyStatus(void){
     wrefresh(window);
-    WINDOW monsterStats = newwin(21,100,0,0);
+    WINDOW *monsterStats; 
+    monsterStats = newwin(21,100,0,0);
     Monster* monsters[NUMBER_OF_MONSTERS];
     Monster *tem;
     int counter=0;
-    while(tem = (Monster*)binheap_remove_min(&heap)){
+    tem = (Monster*)binheap_remove_min(&heap);
+    while(tem){
         monsters[counter]=tem;
         counter++;
     }
@@ -188,7 +203,7 @@ static void displayEnemyStatus(void){
     for(cou=0;cou<counter;cou++){
         Monster *mo; 
         mo = monsters[cou];
-        binheap_insert(heap, mo);
+        binheap_insert(&heap, mo);
         if(!mo->thePlayer){
         char string[19];
         char temp = 'p';
@@ -201,8 +216,8 @@ static void displayEnemyStatus(void){
         string[0] = temp;
         string[1] = ' ';
         
-        int xtemppc = thePlayer->xloc;
-        int ytemppc = thePlayer->yloc;
+        int xtemppc = m->thePlayer->xloc;
+        int ytemppc = m->thePlayer->yloc;
         
         int xtempmon = mo->xloc;
         int ytempmon = mo->yloc;
@@ -249,8 +264,9 @@ static void displayEnemyStatus(void){
             string[14]=':';
             string[15] = ytemppc-ytempmon;
         }
-        mvwprintw(monsterStats,counter,0,"P");
+        mvwprintw(monsterStats,counter,0,string);
         }
     }
 wrefresh(monsterStats);
+return monsterStats;
 }

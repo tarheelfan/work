@@ -479,7 +479,9 @@ void performAction(Monster *mon){
          }
     }
     if(mon->thePlayer){
-        performPCMove();
+        if(performPCMove(mon)){
+            exit(0);
+        }
         return;
     }
      int twoFacesCoin = rand()%2;

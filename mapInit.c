@@ -188,7 +188,7 @@ static void analyzeDistancesPlus(void){//x loc 17 loc 6
     binheap_insert(&heapcell,&root);
     int tempx;
     int tempy;
-    while(!binheap_is_empty(&heap)){
+    while(!binheap_is_empty(&heapcell)){
         distanceCell *temp;
         temp =(distanceCell*) binheap_remove_min(&heapcell);
         tempx = (*temp).xloc;
