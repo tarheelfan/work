@@ -479,7 +479,7 @@ void performAction(Monster *mon){
          }
     }
     if(mon->thePlayer){
-        performWander(mon);
+        performPCMove();
         return;
     }
      int twoFacesCoin = rand()%2;

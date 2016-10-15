@@ -680,9 +680,9 @@ int initMap(int numOfMonster){
         if((*m).grid[yrand][xrand]=='.' || (*m).grid[yrand][xrand]=='#'){
             int twoFacesCoin = rand()%2;
             if(twoFacesCoin){
-                (*m).grid[yrand][xrand]='<'
+                (*m).grid[yrand][xrand]='<';
             }else{
-                (*m).grid[yrand][xrand]='>'
+                (*m).grid[yrand][xrand]='>';
             }
             counter++;
         } 
@@ -715,9 +715,9 @@ void reInitMap(int num_of_mon){
         if((*m).grid[yrand][xrand]=='.' || (*m).grid[yrand][xrand]=='#'){
             int twoFacesCoin = rand()%2;
             if(twoFacesCoin){
-                (*m).grid[yrand][xrand]='<'
+                (*m).grid[yrand][xrand]='<';
             }else{
-                (*m).grid[yrand][xrand]='>'
+                (*m).grid[yrand][xrand]='>';
             }
             counter++;
         } 

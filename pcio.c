@@ -4,22 +4,12 @@
 
 #define ESCAPE 27
 
-#define UP_LEFT (ch == 7 || ch == 'y') ? 1 : 0
-#define UP (ch == 8 || ch == 'k') ? 1 : 0
-#define UP_RIGHT (ch == 9 || ch == 'u') ? 1 : 0
-#define RIGHT (ch == 6 || ch == 'l') ? 1 : 0
-#define BOTTOM_RIGHT (ch == 3 || ch == 'n' ) ? 1 : 0
-#define BOTTOM (ch == 2 || ch =='j') ? 1 : 0
-#define BOTTOM_LEFT (ch == 1 || ch =='b') ? 1 : 0
-#define LEFT (ch == 4 || ch == 'h') ? 1 : 0
-#define UP_STAIRS (ch == '<') ? 1 : 0
-#define DOWN_STAIRS (ch == '>') ? 1 : 0
-#define REST (ch == 5 || ch == ' ') ? 1 : 0
-#define LIST (ch == 'm') ? 1 : 0
-#define SCROLL_UP (ch == KEY_UP) ? 1 : 0
-#define SCROLL_DOWN (ch == KEY_DOWN) ? 1 : 0
-#define RETURN_TO_MAP (ch == ESCAPE)
-#define QUIT ( ch == 'Q') ? 1 : 0
+#define UP_STAIRS '<'
+#define DOWN_STAIRS '>'
+#define LIST ch == 'm'
+#define SCROLL_UP ch == KEY_UP
+#define SCROLL_DOWN KEY_DOWN
+#define QUIT 'Q'
 
 static int upLeft(void);
 static int up(void);
@@ -32,41 +22,47 @@ static int upRight(void);
 static int upStairs(void);
 static int downStairs(void);
 static void clearData();
+static void displayEnemyStatus(void);
 /*Global Data*/
-Monster* pc;
 int ch; /*command*/
 /*******************/
-void ioInit(Monster *pcm){
-    pc = pcm;
-}
 
-void performPCMove(void){    
+
+int performPCMove(void){    
     int done = 0;
     while(!done){
         ch = getch();
         switch(ch){
-            case UP_LEFT :
+            case 7 :
+            case 'y': /*Up Left*/
                 done=upLeft();
                 break;
-            case UP :
+            case 8 : /*Up*/
+            case 'k':
                 done=up();
                 break;
-            case UP_RIGHT :
+            case 'u': /*Up Right*/
+            case 9 :
                 done = upRight();
                 break;
-            case RIGHT :
+            case 'l' : /*Right*/
+            case 6 :
                 done = right();
                 break;
-            case BOTTOM_RIGHT :
+            case 'n':
+            case 3 : /*Bottom Right*/
                 done = bottomRight();
                 break;
-            case BOTTOM:
+            case 'j':
+            case 2: /*Bottom*/
                 done = bottom();
                 break;
-            case BOTTOM_LEFT:
+            case 'b':
+            case 1: /*Bottom Left*/
                 done = bottomLeft();
                 break;
-            case LEFT :
+            case 'h':
+            case 4 : /*Left*/
                 done = left();
                 break;
             case UP_STAIRS :
@@ -75,74 +71,83 @@ void performPCMove(void){
             case DOWN_STAIRS:
                 done =downStairs();
                 break;
-            case REST:
+            case 5 : /*Rest*/
+            case ' ':
                 /*Do Nothing*/
                 break;
             case LIST:
-
+                displayEnemyStatus();
+                char userCommand = getch();
+                if(userCommand == ESCAPE){
+                    wrefresh(window);
+                    clear();
+                }
+                break;
+            case QUIT :
+                return 1;
         }
     }
 }
 
 static int upLeft(void){
-    int x = pc->xloc;
-    int y = pc->yloc;
+    int x = thePlayer->xloc;
+    int y = thePlayer->yloc;
     if(m->grid[y-1][x-1] == '#' || m->grid[y-1][x-1] == '.' ){
         return moveTopLeft(pc);
     }
 }
 static int up(void){
-    int x = pc->xloc;
-    int y = pc->yloc;
+    int x = thePlayer->xloc;
+    int y = thePlayer->yloc;
     if(m->grid[y-1][x] == '#' || m->grid[y-1][x] == '.' ){
        return moveUp(pc);
     }
 }
 static int upRight(void){
-    int x = pc->xloc;
-    int y = pc->yloc;
+    int x = thePlayer->xloc;
+    int y = thePlayer->yloc;
     if(m->grid[y-1][x+1] == '#' || m->grid[y-1][x+1] == '.' ){
         return moveTopRight(pc);         
     }
 }
 static int right(void){
-    int x = pc->xloc;
-    int y = pc->yloc;
+    int x = thePlayer->xloc;
+    int y = thePlayer->yloc;
     if(m->grid[y][x+1] == '#' || m->grid[y][x+1] == '.' ){
-        return moveRight(pc); static void clearData()        
+        return moveRight(pc);        
     }
 }
 static int bottomRight(void){
-    int x = pc->xloc;
-    int y = pc->yloc;
+    int x = thePlayer->xloc;
+    int y = thePlayer->yloc;
     if(m->grid[y+1][x+1] == '#' || m->grid[y+1][x+1] == '.' ){
         return moveBottomRight(pc);         
     }
 }
 static int bottom(void){
-    int x = pc->xloc;
-    int y = pc->yloc;
+    int x = thePlayer->xloc;
+    int y = thePlayer->yloc;
     if(m->grid[y+1][x] == '#' || m->grid[y+1][x] == '.' ){
         return moveDown(pc);         
     }
 }
 static int bottomLeft(void){
-    int x = pc->xloc;
-    int y = pc->yloc;
+    int x = thePlayer->xloc;
+    int y = thePlayer->yloc;
     if(m->grid[y+1][x-1] == '#' || m->grid[y+1][x-1] == '.' ){
         return moveBottomLeft(pc);         
     }
 }
 static int left(void){
-    int x = pc->xloc;
-    int y = pc->yloc;
+   int x = thePlayer->xloc;
+    int y = thePlayer->yloc;
     if(m->grid[y][x-1] == '#' || m->grid[y][x-1] == '.' ){
         return moveLeft(pc);         
     }
 }
 static int upStairs(void){
-    int x = pc->xloc;
-    int y = pc->yloc;
+    int x = thePlayer->xloc;
+    int y = thePlayer->yloc;
     if(m->grid[y][x-1] == '<' ){
         clearData();
         reInitMap(NUMBER_OF_MONSTERS);
@@ -152,8 +157,8 @@ static int upStairs(void){
     return 0;
 }
 static int downStairs(void){
-    int x = pc->xloc;
-    int y = pc->yloc;
+    int x = thePlayer->xloc;
+    int y = thePlayer->yloc;
     if(m->grid[y][x-1] == '>' ){
         clearData();
         reInitMap(NUMBER_OF_MONSTERS);
@@ -171,7 +176,7 @@ static void clearData(){
 
 static void displayEnemyStatus(void){
     wrefresh(window);
-    Window monsterStats = newwin(21,100,0,0);
+    WINDOW monsterStats = newwin(21,100,0,0);
     Monster* monsters[NUMBER_OF_MONSTERS];
     Monster *tem;
     int counter=0;
@@ -181,8 +186,71 @@ static void displayEnemyStatus(void){
     }
     int cou;
     for(cou=0;cou<counter;cou++){
-        Monster *mo =monsters[cou];
-        mvwprintw(window,i,j,"P");
+        Monster *mo; 
+        mo = monsters[cou];
+        binheap_insert(heap, mo);
+        if(!mo->thePlayer){
+        char string[19];
+        char temp = 'p';
+        if(mo->bigPeople){
+            temp = 'P';
+        }
+        if(mo->dragon){
+            temp ='D';
+        }
+        string[0] = temp;
+        string[1] = ' ';
+        
+        int xtemppc = thePlayer->xloc;
+        int ytemppc = thePlayer->yloc;
+        
+        int xtempmon = mo->xloc;
+        int ytempmon = mo->yloc;
+        if(xtemppc<xtempmon){
+            string[2]='E';
+            string[3]='A';
+            string[4]='S';
+            string[5]='T';
+            string[6]=':';
+            string[7]=xtempmon-xtemppc;
+        }
+        if(xtemppc>xtempmon){
+            string[2]='W';
+            string[3]='E';
+            string[4]='S';
+            string[5]='T';
+            string[6]=':';
+            string[7]=xtemppc-xtempmon;
+        }
+        if(xtemppc==xtempmon){
+            string[2]=' ';
+            string[3]=' ';
+            string[4]=' ';
+            string[5]=' ';
+            string[6]=' ';
+            string[7]=' ';
+        }
+        string[8]=' ';
+        if(ytemppc<ytempmon){
+            string[9]='N';
+            string[10]='O';
+            string[11]='R';
+            string[12]='T';
+            string[13]='H';
+            string[14]=':';
+            string[15] = ytempmon-ytemppc;
+        }
+        if(ytemppc>ytempmon){
+            string[9]='S';
+            string[10]='O';
+            string[11]='U';
+            string[12]='T';
+            string[13]='H';
+            string[14]=':';
+            string[15] = ytemppc-ytempmon;
+        }
+        mvwprintw(monsterStats,counter,0,"P");
+        }
     }
-
+wrefresh(monsterStats);
 }
