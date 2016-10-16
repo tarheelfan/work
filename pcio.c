@@ -31,9 +31,9 @@ WINDOW *temppoint;
 
 
 int performPCMove(Monster *pci){    
-    int done = 0;
+    int done = 1;
     pc = pci;
-    while(!done){
+    while(done){
         ch = getch();
         switch(ch){
             case 7 :
@@ -84,7 +84,7 @@ int performPCMove(Monster *pci){
                 if(userCommand == ESCAPE){
                     free(temppoint);
                     wrefresh(window);
-                    clear();
+                    //clear();
                 }
                 break;
             case QUIT :
@@ -97,94 +97,102 @@ int performPCMove(Monster *pci){
 static int upLeft(void){
     int x = m->thePlayer->xloc;
     int y = m->thePlayer->yloc;
-    if(m->grid[y-1][x-1] == '#' || m->grid[y-1][x-1] == '.' ){
+    if(m->grid[y-1][x-1] == '#' || m->grid[y-1][x-1] == '.' || m->grid[y-1][x-1] == '<' || m->grid[y-1][x-1] == '>'){
         return moveTopLeft(pc);
     }
-    return 0;
+    return 1;
 }
 static int up(void){
     int x = m->thePlayer->xloc;
     int y = m->thePlayer->yloc;
-    if(m->grid[y-1][x] == '#' || m->grid[y-1][x] == '.' ){
+    if(m->grid[y-1][x] == '#' || m->grid[y-1][x] == '.' || m->grid[y-1][x] == '<' || m->grid[y-1][x] == '>'){
        return moveUp(pc);
     }
-    return 0;
+    return 1;
 }
 static int upRight(void){
     int x = m->thePlayer->xloc;
     int y = m->thePlayer->yloc;
-    if(m->grid[y-1][x+1] == '#' || m->grid[y-1][x+1] == '.' ){
+    if(m->grid[y-1][x+1] == '#' || m->grid[y-1][x+1] == '.' || m->grid[y-1][x+1] == '<' || m->grid[y-1][x+1] == '>'){
         return moveTopRight(pc);         
     }
-    return 0;
+    return 1;
 }
 static int right(void){
     int x = m->thePlayer->xloc;
     int y = m->thePlayer->yloc;
-    if(m->grid[y][x+1] == '#' || m->grid[y][x+1] == '.' ){
+    if(m->grid[y][x+1] == '#' || m->grid[y][x+1] == '.' || m->grid[y][x+1] == '<' || m->grid[y][x+1] == '>'){
         return moveRight(pc);        
     }
-    return 0;
+    return 1;
 }
 static int bottomRight(void){
     int x = m->thePlayer->xloc;
     int y = m->thePlayer->yloc;
-    if(m->grid[y+1][x+1] == '#' || m->grid[y+1][x+1] == '.' ){
+    if(m->grid[y+1][x+1] == '#' || m->grid[y+1][x+1] == '.' || m->grid[y+1][x+1] == '<' || m->grid[y+1][x+1] == '>'){
         return moveBottomRight(pc);         
     }
-    return 0;
+    return 1;
 }
 static int bottom(void){
     int x = m->thePlayer->xloc;
     int y = m->thePlayer->yloc;
-    if(m->grid[y+1][x] == '#' || m->grid[y+1][x] == '.' ){
+    if(m->grid[y+1][x] == '#' || m->grid[y+1][x] == '.' || m->grid[y+1][x] == '<' || m->grid[y+1][x] == '>'){
         return moveDown(pc);         
     }
-    return 0;
+    return 1;
 }
 static int bottomLeft(void){
     int x = m->thePlayer->xloc;
     int y = m->thePlayer->yloc;
-    if(m->grid[y+1][x-1] == '#' || m->grid[y+1][x-1] == '.' ){
+    if(m->grid[y+1][x-1] == '#' || m->grid[y+1][x-1] == '.' || m->grid[y+1][x-1] == '<' || m->grid[y+1][x-1] == '>'){
         return moveBottomLeft(pc);         
     }
-    return 0;
+    return 1;
 }
 static int left(void){
    int x = m->thePlayer->xloc;
     int y = m->thePlayer->yloc;
-    if(m->grid[y][x-1] == '#' || m->grid[y][x-1] == '.' ){
+    if(m->grid[y][x-1] == '#' || m->grid[y][x-1] == '.' || m->grid[y][x-1] == '<' || m->grid[y][x-1] == '>' ){
         return moveLeft(pc);         
     }
-    return 0;
+    return 1;
 }
 static int upStairs(void){
     int x = m->thePlayer->xloc;
     int y = m->thePlayer->yloc;
-    if(m->grid[y][x-1] == '<' ){
+    if(m->grid[y][x] == '>' ){
         clearData();
         reInitMap(NUMBER_OF_MONSTERS);
         playGame();
-        return 1;
+        return 0;
     }
-    return 0;
+    return 1;
 }
 static int downStairs(void){
     int x = m->thePlayer->xloc;
     int y = m->thePlayer->yloc;
-    if(m->grid[y][x-1] == '>' ){
+    if(m->grid[y][x] == '<' ){
         clearData();
         reInitMap(NUMBER_OF_MONSTERS);
         playGame();
-        return 1;
+        return 0;
     }
-    return 0;
+    return 1;
 }
 static void clearData(){
     while(!binheap_is_empty(&heap)){
         deconstructor(binheap_remove_min(&heap));
     }
-    free(m);
+    int x,y;for(x=0;x<21;x++){
+        for(y=0;y<80;y++){
+            m->distanceGrid[x][y].distance=0;
+            m->grid[x][y]='\0';
+            monsterArray[x][y]=NULL;        
+        }
+    }
+    
+    //free(m);
 }
 
 static WINDOW* displayEnemyStatus(void){

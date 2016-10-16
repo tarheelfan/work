@@ -148,7 +148,7 @@ void deconstructor(Monster *m){
     if(temp!=NULL){
         (*temp).alive=0;
     }
-    if(m->grid[ytemp-1][xtemp]==('#') || m->grid[ytemp-1][xtemp]==('.')){
+    if(m->grid[ytemp-1][xtemp]==('#') || m->grid[ytemp-1][xtemp]==('.') || m->grid[ytemp-1][xtemp]==('<') || m->grid[ytemp-1][xtemp]==('>')){
        monsterArray[ytemp-1][xtemp] = mon;
        (*mon).yloc=ytemp-1; 
     }else{
@@ -186,7 +186,7 @@ void deconstructor(Monster *m){
     if(temp!=NULL){
         (*temp).alive=0;
     }
-    if(m->grid[ytemp+1][xtemp]==('#') || m->grid[ytemp+1][xtemp]==('.')){/*y+1,x*/
+    if(m->grid[ytemp+1][xtemp]==('#') || m->grid[ytemp+1][xtemp]==('.') || m->grid[ytemp+1][xtemp]==('<') || m->grid[ytemp+1][xtemp]==('>')){/*y+1,x*/
        monsterArray[ytemp+1][xtemp] = mon;/*y+1,x*/
        (*mon).yloc=ytemp+1; /*y+1,x*/
     }else{
@@ -223,7 +223,7 @@ void deconstructor(Monster *m){
     if(temp!=NULL){
         (*temp).alive=0;
     }
-    if(m->grid[ytemp][xtemp+1]==('#') || m->grid[ytemp][xtemp+1]==('.')){/*y,x+1*/
+    if(m->grid[ytemp][xtemp+1]==('#') || m->grid[ytemp][xtemp+1]==('.') || m->grid[ytemp][xtemp+1]==('<') || m->grid[ytemp][xtemp+1]==('>')){/*y,x+1*/
        monsterArray[ytemp][xtemp+1] = mon;/*y,x+1*/
        (*mon).xloc=xtemp+1; /*y,x+1*/
     }else{
@@ -262,7 +262,7 @@ void deconstructor(Monster *m){
     if(temp!=NULL){
         (*temp).alive=0;
     }
-    if(m->grid[ytemp][xtemp-1]==('#') || m->grid[ytemp][xtemp-1]==('.')){/*y,x-1*/
+    if(m->grid[ytemp][xtemp-1]==('#') || m->grid[ytemp][xtemp-1]==('.') || m->grid[ytemp][xtemp-1]==('>') || m->grid[ytemp][xtemp-1]==('<')){/*y,x-1*/
        monsterArray[ytemp][xtemp-1] = mon;/*y,x-1*/
        (*mon).xloc=xtemp-1; /*y,x-1*/
     }else{
@@ -301,7 +301,7 @@ void deconstructor(Monster *m){
     if(temp!=NULL){
         (*temp).alive=0;
     }
-    if(m->grid[ytemp-1][xtemp+1]==('#') || m->grid[ytemp-1][xtemp+1]==('.')){/*y-1,x+1*/
+    if(m->grid[ytemp-1][xtemp+1]==('#') || m->grid[ytemp-1][xtemp+1]==('.') || m->grid[ytemp-1][xtemp+1]==('>') || m->grid[ytemp-1][xtemp+1]==('<')){/*y-1,x+1*/
        monsterArray[ytemp-1][xtemp+1] = mon;/*y-1,x+1*/
        (*mon).yloc=ytemp-1;/*y-1,x+1*/
         (*mon).xloc=xtemp+1;
@@ -342,7 +342,7 @@ void deconstructor(Monster *m){
     if(temp!=NULL){
         (*temp).alive=0;
     }
-    if(m->grid[ytemp-1][xtemp-1]==('#') || m->grid[ytemp-1][xtemp-1]==('.') ){/*y-1,x-1*/
+    if(m->grid[ytemp-1][xtemp-1]==('#') || m->grid[ytemp-1][xtemp-1]==('.') || m->grid[ytemp-1][xtemp-1]==('<') || m->grid[ytemp-1][xtemp-1]==('>')){/*y-1,x-1*/
        monsterArray[ytemp-1][xtemp-1] = mon;/*y-1,x-1*/
        (*mon).yloc=ytemp-1;/*y-1,x-1*/
         (*mon).xloc=xtemp-1;
@@ -383,7 +383,7 @@ void deconstructor(Monster *m){
     if(temp!=NULL){
         (*temp).alive=0;
     }
-    if(m->grid[ytemp+1][xtemp-1]==('#') || m->grid[ytemp+1][xtemp-1]==('.')) {/*y+1,x-1*/
+    if(m->grid[ytemp+1][xtemp-1]==('#') || m->grid[ytemp+1][xtemp-1]==('.') || m->grid[ytemp+1][xtemp-1]==('>') || m->grid[ytemp+1][xtemp-1]==('<')) {/*y+1,x-1*/
        monsterArray[ytemp+1][xtemp-1] = mon;/*y+1,x-1*/
        (*mon).yloc=ytemp+1;/*y+1,x-1*/
         (*mon).xloc=xtemp-1;
@@ -424,7 +424,7 @@ void deconstructor(Monster *m){
     if(temp!=NULL){
         (*temp).alive=0;
     }
-    if(m->grid[ytemp+1][xtemp+1]==('#') || m->grid[ytemp-1][xtemp]==('.')){/*y+1,x+1*/
+    if(m->grid[ytemp+1][xtemp+1]==('#') || m->grid[ytemp-1][xtemp]==('.') || m->grid[ytemp-1][xtemp]==('>') || m->grid[ytemp-1][xtemp]==('<')){/*y+1,x+1*/
        monsterArray[ytemp+1][xtemp+1] = mon;/*y+1,x+1*/
        (*mon).yloc=ytemp+1;/*y+1,x+1*/
         (*mon).xloc=xtemp+1;
@@ -807,7 +807,7 @@ static void getDirections(Monster *npc){/*Hey Shane please work here on this fun
     volatile int bottom =0;
     volatile int bottomRight=0;
     /*Top Left*/
-    if(xhere-1!=0 && yhere-1!=0 && (m->grid[yhere-1][xhere-1]==('#') || m->grid[yhere-1][xhere-1]==('.'))){
+    if(xhere-1!=0 && yhere-1!=0 && (m->grid[yhere-1][xhere-1]==('#') || m->grid[yhere-1][xhere-1]==('.') || m->grid[yhere-1][xhere-1]==('<') || m->grid[yhere-1][xhere-1]==('>'))){
             int temp = m->nonTunnelingDistanceGrid[yhere-1][xhere-1].distance;
             if(temp==0){
                 done=1;
@@ -825,7 +825,7 @@ static void getDirections(Monster *npc){/*Hey Shane please work here on this fun
             }
     }
     /*Top*/
-    if(yhere-1!=0 && (m->grid[yhere-1][xhere]==('#') || m->grid[yhere-1][xhere]==('.'))){
+    if(yhere-1!=0 && (m->grid[yhere-1][xhere]==('#') || m->grid[yhere-1][xhere]==('.') || m->grid[yhere-1][xhere]==('<') || m->grid[yhere-1][xhere]==('>'))){
             int temp = m->nonTunnelingDistanceGrid[yhere-1][xhere].distance;
             if(temp==0){
                 done=1;
@@ -843,7 +843,7 @@ static void getDirections(Monster *npc){/*Hey Shane please work here on this fun
             }
     }
     /*TopRight*/
-    if((xhere+1!=79 && yhere-1!=0) && (m->grid[yhere-1][xhere+1]=='#' || m->grid[yhere-1][xhere+1]=='.')){
+    if((xhere+1!=79 && yhere-1!=0) && (m->grid[yhere-1][xhere+1]=='#' || m->grid[yhere-1][xhere+1]=='.' || m->grid[yhere-1][xhere+1]=='<' || m->grid[yhere-1][xhere+1]=='>'  )){
             int temp = m->nonTunnelingDistanceGrid[yhere-1][xhere+1].distance;
             if(temp==0){
                 done=1;
@@ -861,7 +861,7 @@ static void getDirections(Monster *npc){/*Hey Shane please work here on this fun
             }
     }
     /*Left*/
-    if(xhere-1!=0 && (m->grid[yhere][xhere-1]==('#') || m->grid[yhere][xhere-1]==('.'))){
+    if(xhere-1!=0 && (m->grid[yhere][xhere-1]==('#') || m->grid[yhere][xhere-1]==('.') || m->grid[yhere][xhere-1]==('>') || m->grid[yhere][xhere-1]==('<'))){
             int temp = m->nonTunnelingDistanceGrid[yhere][xhere-1].distance;
             if(temp==0){
                 done=1;
@@ -879,7 +879,7 @@ static void getDirections(Monster *npc){/*Hey Shane please work here on this fun
             }   
     }
     /*Right*/
-    if(xhere+1!=79 && (m->grid[yhere][xhere+1]==('#') || m->grid[yhere][xhere+1]==('.'))){
+    if(xhere+1!=79 && (m->grid[yhere][xhere+1]==('#') || m->grid[yhere][xhere+1]==('.') || m->grid[yhere][xhere+1]==('>') || m->grid[yhere][xhere+1]==('<'))){
             int temp = m->nonTunnelingDistanceGrid[yhere][xhere+1].distance;
             if(temp==0){
                 done=1;
@@ -897,7 +897,7 @@ static void getDirections(Monster *npc){/*Hey Shane please work here on this fun
             }
     }
     /*BottomLeft*/
-    if(xhere-1!=0 && yhere+1!=20 && (m->grid[yhere+1][xhere-1]==('#') || m->grid[yhere+1][xhere-1]==('.'))){
+    if(xhere-1!=0 && yhere+1!=20 && (m->grid[yhere+1][xhere-1]==('#') || m->grid[yhere+1][xhere-1]==('.') || m->grid[yhere+1][xhere-1]==('>') || m->grid[yhere+1][xhere-1]==('<'))){
             int temp = m->nonTunnelingDistanceGrid[yhere+1][xhere-1].distance;
             if(temp==0){
                 done=1;
@@ -915,7 +915,7 @@ static void getDirections(Monster *npc){/*Hey Shane please work here on this fun
             }
     }
     /*Bottom*/
-    if(yhere+1!=79 && (m->grid[yhere+1][xhere]==('#') || m->grid[yhere+1][xhere]==('.'))){
+    if(yhere+1!=79 && (m->grid[yhere+1][xhere]==('#') || m->grid[yhere+1][xhere]==('.') || m->grid[yhere+1][xhere]==('>') || m->grid[yhere+1][xhere]==('<'))){
             int temp = m->nonTunnelingDistanceGrid[yhere+1][xhere].distance;
             if(temp==0){
                 done=1;
@@ -933,7 +933,7 @@ static void getDirections(Monster *npc){/*Hey Shane please work here on this fun
             }
     }
     /*BottomRight*/
-    if(xhere+1!=79 && yhere+1!=20 && (m->grid[yhere+1][xhere+1]==('#') || m->grid[yhere+1][xhere+1]==('.'))){
+    if(xhere+1!=79 && yhere+1!=20 && (m->grid[yhere+1][xhere+1]==('#') || m->grid[yhere+1][xhere+1]==('.') || m->grid[yhere+1][xhere+1]==('>') || m->grid[yhere+1][xhere+1]==('<'))){
             int temp = m->nonTunnelingDistanceGrid[yhere+1][xhere+1].distance;
             if(temp==0){
                 done=1;

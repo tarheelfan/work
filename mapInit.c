@@ -81,6 +81,9 @@ void playGame(){
                 }
             }
         }
+        printGrid();
+        wrefresh(window);
+        //clear();
         analyzeDistances();
         analyzeDistancesPlus();
         if((*tem).alive){
@@ -92,9 +95,7 @@ void playGame(){
         }else{
             deconstructor(tem);
         }
-        printGrid();
-        wrefresh(window);
-        clear();
+        
         
     }
 }
@@ -166,7 +167,7 @@ int32_t compare_cell(const void *key,const void *with){
 }
 
 
-static void analyzeDistancesPlus(void){//x loc 17 loc 6
+static void analyzeDistancesPlus(void){
     int xPre=0;
     int yPre=0;
 
@@ -327,6 +328,8 @@ static void initRooms(void){
                 (*m).rooms[size]=*p;
                 size++;
                 done='t';
+            }else{
+                free(p);
             }
         }
     }
@@ -489,8 +492,11 @@ static int contains(Room *inside,Room *out){
 static Room* createRoom(void){
     char done ='n';
     Room *room;
-    room = (Room*)malloc(sizeof( Room));
     while(done!='y'){
+    room = malloc(sizeof( Room));
+    if(room){
+       
+    
         int height = rand();
         height = height % 7;
         if(height<5){
@@ -519,7 +525,7 @@ static Room* createRoom(void){
         (*room).bottomRight[0]=locx+height;
         (*room).bottomRight[1]=locy+width;
     }
-   
+    }
     return room;
 }
 
@@ -672,7 +678,7 @@ int initMap(int numOfMonster){
     initBorder();
     initRooms();
     /*Stair Case Generation*/
-    int count = (rand()%5)+1;
+    int count = (rand()%35)+1;
     int counter =0;
     while(counter<count){
         int xrand = rand()%80;
@@ -702,8 +708,6 @@ int initMap(int numOfMonster){
     return 0;
 }
 void reInitMap(int num_of_mon){
-     m = (Map*)malloc(sizeof(Map));
-   
     initBorder();
     initRooms();
     /*Stair Case Generation*/
