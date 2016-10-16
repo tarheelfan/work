@@ -24,7 +24,7 @@ static int downStairs(void);
 static void clearData();
 static WINDOW* displayEnemyStatus(void);
 /*Global Data*/
-int ch; /*command*/
+char ch; /*command*/
 Monster *pc;
 WINDOW *temppoint;
 /*******************/
@@ -74,9 +74,11 @@ int performPCMove(Monster *pci){
             case '<':
                 done =downStairs();
                 break;
-            case 5 : /*Rest*/
-            case ' ':
+           // case 5 : /*Rest*/
+            case ' ' :
+            case '5' :
                 /*Do Nothing*/
+                done =0;
                 break;
             case 'm':
                 temppoint = displayEnemyStatus();
@@ -89,6 +91,7 @@ int performPCMove(Monster *pci){
                 break;
             case QUIT :
                 return 1;
+                break;
         }
     }
     return 0;
