@@ -2,8 +2,8 @@
 #include <ncurses.h>
 #include "gameMap.h"
 #include <stdint.h>
+#include <stdio.h>
 #include <stdlib.h>
-#define ESCAPE 27
 
 #define UP_STAIRS '<'
 #define DOWN_STAIRS '>'
@@ -22,7 +22,7 @@ static int upRight(void);
 static int upStairs(void);
 static int downStairs(void);
 static void clearData();
-static WINDOW* displayEnemyStatus(void);
+static void displayEnemyStatus(void);
 /*Global Data*/
 char ch; /*command*/
 Monster *pc;
@@ -54,7 +54,7 @@ int performPCMove(Monster *pci){
                 break;
             case 'n':
             case 3 : /*Bottom Right*/
-                done = bottomRight();
+           done = bottomRight();
                 break;
             case 'j':
             case 2: /*Bottom*/
@@ -81,12 +81,12 @@ int performPCMove(Monster *pci){
                 done =0;
                 break;
             case 'm':
-                temppoint = displayEnemyStatus();
+                displayEnemyStatus();
                 char userCommand = getch();
-                if(userCommand == ESCAPE){
-                    free(temppoint);
+                if(userCommand == 27){
+                    printGrid();
                     wrefresh(window);
-                    //clear();
+                    
                 }
                 break;
             case QUIT :
@@ -198,25 +198,24 @@ static void clearData(){
     //free(m);
 }
 
-static WINDOW* displayEnemyStatus(void){
+static void displayEnemyStatus(void){
     wrefresh(window);
-    WINDOW *monsterStats; 
-    monsterStats = newwin(21,100,0,0);
     Monster* monsters[NUMBER_OF_MONSTERS];
     Monster *tem;
-    int counter=0;
-    tem = (Monster*)binheap_remove_min(&heap);
-    while(tem){
-        monsters[counter]=tem;
-        counter++;
+    int numOfMon = heap.size;
+    int x;
+    for(x=0;x<numOfMon;x++){
+         tem = (Monster*)binheap_remove_min(&heap);
+         monsters[x]=tem;
     }
     int cou;
-    for(cou=0;cou<counter;cou++){
+    for(cou=0;cou<numOfMon;cou++){
         Monster *mo; 
         mo = monsters[cou];
         binheap_insert(&heap, mo);
         if(!mo->thePlayer){
-        char string[19];
+        char string[8];
+        char string2[6];
         char temp = 'p';
         if(mo->bigPeople){
             temp = 'P';
@@ -232,13 +231,21 @@ static WINDOW* displayEnemyStatus(void){
         
         int xtempmon = mo->xloc;
         int ytempmon = mo->yloc;
+        int xval = xtempmon - xtemppc;
+        if(xval<0){
+            xval=xval*-1;
+        } 
+        int yval = ytempmon-ytemppc;
+        if(yval<0){
+            yval=yval*-1;
+        }
+
         if(xtemppc<xtempmon){
             string[2]='E';
             string[3]='A';
             string[4]='S';
             string[5]='T';
             string[6]=':';
-            string[7]=xtempmon-xtemppc;
         }
         if(xtemppc>xtempmon){
             string[2]='W';
@@ -246,7 +253,8 @@ static WINDOW* displayEnemyStatus(void){
             string[4]='S';
             string[5]='T';
             string[6]=':';
-            string[7]=xtemppc-xtempmon;
+           
+        
         }
         if(xtemppc==xtempmon){
             string[2]=' ';
@@ -255,29 +263,35 @@ static WINDOW* displayEnemyStatus(void){
             string[5]=' ';
             string[6]=' ';
             string[7]=' ';
+            string[8]=' ';
         }
-        string[8]=' ';
+        string[7]=' ';
         if(ytemppc<ytempmon){
-            string[9]='N';
-            string[10]='O';
-            string[11]='R';
-            string[12]='T';
-            string[13]='H';
-            string[14]=':';
-            string[15] = ytempmon-ytemppc;
+            string2[0]='N';
+            string2[1]='O';
+            string2[2]='R';
+            string2[3]='T';
+            string2[4]='H';
+            string2[5]=':';
+            
+        
         }
         if(ytemppc>ytempmon){
-            string[9]='S';
-            string[10]='O';
-            string[11]='U';
-            string[12]='T';
-            string[13]='H';
-            string[14]=':';
-            string[15] = ytemppc-ytempmon;
+            string2[0]='S';
+            string2[1]='O';
+            string2[2]='U';
+            string2[3]='T';
+            string2[4]='H';
+            string2[5]=':';
+            
+           
         }
-        mvwprintw(monsterStats,counter,0,string);
+        printw("%s\n"," ");
+        printw("%s",string);
+        printw("%i",xval);
+        printw("  %s",string2);
+        printw("%i\n",yval);
         }
     }
-wrefresh(monsterStats);
-return monsterStats;
 }
+
