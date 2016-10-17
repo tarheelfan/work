@@ -83,7 +83,6 @@ void playGame(){
         }
         printGrid();
         wrefresh(window);
-        //clear();
         analyzeDistances();
         analyzeDistancesPlus();
         if((*tem).alive){
@@ -495,8 +494,6 @@ static Room* createRoom(void){
     while(done!='y'){
     room = malloc(sizeof( Room));
     if(room){
-       
-    
         int height = rand();
         height = height % 7;
         if(height<5){
@@ -670,7 +667,7 @@ int NUMBER_OF_MONSTERS;
 int initMap(int numOfMonster){
     initscr(); /*starts curses mode*/
     
-    window = newwin(21,80,0,0); /*Creates Window*/
+    window = newwin(24,80,0,0); /*Creates Window*/
     numberOfMonster=numOfMonster;
     NUMBER_OF_MONSTERS = numberOfMonster;
     m = (Map*)malloc(sizeof(Map));
@@ -754,19 +751,19 @@ void reInitMap(int num_of_mon){
                
                 if(tempMon!=NULL){
                     if(tempMon->bigPeople){
-                        mvwprintw(window,i,j,"P");
+                        mvwprintw(window,i+3,j,"P");
                     }
                     if(tempMon->dragon){
-                        mvwprintw(window,i,j,"D");
+                        mvwprintw(window,i+3,j,"D");
                     }
                     if(tempMon->thePlayer){
-                        mvwprintw(window,i,j,"@");
+                        mvwprintw(window,i+3,j,"@");
                     }
                     if(tempMon->other){
-                        mvwprintw(window,i,j,"p");
+                        mvwprintw(window,i+3,j,"p");
                     }
             }else{
-                mvwprintw(window,i,j,temp);
+                mvwprintw(window,i+3,j,temp);
             }   
         }
     }
