@@ -7,8 +7,6 @@
 
 #define UP_STAIRS '<'
 #define DOWN_STAIRS '>'
-#define SCROLL_UP KEY_UP
-#define SCROLL_DOWN KEY_DOWN
 #define QUIT 'Q'
 
 static int upLeft(void);
@@ -22,7 +20,7 @@ static int upRight(void);
 static int upStairs(void);
 static int downStairs(void);
 static void clearData();
-static void displayEnemyStatus(void);
+static void displayEnemyStatus(int scale);
 /*Global Data*/
 char ch; /*command*/
 Monster *pc;
@@ -31,7 +29,9 @@ WINDOW *temppoint;
 
 
 int performPCMove(Monster *pci){    
+    int scale=0;
     int done = 1;
+    int escape=0;
     pc = pci;
     while(done){
         ch = getch();
@@ -81,13 +81,31 @@ int performPCMove(Monster *pci){
                 done =0;
                 break;
             case 'm':
-                displayEnemyStatus();
+                while(!escape){
+                clear();
+                refresh();
+                clear();
+                displayEnemyStatus(scale);
                 char userCommand = getch();
-                if(userCommand == 27){
+                if(userCommand==27){
+                getch();
+                userCommand = getch();
+                escape=1;
+                if(userCommand=='B'){ /*Down List*/
+                    scale++;
+                    escape=0;
+                }
+                if(userCommand=='A'){ /*Up Arrow*/
+                    if(scale>-1){
+                        scale--;
+                        escape=0;
+                    }
+                }
+                }
+                }
+                    clear();
                     printGrid();
                     wrefresh(window);
-                    
-                }
                 break;
             case QUIT :
                 return 1;
@@ -198,7 +216,7 @@ static void clearData(){
     //free(m);
 }
 
-static void displayEnemyStatus(void){
+static void displayEnemyStatus(int scale){
     wrefresh(window);
     Monster* monsters[NUMBER_OF_MONSTERS];
     Monster *tem;
@@ -208,11 +226,15 @@ static void displayEnemyStatus(void){
          tem = (Monster*)binheap_remove_min(&heap);
          monsters[x]=tem;
     }
+    int ui;
+    for(ui=0;ui<numOfMon;ui++){
+        binheap_insert(&heap, monsters[ui]);
+    }
     int cou;
-    for(cou=0;cou<numOfMon;cou++){
+    for(cou=0+scale;cou<numOfMon && cou<11+scale;cou++){
         Monster *mo; 
         mo = monsters[cou];
-        binheap_insert(&heap, mo);
+        if(mo){
         if(!mo->thePlayer){
         char string[8];
         char string2[6];
@@ -291,6 +313,7 @@ static void displayEnemyStatus(void){
         printw("%i",xval);
         printw("  %s",string2);
         printw("%i\n",yval);
+        }
         }
     }
 }

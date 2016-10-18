@@ -37,7 +37,7 @@ int main (int argc, char* argv[]){
 }
 int initGame(void){
       if(1){/*Code Changed for Purpose of Debugging*/
-        initMap(2);
+        initMap(20);
       }else{
           printf("Need The Number of Monsters and --nummon command \n");
           return 1;
