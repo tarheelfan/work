@@ -34,38 +34,35 @@ int performPCMove(Monster *pci){
     int escape=0;
     pc = pci;
     while(done){
+        printGrid();
+        wrefresh(window);
         ch = getch();
         switch(ch){
-            case 7 :
-            case 'y': /*Up Left*/
+            
+            case 7 : case 'y': /*Up Left*/
                 done=upLeft();
                 break;
-            case 8 : /*Up*/
-            case 'k':
+             
+           case 8 : case 'k': /*Up*/
                 done=up();
                 break;
-            case 'u': /*Up Right*/
-            case 9 :
-                done = upRight();
+            
+            case 'u': case 9 :
+                done = upRight(); /*Up Right*/
                 break;
-            case 'l' : /*Right*/
-            case 6 :
+            case 'l' :  case 6 : /*Right*/
                 done = right();
                 break;
-            case 'n':
-            case 3 : /*Bottom Right*/
+           case 'n': case 3 : /*Bottom Right*/
            done = bottomRight();
                 break;
-            case 'j':
-            case 2: /*Bottom*/
+            case 'j': case 2: /*Bottom*/
                 done = bottom();
                 break;
-            case 'b':
-            case 1: /*Bottom Left*/
+           case 'b':  case 1: /*Bottom Left*/
                 done = bottomLeft();
                 break;
-            case 'h':
-            case 4 : /*Left*/
+          case 'h':  case 4 : /*Left*/
                 done = left();
                 break;
             case '>' :
@@ -75,8 +72,7 @@ int performPCMove(Monster *pci){
                 done =downStairs();
                 break;
            // case 5 : /*Rest*/
-            case ' ' :
-            case '5' :
+           case ' ' : case '5' :
                 /*Do Nothing*/
                 done =0;
                 break;
@@ -84,7 +80,6 @@ int performPCMove(Monster *pci){
                 while(!escape){
                 clear();
                 refresh();
-                clear();
                 displayEnemyStatus(scale);
                 char userCommand = getch();
                 if(userCommand==27){
@@ -212,8 +207,6 @@ static void clearData(){
             monsterArray[x][y]=NULL;        
         }
     }
-    
-    //free(m);
 }
 
 static void displayEnemyStatus(int scale){

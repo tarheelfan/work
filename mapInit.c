@@ -67,7 +67,10 @@ void playGame(){
             binheap_insert(&heap,monster);
         }
     while(!done){
-       
+        printGrid();
+        wrefresh(window);
+        analyzeDistances();
+        analyzeDistancesPlus();
         Monster *tem;
         tem = (Monster*)binheap_remove_min(&heap);
         if((*tem).thePlayer){
@@ -81,10 +84,7 @@ void playGame(){
                 }
             }
         }
-        printGrid();
-        wrefresh(window);
-        analyzeDistances();
-        analyzeDistancesPlus();
+        
         if((*tem).alive){
             performAction(tem);
             tem->roundVal= tem->roundVal + tem->speed;

@@ -45,6 +45,16 @@ int initGame(void){
     return 0;
 }
 void StartGame(void){
+    char ex;
+   printw("Enter Any Key To Start");
+   while(1){
+        ex = getch();
+        
+    if(ex){
+        break;
+    }
+    }
+    
     playGame();
 }
 void closeGame(void){
