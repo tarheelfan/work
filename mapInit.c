@@ -34,7 +34,6 @@ static struct xy getCoords();
 static char getAsci(int num);
 static void analyzeDistancesPlus(void);
 binheap_t heap;
-WINDOW *window;
 struct xy{
     int x;
     int y;
@@ -63,12 +62,10 @@ void playGame(){
             if(!x){
                 m->thePlayer=monster;
             }
-           
             binheap_insert(&heap,monster);
         }
     while(!done){
         printGrid();
-        wrefresh(window);
         analyzeDistances();
         analyzeDistancesPlus();
         Monster *tem;
@@ -129,7 +126,7 @@ static void initBorder(void){
               (*m).hardness[e][ein]=0;  
             }
             (*m).hardness[e][ein]=(rand()%243)+2;
-            //(*m).hardness[e][ein]=2;
+            
         }
     }
     for(count=0;count<80;count++){
@@ -666,8 +663,15 @@ static char getAsci(int num){
 int NUMBER_OF_MONSTERS;
 int initMap(int numOfMonster){
     initscr(); /*starts curses mode*/
-    
-    window = newwin(24,80,0,0); /*Creates Window*/
+    raw();
+    noecho();
+    curs_set(0);
+    keypad(stdscr, TRUE);
+    start_color();
+
+    //window = newwin(24,80,0,0); /*Creates Window*/
+    init_pair(0,COLOR_BLACK,COLOR_GREEN);
+    attron(0);
     numberOfMonster=numOfMonster;
     NUMBER_OF_MONSTERS = numberOfMonster;
     m = (Map*)malloc(sizeof(Map));
@@ -751,19 +755,19 @@ void reInitMap(int num_of_mon){
                
                 if(tempMon!=NULL){
                     if(tempMon->bigPeople){
-                        mvwprintw(window,i+3,j,"P");
+                        mvaddch(i+3,j,'P');
                     }
                     if(tempMon->dragon){
-                        mvwprintw(window,i+3,j,"D");
+                        mvaddch(i+3,j,'D');
                     }
                     if(tempMon->thePlayer){
-                        mvwprintw(window,i+3,j,"@");
+                        mvaddch(i+3,j,'@');
                     }
                     if(tempMon->other){
-                        mvwprintw(window,i+3,j,"p");
+                        mvaddch(i+3,j,'p');
                     }
             }else{
-                mvwprintw(window,i+3,j,temp);
+                mvaddch(i+3,j,temp[0]);
             }   
         }
     }
@@ -822,11 +826,8 @@ void printDistanceGridPlus(){
                         printf("%c",sample);
                         }
                     }
-
                 }
-                
             }
-            
         }
         printf("%c\n",' ');
     }

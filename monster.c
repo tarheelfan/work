@@ -480,6 +480,7 @@ void performAction(Monster *mon){
     }
     if(mon->thePlayer){
         if(performPCMove(mon)){
+            system("reset");
             exit(0);
         }
         return;

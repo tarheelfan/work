@@ -95,5 +95,5 @@ int performPCMove(Monster *pci);
 extern Monster* monsterArray[21][80];
 extern Map *m;
 extern int NUMBER_OF_MONSTERS;
-extern WINDOW *window;
+//extern WINDOW *window;
 extern binheap_t heap;

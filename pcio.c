@@ -24,7 +24,7 @@ static void displayEnemyStatus(int scale);
 /*Global Data*/
 char ch; /*command*/
 Monster *pc;
-WINDOW *temppoint;
+//WINDOW *temppoint;
 /*******************/
 
 
@@ -35,34 +35,39 @@ int performPCMove(Monster *pci){
     pc = pci;
     while(done){
         printGrid();
-        wrefresh(window);
-        ch = getch();
+        //wrefresh(window);
+        while(1){
+        ch = getch(); 
+        if(ch){
+            break;
+        }
+        }
         switch(ch){
             
-            case 7 : case 'y': /*Up Left*/
+            case '7' : case 'y': /*Up Left*/
                 done=upLeft();
                 break;
              
-           case 8 : case 'k': /*Up*/
+           case '8' : case 'k': /*Up*/
                 done=up();
                 break;
             
-            case 'u': case 9 :
+            case 'u': case '9' :
                 done = upRight(); /*Up Right*/
                 break;
-            case 'l' :  case 6 : /*Right*/
+            case 'l' :  case '6' : /*Right*/
                 done = right();
                 break;
-           case 'n': case 3 : /*Bottom Right*/
+           case 'n': case '3' : /*Bottom Right*/
            done = bottomRight();
                 break;
-            case 'j': case 2: /*Bottom*/
+            case 'j': case '2': /*Bottom*/
                 done = bottom();
                 break;
-           case 'b':  case 1: /*Bottom Left*/
+           case 'b':  case '1': /*Bottom Left*/
                 done = bottomLeft();
                 break;
-          case 'h':  case 4 : /*Left*/
+          case 'h':  case '4' : /*Left*/
                 done = left();
                 break;
             case '>' :
@@ -81,26 +86,28 @@ int performPCMove(Monster *pci){
                 clear();
                 refresh();
                 displayEnemyStatus(scale);
-                char userCommand = getch();
-                if(userCommand==27){
-                getch();
-                userCommand = getch();
+
+                int32_t userCommand = getch();
+                //if(userCommand==27){
+                //getch();
                 escape=1;
-                if(userCommand=='B'){ /*Down List*/
+                if(userCommand==258){ /*Down List*/
                     scale++;
                     escape=0;
                 }
-                if(userCommand=='A'){ /*Up Arrow*/
-                    if(scale>-1){
-                        scale--;
-                        escape=0;
-                    }
+                if(userCommand==259){ /*Up Arrow*/
+                    escape=0;
+                    scale--;
                 }
-                }
-                }
+                if(userCommand==27){
                     clear();
-                    printGrid();
-                    wrefresh(window);
+                    printw("Loading Buffer");
+                    
+                }
+                //}
+                }
+                escape=0;
+                    
                 break;
             case QUIT :
                 return 1;
@@ -109,6 +116,7 @@ int performPCMove(Monster *pci){
     }
     return 0;
 }
+
 
 static int upLeft(void){
     int x = m->thePlayer->xloc;
@@ -210,14 +218,20 @@ static void clearData(){
 }
 
 static void displayEnemyStatus(int scale){
-    wrefresh(window);
+    //wrefresh(window);
     Monster* monsters[NUMBER_OF_MONSTERS];
     Monster *tem;
     int numOfMon = heap.size;
     int x;
     for(x=0;x<numOfMon;x++){
          tem = (Monster*)binheap_remove_min(&heap);
-         monsters[x]=tem;
+         if(tem->alive){
+             monsters[x]=tem;
+         }else{
+             x--;
+             numOfMon--;
+         }
+         
     }
     int ui;
     for(ui=0;ui<numOfMon;ui++){
@@ -225,12 +239,13 @@ static void displayEnemyStatus(int scale){
     }
     int cou;
     for(cou=0+scale;cou<numOfMon && cou<11+scale;cou++){
+        if(cou>0 && cou<NUMBER_OF_MONSTERS){
         Monster *mo; 
         mo = monsters[cou];
         if(mo){
         if(!mo->thePlayer){
-        char string[8];
-        char string2[6];
+        char string[9];
+        char string2[7];
         char temp = 'p';
         if(mo->bigPeople){
             temp = 'P';
@@ -306,6 +321,7 @@ static void displayEnemyStatus(int scale){
         printw("%i",xval);
         printw("  %s",string2);
         printw("%i\n",yval);
+        }
         }
         }
     }
