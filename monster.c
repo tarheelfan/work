@@ -14,14 +14,14 @@ static void getDirectionsTunneling(Monster *npc);
 static void readDirections(Monster *mon);
 static void moveNearestTunneling(Monster *npc);
 /*Public Class Monster */
-void initList(struct list dir){
+void initList(struct list dir){ //done
     dir.size=0;
 }
-void addToList(struct list dir,int num){
+void addToList(struct list dir,int num){ //done 
     dir.directions[dir.size]=num;
     dir.size++;
 }
-int removeFromList(struct list dir){
+int removeFromList(struct list dir){ //done
     int num = dir.directions[0];
     int x;
     for(x=1;x<dir.size;x++){
@@ -30,34 +30,33 @@ int removeFromList(struct list dir){
     dir.size--;
     return num;
 }
-void reset(struct list dir){
+void reset(struct list dir){ //done
     dir.size=0;
 } 
 
   
 /*Fields for Library*/
-static int maxMonsters;
+static int maxMonsters; //done
 //static Map *m;
-Monster* monsterArray[21][80] = {{NULL}};
-static int numOfMonsters;
-int pcx;
-int pcy;
+Monster* monsterArray[21][80] = {{NULL}}; //done
+static int numOfMonsters; //done
+int pcx; //done
+int pcy; //done
 
 /*Library Static Funcitons*/
-void initMonsterLib(Map *map, int numOfMax){
+void initMonsterLib(Map *map, int numOfMax){ //done
     srand(time(NULL));
     maxMonsters = numOfMax;
-    //m=map;
-    
+    //m=map; 
 }
-int getPCX(){
+int getPCX(){ //done
     return pcx;
 }
-int getPCY(){
+int getPCY(){ //done
     return pcy;
 }
 /*Constructor*/
-Monster* MonsterInit(Map *map,int x,int y,int isPlayer){
+Monster* MonsterInit(Map *map,int x,int y,int isPlayer){ //done
     Monster *monster;
     monster = malloc(sizeof(Monster));
     if(isPlayer){
@@ -73,28 +72,11 @@ Monster* MonsterInit(Map *map,int x,int y,int isPlayer){
     initList(monster->directions);
     monster->thePlayer=0;
     monster->bigPeople=0;
-    
     monster->dragon=0;
     monster->other=0;
     monster->patrolMode=1;
     monster->alive=1;
     monster->characteristics = rand()%16;
-    monster->moveUp=moveUp;
-    monster->moveDown=moveDown;
-    monster->moveRight =moveRight;
-    monster->moveLeft = moveLeft;
-    monster->moveTopRight = moveTopRight;
-    monster->moveTopLeft = moveTopLeft;
-    monster->moveBottomLeft = moveBottomLeft;
-    monster->moveBottomRight = moveBottomRight;
-    monster->modelNumber=numOfMonsters;
-    monster->isIntelegent = isIntelegent;
-    monster->isTelapathic = isTelapathic;
-    monster->canTunnle = canTunnle;
-    monster->isErratic = isErratic;
-    monster->performAction=performAction;
-    monster->deconstructor = deconstructor;
-    
     monster->yloc=y;
     monster->searchLocationY=y;
     monster->searchLocationX=x;
@@ -450,25 +432,27 @@ void deconstructor(Monster *m){
     
     return 0;
 }
+ //done
+ 
  int isIntelegent(Monster *mon){
-    int unsigned temp = mon->characteristics;
+    int unsigned temp = mon->characteristics;//done
     return 1 & temp;
 
 }
  int isTelapathic(Monster *mon){
-    int unsigned temp = mon->characteristics;
+    int unsigned temp = mon->characteristics;//done
     return (2 & temp);
 }
  int canTunnle(Monster *mon){
-    int unsigned temp = mon->characteristics;
+    int unsigned temp = mon->characteristics;//done
     return 4 & temp;
 }
  int isErratic(Monster *mon){
-    int unsigned temp = mon->characteristics;
+    int unsigned temp = mon->characteristics;//done
     return (8 & temp);
 }
 
-void performAction(Monster *mon){
+void performAction(Monster *mon){ //done
     int spoted = scanArea(mon);
     if(spoted){
         reset(mon->directions);
@@ -480,7 +464,9 @@ void performAction(Monster *mon){
     }
     if(mon->thePlayer){
         if(performPCMove(mon)){
-            system("reset");
+            if(system("reset")){
+                
+            }
             exit(0);
         }
         return;
@@ -557,7 +543,7 @@ void performAction(Monster *mon){
             }
         
 /*Helper Functions For Monsters */
-static void readDirections(Monster *mon){
+static void readDirections(Monster *mon){ //done
      int switchValue = removeFromList(mon->directions);
                             switch(switchValue){
                                 case 1:
@@ -587,7 +573,7 @@ static void readDirections(Monster *mon){
                             }
 }
 
-static void getDirectionsTunneling(Monster *npc){
+static void getDirectionsTunneling(Monster *npc){ //done
     int done=0;
     int xhere = npc->xloc;
     int yhere = npc->yloc;
@@ -790,6 +776,7 @@ static void getDirectionsTunneling(Monster *npc){
     }
     }
 }
+//done
 static void getDirections(Monster *npc){/*Hey Shane please work here on this function and check for correct dimensions and terrain*/
     int done=0;
     volatile int xhere = npc->xloc;
@@ -997,7 +984,7 @@ static void getDirections(Monster *npc){/*Hey Shane please work here on this fun
 
 */
 
-static void performWander(Monster *npc){
+static void performWander(Monster *npc){ //done
         int control = rand()%8;
         int digSwitch = canTunnle(npc);
         while(1){
@@ -1100,7 +1087,7 @@ static void performWander(Monster *npc){
 }               
         }
 }
-static void moveNearestNonTunneling(Monster *npc){
+static void moveNearestNonTunneling(Monster *npc){//done
     int min = 1000;
     int xhere = npc->xloc;
     int yhere = npc->yloc;

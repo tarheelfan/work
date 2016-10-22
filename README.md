@@ -10,4 +10,5 @@ The mapinit.c file and its respective header files is responsible for generating
 
 The cleanSlate.bash is a bash file that removes object files and compiled binaries.  
 
-This program has two switches on it, one is --save and the other is --load , these functions will load or save a file from your home file in a directory called .rlg327 in a file called Dungeon
+The control scheme for this is 8 is up,9 is top right, 6 is right, 3 is bottom right, 5 is wait, 2 is down,1 is bottom left,4 is left,7 it topleft
+

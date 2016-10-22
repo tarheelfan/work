@@ -1,3 +1,81 @@
+commit 2cc6399f
+Author: Shane P Drafahl <sdrafahl@iastate.edu>
+Date:   Wed Oct 19 17:51:46 2016 -0500
+
+    Changed UI to be cleaner and fixed memmory corruption issues
+
+commit fec57eb3
+Author: Shane P Drafahl <sdrafahl@iastate.edu>
+Date:   Tue Oct 18 19:41:07 2016 -0500
+
+    Found work around for starting the game
+
+commit 1a079f20
+Author: Shane P Drafahl <sdrafahl@iastate.edu>
+Date:   Tue Oct 18 10:36:45 2016 -0500
+
+    scrolling functionality works better
+
+commit cc8d855a
+Author: Shane P Drafahl <sdrafahl@iastate.edu>
+Date:   Mon Oct 17 15:14:44 2016 -0500
+
+    added room for messages at top of the screen
+
+commit f53c58e2
+Author: Shane P Drafahl <sdrafahl@iastate.edu>
+Date:   Mon Oct 17 14:49:53 2016 -0500
+
+    Got game to print list of monsters and reprint the map to terminal correctly
+
+commit a513571c
+Author: Shane P Drafahl <sdrafahl@iastate.edu>
+Date:   Sun Oct 16 15:32:55 2016 -0500
+
+    Rest functionality works
+
+commit 4d405e10
+Author: Shane P Drafahl <sdrafahl@iastate.edu>
+Date:   Sun Oct 16 02:03:51 2016 -0500
+
+    I have gotten basic movement to work and movement from one level to the next, next I may work on more UI features
+
+commit bae9632d
+Author: Shane P Drafahl <sdrafahl@iastate.edu>
+Date:   Sat Oct 15 11:10:15 2016 -0500
+
+    fixed compiler issues
+
+commit 19857fc2
+Author: Shane P Drafahl <sdrafahl@iastate.edu>
+Date:   Sat Oct 15 09:34:39 2016 -0500
+
+    fixed case statement
+
+commit b9b55091
+Author: Shane P Drafahl <sdrafahl@iastate.edu>
+Date:   Fri Oct 14 16:57:03 2016 -0500
+
+    UI code
+
+commit c1a41cdf
+Author: Shane P Drafahl <sdrafahl@iastate.edu>
+Date:   Fri Oct 14 15:41:48 2016 -0500
+
+    Added code to enable pc control
+
+commit d33f12b3
+Author: Shane P Drafahl <sdrafahl@iastate.edu>
+Date:   Fri Oct 14 12:06:00 2016 -0500
+
+    added pcio.c file for pc control
+
+commit d1eb8832
+Author: Shane P Drafahl <sdrafahl@iastate.edu>
+Date:   Thu Oct 13 20:12:02 2016 -0500
+
+    Removed unsupported features and I now use ncurses display functions
+
 commit 8d7bbc4d
 Author: Shane P Drafahl <sdrafahl@iastate.edu>
 Date:   Wed Oct 5 10:55:13 2016 -0500
@@ -177,7 +255,7 @@ commit 3e95fa25
 Author: Shane P Drafahl <sdrafahl@iastate.edu>
 Date:   Wed Sep 21 10:19:52 2016 -0500
 
-    able to print most distances but mising entire rooms and doesnt seem to get data from the heap, I also noticed that the initial cursor from the heap never 
+    able to print most distances but mising entire rooms and doesnt seem to get data from the heap, I also noticed that the initial cursor from the heap never changes coordinates
 
 commit 22fd0451
 Author: Shane P Drafahl <sdrafahl@iastate.edu>
@@ -297,13 +375,13 @@ commit 5cba6a85
 Author: Shane P Drafahl <drafahls@gmail.com>
 Date:   Mon Sep 5 00:20:32 2016 -0500
 
-    Modified collides function to make it work correctly, I also changed the Rooms to . from X, Also a few minor touches like correcting the size of the dungeo
+    Modified collides function to make it work correctly, I also changed the Rooms to . from X, Also a few minor touches like correcting the size of the dungeon.
 
 commit 784b9470
 Author: Shane P Drafahl <drafahls@gmail.com>
 Date:   Sun Sep 4 01:22:43 2016 -0500
 
-    I did some work on initRooms and created the colides function that remains untested, currently does not display correct info but without memory issues or c
+    I did some work on initRooms and created the colides function that remains untested, currently does not display correct info but without memory issues or compilation issues
 
 commit 4632272b
 Author: Shane P Drafahl <drafahls@gmail.com>
@@ -329,5 +407,3 @@ Author: Shane P Drafahl <drafahls@gmail.com>
 Date:   Fri Sep 2 00:45:49 2016 -0500
 
     Added git ignore file
-(END)
-

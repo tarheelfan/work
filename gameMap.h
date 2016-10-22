@@ -1,5 +1,22 @@
+#ifndef HEADER_H
+# define HEADER_H
+
+#ifdef __cplusplus
+#include <iostream>
+
+using namespace std;
+
+extern "C" {
+
+#else
+
+
 #include <ncurses.h>
 #include "heap.h"
+
+
+
+
 struct list{
     int directions[1000];
     int size;
@@ -20,21 +37,7 @@ typedef struct{
      int patrolMode;
      int searchLocationX;
      int searchLocationY;
-     int (* moveUp)();
-     int (* moveDown)();
-     int (* moveRight)();
-     int (* moveLeft)();
-     int (* moveTopRight)();
-     int (* moveTopLeft)();
-     int (* moveBottomLeft)();
-     int (* moveBottomRight)();
-     int (* isIntelegent)();
-     int (* isTelapathic)();
-     int (* canTunnle)();
-     int (* isErratic)();
-     void (* performAction)();
-   
-     void (* deconstructor)();
+     
 }Monster;
 typedef struct {
     int topLeft[2];
@@ -97,3 +100,12 @@ extern Map *m;
 extern int NUMBER_OF_MONSTERS;
 //extern WINDOW *window;
 extern binheap_t heap;
+
+
+#endif
+
+#ifdef __cplusplus
+}
+#endif
+
+#endif
