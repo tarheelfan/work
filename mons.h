@@ -1,8 +1,11 @@
+#include "monstruct.h"
+
+
 class MonsterClass {
 
     public:
-          Monster();
-          ~Monster();
+          ~MonsterClass();
+          MonsterClass(int x, int y,int isPlayer);
           int moveUpC();
           int moveDownC();
           int moveRightC();
@@ -11,12 +14,12 @@ class MonsterClass {
           int moveTopLeftC();
           int moveBottomLeftC();
           int moveBottomRightC();
-          int isIntelegent();
-          int isTelapathic();
-          int canTunnle();
-          int isErratic();
-          void performAction();
-          void deconstructor();
+          int isIntelegentC();
+          int isTelapathicC();
+          int canTunnleC();
+          int isErraticC();
+          void performActionC();
+          void deconstructorC();
           void readDirectionsC();
           void getDirectionsTunnelingC();
           void getDirectionsC();
@@ -24,9 +27,9 @@ class MonsterClass {
           void moveNearestNonTunnelingC();
           int scanAreaC();
           void moveNearestTunnelingC();
-    private:
-        Monster *monster;
-        struct list directions;
+    
+        iMonster *monster;
+        struct ilist directions;
         void initList();
         void addToList(int num);
         void reset();
@@ -45,4 +48,6 @@ class MonsterClass {
         int patrolMode;
         int searchLocationX;
         int searchLocationY;
+        private:
 };
+
