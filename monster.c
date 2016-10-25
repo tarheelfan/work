@@ -58,7 +58,7 @@ int getPCY(){
 /*Constructor*/
 Monster* MonsterInit(Map *map,int x,int y,int isPlayer){
     Monster *monster;
-    monster = malloc(sizeof(Monster));
+    monster =(Monster*) malloc(sizeof(Monster));
     if(isPlayer){
         monster->thePlayer=1;   
         monster->speed=10;
@@ -587,7 +587,7 @@ void getDirectionsTunneling(Monster *npc){
     volatile int bottomRight=0;
     /*Top Left*/
     if(xhere-1!=0 && yhere-1!=0){
-            int temp = m->distanceGrid[yhere-1][xhere-1].distance;
+           unsigned int temp = m->distanceGrid[yhere-1][xhere-1].distance;
              if(temp==0){
                 done=1;
             } 
@@ -606,7 +606,7 @@ void getDirectionsTunneling(Monster *npc){
     }
     /*Top*/
     if(yhere-1!=0){
-            int temp = m->distanceGrid[yhere-1][xhere].distance;
+           unsigned int temp = m->distanceGrid[yhere-1][xhere].distance;
             if(temp==0){
                 done=1;
             }
@@ -625,7 +625,7 @@ void getDirectionsTunneling(Monster *npc){
     }
     /*TopRight*/
     if(xhere+1!=79 && yhere-1!=0){
-            int temp = m->distanceGrid[yhere-1][xhere+1].distance;
+           unsigned int temp = m->distanceGrid[yhere-1][xhere+1].distance;
               if(temp==0){
                 done=1;
             }
@@ -647,7 +647,7 @@ void getDirectionsTunneling(Monster *npc){
     if(xhere-1!=0){if(yhere==0){
                 done=1;
             }
-            int temp = m->distanceGrid[yhere][xhere-1].distance;
+           unsigned int temp = m->distanceGrid[yhere][xhere-1].distance;
             if(temp==0){
                 done=1;
             }
@@ -665,7 +665,7 @@ void getDirectionsTunneling(Monster *npc){
     }
     /*Right*/
     if(xhere+1!=79){
-            int temp = m->distanceGrid[yhere][xhere+1].distance;
+           unsigned int temp = m->distanceGrid[yhere][xhere+1].distance;
             if(!temp){
                 done=1;
             }
@@ -684,7 +684,7 @@ void getDirectionsTunneling(Monster *npc){
     }
     /*BottomLeft*/
     if(xhere-1!=0 && yhere+1!=20){
-            int temp = m->distanceGrid[yhere+1][xhere-1].distance;
+           unsigned int temp = m->distanceGrid[yhere+1][xhere-1].distance;
             if(temp==0){
                 done=1;
             }
@@ -702,7 +702,7 @@ void getDirectionsTunneling(Monster *npc){
     }
     /*Bottom*/
     if(yhere+1!=79){
-            int temp = m->distanceGrid[yhere+1][xhere].distance;
+           unsigned int temp = m->distanceGrid[yhere+1][xhere].distance;
             if(temp==0){
                 done=1;
             }
@@ -720,7 +720,7 @@ void getDirectionsTunneling(Monster *npc){
     }
     /*BottomRight*/
     if(xhere+1!=79 && yhere+1!=20){
-            int temp = m->distanceGrid[yhere+1][xhere+1].distance;
+           unsigned int temp = m->distanceGrid[yhere+1][xhere+1].distance;
             if(temp==0){
                 done=1;
             }

@@ -21,6 +21,7 @@ int const y = 21;
 #define hardnesspair(pair) ((*m).hardness[pair[dim_y]][pair[dim_x]])
 #define hardnessxy(x, y) ((*m).hardness[y][x])
 
+
 Map *m;
 int numberOfMonster;
 static int getWeight(int num);
@@ -116,9 +117,7 @@ static struct xy getCoords(){
     return coords;
 } 
 
- Monster* getMonArray(){
-    return monsterArray;
-} 
+ 
 
 static void initBorder(void){
     int count;
@@ -494,7 +493,7 @@ static Room* createRoom(void){
     char done ='n';
     Room *room;
     while(done!='y'){
-    room = malloc(sizeof( Room));
+    room = (Room*)malloc(sizeof (Room));
     if(room){
         int height = rand();
         height = height % 7;

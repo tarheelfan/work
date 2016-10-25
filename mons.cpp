@@ -63,9 +63,7 @@ MonsterClass::MonsterClass(int x, int y,int isPlayer){
     numOfMonsters++;
     }
 this->monster = monster;
-iMonster* array;
-array = (iMonster)getMonArray();
-array[monster->yloc][monster->xloc]= (Monster*)this->monster;
+monsterArray[monster->yloc][monster->xloc]= (Monster*)this->monster;
 
 }
 MonsterClass::~MonsterClass(){
@@ -74,8 +72,6 @@ MonsterClass::~MonsterClass(){
 
 
 /*Private*/
-
-
 void MonsterClass::addToList(int num){
     this->directions.directions[this->directions.size]=num;
     this->directions.size++;
@@ -96,152 +92,151 @@ int MonsterClass::removeFromList(){
 
 /*public*/
 int moveUpI(void* s){ /*C function*/
-    s = (MonsterClass)s;
-    return s::moveUpC();
+    MonsterClass* t = (MonsterClass*) s;
+    return t->moveUpC();
 }
 int MonsterClass::moveUpC(){ 
     return moveUp((Monster*)this->monster); 
 }
 
 int moveDownI(void* s){ /*C function*/
-    s=(MonsterClass)s;
-    return s::moveDownC();
+    MonsterClass* t = (MonsterClass*) s;
+    return t->moveDownC();
 }
 int MonsterClass::moveDownC(){
     return moveDown((Monster*)this->monster);
 }
 int moveRightI(void* s){ /*C function*/
-    s = (MonsterClass)s;
-    return s::moveRightC();
+    MonsterClass* t = (MonsterClass*) s;
+    return t->moveRightC();
 }
 int MonsterClass::moveRightC(){
     return moveRight((Monster*)this->monster);
 }
 
 int moveLeftI(void* s){ /*C function*/
-    s = (MonsterClass)s;
-    return s::moveLeftC();
+    MonsterClass* t = (MonsterClass*) s;
+    return t->moveLeftC();
 }
 int MonsterClass::moveLeftC(){
     return moveLeft((Monster*)this->monster);
 }
 
 int moveTopRightI(void* s){ /*C function*/
-    s =(MonsterClass)s;
-    return s::moveTopRightC();
+    MonsterClass* t = (MonsterClass*) s;
+    return t->moveTopRightC();
 }
 int MonsterClass::moveTopRightC(){
     return moveTopRight((Monster*)this->monster);
 }
 int moveTopLeftI(void* s){ /*C function*/
-    s =(MonsterClass)s;
-    return moveTopLeftC();
+    MonsterClass* t = (MonsterClass*) s;
+    return t->moveTopLeftC();
 }
 int MonsterClass::moveTopLeftC(){
     return moveTopLeft((Monster*)this->monster);
 }
 int moveBottomLeftI(void* s){ /*C function*/
-    s = (MonsterClass)s;
-    return s::moveBottomLeftC();
+    MonsterClass* t = (MonsterClass*) s;
+    return t->moveBottomLeftC();
 }
 int MonsterClass::moveBottomLeftC(){
     return moveBottomLeft((Monster*)this->monster);
 }
 int moveBottomRightI(void* s){ /*C function*/
-    s =(MonsterClass)s;
-    return s:moveBottomRightC();
+    MonsterClass* t = (MonsterClass*) s;
+    return t->moveBottomRightC();
 }
 int MonsterClass::moveBottomRightC(){
     return moveBottomRight((Monster*)this->monster);
 }
 int isIntelegentI(void* s){ /*C functions*/
-    s = (MonsterClass)s;
-    return s::isIntelegentC();
+    MonsterClass* t = (MonsterClass*) s;
+    return t->isIntelegentC();
 }
 int MonsterClass::isIntelegentC(){
     int unsigned temp = this->characteristics;
     return 1 & temp;
 }
 int isTelapathicI(void* s){ /*C function*/
-    s = (MonsterClass)s;
-    return s::isTelapathicC();
+    MonsterClass* t = (MonsterClass*) s;
+    return t->isTelapathicC();
 }
 int MonsterClass::isTelapathicC(){
     int unsigned temp = this->characteristics;
     return 2 & temp;
 }
 int canTunnleI(void* s){ /*C function*/
-    s =(MonsterClass)s;
-    return s::canTunnleC();
+    MonsterClass* t = (MonsterClass*) s;
+    return t->canTunnleC();
 }
 int MonsterClass::canTunnleC(){
     int unsigned temp = this->characteristics;
     return 4 & temp;
 }
 int isErraticI(void* s){ /*C function*/
-    s = (MonsterClass)s;
-    return s::isErraticC();
+    MonsterClass* t = (MonsterClass*) s;
+    return t->isErraticC();
 }
 int MonsterClass::isErraticC(){
     int unsigned temp = this->characteristics;
     return 8 & temp;
 }
 void performActionI(void* s){ /*C function*/
-    s =(MonsterClass)s;
-    s::performActionC();
+    MonsterClass* t = (MonsterClass*) s;
+    t->performActionC();
 }
 void MonsterClass::performActionC(){
     performAction((Monster*)this->monster);
 }
 
 void readDirectionsI(void* s){ /*C function*/
-    s =(MonsterClass)s;
-    s::readDirections();
+    MonsterClass* t = (MonsterClass*) s;
+    t->readDirectionsC();
 }
 void MonsterClass::readDirectionsC(){
     readDirections((Monster*)this->monster);
 }
 void getDirectionsTunnelingI(void* s){ /*C function*/
-    s = (MonsterClass)s;
-    s::getDirectionsTunnelingC();
+    MonsterClass* t = (MonsterClass*) s;
+    t->getDirectionsTunnelingC();
 }
 void MonsterClass::getDirectionsTunnelingC(){
     getDirectionsTunneling((Monster*)this->monster);
 }
 void getDirectionsI(void* s){ /*C function*/
-    s =(MonsterClass)s;
-    s::getDirectionsC();
+    MonsterClass* t = (MonsterClass*) s;
+    t->getDirectionsC();
 }
 void MonsterClass::getDirectionsC(){
     getDirections((Monster*)this->monster);
 }
 void performWanderI(void* s){ /*C function*/
-    s =(MonsterClass)s;
-    s::performWanderC();
+    MonsterClass* t = (MonsterClass*) s;
+    t->performWanderC();
 }
 void MonsterClass::performWanderC(){
     performWander((Monster*)this->monster);
 }
 void moveNearestNonTunnelingI(void* s){ /*C function*/
-    s = (MonsterClass)s;
-    s::moveNearestNonTunnelingC();
+    MonsterClass* t = (MonsterClass*) s;
+    t->moveNearestNonTunnelingC();
 }
 
 void MonsterClass::moveNearestNonTunnelingC(){
     moveNearestNonTunneling((Monster*)this->monster);
 }
 void moveNearestTunneling(void* s){ /*C function*/
-    s = (MonsterClass)s;
-    s::moveNearestTunnelingC();
+    MonsterClass* t = (MonsterClass*) s;
+    t->moveNearestTunnelingC();
 }
 void MonsterClass::moveNearestTunnelingC(){
     moveNearestTunneling((Monster*)this->monster);
 }
 int scanAreaI(void* s){/*C function*/
-    s = (MonsterClass)s;
-    return s::scanAreaC();
+    MonsterClass* t = (MonsterClass*) s;
+    return t->scanAreaC();
 }
 int MonsterClass::scanAreaC(){
     return scanArea((Monster*)this->monster);
-}
 }

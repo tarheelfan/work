@@ -1,18 +1,14 @@
 #ifndef HEADER_H
 #define HEADER_H
 
-
 #ifdef __cplusplus
+
 extern "C"{
-
-#else
-
 #endif
-
 #include "normMonsS.h"
 #include <ncurses.h>
 #include "heap.h"
-Monster* getMonArray();
+
 typedef struct {
     int topLeft[2];
     int topright[2];
@@ -79,12 +75,12 @@ extern Map *m;
 extern int NUMBER_OF_MONSTERS;
 //extern WINDOW *window;
 extern binheap_t heap;
-extern Monster* monsterArray[21][80];
-#ifdef __cplusplus
- 
-}
 
+
+#ifdef __cplusplus 
+}
 #endif
+
 
 #endif
 

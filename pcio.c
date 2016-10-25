@@ -206,7 +206,7 @@ static int downStairs(void){
 }
 static void clearData(){
     while(!binheap_is_empty(&heap)){
-        deconstructor(binheap_remove_min(&heap));
+        deconstructor((Monster*)binheap_remove_min(&heap));
     }
     int x,y;for(x=0;x<21;x++){
         for(y=0;y<80;y++){

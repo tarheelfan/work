@@ -6,3 +6,4 @@ rm heap.a
 rm monster.o
 rm pcio.o
 rm mons.o
+rm mon.o
