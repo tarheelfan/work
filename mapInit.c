@@ -111,10 +111,15 @@ static struct xy getCoords(){
         }
     }
 }
-        
+      
     
     return coords;
 } 
+
+ Monster* getMonArray(){
+    return monsterArray;
+} 
+
 static void initBorder(void){
     int count;
     srand(time(NULL));

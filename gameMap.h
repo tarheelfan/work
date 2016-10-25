@@ -12,7 +12,7 @@ extern "C"{
 #include "normMonsS.h"
 #include <ncurses.h>
 #include "heap.h"
-
+Monster* getMonArray();
 typedef struct {
     int topLeft[2];
     int topright[2];
@@ -72,14 +72,16 @@ int getPCY();
 int32_t compare_monster(const void *key,const void *with);
 void analyzeDistances(void);
 Room* pointContains(int y,int x);
+
 int performPCMove(Monster *pci);
-extern void* monsterArray[21][80];
+extern Monster* monsterArray[21][80];
 extern Map *m;
 extern int NUMBER_OF_MONSTERS;
 //extern WINDOW *window;
 extern binheap_t heap;
-#ifdef __cpluspluc
-
+extern Monster* monsterArray[21][80];
+#ifdef __cplusplus
+ 
 }
 
 #endif

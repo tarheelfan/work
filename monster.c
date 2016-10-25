@@ -37,7 +37,7 @@ void reset(struct list dir){
 /*Fields for Library*/
 static int maxMonsters;
 //static Map *m;
-void* monsterArray[21][80] = {{NULL}};
+Monster* monsterArray[21][80] = {{NULL}};
 static int numOfMonsters;
 int pcx;
 int pcy;

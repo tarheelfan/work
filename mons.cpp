@@ -6,28 +6,9 @@
 
 /*Library Variables*/
 int numOfMonsters;
-int pcx;
-int pcy;
-/*Functions to be called by C*/
-int getPCX(){
-    return pcx;
-}
-int getPCY(){
-    return pcy;
-}
 
-int hasMonster(int yl, int xl){
-    if(yl>21 || 0>yl){
-        return 0;
-    }
-    if(xl>80 || 0>xl){
-        return 0;
-    }
-    if(!monsterArray[yl][xl]){
-        return 0;
-    }
-    return 1;
-}
+/*Functions to be called by C*/
+
 void MonsterClass::initList(){
     this->directions.size=0;
 }
@@ -35,16 +16,15 @@ MonsterClass::MonsterClass(int x, int y,int isPlayer){
     iMonster *monster;
     monster = (iMonster*)malloc(sizeof(iMonster));
     if(isPlayer){
-        monster->thePlayer=1;   
+        monster->thePlayer=1;    
         monster->speed=10;
         monster->roundVal=10;
         monster->xloc=x;
         monster->yloc=y;
-        pcx = x;
-        pcy = y;
         monster->alive=1;
     }else{
     initList();
+    monster->monsterC =this;
     monster->thePlayer=0;
     monster->bigPeople=0;
     monster->dragon=0;
@@ -82,8 +62,11 @@ MonsterClass::MonsterClass(int x, int y,int isPlayer){
     
     numOfMonsters++;
     }
-monsterArray[monster->yloc][monster->xloc]=(void*) (this);
 this->monster = monster;
+iMonster* array;
+array = (iMonster)getMonArray();
+array[monster->yloc][monster->xloc]= (Monster*)this->monster;
+
 }
 MonsterClass::~MonsterClass(){
     free(monster);
@@ -179,42 +162,86 @@ int MonsterClass::isIntelegentC(){
     int unsigned temp = this->characteristics;
     return 1 & temp;
 }
+int isTelapathicI(void* s){ /*C function*/
+    s = (MonsterClass)s;
+    return s::isTelapathicC();
+}
 int MonsterClass::isTelapathicC(){
     int unsigned temp = this->characteristics;
     return 2 & temp;
+}
+int canTunnleI(void* s){ /*C function*/
+    s =(MonsterClass)s;
+    return s::canTunnleC();
 }
 int MonsterClass::canTunnleC(){
     int unsigned temp = this->characteristics;
     return 4 & temp;
 }
+int isErraticI(void* s){ /*C function*/
+    s = (MonsterClass)s;
+    return s::isErraticC();
+}
 int MonsterClass::isErraticC(){
     int unsigned temp = this->characteristics;
     return 8 & temp;
 }
+void performActionI(void* s){ /*C function*/
+    s =(MonsterClass)s;
+    s::performActionC();
+}
 void MonsterClass::performActionC(){
     performAction((Monster*)this->monster);
+}
+
+void readDirectionsI(void* s){ /*C function*/
+    s =(MonsterClass)s;
+    s::readDirections();
 }
 void MonsterClass::readDirectionsC(){
     readDirections((Monster*)this->monster);
 }
+void getDirectionsTunnelingI(void* s){ /*C function*/
+    s = (MonsterClass)s;
+    s::getDirectionsTunnelingC();
+}
 void MonsterClass::getDirectionsTunnelingC(){
     getDirectionsTunneling((Monster*)this->monster);
+}
+void getDirectionsI(void* s){ /*C function*/
+    s =(MonsterClass)s;
+    s::getDirectionsC();
 }
 void MonsterClass::getDirectionsC(){
     getDirections((Monster*)this->monster);
 }
+void performWanderI(void* s){ /*C function*/
+    s =(MonsterClass)s;
+    s::performWanderC();
+}
 void MonsterClass::performWanderC(){
     performWander((Monster*)this->monster);
 }
+void moveNearestNonTunnelingI(void* s){ /*C function*/
+    s = (MonsterClass)s;
+    s::moveNearestNonTunnelingC();
+}
+
 void MonsterClass::moveNearestNonTunnelingC(){
     moveNearestNonTunneling((Monster*)this->monster);
+}
+void moveNearestTunneling(void* s){ /*C function*/
+    s = (MonsterClass)s;
+    s::moveNearestTunnelingC();
 }
 void MonsterClass::moveNearestTunnelingC(){
     moveNearestTunneling((Monster*)this->monster);
 }
-
+int scanAreaI(void* s){/*C function*/
+    s = (MonsterClass)s;
+    return s::scanAreaC();
+}
 int MonsterClass::scanAreaC(){
     return scanArea((Monster*)this->monster);
 }
 }
-4

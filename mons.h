@@ -1,3 +1,9 @@
+# ifndef HEADER_H
+# define HEADER_H
+
+#ifdef __cplusplus
+
+
 #include "monstruct.h"
 
 
@@ -51,3 +57,27 @@ class MonsterClass {
         private:
 };
 
+extern "C"{
+#else
+#endif
+int moveUpI(void* s);
+int moveDownI(void* s);
+int moveRightI(void* s);
+int moveLeftI(void* s);
+int moveTopRightI(void* s);
+int moveTopLeftI(void* s);
+int moveBottomRightI(void* s);
+int isIntelegentI(void* s);
+int isTelapathicI(void* s);
+int canTunnleI(void* s);
+int isErraticI(void* s);
+void performActionI(void* s);
+void readDirectionsI(void* s);
+void getDirectionsTunnelingI(void* s);
+void getDirectionsI(void* s);
+void performWanderI(void* s);
+void moveNearestNonTunnelingI(void* s);
+void moveNearestTunneling(void* s);
+int scanAreaI(void* s);
+}
+#endif
