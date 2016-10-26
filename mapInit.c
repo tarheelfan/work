@@ -741,8 +741,8 @@ void reInitMap(int num_of_mon){
     }
 }
  void printGrid(){
-    int i;
-    int j;
+    int i=0;
+    int j=0;
     for(i=0;i<21;i++){
         for(j=0;j<80;j++){
             char temp[1];
@@ -759,9 +759,13 @@ void reInitMap(int num_of_mon){
             }
             Monster *tempMon;
             tempMon = monsterArray[i][j];
-               
+            
+            
+
                 if(tempMon!=NULL){
-                    if(xtem>xmin && xmax>xtem && ytem<ymin && ytem>ymax){
+                  int xmon = tempMon->xloc;
+                    int ymon = tempMon->yloc;
+                    if(xmon>xmin && xmax>xmon && ymon<ymin && ymon>ymax){
 
                     if(tempMon->bigPeople){
                         mvaddch(i+3,j,'P');
