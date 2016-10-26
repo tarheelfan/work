@@ -45,6 +45,7 @@ typedef struct {
     char grid[21][80];
     distanceCell distanceGrid[21][80];
     distanceCell nonTunnelingDistanceGrid[21][80];
+    void* knowledgeMap;
     unsigned char hardness[21][80];
     Monster *thePlayer;
     Room rooms[100];

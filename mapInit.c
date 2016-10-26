@@ -12,6 +12,7 @@
 #include <limits.h>
 #include <ncurses.h>
 #include "mons.h"
+#include "knowledgeMap.h"
 int const x = 80;
 int const y = 21;
 #define DUNGEON_X 80
@@ -64,7 +65,9 @@ void playGame(){
             }
             binheap_insert(&heap,monster);
         }
+        linkMapandMapI(m);
     while(!done){
+        updateKnowledgeMap(m->knowledgeMap);
         printGrid();
         
         Monster *tem;
@@ -743,7 +746,14 @@ void reInitMap(int num_of_mon){
     for(i=0;i<21;i++){
         for(j=0;j<80;j++){
             char temp[1];
-            temp[0] = (*m).grid[i][j];
+            int xtem = m->thePlayer->xloc;
+            int ytem = m->thePlayer->yloc;
+
+            int xmin = xtem-3;
+            int xmax = xtem+3;
+            int ymin = ytem+3;
+            int ymax = ytem-3;
+            temp[0] = getCharI(m->knowledgeMap,i,j);
             if(!(temp[0]=='-' || temp[0] == '|' || temp[0]=='.' || temp[0]=='#' || temp[0]=='<' || temp[0]=='>')){
                 temp[0] = ' ';
             }
@@ -751,6 +761,8 @@ void reInitMap(int num_of_mon){
             tempMon = monsterArray[i][j];
                
                 if(tempMon!=NULL){
+                    if(xtem>xmin && xmax>xtem && ytem<ymin && ytem>ymax){
+
                     if(tempMon->bigPeople){
                         mvaddch(i+3,j,'P');
                     }
@@ -763,6 +775,7 @@ void reInitMap(int num_of_mon){
                     if(tempMon->other){
                         mvaddch(i+3,j,'p');
                     }
+                }
             }else{
                 mvaddch(i+3,j,temp[0]);
             }   
