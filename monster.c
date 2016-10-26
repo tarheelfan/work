@@ -2,7 +2,7 @@
 #include <time.h>
 #include <stdlib.h>
 #include <stdio.h>
-
+#include "mons.h"
 
 
 void initList(struct list);
@@ -55,10 +55,13 @@ int getPCX(){
 int getPCY(){
     return pcy;
 }
-/*Constructor*/
+
+
+
 Monster* MonsterInit(Map *map,int x,int y,int isPlayer){
     Monster *monster;
     monster =(Monster*) malloc(sizeof(Monster));
+    monster->monsterC = getObj(monster);
     if(isPlayer){
         monster->thePlayer=1;   
         monster->speed=10;
@@ -71,12 +74,13 @@ Monster* MonsterInit(Map *map,int x,int y,int isPlayer){
     }else{
     initList(monster->directions);
     monster->thePlayer=0;
-    monster->bigPeople=0;
     
+    monster->bigPeople=0;
     monster->dragon=0;
     monster->other=0;
     monster->patrolMode=1;
     monster->alive=1;
+    
     monster->characteristics = rand()%16;
     monster->modelNumber=numOfMonsters;
     monster->yloc=y;

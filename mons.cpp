@@ -13,8 +13,8 @@ void MonsterClass::initList(){
     this->directions.size=0;
 }
 MonsterClass::MonsterClass(int x, int y,int isPlayer){
-    iMonster *monster;
-    monster = (iMonster*)malloc(sizeof(iMonster));
+    Monster *monster;
+    monster = (Monster*)malloc(sizeof(iMonster));
     if(isPlayer){
         monster->thePlayer=1;    
         monster->speed=10;
@@ -24,7 +24,6 @@ MonsterClass::MonsterClass(int x, int y,int isPlayer){
         monster->alive=1;
     }else{
     initList();
-    monster->monsterC =this;
     monster->thePlayer=0;
     monster->bigPeople=0;
     monster->dragon=0;
@@ -66,11 +65,25 @@ this->monster = monster;
 monsterArray[monster->yloc][monster->xloc]= (Monster*)this->monster;
 
 }
+MonsterClass::MonsterClass(Monster* st){
+    this->monster = st;
+
+}
 MonsterClass::~MonsterClass(){
     free(monster);
 }
-
-
+void decoStructorI(void* s){
+    MonsterClass* t = (MonsterClass*) s;
+    delete t;
+}
+void* getObj(Monster* s){
+    MonsterClass* ob = new MonsterClass(s);
+    return ob;
+}
+void* linkClass(int x, int y, int isPlayer){
+    MonsterClass *cla = new MonsterClass(x,y,isPlayer);
+    return cla;
+}
 /*Private*/
 void MonsterClass::addToList(int num){
     this->directions.directions[this->directions.size]=num;
@@ -88,9 +101,29 @@ int MonsterClass::removeFromList(){
     this->directions.size--;
     return num;
 }
-
-
 /*public*/
+
+void setRoundValI(void* s){
+    MonsterClass* t = (MonsterClass*) s;
+    t->setRoundValC();
+}
+void MonsterClass::setRoundValC(){
+    monster->roundVal =monster->roundVal + monster->speed ;    
+}
+int thePlayerI(void* s){
+    MonsterClass* t = (MonsterClass*) s;
+    return t->thePlayerC();
+}
+int MonsterClass::thePlayerC(){
+    return monster->thePlayer;;
+}
+int isAliveI(void* s){
+    MonsterClass* t = (MonsterClass*) s;
+    return t->isAliveC();
+}
+int MonsterClass::isAliveC(){
+    return monster->alive;
+}
 int moveUpI(void* s){ /*C function*/
     MonsterClass* t = (MonsterClass*) s;
     return t->moveUpC();
@@ -155,7 +188,7 @@ int isIntelegentI(void* s){ /*C functions*/
     return t->isIntelegentC();
 }
 int MonsterClass::isIntelegentC(){
-    int unsigned temp = this->characteristics;
+    int unsigned temp = this->monster->characteristics;
     return 1 & temp;
 }
 int isTelapathicI(void* s){ /*C function*/
@@ -163,7 +196,7 @@ int isTelapathicI(void* s){ /*C function*/
     return t->isTelapathicC();
 }
 int MonsterClass::isTelapathicC(){
-    int unsigned temp = this->characteristics;
+    int unsigned temp = this->monster->characteristics;
     return 2 & temp;
 }
 int canTunnleI(void* s){ /*C function*/
@@ -171,7 +204,7 @@ int canTunnleI(void* s){ /*C function*/
     return t->canTunnleC();
 }
 int MonsterClass::canTunnleC(){
-    int unsigned temp = this->characteristics;
+    int unsigned temp = this->monster->characteristics;
     return 4 & temp;
 }
 int isErraticI(void* s){ /*C function*/
@@ -179,7 +212,7 @@ int isErraticI(void* s){ /*C function*/
     return t->isErraticC();
 }
 int MonsterClass::isErraticC(){
-    int unsigned temp = this->characteristics;
+    int unsigned temp = this->monster->characteristics;
     return 8 & temp;
 }
 void performActionI(void* s){ /*C function*/
@@ -222,7 +255,6 @@ void moveNearestNonTunnelingI(void* s){ /*C function*/
     MonsterClass* t = (MonsterClass*) s;
     t->moveNearestNonTunnelingC();
 }
-
 void MonsterClass::moveNearestNonTunnelingC(){
     moveNearestNonTunneling((Monster*)this->monster);
 }

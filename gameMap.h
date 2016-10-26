@@ -5,7 +5,6 @@
 
 extern "C"{
 #endif
-#include "normMonsS.h"
 #include <ncurses.h>
 #include "heap.h"
 
@@ -15,7 +14,28 @@ typedef struct {
     int bottomLeft[2];
     int bottomRight[2];
 }Room;
-
+struct list{
+    int directions[1000];
+    int size;
+};
+typedef struct{
+     struct list directions;
+     int thePlayer;
+     int bigPeople;
+     int dragon;
+     int other;
+     unsigned int characteristics : 4; /*Intel,Telapath,Tunneling,Erratic*/
+     void* monsterC;
+     int alive;
+     int xloc;
+     int yloc;
+     int modelNumber;
+     unsigned int roundVal;
+     int speed;
+     int patrolMode;
+     int searchLocationX;
+     int searchLocationY;
+}Monster;
 typedef struct{
     int distance;
     int xloc;

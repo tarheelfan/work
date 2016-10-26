@@ -11,7 +11,7 @@
 #include <sys/stat.h>
 #include <limits.h>
 #include <ncurses.h>
-
+#include "mons.h"
 int const x = 80;
 int const y = 21;
 #define DUNGEON_X 80
@@ -59,7 +59,6 @@ void playGame(){
             }
             Monster *monster;
             monster = MonsterInit(m,coords.x,coords.y,isPlay);
-
             if(!x){
                 m->thePlayer=monster;
             }
@@ -67,12 +66,13 @@ void playGame(){
         }
     while(!done){
         printGrid();
-        analyzeDistances();
-        analyzeDistancesPlus();
+        
         Monster *tem;
         tem = (Monster*)binheap_remove_min(&heap);
-        if((*tem).thePlayer){
-            if(!tem->alive){
+        
+        if(thePlayerI(tem->monsterC)){
+            if(!isAliveI(tem->monsterC)){
+                
                 printf("DEAD");
                 return;
             }else{
@@ -82,21 +82,19 @@ void playGame(){
                 }
             }
         }
-        
-        if((*tem).alive){
-            performAction(tem);
-            tem->roundVal= tem->roundVal + tem->speed;
+        analyzeDistances();
+        analyzeDistancesPlus();
+         if((*tem).alive){
+            performActionI(tem->monsterC);
+            setRoundValI(tem->monsterC);
         }
         if((*tem).alive){
             binheap_insert(&heap,tem);
         }else{
-            deconstructor(tem);
+            decoStructorI(tem->monsterC);
         }
-        
-        
     }
 }
-
 static struct xy getCoords(){
     struct xy coords;
     int x;
@@ -112,13 +110,8 @@ static struct xy getCoords(){
         }
     }
 }
-      
-    
-    return coords;
+return coords;
 } 
-
- 
-
 static void initBorder(void){
     int count;
     srand(time(NULL));
