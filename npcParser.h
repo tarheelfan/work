@@ -17,5 +17,5 @@ class npcInfo {
     ~npcInfo();
     
 }
-int notDesc(std::string word);
+int validSyntax(string input)
 void readFile();
