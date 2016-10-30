@@ -2,7 +2,7 @@
 #include <time.h>
 #include <stdlib.h>
 #include <stdio.h>
-#include "mons.h"
+
 
 
 void initList(struct list);
@@ -61,7 +61,6 @@ int getPCY(){
 Monster* MonsterInit(Map *map,int x,int y,int isPlayer){
     Monster *monster;
     monster =(Monster*) malloc(sizeof(Monster));
-    monster->monsterC = getObj(monster);
     if(isPlayer){
         monster->thePlayer=1;   
         monster->speed=10;
@@ -117,8 +116,9 @@ monsterArray[monster->yloc][monster->xloc]=monster;
 return monster;
 }
 /*Deconstructor*/
-void deconstructor(Monster *m){
-    free(m);
+void deconstructor(Monster *ma){
+    //decoStructorI(ma->monsterC);
+    free(ma);
 }
 /*Public Functions For Monsters*/
 

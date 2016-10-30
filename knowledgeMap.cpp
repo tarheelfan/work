@@ -60,4 +60,3 @@ void updateKnowledgeMap(void* s){
         }
     }
 }
-

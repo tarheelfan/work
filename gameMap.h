@@ -25,7 +25,6 @@ typedef struct{
      int dragon;
      int other;
      unsigned int characteristics : 4; /*Intel,Telapath,Tunneling,Erratic*/
-     void* monsterC;
      int alive;
      int xloc;
      int yloc;

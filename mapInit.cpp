@@ -11,7 +11,6 @@
 #include <sys/stat.h>
 #include <limits.h>
 #include <ncurses.h>
-#include "mons.h"
 #include "knowledgeMap.h"
 int const x = 80;
 int const y = 21;
@@ -73,8 +72,8 @@ void playGame(){
         Monster *tem;
         tem = (Monster*)binheap_remove_min(&heap);
         
-        if(thePlayerI(tem->monsterC)){
-            if(!isAliveI(tem->monsterC)){
+        if(tem->thePlayer){
+            if(!m->thePlayer->alive){
                 
                 printf("DEAD");
                 return;
@@ -88,13 +87,13 @@ void playGame(){
         analyzeDistances();
         analyzeDistancesPlus();
          if((*tem).alive){
-            performActionI(tem->monsterC);
-            setRoundValI(tem->monsterC);
+            performAction(tem);
+            tem->roundVal =tem->roundVal + tem->speed ; 
         }
         if((*tem).alive){
             binheap_insert(&heap,tem);
         }else{
-            decoStructorI(tem->monsterC);
+            free(tem);
         }
     }
 }

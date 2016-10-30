@@ -8,3 +8,4 @@ rm pcio.o
 rm mons.o
 rm mon.o
 rm knowledgeMap.o
+rm npcParser.o
