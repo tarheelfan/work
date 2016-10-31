@@ -9,13 +9,12 @@ class npcInfo {
         std::string description;
         int color;
         int speed;
-        std::vector<unsinged int>
         int hp;
         int dam;
     public:
     npcInfo(char* filename);
     ~npcInfo();
     
-}
-int validSyntax(string input)
+};
+int validSyntax(std::string input);
 void readFile();

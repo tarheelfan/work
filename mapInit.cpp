@@ -12,6 +12,7 @@
 #include <limits.h>
 #include <ncurses.h>
 #include "knowledgeMap.h"
+#include "npcParser.h"
 int const x = 80;
 int const y = 21;
 #define DUNGEON_X 80

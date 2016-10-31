@@ -12,5 +12,17 @@ intimidated.
 SPEED 7+1d4
 DAM 0+1d4
 HP 12+2d6
+ABIL SMART FAST
+END
+BEGIN MONSTER
+NAME Bob Jenkins
+SYMB p
+COLOR RED
+DESC
+This is a an idiot
+.
+DAM 0+1d4
+SPEED 7+1d4
+HP 12+2d6
 ABIL SMART
 END

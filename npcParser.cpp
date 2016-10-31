@@ -1,12 +1,15 @@
 #include <stdexcept>
 #include "npcParser.h"
-
+#include <sstream>
+using namespace std;
 void readFile(){
-    ifstream file ("test.txt");
+    ifstream file ("test.txt",std::ifstream::in);
+    
     stringstream s;
-    s << file;
+    s << file.rdbuf();
     string buffer;
     int createMon=0;
+    file.close();
     while(s >> buffer){
         if(!buffer.compare("BEGIN")){
             if(!createMon){
@@ -19,58 +22,66 @@ void readFile(){
                 string hp = " ";
                 string abil =" ";
                 s >> buffer;
-                if(!buffer.compare("MONSTER"){
+                if(!buffer.compare("MONSTER")){
                     s >> buffer;
                     if(!buffer.compare("NAME")){
                         while(1){
                             s >> buffer;
                         if(validSyntax(buffer)){
                             name+=buffer;
+                            name+=" ";
                         }else{
+                            cout << "Read Monster: " << name <<  endl;
                             break;
                         }
                     }
                     }
-                    cout << "Read Monster: " << name <<  endl;
+                    
                     if(!buffer.compare("SYMB")){
                         while(1){
                             s >> buffer;
                         if(validSyntax(buffer)){
                             symb+=buffer;
                         }else{
+                            cout << "Read Monster: " << symb <<  endl;
                             break;
                         }
                         }
                     }
-                    cout << "Read Monster: " << symb <<  endl;
+                    
                     if(!buffer.compare("COLOR")){
                         while(1){
                             s >> buffer;
                         if(validSyntax(buffer)){
                             color+=buffer;
                         }else{
+                            cout << "Read Monster: " << color <<  endl;
                             break;
                         }
                         }
                     }
-                    cout << "Read Monster: " << color <<  endl;
+                    
                     if(!buffer.compare("DESC")){
                         while(1){
                             s >> buffer;
                         if(validSyntax(buffer)){
+                            
                             desc+=buffer;
+                            desc+=" ";
                         }else{
+                             cout << "Read Monster: " << desc <<  endl;
                             break;
                         }
                         }
                     }
-                    cout << "Read Monster: " << desc <<  endl;
+                   
                     if(!buffer.compare("SPEED")){
                         while(1){
                             s >> buffer;
                         if(validSyntax(buffer)){
                             speed+=buffer;
                         }else{
+                             cout << "Read Monster: " << speed <<  endl;
                             break;
                         }
                         }
@@ -81,28 +92,31 @@ void readFile(){
                         if(validSyntax(buffer)){
                             dam+=buffer;
                         }else{
+                            cout << "Read Monster: " << dam <<  endl;
                             break;
                         }
                         }
                     }
-                    cout << "Read Monster: " << dam <<  endl;
+                    
                     if(!buffer.compare("HP")){
                         while(1){
                             s >> buffer;
                         if(validSyntax(buffer)){
                             hp+=buffer;
                         }else{
+                            cout << "Read Monster: " << hp <<  endl;
                             break;
                         }
                         }
                     }
-                    cout << "Read Monster: " << buffer <<  endl;
+                    
                     if(!buffer.compare("ABIL")){
                         while(1){
                             s >> buffer;
                         if(validSyntax(buffer)){
                             abil+=buffer;
                         }else{
+                            cout << "Read Monster: " << abil <<  endl;
                             break;
                         }
                         }
