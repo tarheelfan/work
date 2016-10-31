@@ -31,6 +31,7 @@ void readFile(){
                         }
                     }
                     }
+                    cout << "Read Monster: " << name <<  endl;
                     if(!buffer.compare("SYMB")){
                         while(1){
                             s >> buffer;
@@ -41,6 +42,7 @@ void readFile(){
                         }
                         }
                     }
+                    cout << "Read Monster: " << symb <<  endl;
                     if(!buffer.compare("COLOR")){
                         while(1){
                             s >> buffer;
@@ -51,6 +53,7 @@ void readFile(){
                         }
                         }
                     }
+                    cout << "Read Monster: " << color <<  endl;
                     if(!buffer.compare("DESC")){
                         while(1){
                             s >> buffer;
@@ -61,6 +64,7 @@ void readFile(){
                         }
                         }
                     }
+                    cout << "Read Monster: " << desc <<  endl;
                     if(!buffer.compare("SPEED")){
                         while(1){
                             s >> buffer;
@@ -81,6 +85,7 @@ void readFile(){
                         }
                         }
                     }
+                    cout << "Read Monster: " << dam <<  endl;
                     if(!buffer.compare("HP")){
                         while(1){
                             s >> buffer;
@@ -91,6 +96,7 @@ void readFile(){
                         }
                         }
                     }
+                    cout << "Read Monster: " << buffer <<  endl;
                     if(!buffer.compare("ABIL")){
                         while(1){
                             s >> buffer;
