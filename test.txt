@@ -1,13 +1,10 @@
+akl;sjdf;lkja ;lkjas;dlfkj;alk lkasdjfl;kja;s l;kajsd;flkja;
 BEGIN MONSTER
 NAME Junior Barbarian
 SYMB p
 COLOR BLUE
 DESC
-This is a junior barbarian. He--or is it she? You can't tell for sure--
-looks like... it should still be in barbarian school. The barbarians are
-putting them in the dungeons young these days. It's wearing dirty, tattered
-cloth armor and wielding a wooden sword. You have a hard time feeling
-intimidated.
+First
 .
 SPEED 7+1d4
 DAM 0+1d4
@@ -15,14 +12,37 @@ HP 12+2d6
 ABIL SMART FAST
 END
 BEGIN MONSTER
-NAME Bob Jenkins
+NAME Junior Barbarian
 SYMB p
-COLOR RED
+COLOR BLUE
 DESC
-This is a an idiot
+Second
 .
-DAM 0+1d4
 SPEED 7+1d4
+DAM 0+1d4
 HP 12+2d6
-ABIL SMART
+ABIL SMART FAST
+END
+BEGIN MONSTER
+NAME Junior Barbarian
+SYMB p
+COLOR BLUE
+DESC
+Third
+.
+SPEED 7+1d4
+DAM 0+1d4
+ABIL SMART FAST
+END
+BEGIN MONSTER
+NAME Junior Barbarian
+SYMB p
+COLOR BLUE
+DESC
+Fourth
+.
+SPEED 7+1d4
+DAM 0+1d4
+HP 12+2d6
+ABIL SMART FAST
 END
