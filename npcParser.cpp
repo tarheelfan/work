@@ -1,7 +1,183 @@
 
 #include "npcParser.h"
 #include <sstream>
+#include <boost/algorithm/string/trim.hpp>
 using namespace std;
+
+int validSyntax(string input){
+    if(!input.compare("NAME")){
+        return 0;
+    }
+    if(!input.compare("SYMB")){
+        return 0;
+    }
+    if(!input.compare("COLOR")){
+        return 0;
+    }
+    if(!input.compare("DESC")){
+        return 0;
+    }
+    if(!input.compare("SPEED")){
+        return 0;
+    }
+    if(!input.compare("DAM")){
+        return 0;
+    }
+    if(!input.compare("HP")){
+        return 0;
+    }
+    if(!input.compare("ABIL")){
+        return 0;
+    }
+    if(!input.compare("END")){
+        return 0;
+    }
+    return 1;
+}
+
+Dice::Dice(int ba,int si,int nu){
+    srand(time(NULL));
+    this->base=ba;
+    this->sides=si;
+    this->numDice=nu;
+}
+Dice::Dice(){
+
+}
+npcInfo::~npcInfo(){}
+Dice::~Dice(){}
+/*Constructor*/
+npcInfo::npcInfo(){};
+npcInfo::npcInfo(string name,string symbol,string color,string desc,string speed,string dam,string hp, string abil){
+    this->name=name;
+    this->symbol=symbol;
+    this->color=getColor(color);
+    this->description=desc;
+    this->speed = getDice(speed);
+    this->dam = getDice(dam);
+    this->hp=getDice(hp);
+    this->speed_i = this->speed.roleDice();
+    this->hp_i = this->hp.roleDice();
+    this->dam_i = this->dam.roleDice();
+    this->characteristics = getCharacteristics(abil);
+}
+int Dice::roleDice(){
+    int x;
+    int total=0;
+    for(x=0;x<numDice;x++){
+        int num = rand() % sides;
+        num++;
+        total+=num;
+    }
+    total+=base;
+    return total;
+}
+int getColor(string c){
+    boost::algorithm::trim(c);
+    if(!c.compare("WHITE")){
+        return 0;
+    }
+    if(!c.compare("RED")){
+        return 1;
+    }
+    if(!c.compare("BLUE")){
+        return 2;
+    }
+    if(!c.compare("YELLOW")){
+        return 3;
+    }
+    if(!c.compare("BLACK")){
+        return 4;
+    }
+    if(!c.compare("GREEN")){
+        return 5;
+    }
+    if(!c.compare("BLUE")){
+        return 6;
+    }
+    if(!c.compare("CYAN")){
+        return 7;
+    }
+    if(!c.compare("MAGENTA")){
+        return 8;
+    }
+    return 0;
+}
+void npcInfo::printInfo(){
+    cout << this->name << endl;
+    cout << this->symbol << endl;
+    cout << "Description: " << this->description << endl;
+    cout << "Color Number: " << this->color << endl;
+    cout << "Speed: " << this->speed_i << endl;
+    cout << "HP: " << hp_i << endl;
+    cout << "Damage: " << dam_i << endl;
+    cout << "Characteristic Num: " << characteristics << endl;
+}
+Dice getDice(string spee){
+    int x=0;
+    string baseNum;
+    while(spee.at(x)!='+'){
+        x++;    
+    }
+    baseNum = spee.substr(0,x);
+    int base = atoi(spee.c_str());
+    int y=0;
+    while(spee.at(y)!='d'){
+        y++;
+    }
+    string numDice = spee.substr(x+1,(y-1)-x);
+    int numOfDice= atoi(numDice.c_str());
+
+    int stringLength = spee.length();
+
+    string rolesS = spee.substr(y+1,stringLength-(y+1));
+    int sides = atoi(rolesS.c_str());
+    Dice d(base,sides,numOfDice);
+
+    return d;
+
+}
+int getCharacteristics(string desc){
+    int intelegent=0;
+    int telapathic=0;
+    int tunnle=0;
+    int erratic=0;
+    stringstream stream(desc);
+    string buffer;
+    int character=0;
+    while(stream >> buffer){
+        boost::algorithm::trim ( buffer );
+        if(!buffer.compare("INTELLIGENT")){
+            intelegent=1;
+        }
+        if(!buffer.compare("SMART")){
+            intelegent=1;
+        }
+        if(!buffer.compare("TELEPATHIC")){
+            telapathic=1;
+        }
+        if(!buffer.compare("TUNNEL")){
+            tunnle=1;
+        }
+        if(!buffer.compare("ERRATIC")){
+            erratic=1;
+        }
+        
+        if(intelegent){
+            character = character | 1;
+        }
+        if(telapathic){
+            character = character | 2;
+        }
+        if(tunnle){
+            character = character | 4;
+        }
+        if(erratic){
+            character = character | 8;
+        }   
+    }
+    return character;
+}
 void readFile(){
     ifstream file ("test.txt",std::ifstream::in);
     
@@ -166,6 +342,7 @@ void readFile(){
                             s >> buffer;
                         if(validSyntax(buffer)){
                             abil+=buffer;
+                            abil+=" ";
                         }else{
                             if(abili){
                                 error=1;
@@ -182,6 +359,9 @@ void readFile(){
                         if(!error){
                             if(namei && symbi && colori && desci && speedi && dami && abili && hpi){
                                 cout << "created" << endl;
+                                npcInfo i(name,symb,color,desc,speed,dam,hp,abil);
+                                cout << "Object Info: " << endl;
+                                i.printInfo();
 
                             }else{
                                 cout << "Not Created" << endl;
@@ -205,116 +385,5 @@ void readFile(){
             }
         }
     }
-
-}
-int validSyntax(string input){
-    if(!input.compare("NAME")){
-        return 0;
-    }
-    if(!input.compare("SYMB")){
-        return 0;
-    }
-    if(!input.compare("COLOR")){
-        return 0;
-    }
-    if(!input.compare("DESC")){
-        return 0;
-    }
-    if(!input.compare("SPEED")){
-        return 0;
-    }
-    if(!input.compare("DAM")){
-        return 0;
-    }
-    if(!input.compare("HP")){
-        return 0;
-    }
-    if(!input.compare("ABIL")){
-        return 0;
-    }
-    if(!input.compare("END")){
-        return 0;
-    }
-    return 1;
-}
-/*Constructor*/
-npcInfo()::npcInfo(string name,string symbol,string color,string desc,string speed,string dam,string hp, string abil){
-    this.name=name;
-    this.symbol=symbol;
-    this.color=getColor(color);
-    this.description=desc;
-    this.speed = getDice(speed);
-    this.dam = getDice(dam);
-    this.hp=getDice(hp);
-
-}
-Dice::Dice(int ba,int si,int nu){
-    srand(time(NULL));
-    this.base=ba;
-    this.sides=si;
-    this.numDice=nu;
-}
-int Dice::roleDice(){
-    int x;
-    int total=0;
-    for(x=0;x<numDice;x++){
-        int num = rand() % sides;
-        num++;
-        total+=num;
-    }
-    total+=base;
-    return total;
-}
-int getColor(string c){
-    if(!c.compare("WHITE")){
-        return 0;
-    }
-    if(!c.compare("RED")){
-        return 1;
-    }
-    if(!c.compare("BLUE")){
-        return 2;
-    }
-    if(!c.compare("YELLOW")){
-        return 3;
-    }
-    if(!c.compare("BLACK")){
-        return 4;
-    }
-    if(!c.compare("GREEN")){
-        return 5;
-    }
-    if(!c.compare("BLUE")){
-        return 6;
-    }
-    if(!c.compare("CYAN")){
-        return 7;
-    }
-    if(!c.compare("MAGENTA")){
-        return 8;
-    }
-}
-Dice getDice(string spee){
-    int x=0;
-    string baseNum;
-    while(spee.at(x)!='+'){
-        x++;    
-    }
-    baseNum = spee.substr(0,x);
-    int base = std::stoi(spee);
-    int y=0;
-    while(spee.at(y)!='d'){
-        y++;
-    }
-    string numDice = spee.substr(x+1,(y-1)-x;);
-    int numOfDice= stoi(numDice);
-
-    int stringLength = spee.lenght();
-
-    string rolesS = spee.substr(y+1,stringLength-(y+1));
-    int sides = stoi(rolesS);
-    Dice d(base,sides,numOfDice);
-
-    return d;
 
 }
