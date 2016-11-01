@@ -1,4 +1,4 @@
-akl;sjdf;lkja ;lkjas;dlfkj;alk lkasdjfl;kja;s l;kajsd;flkja;
+RLG327 MONSTER DESCRIPTION 1
 BEGIN MONSTER
 NAME Junior Barbarian
 SYMB p

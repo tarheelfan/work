@@ -22,7 +22,7 @@ class Dice{
 class npcInfo {
     private:
         string name;
-        string symbol;
+        char symbol;
         string description;
         int color;
         int speed_i;

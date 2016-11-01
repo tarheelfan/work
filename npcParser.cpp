@@ -50,7 +50,7 @@ Dice::~Dice(){}
 npcInfo::npcInfo(){};
 npcInfo::npcInfo(string name,string symbol,string color,string desc,string speed,string dam,string hp, string abil){
     this->name=name;
-    this->symbol=symbol;
+    this->symbol=symbol.at(1);
     this->color=getColor(color);
     this->description=desc;
     this->speed = getDice(speed);
@@ -105,7 +105,7 @@ int getColor(string c){
 }
 void npcInfo::printInfo(){
     cout << this->name << endl;
-    cout << this->symbol << endl;
+    cout << "Symbol: " << this->symbol << endl;
     cout << "Description: " << this->description << endl;
     cout << "Color Number: " << this->color << endl;
     cout << "Speed: " << this->speed_i << endl;
@@ -179,7 +179,10 @@ int getCharacteristics(string desc){
     return character;
 }
 void readFile(){
-    ifstream file ("test.txt",std::ifstream::in);
+    char *se = getenv("HOME");
+    string fileName(se);
+    fileName+="/.rlg327/monster_desc.txt";
+    ifstream file (fileName.c_str());
     
     stringstream s;
     s << file.rdbuf();
@@ -196,8 +199,22 @@ void readFile(){
     int hpi=0;
     int error=0;
     s >> buffer;
+    if(buffer.compare("RLG327")){
+        exit(1);
+    }
     s >> buffer;
+    if(buffer.compare("MONSTER")){
+        exit(1);
+    }
     s >> buffer;
+    if(buffer.compare("DESCRIPTION")){
+        exit(1);
+    }
+    s >> buffer;
+    if(buffer.compare("1")){
+        exit(1);
+    }
+    
     while(s >> buffer){
         if(!buffer.compare("BEGIN")){
             if(!createMon){
