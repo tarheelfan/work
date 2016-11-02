@@ -32,6 +32,9 @@ int validSyntax(string input){
     if(!input.compare("END")){
         return 0;
     }
+    if(!input.compare(".")){
+        return 0;
+    }
     return 1;
 }
 
@@ -106,7 +109,19 @@ int getColor(string c){
 void npcInfo::printInfo(){
     cout << this->name << endl;
     cout << "Symbol: " << this->symbol << endl;
-    cout << "Description: " << this->description << endl;
+    unsigned int x;
+    int y=0;
+    cout << "Description: ";
+    for(x=0;x<this->description.size();x++){
+        cout << this->description.at(x);
+        if((70<y && this->description.at(x)==' ')){
+            y=-1;
+            cout << endl;
+        }
+        y++; 
+    }
+    
+    
     cout << "Color Number: " << this->color << endl;
     cout << "Speed: " << this->speed_i << endl;
     cout << "HP: " << hp_i << endl;
@@ -241,7 +256,7 @@ void readFile(){
                             error=1;
                             }else{
                                 namei=1;
-                                cout << "Read Monster: " << name <<  endl;
+                                cout << "Read Monster Name : " << name <<  endl;
                             }
                             break;
                         }
@@ -258,7 +273,7 @@ void readFile(){
                                 error=1;
                             }else{
                                 symbi=1;
-                                cout << "Read Monster: " << symb <<  endl;
+                                cout << "Read Monster Symbol : " << symb <<  endl;
                             }
                             break;
                         }
@@ -275,7 +290,7 @@ void readFile(){
                                 error=1;
                             }else{
                                 colori=1;
-                                cout << "Read Monster: " << color <<  endl;
+                                cout << "Read Monster Color: " << color <<  endl;
                             }
                             break;
                         }
@@ -290,11 +305,25 @@ void readFile(){
                             desc+=buffer;
                             desc+=" ";
                         }else{
+                             if(!buffer.compare(".")){
+                                 s >> buffer;
+                             }
                              if(desci){
                                  error=1;
                              }else{
                                  desci=1;
-                                 cout << "Read Monster: " << desc <<  endl;
+                                 unsigned int x;
+                                 int y=0;
+                                 cout << "Read Monster Description: ";
+                                 for(x=0;x<desc.size();x++){
+                                     cout << desc.at(x);
+                                     if((70<y && desc.at(x)==' ')){
+                                         y=-1;
+                                         cout << endl;
+                                     }
+                                    y++; 
+                                 }
+                                 cout << endl;
                              }
                              
                              break;
@@ -312,7 +341,7 @@ void readFile(){
                                 error=1;
                             }else{
                                 speedi=1;
-                                cout << "Read Monster: " << speed <<  endl;
+                                cout << "Read Monster Speed: " << speed <<  endl;
                             }
                             
                             break;
@@ -329,7 +358,7 @@ void readFile(){
                                 error=1;
                             }else{
                                 dami=1;
-                                cout << "Read Monster: " << dam <<  endl;
+                                cout << "Read Monster Damage: " << dam <<  endl;
                             }
                             
                             break;
@@ -347,7 +376,7 @@ void readFile(){
                                 error=1;
                             }else{
                                 hpi=1;
-                                cout << "Read Monster: " << hp <<  endl;
+                                cout << "Read Monster HP: " << hp <<  endl;
                             }
                             break;
                         }
@@ -365,7 +394,7 @@ void readFile(){
                                 error=1;
                             }else{
                                 abili=1;
-                                cout << "Read Monster: " << abil <<  endl;
+                                cout << "Read Monster Abilities: " << abil <<  endl;
                             }
                             
                             break;
