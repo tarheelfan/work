@@ -243,7 +243,19 @@ void readFile(){
                 string abil =" ";
                 s >> buffer;
                 if(!buffer.compare("MONSTER")){
+                    createMon=1;
+                    
+                    namei=0;
+                    colori=0;
+                    desci=0;
+                    speedi=0;
+                    dami=0;
+                    abili=0;
+                    hpi=0;
+                    error=0;
                     s >> buffer;
+                    while(1){
+                    
                     if(!buffer.compare("NAME")){
                        
                         while(1){
@@ -254,6 +266,8 @@ void readFile(){
                         }else{
                              if(namei){
                             error=1;
+                            cout << "Duplicate Not Created" << endl;
+                            break;
                             }else{
                                 namei=1;
                                 cout << "Read Monster Name : " << name <<  endl;
@@ -271,6 +285,8 @@ void readFile(){
                         }else{
                             if(symbi){
                                 error=1;
+                                cout << "Duplicate Not Created" << endl;
+                                break;
                             }else{
                                 symbi=1;
                                 cout << "Read Monster Symbol : " << symb <<  endl;
@@ -288,6 +304,8 @@ void readFile(){
                         }else{
                             if(colori){
                                 error=1;
+                                cout << "Duplicate Not Created" << endl;
+                                break;
                             }else{
                                 colori=1;
                                 cout << "Read Monster Color: " << color <<  endl;
@@ -310,6 +328,8 @@ void readFile(){
                              }
                              if(desci){
                                  error=1;
+                                 cout << "Duplicate Not Created" << endl;
+                                break;
                              }else{
                                  desci=1;
                                  unsigned int x;
@@ -339,6 +359,8 @@ void readFile(){
                         }else{
                             if(speedi){
                                 error=1;
+                                cout << "Duplicate Not Created" << endl;
+                                break;
                             }else{
                                 speedi=1;
                                 cout << "Read Monster Speed: " << speed <<  endl;
@@ -356,6 +378,8 @@ void readFile(){
                         }else{
                             if(dami){
                                 error=1;
+                                cout << "Duplicate Not Created" << endl;
+                                break;
                             }else{
                                 dami=1;
                                 cout << "Read Monster Damage: " << dam <<  endl;
@@ -374,6 +398,8 @@ void readFile(){
                         }else{
                             if(hpi){
                                 error=1;
+                                cout << "Duplicate Not Created" << endl;
+                                break;
                             }else{
                                 hpi=1;
                                 cout << "Read Monster HP: " << hp <<  endl;
@@ -392,6 +418,8 @@ void readFile(){
                         }else{
                             if(abili){
                                 error=1;
+                                cout << "Duplicate Not Created" << endl;
+                                break;
                             }else{
                                 abili=1;
                                 cout << "Read Monster Abilities: " << abil <<  endl;
@@ -425,7 +453,8 @@ void readFile(){
                         abili=0;
                         hpi=0;
                         error=0;
-                    
+                        break;
+                    }
                     }
                 }
             }
