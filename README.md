@@ -1,13 +1,5 @@
 # DungeonGame
 Dungeon game written in C for COMS 327 at ISU
 
-This program works by a main method that controls the entire program and then each part of the program will be split into separate
-.a library files that will be compiled and run by the makefile.
-
-The important command for this release is --nummon <numberOFMonsters> will randomly generate the number of monsters
-
-The mapinit.c file and its respective header files is responsible for generating the map.
-
-The cleanSlate.bash is a bash file that removes object files and compiled binaries.  
-
-This program has two switches on it, one is --save and the other is --load , these functions will load or save a file from your home file in a directory called .rlg327 in a file called Dungeon
+This program for this HW has the game functionality commented out. All that remains functional is the parsing of the file. After parsing it creates
+a npcInfo object and uses a built in fuction to print the data from inside the object to prove that the correct data is being parsed and processed. Currently these objects are not doing anything and not stored yet but will be stored for when I need to use them in the next HW.

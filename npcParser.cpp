@@ -5,6 +5,10 @@
 using namespace std;
 
 int validSyntax(string input){
+    boost::algorithm::trim(input);
+    if(!input.size()){
+        return 0;
+    }
     if(!input.compare("NAME")){
         return 0;
     }
@@ -120,7 +124,7 @@ void npcInfo::printInfo(){
         }
         y++; 
     }
-    
+    cout << endl;
     
     cout << "Color Number: " << this->color << endl;
     cout << "Speed: " << this->speed_i << endl;
@@ -254,12 +258,13 @@ void readFile(){
                     hpi=0;
                     error=0;
                     s >> buffer;
+                    int continu=0;
                     while(1){
-                    
+                    continu=0;
                     if(!buffer.compare("NAME")){
-                       
+                       continu=1;
                         while(1){
-                            s >> buffer;
+                            if(s >> buffer){
                         if(validSyntax(buffer)){
                             name+=buffer;
                             name+=" ";
@@ -274,12 +279,17 @@ void readFile(){
                             }
                             break;
                         }
-                    }
+                    }else{
+                            cout << "Unexpected End" << endl;
+                            break;
+                        }
+                        }
                     }
                     
                     if(!buffer.compare("SYMB")){
+                        continu=1;
                         while(1){
-                            s >> buffer;
+                            if(s >> buffer){
                         if(validSyntax(buffer)){
                             symb+=buffer;
                         }else{
@@ -293,12 +303,17 @@ void readFile(){
                             }
                             break;
                         }
+                            }else{
+                                cout << "Unexpected End" << endl;
+                                break;
+                            }
                         }
                     }
                     
                     if(!buffer.compare("COLOR")){
+                        continu=1;
                         while(1){
-                            s >> buffer;
+                            if(s >> buffer){
                         if(validSyntax(buffer)){
                             color+=buffer;
                         }else{
@@ -312,12 +327,20 @@ void readFile(){
                             }
                             break;
                         }
+                            }else{
+                                cout << "Unexpected End" << endl;
+                                break;
+                            }
                         }
                     }
                     
                     if(!buffer.compare("DESC")){
+                        continu=1;
                         while(1){
-                            s >> buffer;
+                            if(!(s >> buffer)){
+                                cout << "Unexpected End" << endl;
+                                break;
+                            }
                         if(validSyntax(buffer)){
                             
                             desc+=buffer;
@@ -352,8 +375,12 @@ void readFile(){
                     }
                    
                     if(!buffer.compare("SPEED")){
+                        continu=1;
                         while(1){
-                            s >> buffer;
+                            if(!(s >> buffer)){
+                                cout << "Unexpected End" << endl;
+                                break;
+                            }
                         if(validSyntax(buffer)){
                             speed+=buffer;
                         }else{
@@ -371,8 +398,12 @@ void readFile(){
                         }
                     }
                     if(!buffer.compare("DAM")){
+                        continu=1;
                         while(1){
-                            s >> buffer;
+                            if(!(s >> buffer)){
+                                cout << "Unexpected End" << endl;
+                                break;
+                            }
                         if(validSyntax(buffer)){
                             dam+=buffer;
                         }else{
@@ -391,8 +422,12 @@ void readFile(){
                     }
                     
                     if(!buffer.compare("HP")){
+                        continu=1;
                         while(1){
-                            s >> buffer;
+                            if(!(s >> buffer)){
+                                cout << "Unexpected End" << endl;
+                                break;
+                            }
                         if(validSyntax(buffer)){
                             hp+=buffer;
                         }else{
@@ -410,8 +445,12 @@ void readFile(){
                     }
                     
                     if(!buffer.compare("ABIL")){
+                        continu=1;
                         while(1){
-                            s >> buffer;
+                            if(!(s >> buffer)){
+                                cout << "Unexpected End" << endl;
+                                break;
+                            }
                         if(validSyntax(buffer)){
                             abil+=buffer;
                             abil+=" ";
@@ -443,6 +482,20 @@ void readFile(){
                         }else{
                             cout << "Not Created" << endl;
                         }
+                        createMon=0;
+                        namei=0;
+                        symbi=0;
+                        colori=0;
+                        desci=0;
+                        speedi=0;
+                        dami=0;
+                        abili=0;
+                        hpi=0;
+                        error=0;
+                        break;
+                    }
+                    if(!continu){
+                        cout << "Not Created" << endl;
                         createMon=0;
                         namei=0;
                         symbi=0;
