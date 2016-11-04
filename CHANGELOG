@@ -1,3 +1,75 @@
+commit af8f0a24
+Author: Shane P Drafahl <sdrafahl@iastate.edu>
+Date:   Wed Nov 2 20:05:12 2016 -0500
+
+    added additional parsing features
+
+commit d2db39bc
+Author: Shane P Drafahl <sdrafahl@iastate.edu>
+Date:   Wed Nov 2 12:56:02 2016 -0500
+
+    Added further parsing code
+
+commit 1c04769e
+Author: Shane P Drafahl <sdrafahl@iastate.edu>
+Date:   Wed Nov 2 12:23:00 2016 -0500
+
+    Added code for formated output to terminal
+
+commit 563d3c93
+Author: Shane P Drafahl <sdrafahl@iastate.edu>
+Date:   Tue Nov 1 13:37:05 2016 -0500
+
+    added some code to take from .rlg327 file
+
+commit 2be4190f
+Author: Shane P Drafahl <sdrafahl@iastate.edu>
+Date:   Tue Nov 1 12:14:06 2016 -0500
+
+    added code to enable second level processing of data
+
+commit ccd93f59
+Author: Shane P Drafahl <sdrafahl@iastate.edu>
+Date:   Tue Nov 1 01:57:53 2016 -0500
+
+    added code for processing of information post parsing file
+
+commit 31326459
+Author: Shane P Drafahl <sdrafahl@iastate.edu>
+Date:   Mon Oct 31 18:30:46 2016 -0500
+
+    Added code to be able to parse a txt file
+
+commit 2d70e8bd
+Author: Shane P Drafahl <sdrafahl@iastate.edu>
+Date:   Mon Oct 31 15:15:21 2016 -0500
+
+    Added terminal output
+
+commit afe37281
+Author: Shane P Drafahl <sdrafahl@iastate.edu>
+Date:   Sun Oct 30 23:14:11 2016 -0500
+
+    added additional code to parser
+
+commit d04a46eb
+Author: Shane P Drafahl <sdrafahl@iastate.edu>
+Date:   Sun Oct 30 16:21:57 2016 -0500
+
+    added validSyntax function
+
+commit 9037f2fa
+Author: Shane P Drafahl <sdrafahl@iastate.edu>
+Date:   Sun Oct 30 16:09:45 2016 -0500
+
+    Added layout for parser code
+
+commit f2544c67
+Author: Shane P Drafahl <sdrafahl@iastate.edu>
+Date:   Sat Oct 29 14:35:09 2016 -0500
+
+    Changed C code to C++
+
 commit 234cde8b
 Author: Shane P Drafahl <sdrafahl@iastate.edu>
 Date:   Wed Oct 26 19:31:44 2016 -0500
