@@ -74,7 +74,7 @@ Dice::Dice(int ba,int si,int nu){
 Dice::Dice(){
 
 }
-npcInfo::~npcInfo(){}
+objectInfo::~objectInfo(){}
 Dice::~Dice(){}
 /*Constructor*/
 objectInfo::objectInfo(){};
@@ -86,7 +86,7 @@ string color,string dodge,string val, string dam,
     this->weight= getDice(weight).roleDice();
     this->color = getColor(color);
     this->dodge = getDice(dodge);
-    this->val = getDice(val).roleDice();
+    this->value = getDice(val).roleDice();
     this->dam = getDice(dam);
     this->def = getDice(def);
     this->hit = getDice(hit);
@@ -95,9 +95,10 @@ string color,string dodge,string val, string dam,
     this->attr = getDice(attr).roleDice();
 }
 int getType(string color){
-    if(!color.compare(LIGHT)){
+    if(!color.compare("LIGHT")){
         return 0;
     }
+    return -1;
 }
 int Dice::roleDice(){
     int x;
@@ -141,28 +142,6 @@ int getColor(string c){
     }
     return 0;
 }
-void objectInfo::printInfo(){
-    cout << this->name << endl;
-    cout << "Symbol: " << this->symbol << endl;
-    unsigned int x;
-    int y=0;
-    cout << "Description: ";
-    for(x=0;x<this->description.size();x++){
-        cout << this->description.at(x);
-        if((70<y && this->description.at(x)==' ')){
-            y=-1;
-            cout << endl;
-        }
-        y++; 
-    }
-    cout << endl;
-    
-    cout << "Color Number: " << this->color << endl;
-    cout << "Speed: " << this->speed_i << endl;
-    cout << "HP: " << hp_i << endl;
-    cout << "Damage: " << dam_i << endl;
-    cout << "Characteristic Num: " << characteristics << endl;
-}
 Dice getDice(string spee){
     int x=0;
     string baseNum;
@@ -187,7 +166,7 @@ Dice getDice(string spee){
     return d;
 
 }
-void readFile(){
+void readFileObjects(){
     char *se = getenv("HOME");
     string fileName(se);
     fileName+="/.rlg327/object_desc.txt";
@@ -305,8 +284,8 @@ void readFile(){
                                 cout << "Duplicate Not Created" << endl;
                                 break;
                             }else{
-                                symbi=1;
-                                cout << "Read Monster Symbol : " << symb <<  endl;
+                                typei=1;
+                                cout << "Read Monster Symbol : " << type <<  endl;
                             }
                             break;
                         }
@@ -397,7 +376,7 @@ void readFile(){
                                 break;
                             }else{
                                 vali=1;
-                                cout << "Read Monster Speed: " << speed <<  endl;
+                                cout << "Read Monster Speed: " << value <<  endl;
                             }
                             
                             break;
@@ -420,7 +399,7 @@ void readFile(){
                                 break;
                             }else{
                                 dodgei=1;
-                                cout << "Read Monster Speed: " << speed <<  endl;
+                                cout << "Read Monster Speed: " << dodge <<  endl;
                             }
                             
                             break;
@@ -443,7 +422,7 @@ void readFile(){
                                 break;
                             }else{
                                 weighti=1;
-                                cout << "Read Monster Speed: " << speed <<  endl;
+                                cout << "Read Monster Speed: " << weight <<  endl;
                             }
                             
                             break;
@@ -514,7 +493,7 @@ void readFile(){
                                 break;
                             }else{
                                 attri=1;
-                                cout << "Read Monster Damage: " << dam <<  endl;
+                                cout << "Read Monster Damage: " << attr <<  endl;
                             }
                             
                             break;
@@ -538,7 +517,7 @@ void readFile(){
                                 break;
                             }else{
                                 defi=1;
-                                cout << "Read Monster HP: " << hp <<  endl;
+                                cout << "Read Monster HP: " << def <<  endl;
                             }
                             break;
                         }
@@ -561,7 +540,7 @@ void readFile(){
                                 break;
                             }else{
                                 hiti=1;
-                                cout << "Read Monster Abilities: " << abil <<  endl;
+                                cout << "Read Monster Abilities: " << hit <<  endl;
                             }
                             
                             break;
@@ -572,10 +551,9 @@ void readFile(){
                         if(!error){
                             if(namei && typei && colori && desci && speedi && dami && hiti && defi && dodgei && vali && weighti && attri){
                                     cout << "created" << endl;
-                                    objectInfo i(name,symb,color,desc,speed,dam,hp,abil);
-                                    cout << "Object Info: " << endl;
-                                    i.printInfo();
-
+                                    objectInfo i(name,type,weight,color,dodge,value,dam, def,hit,speed,desc,attr);
+                                    cout << endl;
+        
                             }else{
                                 cout << "Not Created" << endl;
                             }

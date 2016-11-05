@@ -5,20 +5,9 @@
 #include <time.h> 
 #include <stdlib.h>
 #include <stdio.h> 
+#include "dice.h"
 using namespace std;
 
-class Dice{
-      private:
-        int base;
-        int sides;
-        int numDice;
-        
-      public:
-        Dice(int ba,int si,int nu);
-        Dice();
-        ~Dice();
-        int roleDice();
-  };
 class npcInfo {
     private:
         string name;

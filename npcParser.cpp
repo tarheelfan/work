@@ -42,17 +42,10 @@ int validSyntax(string input){
     return 1;
 }
 
-Dice::Dice(int ba,int si,int nu){
-    srand(time(NULL));
-    this->base=ba;
-    this->sides=si;
-    this->numDice=nu;
-}
-Dice::Dice(){
 
-}
+
 npcInfo::~npcInfo(){}
-Dice::~Dice(){}
+
 /*Constructor*/
 npcInfo::npcInfo(){};
 npcInfo::npcInfo(string name,string symbol,string color,string desc,string speed,string dam,string hp, string abil){
@@ -67,17 +60,6 @@ npcInfo::npcInfo(string name,string symbol,string color,string desc,string speed
     this->hp_i = this->hp.roleDice();
     this->dam_i = this->dam.roleDice();
     this->characteristics = getCharacteristics(abil);
-}
-int Dice::roleDice(){
-    int x;
-    int total=0;
-    for(x=0;x<numDice;x++){
-        int num = rand() % sides;
-        num++;
-        total+=num;
-    }
-    total+=base;
-    return total;
 }
 int getColor(string c){
     boost::algorithm::trim(c);
@@ -132,30 +114,7 @@ void npcInfo::printInfo(){
     cout << "Damage: " << dam_i << endl;
     cout << "Characteristic Num: " << characteristics << endl;
 }
-Dice getDice(string spee){
-    int x=0;
-    string baseNum;
-    while(spee.at(x)!='+'){
-        x++;    
-    }
-    baseNum = spee.substr(0,x);
-    int base = atoi(spee.c_str());
-    int y=0;
-    while(spee.at(y)!='d'){
-        y++;
-    }
-    string numDice = spee.substr(x+1,(y-1)-x);
-    int numOfDice= atoi(numDice.c_str());
 
-    int stringLength = spee.length();
-
-    string rolesS = spee.substr(y+1,stringLength-(y+1));
-    int sides = atoi(rolesS.c_str());
-    Dice d(base,sides,numOfDice);
-
-    return d;
-
-}
 int getCharacteristics(string desc){
     int intelegent=0;
     int telapathic=0;

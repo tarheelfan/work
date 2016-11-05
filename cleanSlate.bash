@@ -9,3 +9,4 @@ rm mons.o
 rm mon.o
 rm knowledgeMap.o
 rm npcParser.o
+rm objectParser.o

@@ -5,20 +5,9 @@
 #include <time.h> 
 #include <stdlib.h>
 #include <stdio.h> 
+#include "dice.h"
 using namespace std;
 
-class Dice{
-      private:
-        int base;
-        int sides;
-        int numDice;
-        
-      public:
-        Dice(int ba,int si,int nu);
-        Dice();
-        ~Dice();
-        int roleDice();
-  };
 class objectInfo {
     private:
         string name;
@@ -38,14 +27,14 @@ class objectInfo {
         string desc;
         int attr;
     public:
-    objectcInfo(string name,string type,string,string weight,string color,string dodge,string val, string dam, string def, string hit,string speed, string desc, string attr);
+    objectInfo(string name,string type,string weight,
+    string color,string dodge,string val, string dam,
+    string def, string hit,string speed, string desc, string attr);
     objectInfo();
-    void printInfo();
     ~objectInfo();
 };
 int validSyntax(std::string input);
-void readFile();
+void readFileObjects();
 int getColor(string c);
-Dice getDice(string spee);
 int getCharacteristics(string desc);
 int getType(string color);

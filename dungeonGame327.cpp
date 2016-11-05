@@ -7,6 +7,7 @@
 #include <string.h>
 #include <ncurses.h>
 #include "npcParser.h"
+#include "objectParser.h"
 /*Switches*/
 int numberOfCreatures= 0;
 char* numberOfCritters = 0;
@@ -37,7 +38,8 @@ int main (int argc, char* argv[]){
     return 0;
 }
 int initGame(void){
-      readFile();
+      //readFile();
+     readFileObjects();
      // if(1){
      //   initMap(5);
     //  }else{
