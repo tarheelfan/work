@@ -13,9 +13,7 @@ void reset(struct list);
 
  
 /*Public Class Monster */
-void initList(struct list dir){
-    dir.size=0;
-}
+
 void addToList(struct list dir,int num){
     dir.directions[dir.size]=num;
     dir.size++;
@@ -33,12 +31,11 @@ void reset(struct list dir){
     dir.size=0;
 } 
 
-  
 /*Fields for Library*/
 static int maxMonsters;
 //static Map *m;
 Monster* monsterArray[21][80] = {{NULL}};
-static int numOfMonsters;
+//static int numOfMonsters;
 int pcx;
 int pcy;
 
@@ -56,65 +53,6 @@ int getPCY(){
     return pcy;
 }
 
-
-
-Monster* MonsterInit(Map *map,int x,int y,int isPlayer){
-    Monster *monster;
-    monster =(Monster*) malloc(sizeof(Monster));
-    if(isPlayer){
-        monster->thePlayer=1;   
-        monster->speed=10;
-        monster->roundVal=10;
-        monster->xloc=x;
-        monster->yloc=y;
-        pcx = x;
-        pcy = y;
-        monster->alive=1;
-    }else{
-    initList(monster->directions);
-    monster->thePlayer=0;
-    
-    monster->bigPeople=0;
-    monster->dragon=0;
-    monster->other=0;
-    monster->patrolMode=1;
-    monster->alive=1;
-    
-    monster->characteristics = rand()%16;
-    monster->modelNumber=numOfMonsters;
-    monster->yloc=y;
-    monster->searchLocationY=y;
-    monster->searchLocationX=x;
-    monster->xloc=x;
-    int typeSwitch = rand()%3;
-    switch(typeSwitch){
-        case 0:
-            monster->bigPeople=1;
-            break;
-        case 1:
-            monster->dragon=1;
-            break;
-        case 2:
-            monster->other=1;
-            break;
-    }
-    
-    if(!isPlayer){
-        int spee = (rand()%19)+1;
-        spee = 100 / spee;
-
-    if(spee<5){
-        spee=spee+5;
-    }
-    monster->roundVal=spee;
-    monster->speed= spee;
-    }
-    
-    numOfMonsters++;
-    }
-monsterArray[monster->yloc][monster->xloc]=monster;
-return monster;
-}
 /*Deconstructor*/
 void deconstructor(Monster *ma){
     //decoStructorI(ma->monsterC);

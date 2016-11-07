@@ -39,13 +39,13 @@ int main (int argc, char* argv[]){
 }
 int initGame(void){
       readFile();
-     //readFileObjects();
-     // if(1){
-     //   initMap(5);
-    //  }else{
-   //       printf("Need The Number of Monsters and --nummon command \n");
-    //      return 1;
-   //   }
+     readFileObjects();
+      if(1){
+        initMap(5);
+      }else{
+          printf("Need The Number of Monsters and --nummon command \n");
+          return 1;
+   }
     return 0;
   
 }

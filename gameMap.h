@@ -1,5 +1,5 @@
-#ifndef HEADER_H
-#define HEADER_H
+#ifndef GAMEMAP
+#define GAMEMAP
 
 #include <ncurses.h>
 #include "heap.h"
@@ -26,6 +26,7 @@ typedef struct{
      int color;
      int alive;
      int xloc;
+     int thePlayer;
      int yloc;
      int modelNumber;
      unsigned int roundVal;
@@ -96,6 +97,7 @@ extern Map *m;
 extern int NUMBER_OF_MONSTERS;
 //extern WINDOW *window;
 extern binheap_t heap;
+extern int pcx;
+extern int pcy;
 
-
-
+#endif

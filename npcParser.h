@@ -13,9 +13,11 @@ using namespace std;
 
 class npcInfo {
     private:
-        string name;
-        char symbol;
-        string description;
+        
+        
+       
+    public:
+     string description;
         int color;
         int speed_i;
         int hp_i;
@@ -24,17 +26,18 @@ class npcInfo {
         Dice dam;
         Dice hp;
         unsigned int characteristics : 4;
-    public:
-    inline unsigned int npcInfo::getInfoCharacter(){
+    string name;
+    char symbol;
+    inline unsigned int getInfoCharacter(){
         return this->characteristics;
     }
-    inline int npcInfo::getColori(){
+    inline int getColori(){
         return this->color;
     }
-    inline string npcInfo::getDesc(){
+    inline string getDesc(){
         return this->description;
     }
-    inline int npcInfo::getHP(){
+    inline int getHP(){
         return this->hp_i;
     }
     inline Dice getDamDice(){
@@ -50,4 +53,5 @@ void readFile();
 int getColorNPC(string c);
 Dice getDice(string spee);
 int getCharacteristics(string desc);
-  
+
+#endif

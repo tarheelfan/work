@@ -1,6 +1,7 @@
 #include "objectParser.h"
 #include <sstream>
 #include <boost/algorithm/string/trim.hpp>
+#include "monsterFactory.h"
 using namespace std;
 
 int validSyntax(string input){
@@ -240,10 +241,9 @@ void readFileObjects(){
     fileName+="/.rlg327/object_desc.txt";
     ifstream file (fileName.c_str());
     
-    Factory factory = new Factory();
     vector<objectInfo> obs;
-    std::vector<npcInfo>::iterator it;
-    it = monstersD.begin();
+    std::vector<objectInfo>::iterator it;
+    it = obs.begin();
 
     stringstream s;
     s << file.rdbuf();
@@ -686,6 +686,6 @@ void readFileObjects(){
         }
     }
     if(obs.size()>0){
-        factory.load(obs);
+        factory.loaded(obs);
     }
 }

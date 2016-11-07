@@ -1,3 +1,5 @@
+#ifndef OBJECTPARSER
+#define OBJECTPARSER
 #include<iostream>
 #include<fstream>
 #include <string>
@@ -38,3 +40,4 @@ void readFileObjects();
 int getColor(string c);
 int getCharacteristics(string desc);
 int getType(string color);
+#endif

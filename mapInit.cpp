@@ -13,6 +13,7 @@
 #include <ncurses.h>
 #include "knowledgeMap.h"
 #include "npcParser.h"
+#include "monsterFactory.h"
 int const x = 80;
 int const y = 21;
 #define DUNGEON_X 80
@@ -59,7 +60,7 @@ void playGame(){
                 isPlay=1;
             }
             Monster *monster;
-            monster = factory->getMon(m,coords.x,coords.y,isPlay);
+            monster = factory.getMon(m,coords.x,coords.y,isPlay);
             if(!x){
                 m->thePlayer=monster;
             }

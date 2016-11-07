@@ -156,9 +156,9 @@ int getCharacteristics(string desc){
     }
     return character;
 }
-void readFile(){
-    
-    Factory factory = new Factory();
+Factory factory;
+void readFile(){    
+
     vector<npcInfo> monstersD;
     std::vector<npcInfo>::iterator it;
     it = monstersD.begin();
@@ -479,7 +479,7 @@ void readFile(){
         }
     }
     if(monstersD.size()>0){
-        factory->lock(monstersD);
+        factory.locked(monstersD);
     }
 
 }

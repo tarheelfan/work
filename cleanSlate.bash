@@ -10,3 +10,4 @@ rm mon.o
 rm knowledgeMap.o
 rm npcParser.o
 rm objectParser.o
+rm monsterFactory.o

@@ -246,13 +246,9 @@ static void displayEnemyStatus(int scale){
         if(!mo->thePlayer){
         char string[9];
         char string2[7];
-        char temp = 'p';
-        if(mo->bigPeople){
-            temp = 'P';
-        }
-        if(mo->dragon){
-            temp ='D';
-        }
+        
+        char temp = mo->symbol;
+        
         string[0] = temp;
         string[1] = ' ';
         
