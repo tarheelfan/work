@@ -4,7 +4,7 @@
 #include <boost/algorithm/string/trim.hpp>
 using namespace std;
 
-int validSyntax(string input){
+int validSyntaxNPC(string input){
     boost::algorithm::trim(input);
     if(!input.size()){
         return 0;
@@ -51,7 +51,7 @@ npcInfo::npcInfo(){};
 npcInfo::npcInfo(string name,string symbol,string color,string desc,string speed,string dam,string hp, string abil){
     this->name=name;
     this->symbol=symbol.at(1);
-    this->color=getColor(color);
+    this->color=getColorNPC(color);
     this->description=desc;
     this->speed = getDice(speed);
     this->dam = getDice(dam);
@@ -61,7 +61,7 @@ npcInfo::npcInfo(string name,string symbol,string color,string desc,string speed
     this->dam_i = this->dam.roleDice();
     this->characteristics = getCharacteristics(abil);
 }
-int getColor(string c){
+int getColorNPC(string c){
     boost::algorithm::trim(c);
     if(!c.compare("WHITE")){
         return 0;
@@ -224,7 +224,7 @@ void readFile(){
                        continu=1;
                         while(1){
                             if(s >> buffer){
-                        if(validSyntax(buffer)){
+                        if(validSyntaxNPC(buffer)){
                             name+=buffer;
                             name+=" ";
                         }else{
@@ -249,7 +249,7 @@ void readFile(){
                         continu=1;
                         while(1){
                             if(s >> buffer){
-                        if(validSyntax(buffer)){
+                        if(validSyntaxNPC(buffer)){
                             symb+=buffer;
                         }else{
                             if(symbi){
@@ -273,7 +273,7 @@ void readFile(){
                         continu=1;
                         while(1){
                             if(s >> buffer){
-                        if(validSyntax(buffer)){
+                        if(validSyntaxNPC(buffer)){
                             color+=buffer;
                         }else{
                             if(colori){
@@ -300,7 +300,7 @@ void readFile(){
                                 cout << "Unexpected End" << endl;
                                 break;
                             }
-                        if(validSyntax(buffer)){
+                        if(validSyntaxNPC(buffer)){
                             
                             desc+=buffer;
                             desc+=" ";
@@ -340,7 +340,7 @@ void readFile(){
                                 cout << "Unexpected End" << endl;
                                 break;
                             }
-                        if(validSyntax(buffer)){
+                        if(validSyntaxNPC(buffer)){
                             speed+=buffer;
                         }else{
                             if(speedi){
@@ -363,7 +363,7 @@ void readFile(){
                                 cout << "Unexpected End" << endl;
                                 break;
                             }
-                        if(validSyntax(buffer)){
+                        if(validSyntaxNPC(buffer)){
                             dam+=buffer;
                         }else{
                             if(dami){
@@ -387,7 +387,7 @@ void readFile(){
                                 cout << "Unexpected End" << endl;
                                 break;
                             }
-                        if(validSyntax(buffer)){
+                        if(validSyntaxNPC(buffer)){
                             hp+=buffer;
                         }else{
                             if(hpi){
@@ -410,7 +410,7 @@ void readFile(){
                                 cout << "Unexpected End" << endl;
                                 break;
                             }
-                        if(validSyntax(buffer)){
+                        if(validSyntaxNPC(buffer)){
                             abil+=buffer;
                             abil+=" ";
                         }else{

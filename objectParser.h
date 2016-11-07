@@ -14,7 +14,7 @@ class objectInfo {
         int type; 
         /*
         0=light
-
+        1=ring
         */
         int weight;
         int color;

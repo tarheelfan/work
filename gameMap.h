@@ -1,12 +1,11 @@
 #ifndef HEADER_H
 #define HEADER_H
 
-#ifdef __cplusplus
-
-extern "C"{
-#endif
 #include <ncurses.h>
 #include "heap.h"
+#include <string>
+#include "dice.h"
+using namespace std;
 
 typedef struct {
     int topLeft[2];
@@ -20,11 +19,11 @@ struct list{
 };
 typedef struct{
      struct list directions;
-     int thePlayer;
-     int bigPeople;
-     int dragon;
-     int other;
+     string name;
+     string desc;
+     char symbol;
      unsigned int characteristics : 4; /*Intel,Telapath,Tunneling,Erratic*/
+     int color;
      int alive;
      int xloc;
      int yloc;
@@ -34,6 +33,8 @@ typedef struct{
      int patrolMode;
      int searchLocationX;
      int searchLocationY;
+     int hp;
+     Dice dam;
 }Monster;
 typedef struct{
     int distance;
@@ -97,10 +98,4 @@ extern int NUMBER_OF_MONSTERS;
 extern binheap_t heap;
 
 
-#ifdef __cplusplus 
-}
-#endif
-
-
-#endif
 

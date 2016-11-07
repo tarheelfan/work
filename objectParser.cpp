@@ -78,26 +78,94 @@ objectInfo::~objectInfo(){}
 Dice::~Dice(){}
 /*Constructor*/
 objectInfo::objectInfo(){};
-objectInfo::objectInfo(string name,string type,string weight,
-string color,string dodge,string val, string dam,
- string def, string hit,string speed, string desc, string attr){
+objectInfo::objectInfo(string name,string type,string weight,string color,string dodge,string val, string dam,string def, string hit,string speed, string desc, string attr){
     this->name= name;
+    
     this->type=getType(type);
+    
     this->weight= getDice(weight).roleDice();
+    
     this->color = getColor(color);
+    
     this->dodge = getDice(dodge);
+    
     this->value = getDice(val).roleDice();
+   
     this->dam = getDice(dam);
+    
     this->def = getDice(def);
+    
     this->hit = getDice(hit);
+    
     this->speed = getDice(speed);
+    
     this->desc = desc;
+    
     this->attr = getDice(attr).roleDice();
+    
 }
 int getType(string color){
     if(!color.compare("LIGHT")){
         return 0;
     }
+    if(!color.compare("RING")){
+        return 1;
+    }
+    if(!color.compare("WEAPON")){
+        return 2;
+    }
+    if(!color.compare("OFFHAND")){
+        return 3;
+    }
+    if(!color.compare("RANGED")){
+        return 4;
+    }
+    if(!color.compare("ARMOR")){
+        return 5;
+    }
+    if(!color.compare("HELMET")){
+        return 6;
+    }
+    if(!color.compare("CLOAK")){
+        return 7;
+    }
+    if(!color.compare("GLOVES")){
+        return 8;
+    }
+    if(!color.compare("BOOTS")){
+        return 9;
+    }
+    if(!color.compare("AMULET")){
+        return 10;
+    }
+    if(!color.compare("SCROLL")){
+        return 11;
+    }
+    if(!color.compare("BOOK")){
+        return 12;
+    }
+    if(!color.compare("FLASK")){
+        return 13;
+    }
+    if(!color.compare("GOLD")){
+        return 14;
+    }
+    if(!color.compare("AMMUNITION")){
+        return 15;
+    }
+    if(!color.compare("FOOD")){
+        return 16;
+    }
+    if(!color.compare("WAND")){
+        return 17;
+    }
+    if(!color.compare("CONTAINER")){
+        return 18;
+    }
+    if(!color.compare("STACK")){
+        return 19;
+    }
+
     return -1;
 }
 int Dice::roleDice(){
@@ -551,6 +619,18 @@ void readFileObjects(){
                         if(!error){
                             if(namei && typei && colori && desci && speedi && dami && hiti && defi && dodgei && vali && weighti && attri){
                                     cout << "created" << endl;
+                                    boost::algorithm::trim(name);
+                                    boost::algorithm::trim(type);
+                                    boost::algorithm::trim(weight);
+                                    boost::algorithm::trim(color);
+                                    boost::algorithm::trim(dodge);
+                                    boost::algorithm::trim(value);
+                                    boost::algorithm::trim(dam);
+                                    boost::algorithm::trim(def);
+                                    boost::algorithm::trim(hit);
+                                    boost::algorithm::trim(speed);
+                                    boost::algorithm::trim(desc);
+                                    boost::algorithm::trim(attr);
                                     objectInfo i(name,type,weight,color,dodge,value,dam, def,hit,speed,desc,attr);
                                     cout << endl;
         

@@ -38,8 +38,8 @@ int main (int argc, char* argv[]){
     return 0;
 }
 int initGame(void){
-      //readFile();
-     readFileObjects();
+      readFile();
+     //readFileObjects();
      // if(1){
      //   initMap(5);
     //  }else{

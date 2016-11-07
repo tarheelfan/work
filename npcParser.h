@@ -22,14 +22,29 @@ class npcInfo {
         Dice hp;
         unsigned int characteristics : 4;
     public:
+    inline unsigned int npcInfo::getInfoCharacter(){
+        return this->characteristics;
+    }
+    inline int npcInfo::getColori(){
+        return this->color;
+    }
+    inline string npcInfo::getDesc(){
+        return this->description;
+    }
+    inline int npcInfo::getHP(){
+        return this->hp_i;
+    }
+    inline Dice getDamDice(){
+        return this->dam;
+    }
     npcInfo(string name,string symbol,string color,string desc,string speed,string dam,string hp, string abil);
     npcInfo();
     void printInfo();
     ~npcInfo();
 };
-int validSyntax(std::string input);
+int validSyntaxNPC(std::string input);
 void readFile();
-int getColor(string c);
+int getColorNPC(string c);
 Dice getDice(string spee);
 int getCharacteristics(string desc);
   
