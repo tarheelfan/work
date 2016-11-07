@@ -12,9 +12,7 @@ class Factory{
         void locked(vector<npcInfo> v);
         /*and*/
         void loaded(vector<objectInfo> v);
-        Monster getMon();
-
-
+        Monster getMon(Map *map,int x,int y,int isPlayer);
     private:
         vector<npcInfo> monstersD;
         vector<objectInfo> objectD;

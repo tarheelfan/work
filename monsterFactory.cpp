@@ -14,7 +14,7 @@ void monsterFactory::locked(vector<npcInfo> v){
 void monsterFactory::loaded(vector<objectInfo> v){
     this.objectD=w;
 }
- Monster getMon(Map *map,int x,int y,int isPlayer{
+ Monster getMon(Map *map,int x,int y,int isPlayer){
     int random = rand() % this.monstersD.size;
     npcInfo info = monstersD.at(random);
     Monster *monster;
@@ -47,8 +47,7 @@ void monsterFactory::loaded(vector<objectInfo> v){
         monster->color = info->getColori();
         monster->desc = info->getDesc();
         monster->hp = info->getHP();
-        monster->dam = getDamDice();
-
+        monster->dam = info->getDamDice();
         if(!isPlayer){
             int spee = info->speed_i;
             spee = 100 / spee;

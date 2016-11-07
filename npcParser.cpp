@@ -1,7 +1,7 @@
-
 #include "npcParser.h"
 #include <sstream>
 #include <boost/algorithm/string/trim.hpp>
+#include "monsterFactory.h"
 using namespace std;
 
 int validSyntaxNPC(string input){
@@ -157,11 +157,16 @@ int getCharacteristics(string desc){
     return character;
 }
 void readFile(){
+    
+    Factory factory = new Factory();
+    vector<npcInfo> monstersD;
+    std::vector<npcInfo>::iterator it;
+    it = monstersD.begin();
+    
     char *se = getenv("HOME");
     string fileName(se);
     fileName+="/.rlg327/monster_desc.txt";
     ifstream file (fileName.c_str());
-    
     stringstream s;
     s << file.rdbuf();
     string buffer;
@@ -434,7 +439,8 @@ void readFile(){
                                 npcInfo i(name,symb,color,desc,speed,dam,hp,abil);
                                 cout << "Object Info: " << endl;
                                 i.printInfo();
-
+                                it = monstersD.insert(it,i);
+                                
                             }else{
                                 cout << "Not Created" << endl;
                             }
@@ -471,6 +477,9 @@ void readFile(){
                 }
             }
         }
+    }
+    if(monstersD.size()>0){
+        factory->lock(monstersD);
     }
 
 }

@@ -240,6 +240,11 @@ void readFileObjects(){
     fileName+="/.rlg327/object_desc.txt";
     ifstream file (fileName.c_str());
     
+    Factory factory = new Factory();
+    vector<objectInfo> obs;
+    std::vector<npcInfo>::iterator it;
+    it = monstersD.begin();
+
     stringstream s;
     s << file.rdbuf();
     string buffer;
@@ -633,7 +638,8 @@ void readFileObjects(){
                                     boost::algorithm::trim(attr);
                                     objectInfo i(name,type,weight,color,dodge,value,dam, def,hit,speed,desc,attr);
                                     cout << endl;
-        
+                                    it = obs.insert(it,i);
+                                    
                             }else{
                                 cout << "Not Created" << endl;
                             }
@@ -679,5 +685,7 @@ void readFileObjects(){
             }
         }
     }
-
+    if(obs.size()>0){
+        factory.load(obs);
+    }
 }

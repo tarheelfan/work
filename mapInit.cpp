@@ -59,7 +59,7 @@ void playGame(){
                 isPlay=1;
             }
             Monster *monster;
-            monster = MonsterInit(m,coords.x,coords.y,isPlay);
+            monster = factory->getMon(m,coords.x,coords.y,isPlay);
             if(!x){
                 m->thePlayer=monster;
             }
@@ -766,20 +766,8 @@ void reInitMap(int num_of_mon){
                   int xmon = tempMon->xloc;
                     int ymon = tempMon->yloc;
                     if(xmon>xmin && xmax>xmon && ymon<ymin && ymon>ymax){
-
-                    if(tempMon->bigPeople){
-                        mvaddch(i+3,j,'P');
+                        mvaddch(i+3,j,tempMon->symbol);
                     }
-                    if(tempMon->dragon){
-                        mvaddch(i+3,j,'D');
-                    }
-                    if(tempMon->thePlayer){
-                        mvaddch(i+3,j,'@');
-                    }
-                    if(tempMon->other){
-                        mvaddch(i+3,j,'p');
-                    }
-                }
             }else{
                 mvaddch(i+3,j,temp[0]);
             }   
