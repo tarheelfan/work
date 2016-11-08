@@ -33,8 +33,8 @@ int main (int argc, char* argv[]){
     if(initGame()){
         return 1;
     }
-    //StartGame();
-    //closeGame();
+    StartGame();
+    closeGame();
     return 0;
 }
 int initGame(void){
@@ -56,11 +56,12 @@ void StartGame(void){
         ex = getch();
         
     if(ex){
-        break;
+        playGame();
+        return;
     }
     }
     
-    playGame();
+    
 }
 void closeGame(void){
     endwin();

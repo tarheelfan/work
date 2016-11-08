@@ -22,8 +22,8 @@ void Factory::loaded(vector<objectInfo> v){
  Monster* Factory::getMon(Map *map,int x,int y,int isPlayer){
     int random = rand() % this->monstersD.size();
     npcInfo info = monstersD.at(random);
-    Monster *monster;
-    monster =(Monster*) malloc(sizeof(Monster));
+    Monster *monster = new Monster();
+   // monster =(Monster*) malloc(sizeof(Monster));
     if(isPlayer){
         monster->thePlayer=1;   
         monster->speed=10;
@@ -45,7 +45,8 @@ void Factory::loaded(vector<objectInfo> v){
         monster->searchLocationX=x;
         monster->xloc=x;
         monster->symbol=info.symbol;
-        monster->name=info.name;
+        string temp=info.name;
+        monster->name = temp;
         monster->color = info.getColori();
         monster->desc = info.getDesc();
         monster->hp = info.getHP();
