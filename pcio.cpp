@@ -56,7 +56,7 @@ int performPCMove(Monster *pci){
                 done = upRight(); /*Up Right*/
                 break;
             case 'l' :  case '6' : /*Right*/
-                done = right();
+              done = right();
                 break;
            case 'n': case '3' : /*Bottom Right*/
            done = bottomRight();
@@ -76,9 +76,7 @@ int performPCMove(Monster *pci){
             case '<':
                 done =downStairs();
                 break;
-           // case 5 : /*Rest*/
            case ' ' : case '5' :
-                /*Do Nothing*/
                 done =0;
                 break;
             case 'm':
@@ -88,8 +86,6 @@ int performPCMove(Monster *pci){
                 displayEnemyStatus(scale);
 
                 int32_t userCommand = getch();
-                //if(userCommand==27){
-                //getch();
                 escape=1;
                 if(userCommand==258){ /*Down List*/
                     scale++;
@@ -103,11 +99,9 @@ int performPCMove(Monster *pci){
                     clear();
                     printw("Loading Buffer");
                     
-                }
-                //}
+                    }
                 }
                 escape=0;
-                    
                 break;
             case QUIT :
                 return 1;
@@ -121,7 +115,8 @@ int performPCMove(Monster *pci){
 static int upLeft(void){
     int x = m->thePlayer->xloc;
     int y = m->thePlayer->yloc;
-    if(m->grid[y-1][x-1] == '#' || m->grid[y-1][x-1] == '.' || m->grid[y-1][x-1] == '<' || m->grid[y-1][x-1] == '>'){
+    if(!(*m).hardness[y-1][x-1])
+    {
         return moveTopLeft(pc);
     }
     return 1;
@@ -129,7 +124,8 @@ static int upLeft(void){
 static int up(void){
     int x = m->thePlayer->xloc;
     int y = m->thePlayer->yloc;
-    if(m->grid[y-1][x] == '#' || m->grid[y-1][x] == '.' || m->grid[y-1][x] == '<' || m->grid[y-1][x] == '>'){
+    if(!(*m).hardness[y-1][x])
+    {
        return moveUp(pc);
     }
     return 1;
@@ -137,7 +133,8 @@ static int up(void){
 static int upRight(void){
     int x = m->thePlayer->xloc;
     int y = m->thePlayer->yloc;
-    if(m->grid[y-1][x+1] == '#' || m->grid[y-1][x+1] == '.' || m->grid[y-1][x+1] == '<' || m->grid[y-1][x+1] == '>'){
+    if(!(*m).hardness[y-1][x+1])
+    {
         return moveTopRight(pc);         
     }
     return 1;
@@ -145,7 +142,8 @@ static int upRight(void){
 static int right(void){
     int x = m->thePlayer->xloc;
     int y = m->thePlayer->yloc;
-    if(m->grid[y][x+1] == '#' || m->grid[y][x+1] == '.' || m->grid[y][x+1] == '<' || m->grid[y][x+1] == '>'){
+    if(!(*m).hardness[y][x+1])
+    {
         return moveRight(pc);        
     }
     return 1;
@@ -153,7 +151,8 @@ static int right(void){
 static int bottomRight(void){
     int x = m->thePlayer->xloc;
     int y = m->thePlayer->yloc;
-    if(m->grid[y+1][x+1] == '#' || m->grid[y+1][x+1] == '.' || m->grid[y+1][x+1] == '<' || m->grid[y+1][x+1] == '>'){
+    if(!(*m).hardness[y+1][x+1])
+    {
         return moveBottomRight(pc);         
     }
     return 1;
@@ -161,7 +160,8 @@ static int bottomRight(void){
 static int bottom(void){
     int x = m->thePlayer->xloc;
     int y = m->thePlayer->yloc;
-    if(m->grid[y+1][x] == '#' || m->grid[y+1][x] == '.' || m->grid[y+1][x] == '<' || m->grid[y+1][x] == '>'){
+    if(!(*m).hardness[y+1][x])
+    {
         return moveDown(pc);         
     }
     return 1;
@@ -169,7 +169,8 @@ static int bottom(void){
 static int bottomLeft(void){
     int x = m->thePlayer->xloc;
     int y = m->thePlayer->yloc;
-    if(m->grid[y+1][x-1] == '#' || m->grid[y+1][x-1] == '.' || m->grid[y+1][x-1] == '<' || m->grid[y+1][x-1] == '>'){
+    if(!(*m).hardness[y+1][x-1])
+    {
         return moveBottomLeft(pc);         
     }
     return 1;
@@ -177,7 +178,8 @@ static int bottomLeft(void){
 static int left(void){
    int x = m->thePlayer->xloc;
     int y = m->thePlayer->yloc;
-    if(m->grid[y][x-1] == '#' || m->grid[y][x-1] == '.' || m->grid[y][x-1] == '<' || m->grid[y][x-1] == '>' ){
+    if(!(*m).hardness[y][x-1])
+    {
         return moveLeft(pc);         
     }
     return 1;
@@ -218,7 +220,6 @@ static void clearData(){
 }
 
 static void displayEnemyStatus(int scale){
-    //wrefresh(window);
     Monster* monsters[NUMBER_OF_MONSTERS];
     Monster *tem;
     int numOfMon = heap.size;
@@ -231,7 +232,6 @@ static void displayEnemyStatus(int scale){
              x--;
              numOfMon--;
          }
-         
     }
     int ui;
     for(ui=0;ui<numOfMon;ui++){
@@ -265,7 +265,6 @@ static void displayEnemyStatus(int scale){
         if(yval<0){
             yval=yval*-1;
         }
-
         if(xtemppc<xtempmon){
             string[2]='E';
             string[3]='A';
@@ -279,8 +278,6 @@ static void displayEnemyStatus(int scale){
             string[4]='S';
             string[5]='T';
             string[6]=':';
-           
-        
         }
         if(xtemppc==xtempmon){
             string[2]=' ';
@@ -299,8 +296,6 @@ static void displayEnemyStatus(int scale){
             string2[3]='T';
             string2[4]='H';
             string2[5]=':';
-            
-        
         }
         if(ytemppc>ytempmon){
             string2[0]='S';
@@ -309,8 +304,6 @@ static void displayEnemyStatus(int scale){
             string2[3]='T';
             string2[4]='H';
             string2[5]=':';
-            
-           
         }
         printw("%s\n"," ");
         printw("%s",string);

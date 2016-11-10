@@ -54,7 +54,7 @@ void updateKnowledgeMap(void* s){
         for(y=ylocal-3;y<=ylocal+3;y++){
             if(x>=0 && x<80){
                 if(y>=0 && y<21){
-                    t->setCharC(y,x,m->grid[y][x]);
+                    t->setCharC(y,x,m->grid[y][x]);    
                 }
             }
         }

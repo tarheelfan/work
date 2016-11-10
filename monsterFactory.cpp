@@ -1,6 +1,9 @@
+#ifndef FACTORY
+#define FACTORY
 #include <time.h> 
 #include "monsterFactory.h"
 #include "gameMap.h"
+#include "objectManager.h"
 using namespace std;
 
 void initList(struct list dir){
@@ -25,6 +28,8 @@ void Factory::loaded(vector<objectInfo> v){
     Monster *monster = new Monster();
    // monster =(Monster*) malloc(sizeof(Monster));
     if(isPlayer){
+        monster->symbol='@';
+        monster->name = "The Player";
         monster->thePlayer=1;   
         monster->speed=10;
         monster->roundVal=10;
@@ -63,4 +68,15 @@ void Factory::loaded(vector<objectInfo> v){
  }
  return monster;
 }
- 
+ Item Factory::getItem(){
+     int index = rand() % objectD.size();
+     objectInfo temp = objectD.at(index);
+    Item send(temp.type,temp.weight,temp.color,temp.dodge,temp.value,temp.dam,temp.def.roleDice(),temp.hit.roleDice(),temp.speed.roleDice(),temp.desc,temp.attr);
+      int cow =90;
+      if(cow==90){
+          return send;
+      }
+     
+ }
+
+ #endif

@@ -11,4 +11,6 @@ rm knowledgeMap.o
 rm npcParser.o
 rm objectParser.o
 rm monsterFactory.o
+rm objectManager.o
+rm dice.o
 reset

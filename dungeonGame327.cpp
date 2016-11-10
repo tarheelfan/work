@@ -41,7 +41,7 @@ int initGame(void){
       readFile();
      readFileObjects();
       if(1){
-        initMap(5);
+        initMap(15);
       }else{
           printf("Need The Number of Monsters and --nummon command \n");
           return 1;

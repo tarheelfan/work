@@ -2,7 +2,7 @@
 #include <time.h>
 #include <stdlib.h>
 #include <stdio.h>
-
+#include "objectManager.h"
 
 
 void initList(struct list);
@@ -44,7 +44,6 @@ void initMonsterLib(Map *map, int numOfMax){
     srand(time(NULL));
     maxMonsters = numOfMax;
     //m=map;
-    
 }
 int getPCX(){
     return pcx;
@@ -56,7 +55,7 @@ int getPCY(){
 /*Deconstructor*/
 void deconstructor(Monster *ma){
     //decoStructorI(ma->monsterC);
-    free(ma);
+    delete ma;
 }
 /*Public Functions For Monsters*/
 
@@ -74,9 +73,22 @@ void deconstructor(Monster *ma){
     if(temp!=NULL){
         (*temp).alive=0;
     }
-    if(m->grid[ytemp-1][xtemp]==('#') || m->grid[ytemp-1][xtemp]==('.') || m->grid[ytemp-1][xtemp]==('<') || m->grid[ytemp-1][xtemp]==('>')){
+    if(!(*m).hardness[ytemp-1][xtemp]){
        monsterArray[ytemp-1][xtemp] = mon;
        (*mon).yloc=ytemp-1; 
+       
+       char pol = getCharacter(ytemp-1,xtemp);
+        if(pol!='0'){
+        while(pol!='0'){
+        Item temp = searchItem(ytemp-1, xtemp);
+        std::vector<Item>::iterator it;
+        it = (*mon).inventory.begin();
+        int var = itemGrid[ytemp-1][xtemp].size(); /*Inserts Items*/
+        (*mon).inventory.insert(it+var,temp);
+        pol = getCharacter(ytemp-1,xtemp);
+        }
+           (*m).grid[ytemp-1][xtemp] = '.'; 
+        }
     }else{
         unsigned char hardness =m->hardness[ytemp-1][xtemp];
         if(hardness>85){
@@ -112,9 +124,25 @@ void deconstructor(Monster *ma){
     if(temp!=NULL){
         (*temp).alive=0;
     }
-    if(m->grid[ytemp+1][xtemp]==('#') || m->grid[ytemp+1][xtemp]==('.') || m->grid[ytemp+1][xtemp]==('<') || m->grid[ytemp+1][xtemp]==('>')){/*y+1,x*/
+    if(!(*m).hardness[ytemp+1][xtemp]){/*y+1,x*/
        monsterArray[ytemp+1][xtemp] = mon;/*y+1,x*/
        (*mon).yloc=ytemp+1; /*y+1,x*/
+    
+        char pol = getCharacter(ytemp+1,xtemp);
+        if(pol!='0'){
+        while(pol!='0'){
+        Item temp = searchItem(ytemp+1, xtemp);
+        std::vector<Item>::iterator it;
+        it = (*mon).inventory.begin();
+        int var = itemGrid[ytemp+1][xtemp].size(); /*Inserts Items*/
+        (*mon).inventory.insert(it+var,temp);
+        pol = getCharacter(ytemp+1,xtemp);
+        }
+           (*m).grid[ytemp+1][xtemp] = '.'; 
+        }
+            
+       
+    
     }else{
         unsigned char hardness =m->hardness[ytemp+1][xtemp];
         if(hardness>85){
@@ -149,9 +177,22 @@ void deconstructor(Monster *ma){
     if(temp!=NULL){
         (*temp).alive=0;
     }
-    if(m->grid[ytemp][xtemp+1]==('#') || m->grid[ytemp][xtemp+1]==('.') || m->grid[ytemp][xtemp+1]==('<') || m->grid[ytemp][xtemp+1]==('>')){/*y,x+1*/
+    if(!(*m).hardness[ytemp][xtemp+1]){/*y,x+1*/
        monsterArray[ytemp][xtemp+1] = mon;/*y,x+1*/
        (*mon).xloc=xtemp+1; /*y,x+1*/
+    
+       char pol = getCharacter(ytemp,xtemp+1);
+        if(pol!='0'){
+        while(pol!='0'){
+        Item temp = searchItem(ytemp, xtemp+1);
+        std::vector<Item>::iterator it;
+        it = (*mon).inventory.begin();
+        int var = itemGrid[ytemp][xtemp+1].size(); /*Inserts Items*/
+        (*mon).inventory.insert(it+var,temp);
+        pol = getCharacter(ytemp,xtemp+1);
+        }
+           (*m).grid[ytemp][xtemp+1] = '.'; 
+        }
     }else{
         unsigned char hardness =m->hardness[ytemp][xtemp+1];
         if(hardness>85){
@@ -188,9 +229,22 @@ void deconstructor(Monster *ma){
     if(temp!=NULL){
         (*temp).alive=0;
     }
-    if(m->grid[ytemp][xtemp-1]==('#') || m->grid[ytemp][xtemp-1]==('.') || m->grid[ytemp][xtemp-1]==('>') || m->grid[ytemp][xtemp-1]==('<')){/*y,x-1*/
+    if(!(*m).hardness[ytemp][xtemp-1]){/*y,x-1*/
        monsterArray[ytemp][xtemp-1] = mon;/*y,x-1*/
        (*mon).xloc=xtemp-1; /*y,x-1*/
+    
+        char pol = getCharacter(ytemp,xtemp-1);
+        if(pol!='0'){
+        while(pol!='0'){
+        Item temp = searchItem(ytemp, xtemp-1);
+        std::vector<Item>::iterator it;
+        it = (*mon).inventory.begin();
+        int var = itemGrid[ytemp][xtemp-1].size(); /*Inserts Items*/
+        (*mon).inventory.insert(it+var,temp);
+        pol = getCharacter(ytemp,xtemp-1);
+        }
+           (*m).grid[ytemp][xtemp-1] = '.'; 
+        }
     }else{
         unsigned char hardness =m->hardness[ytemp][xtemp-1];
         if(hardness>85){
@@ -227,10 +281,23 @@ void deconstructor(Monster *ma){
     if(temp!=NULL){
         (*temp).alive=0;
     }
-    if(m->grid[ytemp-1][xtemp+1]==('#') || m->grid[ytemp-1][xtemp+1]==('.') || m->grid[ytemp-1][xtemp+1]==('>') || m->grid[ytemp-1][xtemp+1]==('<')){/*y-1,x+1*/
+    if(!(*m).hardness[ytemp-1][xtemp+1]){/*y-1,x+1*/
        monsterArray[ytemp-1][xtemp+1] = mon;/*y-1,x+1*/
        (*mon).yloc=ytemp-1;/*y-1,x+1*/
         (*mon).xloc=xtemp+1;
+    
+         char pol = getCharacter(ytemp-1,xtemp+1);
+        if(pol!='0'){
+        while(pol!='0'){
+        Item temp = searchItem(ytemp-1, xtemp+1);
+        std::vector<Item>::iterator it;
+        it = (*mon).inventory.begin();
+        int var = itemGrid[ytemp-1][xtemp+1].size(); /*Inserts Items*/
+        (*mon).inventory.insert(it+var,temp);
+        pol = getCharacter(ytemp-1,xtemp+1);
+        }
+           (*m).grid[ytemp-1][xtemp+1] = '.'; 
+        }
     }else{
         unsigned char hardness =m->hardness[ytemp-1][xtemp+1];
         if(hardness>85){
@@ -268,10 +335,24 @@ void deconstructor(Monster *ma){
     if(temp!=NULL){
         (*temp).alive=0;
     }
-    if(m->grid[ytemp-1][xtemp-1]==('#') || m->grid[ytemp-1][xtemp-1]==('.') || m->grid[ytemp-1][xtemp-1]==('<') || m->grid[ytemp-1][xtemp-1]==('>')){/*y-1,x-1*/
+    if(!(*m).hardness[ytemp-1][xtemp-1]){/*y-1,x-1*/
        monsterArray[ytemp-1][xtemp-1] = mon;/*y-1,x-1*/
        (*mon).yloc=ytemp-1;/*y-1,x-1*/
         (*mon).xloc=xtemp-1;
+    
+         char pol = getCharacter(ytemp-1,xtemp-1);
+        if(pol!='0'){
+        while(pol!='0'){
+        Item temp = searchItem(ytemp-1, xtemp-1);
+        std::vector<Item>::iterator it;
+        it = (*mon).inventory.begin();
+        int var = itemGrid[ytemp-1][xtemp-1].size(); /*Inserts Items*/
+        (*mon).inventory.insert(it+var,temp);
+        pol = getCharacter(ytemp-1,xtemp-1);
+        }
+           (*m).grid[ytemp-1][xtemp-1] = '.'; 
+        }
+
     }else{
         unsigned char hardness =m->hardness[ytemp-1][xtemp-1];
         if(hardness>85){
@@ -309,10 +390,23 @@ void deconstructor(Monster *ma){
     if(temp!=NULL){
         (*temp).alive=0;
     }
-    if(m->grid[ytemp+1][xtemp-1]==('#') || m->grid[ytemp+1][xtemp-1]==('.') || m->grid[ytemp+1][xtemp-1]==('>') || m->grid[ytemp+1][xtemp-1]==('<')) {/*y+1,x-1*/
+    if(!(*m).hardness[ytemp+1][xtemp-1]) {/*y+1,x-1*/
        monsterArray[ytemp+1][xtemp-1] = mon;/*y+1,x-1*/
        (*mon).yloc=ytemp+1;/*y+1,x-1*/
         (*mon).xloc=xtemp-1;
+    
+        char pol = getCharacter(ytemp+1,xtemp-1);
+        if(pol!='0'){
+        while(pol!='0'){
+        Item temp = searchItem(ytemp+1, xtemp-1);
+        std::vector<Item>::iterator it;
+        it = (*mon).inventory.begin();
+        int var = itemGrid[ytemp+1][xtemp-1].size(); /*Inserts Items*/
+       (*mon).inventory.insert(it+var,temp);
+        pol = getCharacter(ytemp+1,xtemp-1);
+        }
+           (*m).grid[ytemp+1][xtemp-1] = '.'; 
+        }
     }else{
         unsigned char hardness =m->hardness[ytemp+1][xtemp-1];
         if(hardness>85){
@@ -350,10 +444,24 @@ void deconstructor(Monster *ma){
     if(temp!=NULL){
         (*temp).alive=0;
     }
-    if(m->grid[ytemp+1][xtemp+1]==('#') || m->grid[ytemp-1][xtemp]==('.') || m->grid[ytemp-1][xtemp]==('>') || m->grid[ytemp-1][xtemp]==('<')){/*y+1,x+1*/
+    if(!(*m).hardness[ytemp+1][xtemp+1] ){/*y+1,x+1*/
        monsterArray[ytemp+1][xtemp+1] = mon;/*y+1,x+1*/
        (*mon).yloc=ytemp+1;/*y+1,x+1*/
         (*mon).xloc=xtemp+1;
+    
+    char pol = getCharacter(ytemp+1,xtemp+1);
+    if(pol!='0'){
+        while(pol!='0'){
+        Item temp = searchItem(ytemp+1, xtemp+1);
+        std::vector<Item>::iterator it;
+        it = (*mon).inventory.begin();
+        int var = itemGrid[ytemp+1][xtemp+1].size(); /*Inserts Items*/
+        (*mon).inventory.insert(it+var,temp);
+        pol = getCharacter(ytemp+1,xtemp+1);
+        }
+           (*m).grid[ytemp+1][xtemp+1] = '.'; 
+        }
+
     }else{
         unsigned char hardness =m->hardness[ytemp+1][xtemp+1];
         if(hardness>85){
@@ -716,6 +824,9 @@ void getDirectionsTunneling(Monster *npc){
     }
     }
 }
+ static int isWalk(int x, int y){
+     return !(*m).hardness[x][y];
+ }
  void getDirections(Monster *npc){/*Hey Shane please work here on this function and check for correct dimensions and terrain*/
     int done=0;
     volatile int xhere = npc->xloc;
@@ -734,7 +845,8 @@ void getDirectionsTunneling(Monster *npc){
     volatile int bottom =0;
     volatile int bottomRight=0;
     /*Top Left*/
-    if(xhere-1!=0 && yhere-1!=0 && (m->grid[yhere-1][xhere-1]==('#') || m->grid[yhere-1][xhere-1]==('.') || m->grid[yhere-1][xhere-1]==('<') || m->grid[yhere-1][xhere-1]==('>'))){
+    
+    if(isWalk(yhere-1,xhere-1)){
             int temp = m->nonTunnelingDistanceGrid[yhere-1][xhere-1].distance;
             if(temp==0){
                 done=1;
@@ -752,7 +864,8 @@ void getDirectionsTunneling(Monster *npc){
             }
     }
     /*Top*/
-    if(yhere-1!=0 && (m->grid[yhere-1][xhere]==('#') || m->grid[yhere-1][xhere]==('.') || m->grid[yhere-1][xhere]==('<') || m->grid[yhere-1][xhere]==('>'))){
+    
+    if(isWalk(yhere-1,xhere)){
             int temp = m->nonTunnelingDistanceGrid[yhere-1][xhere].distance;
             if(temp==0){
                 done=1;
@@ -770,7 +883,8 @@ void getDirectionsTunneling(Monster *npc){
             }
     }
     /*TopRight*/
-    if((xhere+1!=79 && yhere-1!=0) && (m->grid[yhere-1][xhere+1]=='#' || m->grid[yhere-1][xhere+1]=='.' || m->grid[yhere-1][xhere+1]=='<' || m->grid[yhere-1][xhere+1]=='>'  )){
+    
+    if(isWalk(yhere-1,xhere+1)){
             int temp = m->nonTunnelingDistanceGrid[yhere-1][xhere+1].distance;
             if(temp==0){
                 done=1;
@@ -788,7 +902,8 @@ void getDirectionsTunneling(Monster *npc){
             }
     }
     /*Left*/
-    if(xhere-1!=0 && (m->grid[yhere][xhere-1]==('#') || m->grid[yhere][xhere-1]==('.') || m->grid[yhere][xhere-1]==('>') || m->grid[yhere][xhere-1]==('<'))){
+    
+    if(isWalk(yhere,xhere-1)){
             int temp = m->nonTunnelingDistanceGrid[yhere][xhere-1].distance;
             if(temp==0){
                 done=1;
@@ -806,7 +921,8 @@ void getDirectionsTunneling(Monster *npc){
             }   
     }
     /*Right*/
-    if(xhere+1!=79 && (m->grid[yhere][xhere+1]==('#') || m->grid[yhere][xhere+1]==('.') || m->grid[yhere][xhere+1]==('>') || m->grid[yhere][xhere+1]==('<'))){
+    
+    if(isWalk(yhere,xhere+1)){
             int temp = m->nonTunnelingDistanceGrid[yhere][xhere+1].distance;
             if(temp==0){
                 done=1;
@@ -824,7 +940,8 @@ void getDirectionsTunneling(Monster *npc){
             }
     }
     /*BottomLeft*/
-    if(xhere-1!=0 && yhere+1!=20 && (m->grid[yhere+1][xhere-1]==('#') || m->grid[yhere+1][xhere-1]==('.') || m->grid[yhere+1][xhere-1]==('>') || m->grid[yhere+1][xhere-1]==('<'))){
+    
+    if(isWalk(yhere+1,xhere-1)){
             int temp = m->nonTunnelingDistanceGrid[yhere+1][xhere-1].distance;
             if(temp==0){
                 done=1;
@@ -842,7 +959,9 @@ void getDirectionsTunneling(Monster *npc){
             }
     }
     /*Bottom*/
-    if(yhere+1!=79 && (m->grid[yhere+1][xhere]==('#') || m->grid[yhere+1][xhere]==('.') || m->grid[yhere+1][xhere]==('>') || m->grid[yhere+1][xhere]==('<'))){
+    
+    
+    if(isWalk(yhere+1,xhere)){
             int temp = m->nonTunnelingDistanceGrid[yhere+1][xhere].distance;
             if(temp==0){
                 done=1;
@@ -860,7 +979,8 @@ void getDirectionsTunneling(Monster *npc){
             }
     }
     /*BottomRight*/
-    if(xhere+1!=79 && yhere+1!=20 && (m->grid[yhere+1][xhere+1]==('#') || m->grid[yhere+1][xhere+1]==('.') || m->grid[yhere+1][xhere+1]==('>') || m->grid[yhere+1][xhere+1]==('<'))){
+    
+    if(isWalk(yhere+1,xhere+1)){
             int temp = m->nonTunnelingDistanceGrid[yhere+1][xhere+1].distance;
             if(temp==0){
                 done=1;
@@ -1042,7 +1162,7 @@ void moveNearestNonTunneling(Monster *npc){
     int bottomRight=0;
     /*Top Left*/
     if(xhere-1!=0 && yhere-1!=0){
-        if(m->grid[yhere-1][xhere-1]==('#') || m->grid[yhere-1][xhere-1]==('.')){
+        if(isWalk(yhere-1,xhere-1)){
             int temp = m->nonTunnelingDistanceGrid[yhere-1][xhere-1].distance;
             if(temp<min){
                 min=temp;
@@ -1059,7 +1179,8 @@ void moveNearestNonTunneling(Monster *npc){
     }
     /*Top*/
     if(yhere-1!=0){
-        if(m->grid[yhere-1][xhere]==('#') || m->grid[yhere-1][xhere]==('.')){
+        
+        if(isWalk(yhere-1,xhere)){
             int temp = m->nonTunnelingDistanceGrid[yhere-1][xhere].distance;
             if(temp<min){
                 min=temp;
@@ -1076,7 +1197,7 @@ void moveNearestNonTunneling(Monster *npc){
     }
     /*TopRight*/
     if(xhere+1!=79 && yhere-1!=0){
-        if(m->grid[yhere-1][xhere+1]==('#') || m->grid[yhere-1][xhere+1]==('.')){
+        if(isWalk(yhere-1,xhere+1)){
             int temp = m->nonTunnelingDistanceGrid[yhere-1][xhere+1].distance;
             if(temp<min){
                 min=temp;
@@ -1093,8 +1214,8 @@ void moveNearestNonTunneling(Monster *npc){
     }
     /*Left*/
     if(xhere-1!=0){
-        if(m->grid[yhere][xhere-1]==('#') || m->grid[yhere][xhere-1]==('.')){
-            int temp = m->nonTunnelingDistanceGrid[yhere][xhere-1].distance;
+        if(isWalk(yhere,xhere-1)){
+            int temp = m->nonTunnelingDistanceGrid[yhere-1][xhere].distance;
             if(temp<min){
                 min=temp;
                 topLeft=0;
@@ -1110,8 +1231,9 @@ void moveNearestNonTunneling(Monster *npc){
     }
     /*Right*/
     if(xhere+1!=79){
-        if(m->grid[yhere-1][xhere+1]==('#') || m->grid[yhere-1][xhere+1]==('.')){
-            int temp = m->nonTunnelingDistanceGrid[yhere-1][xhere+1].distance;
+        
+        if(isWalk(yhere,xhere+1)){
+            int temp = m->nonTunnelingDistanceGrid[yhere][xhere+1].distance;
             if(temp<min){
                 min=temp;
                 topLeft=0;
@@ -1127,7 +1249,8 @@ void moveNearestNonTunneling(Monster *npc){
     }
     /*BottomLeft*/
     if(xhere-1!=0 && yhere+1!=20){
-        if(m->grid[yhere+1][xhere-1]==('#') || m->grid[yhere+1][xhere-1]==('.')){
+        
+        if(isWalk(yhere+1,xhere-1)){
             int temp = m->nonTunnelingDistanceGrid[yhere+1][xhere-1].distance;
             if(temp<min){
                 min=temp;
@@ -1144,7 +1267,8 @@ void moveNearestNonTunneling(Monster *npc){
     }
     /*Bottom*/
     if(yhere+1!=79){
-        if(m->grid[yhere+1][xhere]==('#') || m->grid[yhere+1][xhere]==('.')){
+        
+        if(isWalk(yhere+1,xhere)){
             int temp = m->nonTunnelingDistanceGrid[yhere+1][xhere].distance;
             if(temp<min){
                 min=temp;
@@ -1161,8 +1285,9 @@ void moveNearestNonTunneling(Monster *npc){
     }
     /*BottomRight*/
     if(xhere!=0 && yhere+1!=0){
-        if(m->grid[yhere+1][xhere]==('#') || m->grid[yhere+1][xhere]==('.')){
-            int temp = m->nonTunnelingDistanceGrid[yhere+1][xhere].distance;
+        
+        if(isWalk(yhere+1,xhere+1)){
+            int temp = m->nonTunnelingDistanceGrid[yhere+1][xhere+1].distance;
             if(temp<min){
                 min=temp;
                 topLeft=0;
