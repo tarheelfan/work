@@ -35,9 +35,13 @@ void Factory::loaded(vector<objectInfo> v){
         monster->roundVal=10;
         monster->xloc=x;
         monster->yloc=y;
+        monster->hp=10000;
         pcx = x;
         pcy = y;
         monster->alive=1;
+        monster->dam = getDice("0+1d4");
+
+
     }else{
         initList(monster->directions);
         monster->thePlayer=0;
@@ -72,10 +76,8 @@ void Factory::loaded(vector<objectInfo> v){
      int index = rand() % objectD.size();
      objectInfo temp = objectD.at(index);
     Item send(temp.type,temp.weight,temp.color,temp.dodge,temp.value,temp.dam,temp.def.roleDice(),temp.hit.roleDice(),temp.speed.roleDice(),temp.desc,temp.attr);
-      int cow =90;
-      if(cow==90){
-          return send;
-      }
+     return send;
+      
      
  }
 

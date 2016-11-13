@@ -735,22 +735,23 @@ int initMap(int numOfMonster){
             counter++;
         }
 }
-            int total = 15;
+            int total = 20;/*Number of Items*/
             int co=0;
             while(co<total){
-                int xr = rand() % 80;
-                int yr = rand() % 21;
+               volatile int xr = rand() % 80;
+               volatile int yr = rand() % 21;
                 if((*m).grid[yr][xr]=='.'){
 
                     std::vector<Item>::iterator it;
                     it = itemGrid[yr][xr].begin();
                     int var = itemGrid[yr][xr].size(); /*Inserts Items*/
                     (itemGrid[yr][xr]).insert(it+var,factory.getItem());
-                    char wert = getCharacter(yr, xr);
-                    if(wert!='0'){
-                        (*m).grid[yr][xr] =  wert;
-                        (*m).hardness[yr][xr]=0;
-                    }
+                    /*Shane Removed Printing onto grid directly*/
+                    //char wert = getCharacter(yr, xr);
+                    //if(wert!='0'){
+                    //    (*m).grid[yr][xr] =  wert;
+                    //    (*m).hardness[yr][xr]=0;
+                    //}
                 co++;
                 }
             }    
@@ -798,6 +799,26 @@ void reInitMap(int num_of_mon){
 
         }
     }
+int total = 15;/*Number of Items*/
+            int co=0;
+            while(co<total){
+                int xr = rand() % 80;
+                int yr = rand() % 21;
+                if((*m).grid[yr][xr]=='.'){
+
+                    std::vector<Item>::iterator it;
+                    it = itemGrid[yr][xr].begin();
+                    int var = itemGrid[yr][xr].size(); /*Inserts Items*/
+                    (itemGrid[yr][xr]).insert(it+var,factory.getItem());
+                    char wert = getCharacter(yr, xr);
+                    if(wert!='0'){
+                        (*m).grid[yr][xr] =  wert;
+                        (*m).hardness[yr][xr]=0;
+                    }
+                co++;
+                }
+            }    
+
 }
  vector<Item> itemGrid[21][80];
  
@@ -821,12 +842,26 @@ void reInitMap(int num_of_mon){
             if(!(temp[0]=='-' || temp[0] == '|' || temp[0]=='.' || temp[0]=='#' || temp[0]=='<' || temp[0]=='>' || temp[0]==')' || temp[0]=='}' || temp[0]=='[' || temp[0]==']' || temp[0]=='(' || temp[0]=='{' || temp[0]=='\\' || temp[0]=='=' || temp[0]=='"' || temp[0]=='_' || temp[0]=='~' || temp[0]=='?' || temp[0]=='!' || temp[0]=='$' || temp[0]=='/' || temp[0]==',' || temp[0]=='-' || temp[0]=='%' || temp[0]=='&')){
                 temp[0] = ' ';
             }
+            
+            if(i < ymin && i > ymax && j > xmin && j < xmax){
+                 if(itemGrid[i][j].size()==1){
+                    Item temp = itemGrid[i][j].at(0);
+                    attron(COLOR_PAIR(temp.color));
+                    char tempchar = getCharacter(i,j);
+                    mvaddch(i+3,j,tempchar);
+                    attroff(COLOR_PAIR(temp.color));
+                 
+                }else{
+               if(itemGrid[i][j].size()>1){
+                     mvaddch(i+3,j,getCharacter(i,j));
+                }else{
+                    mvaddch(i+3,j,temp[0]);
+                }
+                }
            
-            
-            
+            }
             Monster *tempMon;
             tempMon = monsterArray[i][j];
-                
                 if(tempMon!=NULL){
                     int xmon = tempMon->xloc;
                     int ymon = tempMon->yloc;
@@ -835,15 +870,14 @@ void reInitMap(int num_of_mon){
                         mvaddch(i+3,j,tempMon->symbol);
                         attroff(COLOR_PAIR(tempMon->color));
                     }
-            }else{
-                
-                mvaddch(i+3,j,temp[0]);
-                
+               
             }
             
+          }
+    
         }
     }
-}
+
 
 void printDistanceGrid(){
     int i;

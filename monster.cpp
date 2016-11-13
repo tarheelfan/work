@@ -77,18 +77,20 @@ void deconstructor(Monster *ma){
        monsterArray[ytemp-1][xtemp] = mon;
        (*mon).yloc=ytemp-1; 
        
-      // char pol = getCharacter(ytemp-1,xtemp);
-       // if(pol!='0'){
-       // while(pol!='0'){
-       // Item temp = searchItem(ytemp-1, xtemp);
-       // std::vector<Item>::iterator it;
-       // it = (*mon).inventory.begin();
-       // int var = itemGrid[ytemp-1][xtemp].size(); /*Inserts Items*/
-       // (*mon).inventory.insert(it+var,temp);
-       // pol = getCharacter(ytemp-1,xtemp);
-       // }
-       //    (*m).grid[ytemp-1][xtemp] = '.'; 
-       // }
+       char pol = getCharacter(ytemp-1,xtemp);
+        if(pol!='0'){
+        while(pol!='0'){
+        Item temp = searchItem(ytemp-1, xtemp);
+        std::vector<Item>::iterator it;
+        it = (*mon).inventory.begin();
+        int var = itemGrid[ytemp-1][xtemp].size(); /*Inserts Items*/
+        (*mon).inventory.insert(it+var,temp);
+        pol = getCharacter(ytemp-1,xtemp);
+        }
+           itemGrid[ytemp-1][xtemp].clear();
+           //(*m).grid[ytemp-1][xtemp] = '.'; 
+        }
+    
     }else{
         unsigned char hardness =m->hardness[ytemp-1][xtemp];
         if(hardness>85){
@@ -128,18 +130,19 @@ void deconstructor(Monster *ma){
        monsterArray[ytemp+1][xtemp] = mon;/*y+1,x*/
        (*mon).yloc=ytemp+1; /*y+1,x*/
     
-        //char pol = getCharacter(ytemp+1,xtemp);
-        //if(pol!='0'){
-       // while(pol!='0'){
-       // Item temp = searchItem(ytemp+1, xtemp);
-       // std::vector<Item>::iterator it;
-       // it = (*mon).inventory.begin();
-       // int var = itemGrid[ytemp+1][xtemp].size(); /*Inserts Items*/
-       // (*mon).inventory.insert(it+var,temp);
-       // pol = getCharacter(ytemp+1,xtemp);
-        //}
-        //   (*m).grid[ytemp+1][xtemp] = '.'; 
-        //}
+        char pol = getCharacter(ytemp-1,xtemp);
+        if(pol!='0'){
+        while(pol!='0'){
+        Item temp = searchItem(ytemp-1, xtemp);
+        std::vector<Item>::iterator it;
+        it = (*mon).inventory.begin();
+        int var = itemGrid[ytemp+1][xtemp].size(); /*Inserts Items*/
+        (*mon).inventory.insert(it+var,temp);
+        pol = getCharacter(ytemp+1,xtemp);
+        }
+           itemGrid[ytemp+1][xtemp].clear();
+           //(*m).grid[ytemp-1][xtemp] = '.'; 
+        }
             
        
     
@@ -181,18 +184,20 @@ void deconstructor(Monster *ma){
        monsterArray[ytemp][xtemp+1] = mon;/*y,x+1*/
        (*mon).xloc=xtemp+1; /*y,x+1*/
     
-       //char pol = getCharacter(ytemp,xtemp+1);
-        //if(pol!='0'){
-        //while(pol!='0'){
-        //Item temp = searchItem(ytemp, xtemp+1);
-        //std::vector<Item>::iterator it;
-        //it = (*mon).inventory.begin();
-        //int var = itemGrid[ytemp][xtemp+1].size(); /*Inserts Items*/
-        //(*mon).inventory.insert(it+var,temp);
-        //pol = getCharacter(ytemp,xtemp+1);
-        //}
-        //   (*m).grid[ytemp][xtemp+1] = '.'; 
-        //}
+       char pol = getCharacter(ytemp,xtemp+1);
+        if(pol!='0'){
+        while(pol!='0'){
+        Item temp = searchItem(ytemp, xtemp+1);
+        std::vector<Item>::iterator it;
+        it = (*mon).inventory.begin();
+        int var = itemGrid[ytemp][xtemp+1].size(); /*Inserts Items*/
+        (*mon).inventory.insert(it+var,temp);
+        pol = getCharacter(ytemp,xtemp+1);
+        }
+           itemGrid[ytemp][xtemp+1].clear();
+           //(*m).grid[ytemp-1][xtemp] = '.'; 
+        }
+    
     }else{
         unsigned char hardness =m->hardness[ytemp][xtemp+1];
         if(hardness>85){
@@ -233,18 +238,19 @@ void deconstructor(Monster *ma){
        monsterArray[ytemp][xtemp-1] = mon;/*y,x-1*/
        (*mon).xloc=xtemp-1; /*y,x-1*/
     
-        //char pol = getCharacter(ytemp,xtemp-1);
-        //if(pol!='0'){
-        //while(pol!='0'){
-        //Item temp = searchItem(ytemp, xtemp-1);
-        //std::vector<Item>::iterator it;
-        //it = (*mon).inventory.begin();
-        //int var = itemGrid[ytemp][xtemp-1].size(); /*Inserts Items*/
-        //(*mon).inventory.insert(it+var,temp);
-        //pol = getCharacter(ytemp,xtemp-1);
-        //}
-         //  (*m).grid[ytemp][xtemp-1] = '.'; 
-        //}
+        char pol = getCharacter(ytemp,xtemp-1);
+        if(pol!='0'){
+        while(pol!='0'){
+        Item temp = searchItem(ytemp, xtemp-1);
+        std::vector<Item>::iterator it;
+        it = (*mon).inventory.begin();
+        int var = itemGrid[ytemp][xtemp-1].size(); /*Inserts Items*/
+        (*mon).inventory.insert(it+var,temp);
+        pol = getCharacter(ytemp,xtemp-1);
+        }
+           itemGrid[ytemp][xtemp-1].clear();
+           //(*m).grid[ytemp-1][xtemp] = '.'; 
+        }
     
     }else{
         unsigned char hardness =m->hardness[ytemp][xtemp-1];
@@ -287,18 +293,19 @@ void deconstructor(Monster *ma){
        (*mon).yloc=ytemp-1;/*y-1,x+1*/
         (*mon).xloc=xtemp+1;
     
-      //   char pol = getCharacter(ytemp-1,xtemp+1);
-      //  if(pol!='0'){
-      //  while(pol!='0'){
-      //  Item temp = searchItem(ytemp-1, xtemp+1);
-      //  std::vector<Item>::iterator it;
-      //  it = (*mon).inventory.begin();
-       // int var = itemGrid[ytemp-1][xtemp+1].size(); /*Inserts Items*/
-       // (*mon).inventory.insert(it+var,temp);
-        //pol = getCharacter(ytemp-1,xtemp+1);
-       // }
-        //   (*m).grid[ytemp-1][xtemp+1] = '.'; 
-        //}
+      char pol = getCharacter(ytemp-1,xtemp+1);
+        if(pol!='0'){
+        while(pol!='0'){
+        Item temp = searchItem(ytemp-1, xtemp+1);
+        std::vector<Item>::iterator it;
+        it = (*mon).inventory.begin();
+        int var = itemGrid[ytemp-1][xtemp+1].size(); /*Inserts Items*/
+        (*mon).inventory.insert(it+var,temp);
+        pol = getCharacter(ytemp-1,xtemp+1);
+        }
+           itemGrid[ytemp-1][xtemp+1].clear();
+           //(*m).grid[ytemp-1][xtemp] = '.'; 
+        }
         
     }else{
         unsigned char hardness =m->hardness[ytemp-1][xtemp+1];
@@ -342,18 +349,19 @@ void deconstructor(Monster *ma){
        (*mon).yloc=ytemp-1;/*y-1,x-1*/
         (*mon).xloc=xtemp-1;
     
-        // char pol = getCharacter(ytemp-1,xtemp-1);
-        // if(pol!='0'){
-        // while(pol!='0'){
-        // Item temp = searchItem(ytemp-1, xtemp-1);
-        //std::vector<Item>::iterator it;
-        //it = (*mon).inventory.begin();
-        //int var = itemGrid[ytemp-1][xtemp-1].size(); /*Inserts Items*/
-        //(*mon).inventory.insert(it+var,temp);
-        //pol = getCharacter(ytemp-1,xtemp-1);
-        //}
-        //   (*m).grid[ytemp-1][xtemp-1] = '.'; 
-        //}
+        char pol = getCharacter(ytemp-1,xtemp-1);
+        if(pol!='0'){
+        while(pol!='0'){
+        Item temp = searchItem(ytemp-1, xtemp-1);
+        std::vector<Item>::iterator it;
+        it = (*mon).inventory.begin();
+        int var = itemGrid[ytemp-1][xtemp-1].size(); /*Inserts Items*/
+        (*mon).inventory.insert(it+var,temp);
+        pol = getCharacter(ytemp-1,xtemp-1);
+        }
+           itemGrid[ytemp-1][xtemp-1].clear();
+           //(*m).grid[ytemp-1][xtemp] = '.'; 
+        }
         
     }else{
         unsigned char hardness =m->hardness[ytemp-1][xtemp-1];
@@ -397,18 +405,19 @@ void deconstructor(Monster *ma){
        (*mon).yloc=ytemp+1;/*y+1,x-1*/
         (*mon).xloc=xtemp-1;
     
-        //char pol = getCharacter(ytemp+1,xtemp-1);
-        //if(pol!='0'){
-        //while(pol!='0'){
-        //Item temp = searchItem(ytemp+1, xtemp-1);
-        //std::vector<Item>::iterator it;
-        //it = (*mon).inventory.begin();
-        //int var = itemGrid[ytemp+1][xtemp-1].size(); /*Inserts Items*/
-       //(*mon).inventory.insert(it+var,temp);
-        //pol = getCharacter(ytemp+1,xtemp-1);
-       // }
-         //  (*m).grid[ytemp+1][xtemp-1] = '.'; 
-        // }
+         char pol = getCharacter(ytemp+1,xtemp-1);
+        if(pol!='0'){
+        while(pol!='0'){
+        Item temp = searchItem(ytemp+1, xtemp-1);
+        std::vector<Item>::iterator it;
+        it = (*mon).inventory.begin();
+        int var = itemGrid[ytemp+1][xtemp-1].size(); /*Inserts Items*/
+        (*mon).inventory.insert(it+var,temp);
+        pol = getCharacter(ytemp+1,xtemp-1);
+        }
+           itemGrid[ytemp+1][xtemp-1].clear();
+           //(*m).grid[ytemp-1][xtemp] = '.'; 
+        }
     
     }else{
         unsigned char hardness =m->hardness[ytemp+1][xtemp-1];
@@ -452,18 +461,19 @@ void deconstructor(Monster *ma){
        (*mon).yloc=ytemp+1;/*y+1,x+1*/
         (*mon).xloc=xtemp+1;
     
-    //char pol = getCharacter(ytemp+1,xtemp+1);
-    //if(pol!='0'){
-     //   while(pol!='0'){
-      //  Item temp = searchItem(ytemp+1, xtemp+1);
-       // std::vector<Item>::iterator it;
-       // it = (*mon).inventory.begin();
-        //int var = itemGrid[ytemp+1][xtemp+1].size(); /*Inserts Items*/
-        //(*mon).inventory.insert(it+var,temp);
-        //pol = getCharacter(ytemp+1,xtemp+1);
-        //}
-        //   (*m).grid[ytemp+1][xtemp+1] = '.'; 
-        //}
+     char pol = getCharacter(ytemp+1,xtemp+1);
+        if(pol!='0'){
+        while(pol!='0'){
+        Item temp = searchItem(ytemp+1, xtemp+1);
+        std::vector<Item>::iterator it;
+        it = (*mon).inventory.begin();
+        int var = itemGrid[ytemp+1][xtemp+1].size(); /*Inserts Items*/
+        (*mon).inventory.insert(it+var,temp);
+        pol = getCharacter(ytemp+1,xtemp+1);
+        }
+           itemGrid[ytemp+1][xtemp+1].clear();
+           //(*m).grid[ytemp-1][xtemp] = '.'; 
+        }
 
     }else{
         unsigned char hardness =m->hardness[ytemp+1][xtemp+1];

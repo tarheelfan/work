@@ -13,7 +13,7 @@ class Item{
     }
     Item(int type,int weight,int color,Dice dodge, int value,Dice dam, int def,int hit,int speed, string desc, int attr );
     void copy(Item t);
-    private:
+    
         int type;  
         int weight;
         int color;
@@ -25,6 +25,7 @@ class Item{
         int speed;
         string desc;
         int attr;
+    private:
 };
 char getCharacter(int x, int y);
 vector<Item> getItem(int x, int y);
