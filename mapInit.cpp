@@ -738,20 +738,14 @@ int initMap(int numOfMonster){
             int total = 20;/*Number of Items*/
             int co=0;
             while(co<total){
-               volatile int xr = rand() % 80;
-               volatile int yr = rand() % 21;
+                int xr = rand() % 80;
+                int yr = rand() % 21;
                 if((*m).grid[yr][xr]=='.'){
 
                     std::vector<Item>::iterator it;
                     it = itemGrid[yr][xr].begin();
                     int var = itemGrid[yr][xr].size(); /*Inserts Items*/
                     (itemGrid[yr][xr]).insert(it+var,factory.getItem());
-                    /*Shane Removed Printing onto grid directly*/
-                    //char wert = getCharacter(yr, xr);
-                    //if(wert!='0'){
-                    //    (*m).grid[yr][xr] =  wert;
-                    //    (*m).hardness[yr][xr]=0;
-                    //}
                 co++;
                 }
             }    
@@ -826,6 +820,8 @@ int total = 15;/*Number of Items*/
  
  
  void printGrid(){
+    string top = "PLAYER HEALTH: " + m->thePlayer->hp;
+    mvaddstr(0,0,top.c_str());
     int i=0;
     int j=0;
     for(i=0;i<21;i++){

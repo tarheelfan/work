@@ -57,8 +57,126 @@ void deconstructor(Monster *ma){
     //decoStructorI(ma->monsterC);
     delete ma;
 }
-/*Public Functions For Monsters*/
-
+static void bump(int xtemp,int ytemp,Monster* npc){
+    
+         int control = rand()%8;
+        int digSwitch = canTunnle(npc);
+        Monster *check;
+        while(1){
+        control = rand()%8;
+        switch(control){
+            
+            case 0:/*Move Up*/
+            check = monsterArray[xtemp][ytemp-1];
+            if(npc->yloc-1>0 && !check){
+            if(m->grid[npc->yloc-1][npc->xloc]==('#') || m->grid[npc->yloc-1][npc->xloc]==('.') || digSwitch){
+                int isd = moveUp(npc);
+                if(!isd){
+                    return;
+                }
+            }
+        }
+            break;
+            
+            case 1:/*Move Down*/
+            check = monsterArray[xtemp][ytemp+1];
+            if(npc->yloc+1<20 && !check){
+            
+                if(m->grid[npc->yloc+1][npc->xloc]==('#') || m->grid[npc->yloc+1][npc->xloc]==('.') || digSwitch){
+                    
+                    if(!moveDown(npc)){
+                        return;
+                    }
+            }
+            }
+            break;
+            
+            case 2:/*Move Right*/
+            check = monsterArray[xtemp+1][ytemp];
+            if(npc->xloc+1<79 && !check){
+            
+            if(m->grid[npc->yloc][npc->xloc+1]==('#') || m->grid[npc->yloc][npc->xloc+1]==('.') || digSwitch){
+                
+                if(!moveRight(npc)){
+                    return;
+                }
+            }
+        }
+            break;
+            
+            case 3:/*Move Left*/
+             check = monsterArray[xtemp-1][ytemp];
+             if(npc->xloc-1>0 && !check){
+             
+             if(m->grid[npc->yloc][npc->xloc-1]==('#') || m->grid[npc->yloc][npc->xloc-1]==('.') || digSwitch){
+                
+                if(!moveLeft(npc)){
+                    return;
+                }
+            }
+             }
+            break;
+            case 4:/*Move TopRight*/
+            check = monsterArray[xtemp+1][ytemp-1];
+            if(npc->yloc-1>0 && npc->xloc+1<79 && !check){
+            
+            if(m->grid[npc->yloc-1][npc->xloc+1]==('#') || m->grid[npc->yloc-1][npc->xloc+1]==('.') || digSwitch ){
+                
+                if(!moveTopRight(npc)){
+                    return;
+                }
+            }
+            }
+            break;
+            
+            case 5:/*Move TopLeft*/
+            check = monsterArray[xtemp-1][ytemp-1];
+            if(npc->yloc-1>0 && npc->xloc-1>0 && !check){
+            
+            if(m->grid[npc->yloc-1][npc->xloc-1]==('#') || m->grid[npc->yloc-1][npc->xloc-1]==('.') || digSwitch ){
+                
+                if(!moveTopLeft(npc)){
+                    return;
+                }
+            }
+        }
+            break;
+            case 6:/*Move BottomRight*/
+             check = monsterArray[xtemp+1][ytemp+1];
+             if(npc->yloc+1<20 && npc->xloc+1<79 && !check ){
+             
+             if(m->grid[npc->yloc+1][npc->xloc+1]==('#') || m->grid[npc->yloc+1][npc->xloc+1]==('.') || digSwitch){
+                
+                if(!moveBottomRight(npc)){
+                    return;
+                }
+            }
+        }
+            break;
+            case 7:/*Move BottomLeft*/
+            check = monsterArray[xtemp-1][ytemp+1];
+            if(npc->yloc+1<20 && npc->xloc-1>0 && !check){
+             
+             if(m->grid[(npc->yloc)+1][npc->xloc-1]==('#') || m->grid[(npc->yloc)+1][npc->xloc-1]==('.') || digSwitch){
+                
+                if(!moveBottomLeft(npc)){
+                    return;
+                }
+                break;
+            }
+        }
+}               
+        }
+}
+static int attack(Monster* mon,Monster* player){
+    int damage = mon->dam.roleDice();
+    player->hp = player->hp - damage;
+    if(player->hp<=0){
+        player->alive=0;
+        return 1;
+    }
+    return 0;
+}
  int moveUp(Monster *mon){/*y-1,x*/
     Monster *temp;
     int ytemp = (*mon).yloc;
@@ -68,11 +186,18 @@ void deconstructor(Monster *ma){
     int xtemp = (*mon).xloc;
     monsterArray[ytemp][xtemp]=NULL;/*y,x*/
     
-    
     temp = monsterArray[ytemp-1][xtemp];
     if(temp!=NULL){
-        (*temp).alive=0;
+        if(temp->thePlayer){
+            if(!attack(mon,temp)){
+                monsterArray[ytemp][xtemp]=temp;
+                return 1;
+            }
+        }else{
+            bump(xtemp,ytemp,temp);
+        }
     }
+    
     if(!(*m).hardness[ytemp-1][xtemp]){
        monsterArray[ytemp-1][xtemp] = mon;
        (*mon).yloc=ytemp-1; 
@@ -121,7 +246,18 @@ void deconstructor(Monster *ma){
     int xtemp = (*mon).xloc;
     monsterArray[ytemp][xtemp]=NULL;/*y,x*/
     
-    
+    temp = monsterArray[ytemp+1][xtemp];
+    if(temp!=NULL){
+        if(temp->thePlayer){
+            if(!attack(mon,temp)){
+                monsterArray[ytemp][xtemp]=temp;
+                return 1;
+            }
+        }else{
+            bump(xtemp,ytemp,temp);
+        }
+    }
+
     temp = monsterArray[ytemp+1][xtemp];/*y+1,x*/
     if(temp!=NULL){
         (*temp).alive=0;
@@ -176,6 +312,19 @@ void deconstructor(Monster *ma){
         return 1;
     }
     monsterArray[ytemp][xtemp]=NULL;/*y,x*/
+    
+    temp = monsterArray[ytemp][xtemp+1];
+    if(temp!=NULL){
+        if(temp->thePlayer){
+            if(!attack(mon,temp)){
+                monsterArray[ytemp][xtemp]=temp;
+                return 1;
+            }
+        }else{
+            bump(xtemp,ytemp,temp);
+        }
+    }
+    
     temp = monsterArray[ytemp][xtemp+1];/*y,x+1*/
     if(temp!=NULL){
         (*temp).alive=0;
@@ -229,6 +378,17 @@ void deconstructor(Monster *ma){
     }
     monsterArray[ytemp][xtemp]=NULL;/*y,x*/
     
+    temp = monsterArray[ytemp][xtemp-1];
+    if(temp!=NULL){
+        if(temp->thePlayer){
+            if(!attack(mon,temp)){
+                monsterArray[ytemp][xtemp]=temp;
+                return 1;
+            }
+        }else{
+            bump(xtemp,ytemp,temp);
+        }
+    }
     
     temp = monsterArray[ytemp][xtemp-1];/*y,x-1*/
     if(temp!=NULL){
@@ -283,7 +443,18 @@ void deconstructor(Monster *ma){
     }
     monsterArray[ytemp][xtemp]=NULL;/*y,x*/
     
-    
+    temp = monsterArray[ytemp-1][xtemp+1];
+    if(temp!=NULL){
+        if(temp->thePlayer){
+            if(!attack(mon,temp)){
+                monsterArray[ytemp][xtemp]=temp;
+                return 1;
+            }
+        }else{
+            bump(xtemp,ytemp,temp);
+        }
+    }
+
     temp = monsterArray[ytemp-1][xtemp+1];/*y-1,x+1*/
     if(temp!=NULL){
         (*temp).alive=0;
@@ -339,7 +510,18 @@ void deconstructor(Monster *ma){
     }
     monsterArray[ytemp][xtemp]=NULL;/*y,x*/
     
-    
+    temp = monsterArray[ytemp-1][xtemp-1];
+    if(temp!=NULL){
+        if(temp->thePlayer){
+            if(!attack(mon,temp)){
+                monsterArray[ytemp][xtemp]=temp;
+                return 1;
+            }
+        }else{
+            bump(xtemp,ytemp,temp);
+        }
+    }
+
     temp = monsterArray[ytemp-1][xtemp-1];/*y-1,x-1*/
     if(temp!=NULL){
         (*temp).alive=0;
@@ -395,6 +577,17 @@ void deconstructor(Monster *ma){
     }
     monsterArray[ytemp][xtemp]=NULL;/*y,x*/
     
+    temp = monsterArray[ytemp+1][xtemp-1];
+    if(temp!=NULL){
+        if(temp->thePlayer){
+            if(!attack(mon,temp)){
+                monsterArray[ytemp][xtemp]=temp;
+                return 1;
+            }
+        }else{
+            bump(xtemp,ytemp,temp);
+        }
+    }
     
     temp = monsterArray[ytemp+1][xtemp-1];/*y+1,x-1*/
     if(temp!=NULL){
@@ -451,6 +644,17 @@ void deconstructor(Monster *ma){
     
     monsterArray[ytemp][xtemp]=NULL;/*y,x*/
     
+    temp = monsterArray[ytemp+1][xtemp+1];
+    if(temp!=NULL){
+        if(temp->thePlayer){
+            if(!attack(mon,temp)){
+                monsterArray[ytemp][xtemp]=temp;
+                return 1;
+            }
+        }else{
+            bump(xtemp,ytemp,temp);
+        }
+    }
     
     temp = monsterArray[ytemp+1][xtemp+1];/*y+1,x+1*/
     if(temp!=NULL){
