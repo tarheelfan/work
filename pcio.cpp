@@ -4,7 +4,6 @@
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
-
 #define UP_STAIRS '<'
 #define DOWN_STAIRS '>'
 #define QUIT 'Q'
@@ -21,6 +20,8 @@ static int upStairs(void);
 static int downStairs(void);
 static void clearData();
 static void displayEnemyStatus(int scale);
+static void displayInventoryStatus(unsigned int selection);
+static string convertType(int tyi);
 /*Global Data*/
 char ch; /*command*/
 Monster *pc;
@@ -106,12 +107,122 @@ int performPCMove(Monster *pci){
             case QUIT :
                 return 1;
                 break;
+            case 'i':
+                    int selection = 0;
+                    int escape = 0;
+                    int size = m->thePlayer->inventory.size();
+                    while(!escape){
+                        clear();
+                        refresh();
+                        int convert = (unsigned int)selection;
+                        displayInventoryStatus(convert);
+                        int32_t userCommand = getch();
+                        if(userCommand==27){
+                            clear();
+                            escape=1;
+                        }
+                        if(userCommand==259){ /*Up Arrow*/
+                            selection--;
+                            if(selection<0){
+                                selection=size-1;
+                            }
+                        }
+                        if(userCommand==258){ /*Up Arrow*/
+                            selection++;
+                            if(selection>size-1){
+                                selection=0;
+                            }
+                        }
+                        
+                    }
+                break;
         }
     }
     return 0;
 }
-
-
+static void displayInventoryStatus(unsigned int selection){
+    init_pair(5,COLOR_GREEN,COLOR_BLACK);
+    init_pair(0,COLOR_WHITE,COLOR_BLACK);
+    unsigned int inc;
+    for(inc=0;inc<m->thePlayer->inventory.size();inc++){
+        Item tem = m->thePlayer->inventory.at(inc);
+        std::ostringstream stream;
+        stream << "ITEM: " << tem.name << " TYPE: " <<  convertType(tem.type) << " " << tem.dam.getDescription() << " VALUE: " << tem.value;
+        if(selection==inc){
+            attron(COLOR_PAIR(5));
+        }else{
+            attron(COLOR_PAIR(0));
+        }
+        mvaddstr(inc,0,stream.str().c_str());
+        if(selection==inc){
+             attroff(COLOR_PAIR(5));
+        }else{
+            attroff(COLOR_PAIR(0));
+        }
+    }                
+}
+static string convertType(int tyi){
+    switch(tyi){
+        case 0:
+            return "LIGHT";
+            break;
+        case 1:
+            return "RING";
+            break;
+        case 2:
+            return "WEAPON";
+            break;
+        case 3:
+            return "OFFHAND";
+            break;
+        case 4:
+            return "RANGED";
+            break;
+        case 5:
+            return "ARMOR";
+            break;
+        case 6:
+            return "HELMET";
+            break;
+        case 7:
+            return "CLOAK";
+            break;
+        case 8:
+            return "GLOVES";
+            break;
+        case 9:
+            return "BOOTS";
+            break;
+        case 10:
+            return "AMULET";
+            break;
+        case 11:
+            return "SCROLL";
+            break;
+        case 12:
+            return "BOOK";
+            break;
+        case 13:
+            return "FLASK";
+            break;
+        case 14:
+            return "GOLD";
+            break;
+        case 15:
+            return "AMMUNITION";
+            break;
+        case 16:
+            return "FOOD";
+            break;
+        case 17: 
+            return "WAND";
+            break;
+        case 18:
+            return "CONTAINER";
+            break;
+    }
+    return " ";
+}
 static int upLeft(void){
     int x = m->thePlayer->xloc;
     int y = m->thePlayer->yloc;

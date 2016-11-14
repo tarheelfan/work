@@ -75,7 +75,7 @@ void Factory::loaded(vector<objectInfo> v){
  Item Factory::getItem(){
      int index = rand() % objectD.size();
      objectInfo temp = objectD.at(index);
-    Item send(temp.type,temp.weight,temp.color,temp.dodge,temp.value,temp.dam,temp.def.roleDice(),temp.hit.roleDice(),temp.speed.roleDice(),temp.desc,temp.attr);
+    Item send(temp.name,temp.type,temp.weight,temp.color,temp.dodge,temp.value,temp.dam,temp.def.roleDice(),temp.hit.roleDice(),temp.speed.roleDice(),temp.desc,temp.attr);
      return send;
       
      

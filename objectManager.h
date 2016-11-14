@@ -11,7 +11,7 @@ class Item{
     inline int getType(){
         return type;
     }
-    Item(int type,int weight,int color,Dice dodge, int value,Dice dam, int def,int hit,int speed, string desc, int attr );
+    Item(string name,int type,int weight,int color,Dice dodge, int value,Dice dam, int def,int hit,int speed, string desc, int attr );
     void copy(Item t);
     
         int type;  
@@ -24,6 +24,7 @@ class Item{
         int hit;
         int speed;
         string desc;
+        string name;
         int attr;
     private:
 };

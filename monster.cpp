@@ -168,6 +168,7 @@ static void bump(int xtemp,int ytemp,Monster* npc){
 }               
         }
 }
+
 static int attack(Monster* mon,Monster* player){
     int damage = mon->dam.roleDice();
     player->hp = player->hp - damage;
@@ -202,6 +203,7 @@ static int attack(Monster* mon,Monster* player){
        monsterArray[ytemp-1][xtemp] = mon;
        (*mon).yloc=ytemp-1; 
        
+       if(mon->inventory.size()<9){
        char pol = getCharacter(ytemp-1,xtemp);
         if(pol!='0'){
         while(pol!='0'){
@@ -215,6 +217,7 @@ static int attack(Monster* mon,Monster* player){
            itemGrid[ytemp-1][xtemp].clear();
            //(*m).grid[ytemp-1][xtemp] = '.'; 
         }
+       }
     
     }else{
         unsigned char hardness =m->hardness[ytemp-1][xtemp];
@@ -266,6 +269,7 @@ static int attack(Monster* mon,Monster* player){
        monsterArray[ytemp+1][xtemp] = mon;/*y+1,x*/
        (*mon).yloc=ytemp+1; /*y+1,x*/
     
+       if(mon->inventory.size()<9){
         char pol = getCharacter(ytemp-1,xtemp);
         if(pol!='0'){
         while(pol!='0'){
@@ -279,7 +283,7 @@ static int attack(Monster* mon,Monster* player){
            itemGrid[ytemp+1][xtemp].clear();
            //(*m).grid[ytemp-1][xtemp] = '.'; 
         }
-            
+       }
        
     
     }else{
@@ -333,6 +337,7 @@ static int attack(Monster* mon,Monster* player){
        monsterArray[ytemp][xtemp+1] = mon;/*y,x+1*/
        (*mon).xloc=xtemp+1; /*y,x+1*/
     
+       if((mon->inventory.size()<9)){
        char pol = getCharacter(ytemp,xtemp+1);
         if(pol!='0'){
         while(pol!='0'){
@@ -346,6 +351,7 @@ static int attack(Monster* mon,Monster* player){
            itemGrid[ytemp][xtemp+1].clear();
            //(*m).grid[ytemp-1][xtemp] = '.'; 
         }
+       }
     
     }else{
         unsigned char hardness =m->hardness[ytemp][xtemp+1];
@@ -398,6 +404,7 @@ static int attack(Monster* mon,Monster* player){
        monsterArray[ytemp][xtemp-1] = mon;/*y,x-1*/
        (*mon).xloc=xtemp-1; /*y,x-1*/
     
+       if(mon->inventory.size()<9){
         char pol = getCharacter(ytemp,xtemp-1);
         if(pol!='0'){
         while(pol!='0'){
@@ -411,6 +418,7 @@ static int attack(Monster* mon,Monster* player){
            itemGrid[ytemp][xtemp-1].clear();
            //(*m).grid[ytemp-1][xtemp] = '.'; 
         }
+       }
     
     }else{
         unsigned char hardness =m->hardness[ytemp][xtemp-1];
@@ -464,6 +472,7 @@ static int attack(Monster* mon,Monster* player){
        (*mon).yloc=ytemp-1;/*y-1,x+1*/
         (*mon).xloc=xtemp+1;
     
+    if(mon->inventory.size()<9){
       char pol = getCharacter(ytemp-1,xtemp+1);
         if(pol!='0'){
         while(pol!='0'){
@@ -477,6 +486,7 @@ static int attack(Monster* mon,Monster* player){
            itemGrid[ytemp-1][xtemp+1].clear();
            //(*m).grid[ytemp-1][xtemp] = '.'; 
         }
+    }
         
     }else{
         unsigned char hardness =m->hardness[ytemp-1][xtemp+1];
@@ -531,6 +541,7 @@ static int attack(Monster* mon,Monster* player){
        (*mon).yloc=ytemp-1;/*y-1,x-1*/
         (*mon).xloc=xtemp-1;
     
+        if(mon->inventory.size()<9){
         char pol = getCharacter(ytemp-1,xtemp-1);
         if(pol!='0'){
         while(pol!='0'){
@@ -543,6 +554,7 @@ static int attack(Monster* mon,Monster* player){
         }
            itemGrid[ytemp-1][xtemp-1].clear();
            //(*m).grid[ytemp-1][xtemp] = '.'; 
+        }
         }
         
     }else{
@@ -598,6 +610,7 @@ static int attack(Monster* mon,Monster* player){
        (*mon).yloc=ytemp+1;/*y+1,x-1*/
         (*mon).xloc=xtemp-1;
     
+        if((mon->inventory.size()<9)){
          char pol = getCharacter(ytemp+1,xtemp-1);
         if(pol!='0'){
         while(pol!='0'){
@@ -611,7 +624,7 @@ static int attack(Monster* mon,Monster* player){
            itemGrid[ytemp+1][xtemp-1].clear();
            //(*m).grid[ytemp-1][xtemp] = '.'; 
         }
-    
+    }
     }else{
         unsigned char hardness =m->hardness[ytemp+1][xtemp-1];
         if(hardness>85){
@@ -664,7 +677,7 @@ static int attack(Monster* mon,Monster* player){
        monsterArray[ytemp+1][xtemp+1] = mon;/*y+1,x+1*/
        (*mon).yloc=ytemp+1;/*y+1,x+1*/
         (*mon).xloc=xtemp+1;
-    
+    if(mon->inventory.size()<9){
      char pol = getCharacter(ytemp+1,xtemp+1);
         if(pol!='0'){
         while(pol!='0'){
@@ -678,7 +691,7 @@ static int attack(Monster* mon,Monster* player){
            itemGrid[ytemp+1][xtemp+1].clear();
            //(*m).grid[ytemp-1][xtemp] = '.'; 
         }
-
+    }
     }else{
         unsigned char hardness =m->hardness[ytemp+1][xtemp+1];
         if(hardness>85){

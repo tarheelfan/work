@@ -39,6 +39,19 @@ typedef struct{
      int hp;
      Dice dam;
      vector<Item> inventory;
+      /*Slots*/
+     Item weapon;
+     Item offhand;
+     Item ranged;
+     Item armor;
+     Item helmet;
+     Item cloak;
+     Item gloves;
+     Item boots;
+     Item amulet;
+     Item light;
+     Item ring1;
+     Item ring2;
 }Monster;
 typedef struct{
     int distance;
