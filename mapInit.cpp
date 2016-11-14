@@ -15,6 +15,7 @@
 #include "npcParser.h"
 #include "monsterFactory.h"
 #include "gameMap.h"
+#include <sstream>
 int const x = 80;
 int const y = 21;
 #define DUNGEON_X 80
@@ -820,8 +821,10 @@ int total = 15;/*Number of Items*/
  
  
  void printGrid(){
-    string top = "PLAYER HEALTH: " + m->thePlayer->hp;
-    mvaddstr(0,0,top.c_str());
+    string top = "PLAYER HEALTH: " ;
+    std::ostringstream stream;
+    stream << top << m->thePlayer->hp << "               ";
+    mvaddstr(0,0,stream.str().c_str());
     int i=0;
     int j=0;
     for(i=0;i<21;i++){
