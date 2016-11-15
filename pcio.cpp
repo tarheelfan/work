@@ -23,6 +23,8 @@ static void displayEnemyStatus(int scale);
 static void displayInventoryStatus(unsigned int selection);
 static string convertType(int tyi);
 static void inspectItem(int slot);
+static void printEquipment(unsigned int selection);
+static string prettyDescription(string desc);
 /*Global Data*/
 char ch; /*command*/
 Monster *pc;
@@ -109,7 +111,7 @@ int performPCMove(Monster *pci){
                 return 1;
                 break;
             case 'i':
-                    int selection = 0;
+              {      int selection = 0;
                     int escape = 0;
                     int size = m->thePlayer->inventory.size();
                         clear();
@@ -138,11 +140,329 @@ int performPCMove(Monster *pci){
                         if(userCommand==73){ /*Inspect Item*/
                             inspectItem(selection);
                         }
+                        if(userCommand==101){
+
+                        }
                     }
                 break;
+              }
+            case 'e':
+                   int selection1 = 0;
+                    int escape2 = 0;
+                        clear();
+                        refresh();
+                    while(!escape2){
+                        
+                        int convert = (unsigned int)selection1;
+                        printEquipment(convert);
+                        int32_t userCommandi = getch();
+                        if(userCommandi==27){
+                            clear();
+                            escape2=1;
+                        }
+                        if(userCommandi==259){ /*Up Arrow*/
+                            selection1--;
+                            if(selection1<0){
+                                selection1=11;
+                            }
+                        }
+                        if(userCommandi==258){ /*Up Arrow*/
+                            selection1++;
+                            if(selection1>11){
+                                selection1=0;
+                            }
+                        }
+                    }
+            break;
+               
         }
     }
     return 0;
+}
+
+static void printEquipment(unsigned int selection){
+    init_pair(5,COLOR_GREEN,COLOR_BLACK);
+    init_pair(0,COLOR_WHITE,COLOR_BLACK);
+    std::ostringstream stream;
+    
+    //////////////////////////done
+    if(selection==0){
+        attron(COLOR_PAIR(5));
+    }else{
+        attron(COLOR_PAIR(0));
+    }
+    if(m->thePlayer->weapon.equiped){
+        
+        stream.str("");
+        stream << m->thePlayer->weapon.name << " " << prettyDescription(m->thePlayer->weapon.desc);
+        mvaddstr(0,0,stream.str().c_str());
+        
+    }else{
+        string te = "EMPTY";
+        mvaddstr(0,0,te.c_str());
+    }
+    if(selection==0){
+        attroff(COLOR_PAIR(5));
+    }else{
+        attroff(COLOR_PAIR(0));
+    }
+        
+    //////////////////////////done
+    if(selection==1){
+        attron(COLOR_PAIR(5));
+    }else{
+        attron(COLOR_PAIR(0));
+    }
+    if(m->thePlayer->offhand.equiped){
+        
+        stream.str("");
+        stream << m->thePlayer->offhand.name << " " << prettyDescription(m->thePlayer->offhand.desc);
+        mvaddstr(1,0,stream.str().c_str());
+        
+    }else{
+        string te = "EMPTY";
+        mvaddstr(1,0,te.c_str());
+    }  
+
+    if(selection==1){
+        attroff(COLOR_PAIR(5));
+    }else{
+        attroff(COLOR_PAIR(0));
+    }
+    
+    //////////////////////////done
+    if(selection==2){
+        attron(COLOR_PAIR(5));
+    }else{
+        attron(COLOR_PAIR(0));
+    }
+    if(m->thePlayer->ranged.equiped){
+        
+        stream.str("");
+        stream << m->thePlayer->ranged.name << " " << prettyDescription(m->thePlayer->ranged.desc);
+        mvaddstr(2,0,stream.str().c_str());
+        
+    }else{
+        string te = "EMPTY";
+        mvaddstr(2,0,te.c_str());
+    }  
+
+    if(selection==2){
+        attroff(COLOR_PAIR(5));
+    }else{
+        attroff(COLOR_PAIR(0));
+    }
+    ////////////////////////done
+    if(selection==3){
+        attron(COLOR_PAIR(5));
+    }else{
+        attron(COLOR_PAIR(0));
+    }
+    if(m->thePlayer->armor.equiped){
+        
+        stream.str("");
+        stream << m->thePlayer->armor.name << " " << prettyDescription(m->thePlayer->armor.desc);
+        mvaddstr(3,0,stream.str().c_str());
+        
+    }else{
+        string te = "EMPTY";
+        mvaddstr(3,0,te.c_str());
+    }  
+    
+    if(selection==3){
+        attroff(COLOR_PAIR(5));
+    }else{
+        attroff(COLOR_PAIR(0));
+    }
+    /////////////////////////////
+    if(selection==4){
+        attron(COLOR_PAIR(5));
+    }else{
+        attron(COLOR_PAIR(0));
+    }
+    if(m->thePlayer->helmet.equiped){
+        
+        stream.str("");
+        stream << m->thePlayer->helmet.name << " " << prettyDescription(m->thePlayer->helmet.desc);
+        mvaddstr(4,0,stream.str().c_str());
+        
+    }else{
+        string te = "EMPTY";
+        mvaddstr(4,0,te.c_str());
+    }
+    
+    if(selection==4){
+        attroff(COLOR_PAIR(5));
+    }else{
+        attroff(COLOR_PAIR(0));
+    }
+    ////////////////////////////////
+    if(selection==5){
+        attron(COLOR_PAIR(5));
+    }else{
+        attron(COLOR_PAIR(0));
+    }
+    if(m->thePlayer->cloak.equiped){
+        
+        stream.str("");
+        stream << m->thePlayer->cloak.name << " " << prettyDescription(m->thePlayer->cloak.desc);
+        mvaddstr(5,0,stream.str().c_str());
+        
+    }else{
+        string te = "EMPTY";
+        mvaddstr(5,0,te.c_str());
+    }
+    if(selection==5){
+        attroff(COLOR_PAIR(5));
+    }else{
+        attroff(COLOR_PAIR(0));
+    }
+    ////////////////////////////////
+    if(selection==6){
+        attron(COLOR_PAIR(5));
+    }else{
+        attron(COLOR_PAIR(0));
+    }
+    if(m->thePlayer->gloves.equiped){
+        
+        stream.str("");
+        stream << m->thePlayer->gloves.name << " " << prettyDescription(m->thePlayer->gloves.desc);
+        mvaddstr(6,0,stream.str().c_str());
+        
+    }else{
+        string te = "EMPTY";
+        mvaddstr(6,0,te.c_str());
+    }
+    if(selection==6){
+        attroff(COLOR_PAIR(5));
+    }else{
+        attroff(COLOR_PAIR(0));
+    }
+    ////////////////////////////////
+    if(selection==7){
+        attron(COLOR_PAIR(5));
+    }else{
+        attron(COLOR_PAIR(0));
+    }
+    if(m->thePlayer->boots.equiped){
+        
+        stream.str("");
+        stream << m->thePlayer->boots.name << " " << prettyDescription(m->thePlayer->boots.desc);
+        mvaddstr(7,0,stream.str().c_str());
+        
+    }else{
+        string te = "EMPTY";
+        mvaddstr(7,0,te.c_str());
+    }
+    
+    if(selection==7){
+        attroff(COLOR_PAIR(5));
+    }else{
+        attroff(COLOR_PAIR(0));
+    }
+    ///////////////////////////////
+    if(selection==8){
+        attron(COLOR_PAIR(5));
+    }else{
+        attron(COLOR_PAIR(0));
+    }
+    if(m->thePlayer->amulet.equiped){
+        
+        stream.str("");
+        stream << m->thePlayer->amulet.name << " " << prettyDescription(m->thePlayer->amulet.desc);
+        mvaddstr(8,0,stream.str().c_str());
+        
+    }else{
+        string te = "EMPTY";
+        mvaddstr(8,0,te.c_str());
+    }
+    
+    if(selection==8){
+        attroff(COLOR_PAIR(5));
+    }else{
+        attroff(COLOR_PAIR(0));
+    }
+    ////////////////////////////////
+    if(selection==9){
+        attron(COLOR_PAIR(5));
+    }else{
+        attron(COLOR_PAIR(0));
+    }
+    if(m->thePlayer->light.equiped){
+        
+        stream.str("");
+        stream << m->thePlayer->light.name << " " << prettyDescription(m->thePlayer->light.desc);
+        mvaddstr(9,0,stream.str().c_str());
+        
+    }else{
+        string te = "EMPTY";
+        mvaddstr(9,0,te.c_str());
+    }
+    
+    if(selection==9){
+        attroff(COLOR_PAIR(5));
+    }else{
+        attroff(COLOR_PAIR(0));
+    }
+    /////////////////////////////////
+    if(selection==10){
+        attron(COLOR_PAIR(5));
+    }else{
+        attron(COLOR_PAIR(0));
+    }
+    if(m->thePlayer->ring1.equiped){
+        
+        stream.str("");
+        stream << m->thePlayer->ring1.name << " " << prettyDescription(m->thePlayer->ring1.desc);
+        mvaddstr(10,0,stream.str().c_str());
+        
+    }else{
+        string te = "EMPTY";
+        mvaddstr(10,0,te.c_str());
+    }
+    
+    if(selection==10){
+        attroff(COLOR_PAIR(5));
+    }else{
+        attroff(COLOR_PAIR(0));
+    }   
+    ///////////////////////////////
+    if(selection==11){
+        attron(COLOR_PAIR(5));
+    }else{
+        attron(COLOR_PAIR(0));
+    }
+    if(m->thePlayer->ring2.equiped){
+        
+        stream.str("");
+        stream << m->thePlayer->ring2.name << " " << prettyDescription(m->thePlayer->ring2.desc);
+        mvaddstr(11,0,stream.str().c_str());
+        
+    }else{
+        string te = "EMPTY";
+        mvaddstr(11,0,te.c_str());
+    }
+    if(selection==11){
+        attroff(COLOR_PAIR(5));
+    }else{
+        attroff(COLOR_PAIR(0));
+    }
+    ////////////////////////
+    /*
+    
+
+     
+     Item helmet;
+     Item cloak;
+     Item gloves;
+     Item boots;
+     Item amulet;
+     Item light;
+     Item ring1;
+     Item ring2;
+    */
+
+    
 }
 static string prettyDescription(string desc){
     std::stringstream stream;

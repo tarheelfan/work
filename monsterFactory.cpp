@@ -79,7 +79,6 @@ void Factory::loaded(vector<objectInfo> v){
      send.equiped=0;
      return send;
       
-     
  }
 
  #endif

@@ -431,7 +431,7 @@ static void bump(int xtemp,int ytemp,Monster* npc){
 static int attack(Monster* mon,Monster* player){
     int damage = mon->dam.roleDice();
     player->hp = player->hp - damage;
-    if(player->hp<=0){
+    if(player->hp<0){
         player->alive=0;
         return 1;
     }
