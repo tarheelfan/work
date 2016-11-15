@@ -106,6 +106,7 @@ int getPCY();
 int32_t compare_monster(const void *key,const void *with);
 void analyzeDistances(void);
 Room* pointContains(int y,int x);
+void equip(Item item);
 
 int performPCMove(Monster *pci);
 extern Monster* monsterArray[21][80];

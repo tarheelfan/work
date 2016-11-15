@@ -22,6 +22,7 @@ class Item{
         Dice dam;
         int def;
         int hit;
+        int equiped;
         int speed;
         string desc;
         string name;

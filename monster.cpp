@@ -12,7 +12,266 @@ void reset(struct list);
 
 
  
-/*Public Class Monster */
+
+void equip(Item item){
+    int type = item.type;
+    switch(type){
+        case 0:/*Light*/
+            
+            if(!m->thePlayer->light.equiped){
+                m->thePlayer->light= item;
+                m->thePlayer->light.equiped=1;
+            }else{
+                std::vector<Item>::iterator it;
+                it = m->thePlayer->inventory.begin();
+                m->thePlayer->light.equiped=0;
+                m->thePlayer->inventory.insert(it+m->thePlayer->inventory.size(),m->thePlayer->light);
+                m->thePlayer->light=item;
+                m->thePlayer->light.equiped=1;
+            }
+            break;
+        case 1:/*ring*/
+            if(!m->thePlayer->ring1.equiped || !m->thePlayer->ring2.equiped){
+                if(!m->thePlayer->ring1.equiped){
+                    m->thePlayer->ring1= item;
+                    m->thePlayer->ring1.equiped=1;
+
+                }
+                if(!m->thePlayer->ring2.equiped){
+                    m->thePlayer->ring2= item;
+                    m->thePlayer->ring2.equiped=1;
+                }
+            }else{
+                std::vector<Item>::iterator it;
+                it = m->thePlayer->inventory.begin();
+                clear();
+                refresh();
+                string exam = "Which ring would you like to replace? enter 1 or 2, 1 is default ";
+                mvaddstr(0,0,exam.c_str());
+                unsigned int input = getch();
+                if(input==2){
+                    m->thePlayer->ring2.equiped=0;
+                    m->thePlayer->inventory.insert(it+m->thePlayer->inventory.size(),m->thePlayer->ring2);
+                    m->thePlayer->ring2=item;
+                    m->thePlayer->ring2.equiped=1;
+                }else{
+                    m->thePlayer->ring1.equiped=0;
+                    m->thePlayer->inventory.insert(it+m->thePlayer->inventory.size(),m->thePlayer->ring1);
+                    m->thePlayer->ring1=item;
+                    m->thePlayer->ring1.equiped=1;
+                }
+            }
+            break;
+        case 2:/*weapon*/
+            if(!m->thePlayer->weapon.equiped){
+                m->thePlayer->weapon= item;
+                m->thePlayer->weapon.equiped=1;
+            }else{
+                std::vector<Item>::iterator it;
+                it = m->thePlayer->inventory.begin();
+                m->thePlayer->weapon.equiped=0;
+                m->thePlayer->inventory.insert(it+m->thePlayer->inventory.size(),m->thePlayer->weapon);
+                m->thePlayer->weapon=item;
+                m->thePlayer->weapon.equiped=1;
+            }
+            break;
+        case 3:/*offhand*/
+            if(!m->thePlayer->offhand.equiped){
+                m->thePlayer->offhand= item;
+                m->thePlayer->offhand.equiped=1;
+            }else{
+                std::vector<Item>::iterator it;
+                it = m->thePlayer->inventory.begin();
+                m->thePlayer->offhand.equiped=0;
+                m->thePlayer->inventory.insert(it+m->thePlayer->inventory.size(),m->thePlayer->offhand);
+                m->thePlayer->offhand=item;
+                m->thePlayer->offhand.equiped=1;
+            }
+            break;
+        case 4:/*ranged*/
+            if(!m->thePlayer->ranged.equiped){
+                m->thePlayer->ranged= item;
+                m->thePlayer->ranged.equiped=1;
+            }else{
+                std::vector<Item>::iterator it;
+                it = m->thePlayer->inventory.begin();
+                m->thePlayer->ranged.equiped=0;
+                m->thePlayer->inventory.insert(it+m->thePlayer->inventory.size(),m->thePlayer->ranged);
+                m->thePlayer->ranged=item;
+                m->thePlayer->ranged.equiped=1;
+            }
+            break;
+        case 5:/*armor*/
+            if(!m->thePlayer->armor.equiped){
+                m->thePlayer->armor= item;
+                m->thePlayer->armor.equiped=1;
+            }else{
+                std::vector<Item>::iterator it;
+                m->thePlayer->armor.equiped=0;
+                it = m->thePlayer->inventory.begin();
+                m->thePlayer->inventory.insert(it+m->thePlayer->inventory.size(),m->thePlayer->armor);
+                m->thePlayer->armor=item;
+                m->thePlayer->armor.equiped=1;
+            }
+            break;
+        case 6:/*helmet*/
+            if(!m->thePlayer->helmet.equiped){
+                m->thePlayer->helmet= item;
+                m->thePlayer->helmet.equiped=1;
+            }else{
+                std::vector<Item>::iterator it;
+                m->thePlayer->helmet.equiped=0;
+                it = m->thePlayer->inventory.begin();
+                m->thePlayer->inventory.insert(it+m->thePlayer->inventory.size(),m->thePlayer->helmet);
+                m->thePlayer->helmet=item;
+                m->thePlayer->helmet.equiped=1;
+            }
+            break;
+        case 7:/*cloak*/
+            if(!m->thePlayer->cloak.equiped){
+                m->thePlayer->cloak= item;
+                m->thePlayer->cloak.equiped=1;
+            }else{
+                std::vector<Item>::iterator it;
+                m->thePlayer->cloak.equiped=0;
+                it = m->thePlayer->inventory.begin();
+                m->thePlayer->inventory.insert(it+m->thePlayer->inventory.size(),m->thePlayer->cloak);
+                m->thePlayer->cloak=item;
+                m->thePlayer->cloak.equiped=1;
+            }
+            break;
+        case 8:/*gloves*/
+            if(!m->thePlayer->gloves.equiped){
+                m->thePlayer->gloves= item;
+                m->thePlayer->gloves.equiped=1;
+            }else{
+                std::vector<Item>::iterator it;
+                it = m->thePlayer->inventory.begin();
+                m->thePlayer->gloves.equiped=0;
+                m->thePlayer->inventory.insert(it+m->thePlayer->inventory.size(),m->thePlayer->gloves);
+                m->thePlayer->gloves=item;
+                m->thePlayer->gloves.equiped=1;
+            }
+            break;
+        case 9:/*boots*/
+            if(!m->thePlayer->boots.equiped){
+                m->thePlayer->boots= item;
+                m->thePlayer->boots.equiped=1;
+            }else{
+                std::vector<Item>::iterator it;
+                it = m->thePlayer->inventory.begin();
+                m->thePlayer->boots.equiped=0;
+                m->thePlayer->inventory.insert(it+m->thePlayer->inventory.size(),m->thePlayer->boots);
+                m->thePlayer->boots=item;
+                m->thePlayer->boots.equiped=1;
+            }
+            break;
+        case 10:/*amulet*/
+            if(!m->thePlayer->amulet.equiped){
+                m->thePlayer->amulet= item;
+                m->thePlayer->amulet.equiped=1;
+            }else{
+                std::vector<Item>::iterator it;
+                m->thePlayer->amulet.equiped=0;
+                it = m->thePlayer->inventory.begin();
+                m->thePlayer->inventory.insert(it+m->thePlayer->inventory.size(),m->thePlayer->amulet);
+                m->thePlayer->amulet=item;
+                m->thePlayer->amulet.equiped=1;
+            }
+            break;
+        case 11:/*scroll*/
+            if(!m->thePlayer->offhand.equiped){
+                m->thePlayer->offhand= item;
+                m->thePlayer->offhand.equiped=1;
+            }else{
+                std::vector<Item>::iterator it;
+                m->thePlayer->offhand.equiped=0;
+                it = m->thePlayer->inventory.begin();
+                m->thePlayer->inventory.insert(it+m->thePlayer->inventory.size(),m->thePlayer->offhand);
+                m->thePlayer->offhand=item;
+                m->thePlayer->offhand.equiped=1;
+            }
+            break;
+        case 12:/*book*/
+            if(!m->thePlayer->offhand.equiped){
+                m->thePlayer->offhand= item;
+                m->thePlayer->offhand.equiped=1;
+            }else{
+                std::vector<Item>::iterator it;
+                m->thePlayer->offhand.equiped=0;
+                it = m->thePlayer->inventory.begin();
+                m->thePlayer->inventory.insert(it+m->thePlayer->inventory.size(),m->thePlayer->offhand);
+                m->thePlayer->offhand=item;
+                m->thePlayer->offhand.equiped=1;
+            }
+            break;
+        case 13:/*flask*/
+            if(!m->thePlayer->offhand.equiped){
+                m->thePlayer->offhand= item;
+                m->thePlayer->offhand.equiped=1;
+            }else{
+                std::vector<Item>::iterator it;
+                m->thePlayer->offhand.equiped=0;
+                it = m->thePlayer->inventory.begin();
+                m->thePlayer->inventory.insert(it+m->thePlayer->inventory.size(),m->thePlayer->offhand);
+                m->thePlayer->offhand=item;
+                m->thePlayer->offhand.equiped=1;
+            }
+            break;
+        case 14:/*gold*/
+            if(!m->thePlayer->offhand.equiped){
+                m->thePlayer->offhand= item;
+                m->thePlayer->offhand.equiped=1;
+            }else{
+                std::vector<Item>::iterator it;
+                m->thePlayer->offhand.equiped=0;
+                it = m->thePlayer->inventory.begin();
+                m->thePlayer->inventory.insert(it+m->thePlayer->inventory.size(),m->thePlayer->offhand);
+                m->thePlayer->offhand=item;
+                m->thePlayer->offhand.equiped=1;
+            }
+            break;
+        case 15:/*ammunition*/
+            if(!m->thePlayer->offhand.equiped){
+                m->thePlayer->offhand = item;
+                m->thePlayer->offhand.equiped=1;
+            }else{
+                std::vector<Item>::iterator it;
+                m->thePlayer->offhand.equiped=0;
+                it = m->thePlayer->inventory.begin();
+                m->thePlayer->inventory.insert(it+m->thePlayer->inventory.size(),m->thePlayer->offhand);
+                m->thePlayer->offhand=item;
+                m->thePlayer->offhand.equiped=1;
+            }
+            break;
+        case 16:/*food*/
+            if(!m->thePlayer->offhand.equiped){
+                m->thePlayer->offhand= item;
+                m->thePlayer->offhand.equiped=1;
+            }else{
+                std::vector<Item>::iterator it;
+                m->thePlayer->offhand.equiped=0;
+                it = m->thePlayer->inventory.begin();
+                m->thePlayer->inventory.insert(it+m->thePlayer->inventory.size(),m->thePlayer->offhand);
+                m->thePlayer->offhand=item;
+                m->thePlayer->offhand.equiped=1;
+            }
+            break;
+        case 17: /*wand*/
+            if(!m->thePlayer->offhand.equiped){
+                m->thePlayer->offhand= item;
+                m->thePlayer->offhand.equiped=1;
+            }else{
+                std::vector<Item>::iterator it;
+                m->thePlayer->offhand.equiped=0;
+                it = m->thePlayer->inventory.begin();
+                m->thePlayer->inventory.insert(it+m->thePlayer->inventory.size(),m->thePlayer->offhand);
+                m->thePlayer->offhand=item;
+                m->thePlayer->offhand.equiped=1;
+            }
+            break;
+    }
+}
 
 void addToList(struct list dir,int num){
     dir.directions[dir.size]=num;

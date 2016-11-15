@@ -22,6 +22,7 @@ static void clearData();
 static void displayEnemyStatus(int scale);
 static void displayInventoryStatus(unsigned int selection);
 static string convertType(int tyi);
+static void inspectItem(int slot);
 /*Global Data*/
 char ch; /*command*/
 Monster *pc;
@@ -111,9 +112,10 @@ int performPCMove(Monster *pci){
                     int selection = 0;
                     int escape = 0;
                     int size = m->thePlayer->inventory.size();
-                    while(!escape){
                         clear();
                         refresh();
+                    while(!escape){
+                        
                         int convert = (unsigned int)selection;
                         displayInventoryStatus(convert);
                         int32_t userCommand = getch();
@@ -133,13 +135,54 @@ int performPCMove(Monster *pci){
                                 selection=0;
                             }
                         }
-                        
+                        if(userCommand==73){ /*Inspect Item*/
+                            inspectItem(selection);
+                        }
                     }
                 break;
         }
     }
     return 0;
 }
+static string prettyDescription(string desc){
+    std::stringstream stream;
+    stream.str(desc);
+    string temp;
+    std::stringstream newStream;
+    int counter=0;
+    while(stream >> temp){
+        counter+= temp.size();
+        if(counter>60){
+            counter=0;
+            newStream << endl;
+        }
+        newStream << temp;
+        newStream << " ";
+    }
+    return newStream.str();
+}
+
+static void inspectItem(int slot){
+    clear();
+    refresh();
+    std::stringstream stream;
+    stream << m->thePlayer->inventory.at(slot).name << endl << 
+    prettyDescription(m->thePlayer->inventory.at(slot).desc) << 
+    endl << convertType(m->thePlayer->inventory.at(slot).type);
+    mvaddstr(0,0,stream.str().c_str());
+    string question = "Would you like to equip, y or n, entering neither will result in no";
+    mvaddstr(1,0,question.c_str());
+    unsigned int answer = getch();
+    if(answer==89 || answer==121){
+        Item temp = m->thePlayer->inventory.at(slot);
+        m->thePlayer->inventory.erase(m->thePlayer->inventory.begin()+slot);
+        equip(temp);
+    }
+    
+}
+
+
+
 static void displayInventoryStatus(unsigned int selection){
     init_pair(5,COLOR_GREEN,COLOR_BLACK);
     init_pair(0,COLOR_WHITE,COLOR_BLACK);
@@ -147,7 +190,7 @@ static void displayInventoryStatus(unsigned int selection){
     for(inc=0;inc<m->thePlayer->inventory.size();inc++){
         Item tem = m->thePlayer->inventory.at(inc);
         std::ostringstream stream;
-        stream << "ITEM: " << tem.name << " TYPE: " <<  convertType(tem.type) << " " << tem.dam.getDescription() << " VALUE: " << tem.value;
+        stream << "ITEM: " << tem.name << " TYPE: " <<  convertType(tem.type) << " DAMAGE: " << prettyDescription(tem.dam.getDescription()) << " VALUE: " << tem.value;
         if(selection==inc){
             attron(COLOR_PAIR(5));
         }else{
