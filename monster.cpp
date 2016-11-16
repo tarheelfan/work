@@ -35,7 +35,6 @@ void equip(Item item){
                 if(!m->thePlayer->ring1.equiped){
                     m->thePlayer->ring1= item;
                     m->thePlayer->ring1.equiped=1;
-
                 }
                 if(!m->thePlayer->ring2.equiped){
                     m->thePlayer->ring2= item;
@@ -112,12 +111,14 @@ void equip(Item item){
                 m->thePlayer->inventory.insert(it+m->thePlayer->inventory.size(),m->thePlayer->armor);
                 m->thePlayer->armor=item;
                 m->thePlayer->armor.equiped=1;
+                
             }
             break;
         case 6:/*helmet*/
             if(!m->thePlayer->helmet.equiped){
                 m->thePlayer->helmet= item;
                 m->thePlayer->helmet.equiped=1;
+
             }else{
                 std::vector<Item>::iterator it;
                 m->thePlayer->helmet.equiped=0;
@@ -430,6 +431,15 @@ static void bump(int xtemp,int ytemp,Monster* npc){
 
 static int attack(Monster* mon,Monster* player){
     int damage = mon->dam.roleDice();
+    damage += mon->weapon.dam.roleDice();
+    int protec = 0;
+    if(player->armor.equiped){
+        protec+=player->armor.def;
+    }
+    damage = damage - protec;
+    if(damage<0){
+        damage=0;
+    } 
     player->hp = player->hp - damage;
     if(player->hp<0){
         player->alive=0;

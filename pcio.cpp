@@ -139,11 +139,46 @@ int performPCMove(Monster *pci){
                         }
                         if(userCommand==73){ /*Inspect Item*/
                             inspectItem(selection);
+                            int count;
+                            for(count=0;count<10;count++){
+                                mvaddstr(0,0,"                                                         ");
+                            }
+                            clear();
+                            refresh();
+                            displayInventoryStatus(convert);
                         }
-                        if(userCommand==101){
-
+                       
+                        if(userCommand==100){ /*drop*/
+                           std::vector<Item>::iterator pok;
+                           pok = itemGrid[m->thePlayer->yloc][m->thePlayer->xloc].begin();
+                           itemGrid[m->thePlayer->yloc][m->thePlayer->xloc].insert(pok+itemGrid[m->thePlayer->yloc][m->thePlayer->xloc].size(),m->thePlayer->inventory.at(selection));
+                           std::vector<Item>::iterator it;
+                           it = m->thePlayer->inventory.begin();
+                           m->thePlayer->inventory.erase(it + selection);
+                           clear();
+                           refresh();
+                           displayInventoryStatus(convert);
+                        }
+                        if(userCommand==120){
+                            std::vector<Item>::iterator it;
+                            it = m->thePlayer->inventory.begin();
+                            m->thePlayer->inventory.erase(it + selection);
+                            clear();
+                            refresh();
+                            displayInventoryStatus(convert);
+                        }
+                        if(userCommand==119){
+                            Item inse = m->thePlayer->inventory.at(selection);
+                            equip(inse);
+                            std::vector<Item>::iterator it;
+                            it = m->thePlayer->inventory.begin();
+                            m->thePlayer->inventory.erase(it+selection);
+                            clear();
+                            refresh();
+                            displayInventoryStatus(convert);
                         }
                     }
+                    
                 break;
               }
             case 'e':
@@ -172,6 +207,122 @@ int performPCMove(Monster *pci){
                                 selection1=0;
                             }
                         }
+                        if(userCommandi==116){ 
+                            switch(selection1){
+                                case 0:
+                                    {
+                                    m->thePlayer->weapon.equiped=0;
+                                    std::vector<Item>::iterator it;
+                                    it = m->thePlayer->inventory.begin();
+                                    int size = m->thePlayer->inventory.size();
+                                    m->thePlayer->inventory.insert(it + size,m->thePlayer->weapon);
+                                break;
+                                    }
+                                case 1:
+                                    {
+                                    m->thePlayer->offhand.equiped=0;
+                                    std::vector<Item>::iterator it;
+                                    it = m->thePlayer->inventory.begin();
+                                    int size = m->thePlayer->inventory.size();
+                                    m->thePlayer->inventory.insert(it + size,m->thePlayer->offhand);
+                                break;
+                                    }
+                                case 2:
+                                    {
+                                    m->thePlayer->ranged.equiped=0;
+                                    std::vector<Item>::iterator it;
+                                    it = m->thePlayer->inventory.begin();
+                                    int size = m->thePlayer->inventory.size();
+                                    m->thePlayer->inventory.insert(it + size,m->thePlayer->ranged);
+                                break;
+                                    }
+                                case 3:
+                                    {
+                                    m->thePlayer->armor.equiped=0;
+                                    std::vector<Item>::iterator it;
+                                    it = m->thePlayer->inventory.begin();
+                                    int size = m->thePlayer->inventory.size();
+                                    m->thePlayer->inventory.insert(it + size,m->thePlayer->armor);
+                                break;
+                                    }
+                                case 4:
+                                    {
+                                    m->thePlayer->helmet.equiped=0;
+                                    std::vector<Item>::iterator it;
+                                    it = m->thePlayer->inventory.begin();
+                                    int size = m->thePlayer->inventory.size();
+                                    m->thePlayer->inventory.insert(it + size,m->thePlayer->helmet);
+                                break;
+                                    }
+                                case 5:
+                                    {
+                                    m->thePlayer->cloak.equiped=0;
+                                    std::vector<Item>::iterator it;
+                                    it = m->thePlayer->inventory.begin();
+                                    int size = m->thePlayer->inventory.size();
+                                    m->thePlayer->inventory.insert(it + size,m->thePlayer->cloak);
+                                break;
+                                    }
+                                case 6:
+                                    {
+                                    m->thePlayer->gloves.equiped=0;
+                                    std::vector<Item>::iterator it;
+                                    it = m->thePlayer->inventory.begin();
+                                    int size = m->thePlayer->inventory.size();
+                                    m->thePlayer->inventory.insert(it + size,m->thePlayer->gloves);
+                                break;
+                                    }
+                                case 7:
+                                    {
+                                    m->thePlayer->boots.equiped=0;
+                                    std::vector<Item>::iterator it;
+                                    it = m->thePlayer->inventory.begin();
+                                    int size = m->thePlayer->inventory.size();
+                                    m->thePlayer->inventory.insert(it + size,m->thePlayer->boots);
+                                break;
+                                    }
+                                case 8:
+                                    {
+                                    m->thePlayer->amulet.equiped=0;
+                                    std::vector<Item>::iterator it;
+                                    it = m->thePlayer->inventory.begin();
+                                    int size = m->thePlayer->inventory.size();
+                                    m->thePlayer->inventory.insert(it + size,m->thePlayer->amulet);
+                                break;
+                                    }
+                                case 9:
+                                    {
+                                    m->thePlayer->light.equiped=0;
+                                    std::vector<Item>::iterator it;
+                                    it = m->thePlayer->inventory.begin();
+                                    int size = m->thePlayer->inventory.size();
+                                    m->thePlayer->inventory.insert(it + size,m->thePlayer->light);
+                                break;
+                                    }
+                                case 10:
+                                    {
+                                    m->thePlayer->ring1.equiped=0;
+                                    std::vector<Item>::iterator it;
+                                    it = m->thePlayer->inventory.begin();
+                                    int size = m->thePlayer->inventory.size();
+                                    m->thePlayer->inventory.insert(it + size,m->thePlayer->ring1);
+                                break;
+                                    }
+                                case 11:
+                                    {
+                                    m->thePlayer->ring2.equiped=0;
+                                    std::vector<Item>::iterator it;
+                                    it = m->thePlayer->inventory.begin();
+                                    int size = m->thePlayer->inventory.size();
+                                    m->thePlayer->inventory.insert(it + size,m->thePlayer->ring2);
+                                break;
+                                    }
+
+                                    clear();
+                                    refresh();
+                                    printEquipment(convert);
+                            }
+                        }
                     }
             break;
                
@@ -198,7 +349,7 @@ static void printEquipment(unsigned int selection){
         mvaddstr(0,0,stream.str().c_str());
         
     }else{
-        string te = "EMPTY";
+        string te = "EMPTY                               ";
         mvaddstr(0,0,te.c_str());
     }
     if(selection==0){
@@ -220,7 +371,7 @@ static void printEquipment(unsigned int selection){
         mvaddstr(1,0,stream.str().c_str());
         
     }else{
-        string te = "EMPTY";
+        string te = "EMPTY                               ";
         mvaddstr(1,0,te.c_str());
     }  
 
@@ -243,7 +394,7 @@ static void printEquipment(unsigned int selection){
         mvaddstr(2,0,stream.str().c_str());
         
     }else{
-        string te = "EMPTY";
+        string te = "EMPTY                               ";
         mvaddstr(2,0,te.c_str());
     }  
 
@@ -265,7 +416,7 @@ static void printEquipment(unsigned int selection){
         mvaddstr(3,0,stream.str().c_str());
         
     }else{
-        string te = "EMPTY";
+        string te = "EMPTY                               ";
         mvaddstr(3,0,te.c_str());
     }  
     
@@ -287,7 +438,7 @@ static void printEquipment(unsigned int selection){
         mvaddstr(4,0,stream.str().c_str());
         
     }else{
-        string te = "EMPTY";
+        string te = "EMPTY                               ";
         mvaddstr(4,0,te.c_str());
     }
     
@@ -309,7 +460,7 @@ static void printEquipment(unsigned int selection){
         mvaddstr(5,0,stream.str().c_str());
         
     }else{
-        string te = "EMPTY";
+        string te = "EMPTY                               ";
         mvaddstr(5,0,te.c_str());
     }
     if(selection==5){
@@ -330,7 +481,7 @@ static void printEquipment(unsigned int selection){
         mvaddstr(6,0,stream.str().c_str());
         
     }else{
-        string te = "EMPTY";
+        string te = "EMPTY                               ";
         mvaddstr(6,0,te.c_str());
     }
     if(selection==6){
@@ -351,7 +502,7 @@ static void printEquipment(unsigned int selection){
         mvaddstr(7,0,stream.str().c_str());
         
     }else{
-        string te = "EMPTY";
+        string te = "EMPTY                               ";
         mvaddstr(7,0,te.c_str());
     }
     
@@ -373,7 +524,7 @@ static void printEquipment(unsigned int selection){
         mvaddstr(8,0,stream.str().c_str());
         
     }else{
-        string te = "EMPTY";
+        string te = "EMPTY                               ";
         mvaddstr(8,0,te.c_str());
     }
     
@@ -395,7 +546,7 @@ static void printEquipment(unsigned int selection){
         mvaddstr(9,0,stream.str().c_str());
         
     }else{
-        string te = "EMPTY";
+        string te = "EMPTY                               ";
         mvaddstr(9,0,te.c_str());
     }
     
@@ -417,7 +568,7 @@ static void printEquipment(unsigned int selection){
         mvaddstr(10,0,stream.str().c_str());
         
     }else{
-        string te = "EMPTY";
+        string te = "EMPTY                               ";
         mvaddstr(10,0,te.c_str());
     }
     
@@ -439,7 +590,7 @@ static void printEquipment(unsigned int selection){
         mvaddstr(11,0,stream.str().c_str());
         
     }else{
-        string te = "EMPTY";
+        string te = "EMPTY                               ";
         mvaddstr(11,0,te.c_str());
     }
     if(selection==11){
@@ -447,22 +598,7 @@ static void printEquipment(unsigned int selection){
     }else{
         attroff(COLOR_PAIR(0));
     }
-    ////////////////////////
-    /*
-    
-
-     
-     Item helmet;
-     Item cloak;
-     Item gloves;
-     Item boots;
-     Item amulet;
-     Item light;
-     Item ring1;
-     Item ring2;
-    */
-
-    
+   
 }
 static string prettyDescription(string desc){
     std::stringstream stream;
