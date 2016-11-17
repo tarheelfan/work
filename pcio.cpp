@@ -124,6 +124,7 @@ int performPCMove(Monster *pci){
                         if(userCommand==27){
                             clear();
                             escape=1;
+                            printGrid();
                         }
                         if(userCommand==259){ /*Up Arrow*/
                             selection--;
@@ -149,6 +150,7 @@ int performPCMove(Monster *pci){
                         }
                        
                         if(userCommand==100){ /*drop*/
+                           if(m->thePlayer->inventory.size()>0){
                            std::vector<Item>::iterator pok;
                            pok = itemGrid[m->thePlayer->yloc][m->thePlayer->xloc].begin();
                            itemGrid[m->thePlayer->yloc][m->thePlayer->xloc].insert(pok+itemGrid[m->thePlayer->yloc][m->thePlayer->xloc].size(),m->thePlayer->inventory.at(selection));
@@ -158,16 +160,20 @@ int performPCMove(Monster *pci){
                            clear();
                            refresh();
                            displayInventoryStatus(convert);
+                           }
                         }
                         if(userCommand==120){
+                            if(m->thePlayer->inventory.size()>0){
                             std::vector<Item>::iterator it;
                             it = m->thePlayer->inventory.begin();
                             m->thePlayer->inventory.erase(it + selection);
                             clear();
                             refresh();
                             displayInventoryStatus(convert);
+                            }
                         }
                         if(userCommand==119){
+                            if(m->thePlayer->inventory.size()>0){
                             Item inse = m->thePlayer->inventory.at(selection);
                             equip(inse);
                             std::vector<Item>::iterator it;
@@ -176,6 +182,7 @@ int performPCMove(Monster *pci){
                             clear();
                             refresh();
                             displayInventoryStatus(convert);
+                            }
                         }
                     }
                     
@@ -328,6 +335,7 @@ int performPCMove(Monster *pci){
                
         }
     }
+    
     return 0;
 }
 

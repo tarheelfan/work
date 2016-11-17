@@ -26,6 +26,7 @@ void Factory::loaded(vector<objectInfo> v){
     int random = rand() % this->monstersD.size();
     npcInfo info = monstersD.at(random);
     Monster *monster = new Monster();
+    monster->kills=0;
    // monster =(Monster*) malloc(sizeof(Monster));
     if(isPlayer){
         monster->symbol='@';

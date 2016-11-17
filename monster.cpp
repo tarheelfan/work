@@ -431,10 +431,18 @@ static void bump(int xtemp,int ytemp,Monster* npc){
 
 static int attack(Monster* mon,Monster* player){
     int damage = mon->dam.roleDice();
-    damage += mon->weapon.dam.roleDice();
+    if(mon->weapon.equiped){
+        damage = mon->weapon.dam.roleDice();
+    }
     int protec = 0;
     if(player->armor.equiped){
         protec+=player->armor.def;
+    }
+    if(player->helmet.equiped){
+        protec+=player->helmet.def;
+    }
+    if(player->gloves.equiped){
+        protec+=player->gloves.def;
     }
     damage = damage - protec;
     if(damage<0){
@@ -443,6 +451,9 @@ static int attack(Monster* mon,Monster* player){
     player->hp = player->hp - damage;
     if(player->hp<0){
         player->alive=0;
+        if(mon->thePlayer){
+            mon->kills++;
+        }
         return 1;
     }
     return 0;
@@ -458,10 +469,10 @@ static int attack(Monster* mon,Monster* player){
     
     temp = monsterArray[ytemp-1][xtemp];
     if(temp!=NULL){
-        if(temp->thePlayer){
+        if(temp->thePlayer  || mon->thePlayer){
             if(!attack(mon,temp)){
-                monsterArray[ytemp][xtemp]=temp;
-                return 1;
+                monsterArray[ytemp][xtemp]=mon;
+                return 0;
             }
         }else{
             bump(xtemp,ytemp,temp);
@@ -520,10 +531,10 @@ static int attack(Monster* mon,Monster* player){
     
     temp = monsterArray[ytemp+1][xtemp];
     if(temp!=NULL){
-        if(temp->thePlayer){
+        if(temp->thePlayer || mon->thePlayer){
             if(!attack(mon,temp)){
-                monsterArray[ytemp][xtemp]=temp;
-                return 1;
+                monsterArray[ytemp][xtemp]=mon;
+                return 0;
             }
         }else{
             bump(xtemp,ytemp,temp);
@@ -537,12 +548,12 @@ static int attack(Monster* mon,Monster* player){
     if(!(*m).hardness[ytemp+1][xtemp]){/*y+1,x*/
        monsterArray[ytemp+1][xtemp] = mon;/*y+1,x*/
        (*mon).yloc=ytemp+1; /*y+1,x*/
-    
+       if(mon->thePlayer){
        if(mon->inventory.size()<9){
-        char pol = getCharacter(ytemp-1,xtemp);
+        char pol = getCharacter(ytemp+1,xtemp);
         if(pol!='0'){
         while(pol!='0'){
-        Item temp = searchItem(ytemp-1, xtemp);
+        Item temp = searchItem(ytemp+1, xtemp);
         std::vector<Item>::iterator it;
         it = (*mon).inventory.begin();
         int var = itemGrid[ytemp+1][xtemp].size(); /*Inserts Items*/
@@ -552,6 +563,7 @@ static int attack(Monster* mon,Monster* player){
            itemGrid[ytemp+1][xtemp].clear();
            //(*m).grid[ytemp-1][xtemp] = '.'; 
         }
+       }
        }
        
     
@@ -588,10 +600,10 @@ static int attack(Monster* mon,Monster* player){
     
     temp = monsterArray[ytemp][xtemp+1];
     if(temp!=NULL){
-        if(temp->thePlayer){
+        if(temp->thePlayer  || mon->thePlayer){
             if(!attack(mon,temp)){
-                monsterArray[ytemp][xtemp]=temp;
-                return 1;
+                monsterArray[ytemp][xtemp]=mon;
+                return 0;
             }
         }else{
             bump(xtemp,ytemp,temp);
@@ -655,10 +667,10 @@ static int attack(Monster* mon,Monster* player){
     
     temp = monsterArray[ytemp][xtemp-1];
     if(temp!=NULL){
-        if(temp->thePlayer){
+        if(temp->thePlayer || mon->thePlayer){
             if(!attack(mon,temp)){
-                monsterArray[ytemp][xtemp]=temp;
-                return 1;
+                monsterArray[ytemp][xtemp]=mon;
+                return 0;
             }
         }else{
             bump(xtemp,ytemp,temp);
@@ -722,10 +734,10 @@ static int attack(Monster* mon,Monster* player){
     
     temp = monsterArray[ytemp-1][xtemp+1];
     if(temp!=NULL){
-        if(temp->thePlayer){
+        if(temp->thePlayer || mon->thePlayer){
             if(!attack(mon,temp)){
-                monsterArray[ytemp][xtemp]=temp;
-                return 1;
+                monsterArray[ytemp][xtemp]=mon;
+                return 0;
             }
         }else{
             bump(xtemp,ytemp,temp);
@@ -791,10 +803,10 @@ static int attack(Monster* mon,Monster* player){
     
     temp = monsterArray[ytemp-1][xtemp-1];
     if(temp!=NULL){
-        if(temp->thePlayer){
+        if(temp->thePlayer || mon->thePlayer){
             if(!attack(mon,temp)){
-                monsterArray[ytemp][xtemp]=temp;
-                return 1;
+                monsterArray[ytemp][xtemp]=mon;
+                return 0;
             }
         }else{
             bump(xtemp,ytemp,temp);
@@ -860,10 +872,10 @@ static int attack(Monster* mon,Monster* player){
     
     temp = monsterArray[ytemp+1][xtemp-1];
     if(temp!=NULL){
-        if(temp->thePlayer){
+        if(temp->thePlayer || mon->thePlayer){
             if(!attack(mon,temp)){
-                monsterArray[ytemp][xtemp]=temp;
-                return 1;
+                monsterArray[ytemp][xtemp]=mon;
+                return 0;
             }
         }else{
             bump(xtemp,ytemp,temp);
@@ -879,6 +891,7 @@ static int attack(Monster* mon,Monster* player){
        (*mon).yloc=ytemp+1;/*y+1,x-1*/
         (*mon).xloc=xtemp-1;
     
+        
         if((mon->inventory.size()<9)){
          char pol = getCharacter(ytemp+1,xtemp-1);
         if(pol!='0'){
@@ -928,10 +941,10 @@ static int attack(Monster* mon,Monster* player){
     
     temp = monsterArray[ytemp+1][xtemp+1];
     if(temp!=NULL){
-        if(temp->thePlayer){
+        if(temp->thePlayer || mon->thePlayer){
             if(!attack(mon,temp)){
-                monsterArray[ytemp][xtemp]=temp;
-                return 1;
+                monsterArray[ytemp][xtemp]=mon;
+                return 0;
             }
         }else{
             bump(xtemp,ytemp,temp);

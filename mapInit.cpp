@@ -101,7 +101,26 @@ void playGame(){
         analyzeDistancesPlus();
          if((*tem).alive){
             performAction(tem);
-            tem->roundVal =tem->roundVal + tem->speed ; 
+            int effectiveSpeed = tem->speed;
+            if(tem->weapon.equiped){
+                effectiveSpeed += tem->weapon.weight - tem->weapon.speed ;
+            }
+            if(tem->armor.equiped){
+                effectiveSpeed += tem->armor.weight - tem->armor.speed;
+            }
+            if(tem->helmet.equiped){
+                effectiveSpeed += tem->helmet.weight - tem->helmet.speed;
+            }
+            if(tem->gloves.equiped){
+                effectiveSpeed += tem->gloves.weight - tem->gloves.speed;
+            }
+            if(tem->ring1.equiped){
+                effectiveSpeed += tem->ring1.weight - tem->ring1.speed;
+            }
+            if(tem->ring2.equiped){
+                effectiveSpeed += tem->ring2.weight - tem->ring2.speed;
+            }
+            tem->roundVal =tem->roundVal + effectiveSpeed;
         }
         if((*tem).alive){
             binheap_insert(&heap,tem);
@@ -736,7 +755,7 @@ int initMap(int numOfMonster){
             counter++;
         }
 }
-            int total = 20;/*Number of Items*/
+            int total = 25;/*Number of Items*/
             int co=0;
             while(co<total){
                 int xr = rand() % 80;
@@ -825,6 +844,12 @@ int total = 15;/*Number of Items*/
     std::ostringstream stream;
     stream << top << m->thePlayer->hp << "               ";
     mvaddstr(0,0,stream.str().c_str());
+
+    string top1 = "KILLS: " ;
+    std::ostringstream streamkill;
+    streamkill << top1 << m->thePlayer->kills << "               ";
+    mvaddstr(1,0,streamkill.str().c_str());
+
     int i=0;
     int j=0;
     for(i=0;i<21;i++){
@@ -858,6 +883,8 @@ int total = 15;/*Number of Items*/
                 }
                 }
            
+            }else{
+                mvaddch(i+3,j,temp[0]);
             }
             Monster *tempMon;
             tempMon = monsterArray[i][j];

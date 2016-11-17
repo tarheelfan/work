@@ -52,6 +52,7 @@ typedef struct{
      Item light;
      Item ring1;
      Item ring2;
+     int kills;
 }Monster;
 typedef struct{
     int distance;
