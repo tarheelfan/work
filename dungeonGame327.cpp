@@ -40,8 +40,8 @@ int main (int argc, char* argv[]){
 int initGame(void){
       readFile();
      readFileObjects();
-      if(1){
-        initMap(5);
+      if(numberOfCreatures){
+        initMap(numberOfCreatures);
       }else{
           printf("Need The Number of Monsters and --nummon command \n");
           return 1;

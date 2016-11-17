@@ -327,7 +327,8 @@ static void bump(int xtemp,int ytemp,Monster* npc){
         switch(control){
             
             case 0:/*Move Up*/
-            check = monsterArray[xtemp][ytemp-1];
+            {
+            check = monsterArray[ytemp-1][xtemp];
             if(npc->yloc-1>0 && !check){
             if(m->grid[npc->yloc-1][npc->xloc]==('#') || m->grid[npc->yloc-1][npc->xloc]==('.') || digSwitch){
                 int isd = moveUp(npc);
@@ -337,9 +338,10 @@ static void bump(int xtemp,int ytemp,Monster* npc){
             }
         }
             break;
-            
+            }
             case 1:/*Move Down*/
-            check = monsterArray[xtemp][ytemp+1];
+            {
+            check = monsterArray[ytemp+1][xtemp];
             if(npc->yloc+1<20 && !check){
             
                 if(m->grid[npc->yloc+1][npc->xloc]==('#') || m->grid[npc->yloc+1][npc->xloc]==('.') || digSwitch){
@@ -350,9 +352,10 @@ static void bump(int xtemp,int ytemp,Monster* npc){
             }
             }
             break;
-            
+            }
             case 2:/*Move Right*/
-            check = monsterArray[xtemp+1][ytemp];
+            {
+            check = monsterArray[ytemp][xtemp+1];
             if(npc->xloc+1<79 && !check){
             
             if(m->grid[npc->yloc][npc->xloc+1]==('#') || m->grid[npc->yloc][npc->xloc+1]==('.') || digSwitch){
@@ -363,9 +366,10 @@ static void bump(int xtemp,int ytemp,Monster* npc){
             }
         }
             break;
-            
+            }
             case 3:/*Move Left*/
-             check = monsterArray[xtemp-1][ytemp];
+             {
+             check = monsterArray[ytemp][xtemp-1];
              if(npc->xloc-1>0 && !check){
              
              if(m->grid[npc->yloc][npc->xloc-1]==('#') || m->grid[npc->yloc][npc->xloc-1]==('.') || digSwitch){
@@ -376,8 +380,10 @@ static void bump(int xtemp,int ytemp,Monster* npc){
             }
              }
             break;
+             }
             case 4:/*Move TopRight*/
-            check = monsterArray[xtemp+1][ytemp-1];
+            {
+            check = monsterArray[ytemp-1][xtemp+1];
             if(npc->yloc-1>0 && npc->xloc+1<79 && !check){
             
             if(m->grid[npc->yloc-1][npc->xloc+1]==('#') || m->grid[npc->yloc-1][npc->xloc+1]==('.') || digSwitch ){
@@ -388,9 +394,10 @@ static void bump(int xtemp,int ytemp,Monster* npc){
             }
             }
             break;
-            
+            }
             case 5:/*Move TopLeft*/
-            check = monsterArray[xtemp-1][ytemp-1];
+            {
+            check = monsterArray[ytemp-1][xtemp-1];
             if(npc->yloc-1>0 && npc->xloc-1>0 && !check){
             
             if(m->grid[npc->yloc-1][npc->xloc-1]==('#') || m->grid[npc->yloc-1][npc->xloc-1]==('.') || digSwitch ){
@@ -401,8 +408,10 @@ static void bump(int xtemp,int ytemp,Monster* npc){
             }
         }
             break;
+            }
             case 6:/*Move BottomRight*/
-             check = monsterArray[xtemp+1][ytemp+1];
+             {
+             check = monsterArray[ytemp+1][xtemp+1];
              if(npc->yloc+1<20 && npc->xloc+1<79 && !check ){
              
              if(m->grid[npc->yloc+1][npc->xloc+1]==('#') || m->grid[npc->yloc+1][npc->xloc+1]==('.') || digSwitch){
@@ -413,8 +422,10 @@ static void bump(int xtemp,int ytemp,Monster* npc){
             }
         }
             break;
+             }
             case 7:/*Move BottomLeft*/
-            check = monsterArray[xtemp-1][ytemp+1];
+            {
+            check = monsterArray[ytemp+1][xtemp-1];
             if(npc->yloc+1<20 && npc->xloc-1>0 && !check){
              
              if(m->grid[(npc->yloc)+1][npc->xloc-1]==('#') || m->grid[(npc->yloc)+1][npc->xloc-1]==('.') || digSwitch){
@@ -422,8 +433,10 @@ static void bump(int xtemp,int ytemp,Monster* npc){
                 if(!moveBottomLeft(npc)){
                     return;
                 }
-                break;
+                
+             }
             }
+        break;
         }
 }               
         }
@@ -490,7 +503,8 @@ static int attack(Monster* mon,Monster* player){
         Item temp = searchItem(ytemp-1, xtemp);
         std::vector<Item>::iterator it;
         it = (*mon).inventory.begin();
-        int var = itemGrid[ytemp-1][xtemp].size(); /*Inserts Items*/
+        //int var = itemGrid[ytemp-1][xtemp].size(); /*Inserts Items*/
+        int var = (*mon).inventory.size();
         (*mon).inventory.insert(it+var,temp);
         pol = getCharacter(ytemp-1,xtemp);
         }
@@ -556,7 +570,8 @@ static int attack(Monster* mon,Monster* player){
         Item temp = searchItem(ytemp+1, xtemp);
         std::vector<Item>::iterator it;
         it = (*mon).inventory.begin();
-        int var = itemGrid[ytemp+1][xtemp].size(); /*Inserts Items*/
+        //int var = itemGrid[ytemp+1][xtemp].size(); /*Inserts Items*/
+        int var = (*mon).inventory.size();
         (*mon).inventory.insert(it+var,temp);
         pol = getCharacter(ytemp+1,xtemp);
         }
@@ -625,7 +640,8 @@ static int attack(Monster* mon,Monster* player){
         Item temp = searchItem(ytemp, xtemp+1);
         std::vector<Item>::iterator it;
         it = (*mon).inventory.begin();
-        int var = itemGrid[ytemp][xtemp+1].size(); /*Inserts Items*/
+        //int var = itemGrid[ytemp][xtemp+1].size(); /*Inserts Items*/
+        int var = (*mon).inventory.size();
         (*mon).inventory.insert(it+var,temp);
         pol = getCharacter(ytemp,xtemp+1);
         }
@@ -692,7 +708,8 @@ static int attack(Monster* mon,Monster* player){
         Item temp = searchItem(ytemp, xtemp-1);
         std::vector<Item>::iterator it;
         it = (*mon).inventory.begin();
-        int var = itemGrid[ytemp][xtemp-1].size(); /*Inserts Items*/
+        //int var = itemGrid[ytemp][xtemp-1].size(); /*Inserts Items*/
+        int var = (*mon).inventory.size();
         (*mon).inventory.insert(it+var,temp);
         pol = getCharacter(ytemp,xtemp-1);
         }
@@ -760,7 +777,8 @@ static int attack(Monster* mon,Monster* player){
         Item temp = searchItem(ytemp-1, xtemp+1);
         std::vector<Item>::iterator it;
         it = (*mon).inventory.begin();
-        int var = itemGrid[ytemp-1][xtemp+1].size(); /*Inserts Items*/
+        //int var = itemGrid[ytemp-1][xtemp+1].size(); /*Inserts Items*/
+        int var = (*mon).inventory.size();
         (*mon).inventory.insert(it+var,temp);
         pol = getCharacter(ytemp-1,xtemp+1);
         }
@@ -829,7 +847,8 @@ static int attack(Monster* mon,Monster* player){
         Item temp = searchItem(ytemp-1, xtemp-1);
         std::vector<Item>::iterator it;
         it = (*mon).inventory.begin();
-        int var = itemGrid[ytemp-1][xtemp-1].size(); /*Inserts Items*/
+        //int var = itemGrid[ytemp-1][xtemp-1].size(); /*Inserts Items*/
+        int var = (*mon).inventory.size();
         (*mon).inventory.insert(it+var,temp);
         pol = getCharacter(ytemp-1,xtemp-1);
         }
@@ -899,7 +918,8 @@ static int attack(Monster* mon,Monster* player){
         Item temp = searchItem(ytemp+1, xtemp-1);
         std::vector<Item>::iterator it;
         it = (*mon).inventory.begin();
-        int var = itemGrid[ytemp+1][xtemp-1].size(); /*Inserts Items*/
+        //int var = itemGrid[ytemp+1][xtemp-1].size(); /*Inserts Items*/
+        int var = (*mon).inventory.size();
         (*mon).inventory.insert(it+var,temp);
         pol = getCharacter(ytemp+1,xtemp-1);
         }
@@ -966,7 +986,8 @@ static int attack(Monster* mon,Monster* player){
         Item temp = searchItem(ytemp+1, xtemp+1);
         std::vector<Item>::iterator it;
         it = (*mon).inventory.begin();
-        int var = itemGrid[ytemp+1][xtemp+1].size(); /*Inserts Items*/
+        //int var = itemGrid[ytemp+1][xtemp+1].size(); /*Inserts Items*/
+        int var = (*mon).inventory.size();
         (*mon).inventory.insert(it+var,temp);
         pol = getCharacter(ytemp+1,xtemp+1);
         }

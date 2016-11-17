@@ -139,6 +139,7 @@ int performPCMove(Monster *pci){
                             }
                         }
                         if(userCommand==73){ /*Inspect Item*/
+                            if(m->thePlayer->inventory.size()>0){
                             inspectItem(selection);
                             int count;
                             for(count=0;count<10;count++){
@@ -147,6 +148,7 @@ int performPCMove(Monster *pci){
                             clear();
                             refresh();
                             displayInventoryStatus(convert);
+                            }
                         }
                        
                         if(userCommand==100){ /*drop*/
@@ -215,6 +217,7 @@ int performPCMove(Monster *pci){
                             }
                         }
                         if(userCommandi==116){ 
+                            
                             switch(selection1){
                                 case 0:
                                     {
@@ -329,6 +332,7 @@ int performPCMove(Monster *pci){
                                     refresh();
                                     printEquipment(convert);
                             }
+                            
                         }
                     }
             break;
