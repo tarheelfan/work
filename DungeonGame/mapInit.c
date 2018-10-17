@@ -33,8 +33,7 @@ static int contains(Room *r,Room *ro);
 static struct xy getCoords();
 static char getAsci(int num);
 static void analyzeDistancesPlus(void);
-
-WINDOW *window;
+binheap_t heap;
 struct xy{
     int x;
     int y;
@@ -46,7 +45,6 @@ int32_t compare_monster(const void *key,const void *with){
 }
 void playGame(){
     int done = 0;
-    binheap_t heap;
     binheap_init(&heap,compare_monster,free);
         initMonsterLib(m, numberOfMonster);
         /*Setup Monsters*/
@@ -60,15 +58,16 @@ void playGame(){
             }
             Monster *monster;
             monster = MonsterInit(m,coords.x,coords.y,isPlay);
-            
+
             if(!x){
                 m->thePlayer=monster;
             }
-           
             binheap_insert(&heap,monster);
         }
     while(!done){
-       
+        printGrid();
+        analyzeDistances();
+        analyzeDistancesPlus();
         Monster *tem;
         tem = (Monster*)binheap_remove_min(&heap);
         if((*tem).thePlayer){
@@ -82,8 +81,7 @@ void playGame(){
                 }
             }
         }
-        analyzeDistances();
-        analyzeDistancesPlus();
+        
         if((*tem).alive){
             performAction(tem);
             tem->roundVal= tem->roundVal + tem->speed;
@@ -93,9 +91,7 @@ void playGame(){
         }else{
             deconstructor(tem);
         }
-        printGrid();
-        wrefresh(window);
-        clear();
+        
         
     }
 }
@@ -130,7 +126,7 @@ static void initBorder(void){
               (*m).hardness[e][ein]=0;  
             }
             (*m).hardness[e][ein]=(rand()%243)+2;
-            //(*m).hardness[e][ein]=2;
+            
         }
     }
     for(count=0;count<80;count++){
@@ -167,7 +163,7 @@ int32_t compare_cell(const void *key,const void *with){
 }
 
 
-static void analyzeDistancesPlus(void){//x loc 17 loc 6
+static void analyzeDistancesPlus(void){
     int xPre=0;
     int yPre=0;
 
@@ -181,17 +177,17 @@ static void analyzeDistancesPlus(void){//x loc 17 loc 6
         }
     }
     (*m).distanceGrid[(*m).thePlayer->yloc][(*m).thePlayer->xloc].distance=0;
-    binheap_t heap;
-    binheap_init(&heap,compare_cell,free);
+    binheap_t heapcell;
+    binheap_init(&heapcell,compare_cell,free);
     
     distanceCell root = (*m).distanceGrid[(*m).thePlayer->yloc][(*m).thePlayer->xloc];
     root.distance=0;
-    binheap_insert(&heap,&root);
+    binheap_insert(&heapcell,&root);
     int tempx;
     int tempy;
-    while(!binheap_is_empty(&heap)){
+    while(!binheap_is_empty(&heapcell)){
         distanceCell *temp;
-        temp =(distanceCell*) binheap_remove_min(&heap);
+        temp =(distanceCell*) binheap_remove_min(&heapcell);
         tempx = (*temp).xloc;
         tempy = (*temp).yloc;
         int alt;
@@ -204,7 +200,7 @@ static void analyzeDistancesPlus(void){//x loc 17 loc 6
                     (*m).distanceGrid[tempy-1][tempx].distance=alt;
                     distanceCell *temp0;
                     temp0 = &(*m).distanceGrid[tempy-1][tempx];
-                    binheap_insert(&heap, temp0);
+                    binheap_insert(&heapcell, temp0);
                     
             }
         } 
@@ -215,7 +211,7 @@ static void analyzeDistancesPlus(void){//x loc 17 loc 6
                     (*m).distanceGrid[tempy+1][tempx].distance=(*temp).distance+1;
                     distanceCell *temp1;
                     temp1 = &(*m).distanceGrid[tempy+1][tempx];
-                    binheap_insert(&heap,temp1);
+                    binheap_insert(&heapcell,temp1);
                 }
         } 
          if((*m).grid[(*temp).yloc][(*temp).xloc+1]!='-' || (*m).grid[(*temp).yloc][(*temp).xloc+1]!='|'){/* right */
@@ -225,7 +221,7 @@ static void analyzeDistancesPlus(void){//x loc 17 loc 6
                     (*m).distanceGrid[tempy][tempx+1].distance=(*temp).distance+1;
                     distanceCell *temp2;
                     temp2 = &(*m).distanceGrid[tempy][tempx+1];
-                    binheap_insert(&heap,temp2);
+                    binheap_insert(&heapcell,temp2);
                 }
         } 
          if((*m).grid[(*temp).yloc][(*temp).xloc-1]!='-' || (*m).grid[(*temp).yloc][(*temp).xloc-1]!='|'){/* left */
@@ -236,7 +232,7 @@ static void analyzeDistancesPlus(void){//x loc 17 loc 6
                     (*m).distanceGrid[tempy][tempx-1].distance=alt;
                     distanceCell *temp3;
                     temp3 = &(*m).distanceGrid[tempy][tempx-1];
-                    binheap_insert(&heap,temp3);   
+                    binheap_insert(&heapcell,temp3);   
                 }
         }
         if((*m).grid[(*temp).yloc-1][(*temp).xloc+1]!='-' || (*m).grid[(*temp).yloc-1][(*temp).xloc+1]!='|'){/* top right */
@@ -247,7 +243,7 @@ static void analyzeDistancesPlus(void){//x loc 17 loc 6
                     (*m).distanceGrid[tempy-1][tempx+1].distance=alt;
                     distanceCell *temp4;
                     temp4 = &(*m).distanceGrid[tempy-1][tempx+1];
-                    binheap_insert(&heap,temp4);
+                    binheap_insert(&heapcell,temp4);
                     
                 }
 
@@ -261,7 +257,7 @@ static void analyzeDistancesPlus(void){//x loc 17 loc 6
                     (*m).distanceGrid[tempy-1][tempx-1].distance=alt;
                     distanceCell *temp5;
                     temp5 = &(*m).distanceGrid[tempy-1][tempx-1];
-                   binheap_insert(&heap,temp5);
+                   binheap_insert(&heapcell,temp5);
                 }
 
             
@@ -274,7 +270,7 @@ static void analyzeDistancesPlus(void){//x loc 17 loc 6
                     (*m).distanceGrid[tempy+1][tempx-1].distance=alt;
                     distanceCell *temp6;
                     temp6 = &(*m).distanceGrid[tempy+1][tempx-1];
-                    binheap_insert(&heap,temp6);
+                    binheap_insert(&heapcell,temp6);
                     
                 }
 
@@ -288,7 +284,7 @@ static void analyzeDistancesPlus(void){//x loc 17 loc 6
                     (*m).distanceGrid[tempy+1][tempx+1].distance=alt;
                     distanceCell *temp7;
                     temp7 = &(*m).distanceGrid[tempy+1][tempx+1];
-                    binheap_insert(&heap,temp7);
+                    binheap_insert(&heapcell,temp7);
                     
                 }
         }
@@ -328,6 +324,8 @@ static void initRooms(void){
                 (*m).rooms[size]=*p;
                 size++;
                 done='t';
+            }else{
+                free(p);
             }
         }
     }
@@ -490,8 +488,9 @@ static int contains(Room *inside,Room *out){
 static Room* createRoom(void){
     char done ='n';
     Room *room;
-    room = (Room*)malloc(sizeof( Room));
     while(done!='y'){
+    room = malloc(sizeof( Room));
+    if(room){
         int height = rand();
         height = height % 7;
         if(height<5){
@@ -520,7 +519,7 @@ static Room* createRoom(void){
         (*room).bottomRight[0]=locx+height;
         (*room).bottomRight[1]=locy+width;
     }
-   
+    }
     return room;
 }
 
@@ -661,23 +660,41 @@ static char getAsci(int num){
         }
     }
 }
-
+int NUMBER_OF_MONSTERS;
 int initMap(int numOfMonster){
     initscr(); /*starts curses mode*/
-    window = newwin(21,80,0,0); /*Creates Window*/
+    raw();
+    noecho();
+    curs_set(0);
+    keypad(stdscr, TRUE);
+    start_color();
+
+    //window = newwin(24,80,0,0); /*Creates Window*/
+    init_pair(0,COLOR_BLACK,COLOR_GREEN);
+    attron(0);
     numberOfMonster=numOfMonster;
+    NUMBER_OF_MONSTERS = numberOfMonster;
     m = (Map*)malloc(sizeof(Map));
    
     initBorder();
     initRooms();
-    int done=0;
-    while(!done){
+    /*Stair Case Generation*/
+    int count = (rand()%35)+1;
+    int counter =0;
+    while(counter<count){
         int xrand = rand()%80;
         int yrand = rand()%21;
-        if((*m).grid[yrand][xrand]=='.'){
-            done=1;
+        if((*m).grid[yrand][xrand]=='.' || (*m).grid[yrand][xrand]=='#'){
+            int twoFacesCoin = rand()%2;
+            if(twoFacesCoin){
+                (*m).grid[yrand][xrand]='<';
+            }else{
+                (*m).grid[yrand][xrand]='>';
+            }
+            counter++;
         } 
     }
+    /****************************/
     int c;
     int f;
     for(c=0;c<21;c++){
@@ -691,7 +708,38 @@ int initMap(int numOfMonster){
     }
     return 0;
 }
+void reInitMap(int num_of_mon){
+    initBorder();
+    initRooms();
+    /*Stair Case Generation*/
+    int count = (rand()%5)+1;
+    int counter =0;
+    while(counter<count){
+        int xrand = rand()%80;
+        int yrand = rand()%21;
+        if((*m).grid[yrand][xrand]=='.' || (*m).grid[yrand][xrand]=='#'){
+            int twoFacesCoin = rand()%2;
+            if(twoFacesCoin){
+                (*m).grid[yrand][xrand]='<';
+            }else{
+                (*m).grid[yrand][xrand]='>';
+            }
+            counter++;
+        } 
+    }
+    /****************************/
+    int c;
+    int f;
+    for(c=0;c<21;c++){
+        for(f=0;f<80;f++){
+            char temp = (*m).grid[c][f];
+            if(temp=='.' || temp=='#'){
+                (*m).hardness[c][f]=0;
+            }
 
+        }
+    }
+}
  void printGrid(){
     int i;
     int j;
@@ -699,7 +747,7 @@ int initMap(int numOfMonster){
         for(j=0;j<80;j++){
             char temp[1];
             temp[0] = (*m).grid[i][j];
-            if(!(temp[0]=='-' || temp[0] == '|' || temp[0]=='.' || temp[0]=='#')){
+            if(!(temp[0]=='-' || temp[0] == '|' || temp[0]=='.' || temp[0]=='#' || temp[0]=='<' || temp[0]=='>')){
                 temp[0] = ' ';
             }
             Monster *tempMon;
@@ -707,23 +755,21 @@ int initMap(int numOfMonster){
                
                 if(tempMon!=NULL){
                     if(tempMon->bigPeople){
-                        mvwprintw(window,i,j,"P");
+                        mvaddch(i+3,j,'P');
                     }
                     if(tempMon->dragon){
-                        mvwprintw(window,i,j,"D");
+                        mvaddch(i+3,j,'D');
                     }
                     if(tempMon->thePlayer){
-                        mvwprintw(window,i,j,"@");
+                        mvaddch(i+3,j,'@');
                     }
                     if(tempMon->other){
-                        mvwprintw(window,i,j,"p");
+                        mvaddch(i+3,j,'p');
                     }
             }else{
-                mvwprintw(window,i,j,temp);
-            }
-            
+                mvaddch(i+3,j,temp[0]);
+            }   
         }
-        //mvprintw(window,i,j,'\n');
     }
 }
 
@@ -780,11 +826,8 @@ void printDistanceGridPlus(){
                         printf("%c",sample);
                         }
                     }
-
                 }
-                
             }
-            
         }
         printf("%c\n",' ');
     }

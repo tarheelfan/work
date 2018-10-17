@@ -37,7 +37,7 @@ int main (int argc, char* argv[]){
 }
 int initGame(void){
       if(1){/*Code Changed for Purpose of Debugging*/
-        initMap(10);
+        initMap(20);
       }else{
           printf("Need The Number of Monsters and --nummon command \n");
           return 1;
@@ -45,6 +45,16 @@ int initGame(void){
     return 0;
 }
 void StartGame(void){
+    char ex;
+   printw("Enter Any Key To Start");
+   while(1){
+        ex = getch();
+        
+    if(ex){
+        break;
+    }
+    }
+    
     playGame();
 }
 void closeGame(void){

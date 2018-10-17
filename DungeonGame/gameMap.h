@@ -1,3 +1,4 @@
+#include <ncurses.h>
 #include "heap.h"
 struct list{
     int directions[1000];
@@ -79,6 +80,7 @@ Monster* MonsterInit(Map *map,int x,int y,int isPlayer);
  int isIntelegent(Monster *mon);
  int isTelapathic(Monster *mon);
  int canTunnle(Monster *mon);
+ void reInitMap(int num_of_mon);
  int isErratic(Monster *mon);
 int hasMonster(int xl, int yl);
 void deconstructor(Monster *m);
@@ -89,5 +91,9 @@ int getPCY();
 int32_t compare_monster(const void *key,const void *with);
 void analyzeDistances(void);
 Room* pointContains(int y,int x);
+int performPCMove(Monster *pci);
 extern Monster* monsterArray[21][80];
 extern Map *m;
+extern int NUMBER_OF_MONSTERS;
+//extern WINDOW *window;
+extern binheap_t heap;
