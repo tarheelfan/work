@@ -5,6 +5,6 @@ All: mapInit.c
 	gcc -Wall -g -O -c pcio.c -lncurses
 	ar -cvq heap.a heap.o 
 	ar -cvq gameMap.a mapInit.o monster.o pcio.o
-	gcc -Wall -O0 -ggdb dungeonGame327.c -o run gameMap.a heap.a -lncurses
+	gcc -Wall -O0 -ggdb main.c -o run gameMap.a heap.a -lncurses
 Clean: run gameMap.a mapInit.o
 	bash cleanSlate.bash

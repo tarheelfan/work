@@ -1,4 +1,4 @@
-#include "dungeonGame327.h"
+#include "main.h"
 #include <stdio.h>
 #include "gameMap.h"
 #include <string.h>

@@ -1,11 +1,141 @@
+  commit 48
+  Author: Benjamin Trettin
+  Date:   wed oct 17 12:43:17 2018 -0500
+
+    updated CHANGELOG and Readme
+
+  trettin_benjamin.assignment-1.05/CHANGELOG.txt      |  130 ++++++++++++++++++++++
+  trettin_benjamin.assignment-1.05/README.md     |  6 +++---
+  2 files changed, 133 insertions(+), 3 deletions(-)
+
+  commit 47
+  Author: Benjamin Trettin
+  Date:   tues oct 16 17:11:41 2018 -0500
+
+    fixed some compile issues and errors
+
+  trettin_benjamin.assignment-1.05/pcio.c     |  12 +++++------
+  1 file changed, 6 insertions(+), 6 deletions(-)
+
+  commit 46
+  Author: Benjamin Trettin
+  Date:   wed oct 9 16:21:44 2018 -0500
+
+      finished some edge case issues and bugs with viewing ui
+
+    trettin_benjamin.assignment-1.05/gameMap.h      |  12 ++++++++---
+    trettin_benjamin.assignment-1.05/mapInit.c     |  6 +++---
+    trettin_benjamin.assignment-1.05/pcio.c     |  10 ++++----
+    3 files changed, 15 insertions(+), 13 deletions(-)
+
+
+commit 45
+Author: Benjamin Trettin
+Date:   tues oct 9 21:22:52 2018 -0500
+
+    started implementing printing of monsters and rest of ui
+
+  trettin_benjamin.assignment-1.05/pcio.c     |  23 +++++++++++++++++++++
+  trettin_benjamin.assignment-1.05/main.c     |  7 ++++++--
+  2 files changed, 28 insertions(+), 2 deletions(-)
+
+commit 44
+Author: Benjamin Trettin
+Date:   tues oct 9 17:23:02 2018 -0500
+
+    some basic movement works and ui shows properly
+
+  trettin_benjamin.assignment-1.05/main.c     | 2 ++
+  trettin_benjamin.assignment-1.05/mapInit.c    | 10 ++++++++--
+  trettin_benjamin.assignment-1.05/monster.c     | 30 +++++++++++++++++--------
+  trettin_benjamin.assignment-1.05/gameMap.c     | 11 ++++++++++
+  4 files changed 44 insertions(+), 10 deletions(-)
+
+commit 43
+Author: Benjamin Trettin
+Date:   tues oct 11 12:32:12 2018 -0500
+
+    fixed a few edge cases for movement and update clean/make files
+
+ trettin_benjamin.assignment-1.05/Makefile      | 2 ++
+ trettin_benjamin.assignment-1.05/install.bash      | 4 +++-
+ trettin_benjamin.assignment-1.05/gameMap.c      | 15 +++++----------
+ trettin_benjamin.assignment-1.05/mapInit.c      | 25 +++++++++++----------
+ trettin_benjamin.assignment-1.05/pcio.c      | 8 ++++++++
+ trettin_benjamin.assignment-1.05/main.c      | 4 ++--
+ 6 files changed, 35 insertions(+), 15 deletions(-)
+
+commit 42
+Author: Benjamin Trettin
+Date:   tues oct 10 13:11:41 2018 -0500
+
+    more UI code for various things
+
+  trettin_benjamin.assignment-1.05/gameMap.h      |  22 ++++++++++++--------
+  trettin_benjamin.assignment-1.05/mapInit.c     |  16 +++++++++++++++
+  trettin_benjamin.assignment-1.05/pcio.c     |  34 +++++++++++++++++++++++++
+  3 files changed, 66 insertions(+), 6 deletions(-)
+
+  commit 41
+  Author: Benjamin Trettin
+  Date:   mon oct 8 23:21:44 2018 -0500
+
+      added functionality for pc movement
+
+    trettin_benjamin.assignment-1.05/gameMap.h      |  12 ++++++++++++
+    trettin_benjamin.assignment-1.05/mapInit.c     |  6 ++++++
+    trettin_benjamin.assignment-1.05/pcio.c     |  10 +++++++++
+    3 files changed, 28 insertions(+)
+
+
+commit 40
+Author: Benjamin Trettin
+Date:   mon oct 8 15:22:52 2018 -0500
+
+    Added pcio.c file for pc control
+
+  trettin_benjamin.assignment-1.05/pcio.c     |  43 +++++++++++++++++++++++++
+  1 file added, 43 insertions(+)
+
+commit 39
+Author: Benjamin Trettin
+Date:   mon oct 8 10:23:02 2018 -0500
+
+    added ncurse functionality
+
+  trettin_benjamin.assignment-1.05/main.c     | 4 +++-
+  trettin_benjamin.assignment-1.05/mapInit.c    | 1 +
+  trettin_benjamin.assignment-1.05/monster.c     | 10 ++++++----
+  trettin_benjamin.assignment-1.05/gameMap.c     | 14 ++++++++++++++++
+  4 files changed 24 insertions(+), 5 deletions(-)
+
+commit 38
+Author: Benjamin Trettin
+Date:   sat oct 6 12:32:12 2018 -0500
+
+    updated makefile for cleaning
+
+ trettin_benjamin.assignment-1.05/Makefile      | 5 +++++
+ 1 file changed, 5 insertions(+)
+
+commit 37
+Author: Benjamin Trettin
+Date:   sat oct 6 13:25:07 2018 -0500
+
+    Added gitignore for o and a files as well as a clean bash for easier cleaning of folder
+
+ trettin_benjamin.assignment-1.05/gitignore               |   3 +++
+ trettin_benjamin.assignment-1.05/install.bash             |   1 +
+ 2 files added, 4 insertions(+)
+
 commit 36
 Author: Benjamin Trettin
 Date:   wed oct 4 16:43:17 2018 -0500
 
     updated changelog and readme
 
-  trettin_benjamin.assignment-1.04/CHANGELOG.txt      |  73 +++++++++++++++++
-  trettin_benjamin.assignment-1.04/README.md     |  6 +++---
+  trettin_benjamin.assignment-1.05/CHANGELOG.txt      |  73 +++++++++++++++++
+  trettin_benjamin.assignment-1.05/README.md     |  6 +++---
   2 files changed, 76 insertions(+), 3 deletions(-)
 
 commit 35
