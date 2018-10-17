@@ -1,333 +1,341 @@
-commit 8d7bbc4d
-Author: Shane P Drafahl <sdrafahl@iastate.edu>
-Date:   Wed Oct 5 10:55:13 2016 -0500
+commit 36
+Author: Benjamin Trettin
+Date:   wed oct 4 16:43:17 2018 -0500
 
-    almost ready for release, fixed some bugs,basic testing left to determine if everythin works correctly
+    updated changelog and readme
 
-commit 060c8102
-Author: Shane P Drafahl <sdrafahl@iastate.edu>
-Date:   Wed Oct 5 01:02:19 2016 -0500
+  trettin_benjamin.assignment-1.04/CHANGELOG.txt      |  73 +++++++++++++++++
+  trettin_benjamin.assignment-1.04/README.md     |  6 +++---
+  2 files changed, 76 insertions(+), 3 deletions(-)
 
-    Fixed most bugs as far as I can tell,behavior is improved, I always tell the truth,Even when I lie.
+commit 35
+Author: Benjamin Trettin
+Date:   tues oct 3 13:11:41 2018 -0500
 
-commit c69eca0b
-Author: Shane P Drafahl <sdrafahl@iastate.edu>
-Date:   Tue Oct 4 10:51:23 2016 -0500
+    fixed some final bugs with pc and monster and added to monster.h
 
-    Fixed the rendering of the game map, program demonstrates basic interaction
+  trettin_benjamin.assignment-1.04/monster.c      |  144 ++++++++++++++++++--
+  trettin_benjamin.assignment-1.04/monster.h      |  3 +++
+  2 files changed, 143 insertions(+), 4 deletions(-)
 
-commit 674575bf
-Author: Shane P Drafahl <sdrafahl@iastate.edu>
-Date:   Mon Oct 3 12:46:30 2016 -0500
+  commit 34
+  Author: Benjamin Trettin
+  Date:   tues oct 1 23:21:44 2018 -0500
 
-    compiler issues resolved, segmentation faults to fix
+      moved a lot of the map info to a gameMap.h file
 
-commit d0a0d728
-Author: Shane P Drafahl <sdrafahl@iastate.edu>
-Date:   Sun Oct 2 20:42:52 2016 -0500
+    trettin_benjamin.assignment-1.04/gameMap.h      |  60 ++++++++++++++++++
+    trettin_benjamin.assignment-1.04/map.c     |  55 -----------------
+    2 files changed, 60 insertions(+), 55 deletions(-)
 
-    Did some bug fixes
 
-commit 056cdac8
-Author: Shane P Drafahl <sdrafahl@iastate.edu>
-Date:   Sun Oct 2 18:42:29 2016 -0500
+commit 33
+Author: Benjamin Trettin
+Date:   tues oct 3 10:22:52 2018 -0500
 
-    Fixed some bugs and combined two .c files into gameMap.a library
+    Fixed some bugs with the monster attributes and some tunnelling
 
-commit cf51b1f9
-Author: Shane P Drafahl <sdrafahl@iastate.edu>
-Date:   Sun Oct 2 02:25:11 2016 -0500
+  trettin_benjamin.assignment-1.04/monster.c     |  131 ++++++++++++++++++------
+  1 file changed, 121 insertions(+), 10 deletions(-)
 
-    finnished with rough draft of code
+commit 32
+Author: Benjamin Trettin
+Date:   mon oct 2 15:23:02 2018 -0500
 
-commit c1b14424
-Author: Shane P Drafahl <sdrafahl@iastate.edu>
-Date:   Sun Oct 2 00:08:55 2016 -0500
+    added more abilities for the monster in many functions
 
-    Makefile changes
+  trettin_benjamin.assignment-1.04/monster.c     | 258 ++++++++++++++++++++++
+  1 file changed 258 insertions(+)
 
-commit 8c00d898
-Author: Shane P Drafahl <sdrafahl@iastate.edu>
-Date:   Sat Oct 1 12:42:33 2016 -0500
+commit 31
+Author: Benjamin Trettin
+Date:   mon oct 2 12:32:12 2018 -0500
 
-    Finnished most of monster.c file
+    Added nummon switch in dungeongame
 
-commit ac296339
-Author: Shane P Drafahl <sdrafahl@iastate.edu>
-Date:   Sat Oct 1 02:09:19 2016 -0500
+ trettin_benjamin.assignment-1.04/dungeonGame.c      | 18 ++++++++++++++++
+ 1 file changed, 18 insertions(+)
 
-    Lots of work on monster.c file in general, working on adding paths for the smart monsters
+commit 30
+Author: Benjamin Trettin
+Date:   Sat oct 1 13:25:07 2018 -0500
 
-commit 8db9e7e1
-Author: Shane P Drafahl <sdrafahl@iastate.edu>
-Date:   Fri Sep 30 23:42:04 2016 -0500
+    Added methods for monster to travel
 
-    upgraded scanning, you require more vespene gas
+ trettin_benjamin.assignment-1.04/monster.c               |   28 ++++++++++++++++++++
+ 1 file changed, 28 insertions(+)
 
-commit b71445b3
-Author: Shane P Drafahl <sdrafahl@iastate.edu>
-Date:   Fri Sep 30 23:25:28 2016 -0500
+commit 29
+Author: Benjamin Trettin
+Date:   sun sep 30 5:12:51 2018 -0500
 
-    Added proper tunnle algorithm
+    Implemented monster in the mapinit as well as the heap for it
 
-commit 06957c21
-Author: Shane P Drafahl <sdrafahl@iastate.edu>
-Date:   Fri Sep 30 17:57:51 2016 -0500
+  trettin_benjamin.assignment-1.04/dungeonGame.c     |  4 ++++
+  trettin_benjamin.assignment-1.04/map.c     |  25 +++++++++++++++++++++
+  trettin_benjamin.assignment-1.04/monster.c      |  32 ++++++++++++++++++++---
+  trettin_benjamin.assignment-1.04/monster.h    |  5 +++++
+  4 files changed, 60 insertions(+), 3 deletions
 
-    Added kill functionality to movement functions
+commit 28
+Author: Benjamin Trettin
+Date:   thur sep 27 10:52:21 2018 -0500
 
-commit c1df57e0
-Author: Shane P Drafahl <sdrafahl@iastate.edu>
-Date:   Thu Sep 29 23:39:50 2016 -0500
+    Added monster.c and monster.h files with some basic implementation
 
-    I got started on performAction function
+  trettin_benjamin.assignment-1.04/monster.c      |  45 +++++++++++++++++++++++
+  trettin_benjamin.assignment-1.04/monster.h      |  3 +++
+  2 files added, 48 insertions(+)
 
-commit d54b09e4
-Author: Shane P Drafahl <sdrafahl@iastate.edu>
-Date:   Thu Sep 29 22:15:40 2016 -0500
+commit 27
+Author: Benjamin Trettin
+Date:   wed sep 26 18:54:21 2018 -0500
 
-    Created scanArea function
+    updated readme and changelog
 
-commit cffb8f09
-Author: Shane P Drafahl <sdrafahl@iastate.edu>
-Date:   Thu Sep 29 20:01:18 2016 -0500
+  trettin_benjamin.assignment-1.01/README.md      | 4 ++--
+  trettin_benjamin.assignment-1.01/CHANGELOG.txt     |  77 +++++++++++++++++++++
+  2 files changed, 79 insertions(+), 2 deletions(-)
 
-    Added second heap to program
+commit 26
+Author: Benjamin Trettin
+Date:   mon sep 24 21:23:01 2018 -0500
 
-commit 11455507
-Author: Shane P Drafahl <sdrafahl@iastate.edu>
-Date:   Thu Sep 29 19:58:30 2016 -0500
+    finished fixing bugs
 
-    Added some more functionality to the monster library
+  trettin_benjamin.assignment-1.01/map.c     |  15 ++++++++++++++++++++--
+  1 file changed, 15 insertions(+), 2 deletions(-)
 
-commit d60a025f
-Author: Shane P Drafahl <sdrafahl@iastate.edu>
-Date:   Thu Sep 29 00:44:04 2016 -0500
+commit 25
+Author: Benjamin Trettin
+Date:   wed sep 19 16:43:17 2018 -0500
 
-    Did some more work on monster.c
+    Fixed bugs with djikstra for both and added weight method
 
-commit 1dcc371e
-Author: Shane P Drafahl <sdrafahl@iastate.edu>
-Date:   Wed Sep 28 21:32:55 2016 -0500
+  trettin_benjamin.assignment-1.01/map.c      |  13 ++++++++++++++---
+  1 file changed, 13 insertions(+), 3 deletions(-)
 
-    Added monster.c and monster.h to be a new library for mapInit library
+commit 24
+Author: Benjamin Trettin
+Date:   tues sep 18 13:11:41 2018 -0500
 
-commit 7779a6d3
-Author: Shane P Drafahl <sdrafahl@iastate.edu>
-Date:   Mon Sep 26 14:30:35 2016 -0500
+    Added load and save functions. Very simple functionality.
 
-    updated changelog
+  trettin_benjamin.assignment-1.01/map.c      |  14 ++++++++++++++++++--
+  trettin_benjamin.assignment-1.03/dungeonGame.c      |  3 +++
+  2 files changed, 15 insertions(+), 2 deletions(-)
 
-commit c260c6d3
-Author: Shane P Drafahl <sdrafahl@iastate.edu>
-Date:   Mon Sep 26 14:27:12 2016 -0500
+commit 23
+Author: Benjamin Trettin
+Date:   tues sep 18 10:22:52 2018 -0500
 
-    Finall touches
+    Implemented some of djikstra for all map and created printing methods for map
 
-commit e29abcb4
-Author: Shane P Drafahl <sdrafahl@iastate.edu>
-Date:   Sun Sep 25 16:15:14 2016 -0500
+  trettin_benjamin.assignment-1.01/map.c      |  14 ++++++++++++++++++--
+  trettin_benjamin.assignment-1.03/dungeonGame.c      |  3 +++
+  2 files changed, 15 insertions(+), 2 deletions(-)
 
-    reconfigured printing functions and search algorithm with correct weights and added function static int getWeight(int num)
+commit 22
+Author: Benjamin Trettin
+Date:   mon Sep 17 15:23:02 2018 -0500
 
-commit 7f8b0420
-Merge: 7ac7953f 0da293b8
-Author: Shane P Drafahl <sdrafahl@iastate.edu>
-Date:   Sun Sep 25 02:25:58 2016 -0500
+    used heap to implemnet djikstra for cooridors
 
-    merge
+  trettin_benjamin.assignment-1.03/map.c      | 18 +++++++++++--------
+  1 file changed 10 insertions(+), 8 deletions(-)
 
-commit 7ac7953f
-Author: Shane P Drafahl <sdrafahl@iastate.edu>
-Date:   Sun Sep 25 02:17:46 2016 -0500
+commit 21
+Author: Benjamin Trettin
+Date:   Sun Sep 16 12:32:12 2018 -0500
 
-    moved stuff around
+    Added heap from library and heap.h to use
 
-commit 0da293b8
-Author: Shane P Drafahl <sdrafahl@iastate.edu>
-Date:   Sun Sep 25 00:11:03 2016 -0500
+ trettin_benjamin.assignment-1.03/heap.c      | Bin 0 -> 45 bytes
+ trettin_benjamin.assignment-1.03/heap.h      | Bin 0 -> 6 bytes
+ 2 files Added
 
-    Did some work on analyzeDistancesPlus
+commit 20
+Author: Benjamin Trettin
+Date:   Sat Sep 15 13:25:07 2018 -0500
 
-commit fa3f6ed3
-Author: Shane P Drafahl <sdrafahl@iastate.edu>
-Date:   Sat Sep 24 15:43:14 2016 -0500
+    created templates and based code for both algorithms
 
-    Distances are correct for non tunnling monseters
+ trettin_benjamin.assignment-1.03/map.c               |   18 ++++++++++++++++++++
+ trettin_benjamin.assignment-1.03/dungeonGame.c       |   4  ++++
+ 2 files changed, 16 insertions(+)
 
-commit fa5288a1
-Author: Shane P Drafahl <sdrafahl@iastate.edu>
-Date:   Sat Sep 24 15:07:01 2016 -0500
+commit 19
+Author: Benjamin Trettin
+Date:   wed sep 12 5:12:51 2018 -0500
 
-    added function getAsci(int num)
+    finished changing readme and changelog
 
-commit 945beec8
-Author: Shane P Drafahl <sdrafahl@iastate.edu>
-Date:   Fri Sep 23 22:03:31 2016 -0500
+  trettin_benjamin.assignment-1.01/README.md      |  12 ++++++++++++
+  trettin_benjamin.assignment-1.01/CHANGELOG.txt     |  85 +++++++++++++++++++++
+  2 files changed, 12 insertions(+)
 
-    started working on correct assci rendering
+commit 18
+Author: Benjamin Trettin
+Date:   tues sep 11 10:54:21 2018 -0500
 
-commit 26c26bc2
-Author: Shane P Drafahl <sdrafahl@iastate.edu>
-Date:   Fri Sep 23 19:23:39 2016 -0500
+    Fixed bugs in load method and added proper formatting of mapArray
 
-    modification to asci rendering function
+  trettin_benjamin.assignment-1.01/map.c      |  12 ++++++++++--
+  1 file changed, 10 insertions(+), 2 deletions(-)
 
-commit 3e95fa25
-Author: Shane P Drafahl <sdrafahl@iastate.edu>
-Date:   Wed Sep 21 10:19:52 2016 -0500
+commit 17
+Author: Benjamin Trettin
+Date:   mon sep 10 21:23:01 2018 -0500
 
-    able to print most distances but mising entire rooms and doesnt seem to get data from the heap, I also noticed that the initial cursor from the heap never 
+    added functions in dungeonGame to return load or save depending on user input
 
-commit 22fd0451
-Author: Shane P Drafahl <sdrafahl@iastate.edu>
-Date:   Wed Sep 21 00:00:44 2016 -0500
+  trettin_benjamin.assignment-1.01/dungeonGame.c     |  15 ++++++++++++++++++++--
+  1 file changed, 15 insertions(+), 2 deletions(-)
 
-    wrote most of BFS and function to print the graph with distances
+commit 16
+Author: Benjamin Trettin
+Date:   mon sep 10 14:43:27 2018 -0500
 
-commit 47493966
-Author: Shane P Drafahl <sdrafahl@iastate.edu>
-Date:   Tue Sep 20 12:06:16 2016 -0500
+    Added functions for fread and fwrite for load/save and create a createRoom function to implement load
 
-    changed code for analyzeDistance in new direction
+  trettin_benjamin.assignment-1.01/map.c      |  13 ++++++++++++++
+  1 file changed, 13 insertions(+)
 
-commit c20aa7f5
-Author: Shane P Drafahl <sdrafahl@iastate.edu>
-Date:   Tue Sep 20 00:51:23 2016 -0500
+commit 15
+Author: Benjamin Trettin
+Date:   sat sep 7 13:11:41 2018 -0500
 
-    removed compiler issues, might change code out so commiting now
+    Added load and save functions. Very simple functionality.
 
-commit 8b41d94f
-Author: Shane P Drafahl <sdrafahl@iastate.edu>
-Date:   Mon Sep 19 14:34:28 2016 -0500
+  trettin_benjamin.assignment-1.01/map.c      |  14 ++++++++++++++++++--
+  trettin_benjamin.assignment-1.01/dungeonGame.c      |  3 +++
+  2 files changed, 15 insertions(+), 2 deletions(-)
 
-    added distanceGrid
+commit 14
+Author: Benjamin Trettin
+Date:   sat sep 8 12:22:58 2018 -0500
 
-commit 9376c5f8
-Author: Shane P Drafahl <drafahls@gmail.com>
-Date:   Mon Sep 19 00:08:20 2016 -0500
+    Added hardness randomness and pc starting
 
-    Added binheap library
+  trettin_benjamin.assignment-1.01/map.c      |  8 ++++++++
+  1 file changed, 8 insertions(+)
 
-commit af3f67c3
-Author: Shane P Drafahl <drafahls@gmail.com>
-Date:   Sun Sep 18 23:49:13 2016 -0500
+commit 13
+Author: Benjamin Trettin
+Date:   fri Sep 7 18:33:02 2018 -0500
 
-    some basic changes
+    created main file called dungeonGame and moved some abstract functionality to it
 
-commit d45c7c3c
-Author: Shane P Drafahl <drafahls@gmail.com>
-Date:   Fri Sep 16 16:26:06 2016 -0500
+  trettin_benjamin.assignment-1.01/dungeonGame.c      |  7 +++++++
+  trettin_benjamin.assignment-1.01/maap.c      |  12 +++---------
+  1 file added, 1 file changed 10 insertions(+), 9 deletions(-)
 
-    removed comments
+commit 12
+Author: Benjamin Trettin
+Date:   Wed Sep 5 19:37:17 2018 -0500
 
-commit ca955489
-Author: Shane P Drafahl <drafahls@gmail.com>
-Date:   Wed Sep 14 21:37:11 2016 -0500
+    create zip file for assignment
 
-    finnal bug fixes
+ trettin_benjamin.assignment-1.01.tar.gz      | Bin 0 -> 45 bytes
+ 1 file Added
 
-commit 0ced654d
-Author: Shane P Drafahl <drafahls@gmail.com>
-Date:   Wed Sep 14 19:15:01 2016 -0500
+commit 11
+Author: Benjamin Trettin
+Date:   Wed Sep 5 18:25:07 2018 -0500
 
-    bug fixes
+    changed readme to account for this assignment
 
-commit bdc2e70c
-Author: Shane P Drafahl <drafahls@gmail.com>
-Date:   Wed Sep 14 11:41:28 2016 -0500
+ trettin_benjamin.assignment-1.01/README.md               |   4 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-    fixed bugs enabling the ability to load files
+commit 10
+Author: Benjamin Trettin
+Date:   mon Sep 3 2:02:54 2018 -0500
 
-commit 62fa69f2
-Author: Shane P Drafahl <drafahls@gmail.com>
-Date:   Tue Sep 13 22:16:12 2016 -0500
+    Added first room top-left coordinate varaible and pc symbol
 
-    bug fixes
+  trettin_benjamin.assignment-1.01/map.c      |  12 ++++++++++++
+  1 file changed, 12 insertions(+)
 
-commit 610948f9
-Author: Shane P Drafahl <drafahls@gmail.com>
-Date:   Tue Sep 13 17:32:16 2016 -0500
+commit 9
+Author: Benjamin Trettin
+Date:   sat Sep 1 10:10:27 2018 -0500
 
-    fixed some compiler issues
+    Cleaned up code for calling functions in main method
 
-commit 2b06bc45
-Author: Shane P Drafahl <drafahls@gmail.com>
-Date:   Mon Sep 12 15:39:08 2016 -0500
+  trettin_benjamin.assignment-1.01/map.c      |  12 ++++++++++--
+  1 file changed, 10 insertions(+), 2 deletions(-)
 
-    Removed warnings and added hardness to map
+commit 8
+Author: Benjamin Trettin
+Date:   wed Aug 29 23:33:01 2018 -0500
 
-commit 1d8a0d1d
-Author: Shane P Drafahl <drafahls@gmail.com>
-Date:   Mon Sep 12 00:10:42 2016 -0500
+    Added algorithm for nearest path and implementation of cooridor connection
 
-    started on saveGame function
+  trettin_benjamin.assignment-1.01/map.c      |  19 +++++++++++++++++++
+  1 file changed, 19 insertions(+)
 
-commit 0134f07c
-Author: Shane P Drafahl <drafahls@gmail.com>
-Date:   Sun Sep 11 21:50:04 2016 -0500
+commit 7
+Author: Benjamin Trettin
+Date:   wed Aug 29 22:05:07 2018 -0500
 
-    Added left path and made print grid public
+    Added function for randomly generating number of rooms and set proper room sizes
 
-commit 11590f5f
-Author: Shane P Drafahl <drafahls@gmail.com>
-Date:   Sun Sep 11 19:21:12 2016 -0500
+  trettin_benjamin.assignment-1.01/map.c      |  8 ++++++++
+  1 file changed, 8 insertions(+)
 
-    Made print grid public
+commit 6
+Author: Benjamin Trettin
+Date:   wed Aug 29 21.04:11:14 2018 -0500
 
-commit 2113ed65
-Author: Shane P Drafahl <drafahls@gmail.com>
-Date:   Sun Sep 11 18:01:07 2016 -0500
+    Added checks to make sure two rooms arent hitting each other, otherwhise regenerate a room.
 
-    Added Connected path on left side of map
+  trettin_benjamin.assignment-1.01/map.c      |  14 ++++++++++++--
+  1 file changed, 12 insertions(+), 2 deletions(-)
 
-commit a10fc5cf
-Author: Shane P Drafahl <drafahls@gmail.com>
-Date:   Mon Sep 5 15:27:00 2016 -0500
+commit 5
+Author: Benjamin Trettin
+Date:   wed Aug 29 20:25:32 2018 -0500
 
-    I have added paths in order to connect the different rooms together
+    Creating struct for storing room coordinates and struct for storing the rooms
 
-commit a8e88d12
-Author: Shane Drafahl <sdrafahl@iastate.edu>
-Date:   Mon Sep 5 00:22:01 2016 -0500
+  trettin_benjamin.assignment-1.01/map.c      |  4 ++++
+  1 file changed, 4 insertions(+)
 
-    Create README.md
+commit 4
+Author: Benjamin Trettin
+Date:   wed Aug 29 18:33:02 2018 -0500
 
-commit 5cba6a85
-Author: Shane P Drafahl <drafahls@gmail.com>
-Date:   Mon Sep 5 00:20:32 2016 -0500
+    Created algorithm for generating a single room.
 
-    Modified collides function to make it work correctly, I also changed the Rooms to . from X, Also a few minor touches like correcting the size of the dungeo
+  trettin_benjamin.assignment-1.01/map.c      |  23 +++++++++++++++++++---
+  1 file changed, 20 insertions(+), 3 deletions(-)
 
-commit 784b9470
-Author: Shane P Drafahl <drafahls@gmail.com>
-Date:   Sun Sep 4 01:22:43 2016 -0500
+commit 3
+Author: Benjamin Trettin
+Date:   wed Aug 29 15:03:35 2018 -0500
 
-    I did some work on initRooms and created the colides function that remains untested, currently does not display correct info but without memory issues or c
+    Adding a mapArray, room parameters, and a main method
 
-commit 4632272b
-Author: Shane P Drafahl <drafahls@gmail.com>
-Date:   Sat Sep 3 14:29:53 2016 -0500
+  trettin_benjamin.assignment-1.01/map.c      |  16 ++++++++++++++++
+  1 file changed, 16 insertions(+)
 
-    added function initRooms and createRoom, initRooms currently just inserts one room into the grid for testing purposes for the function createRoom
+commit 2
+Author: Benjamin Trettin
+Date:   wed Aug 29 12:23:16 2018 -0500
 
-commit 71a61276
-Author: Shane P Drafahl <drafahls@gmail.com>
-Date:   Fri Sep 2 11:51:43 2016 -0500
+    Create a map.c file with #includes
 
-    fixed some bugs with the display grid function
+  trettin_benjamin.assignment-1.01/map.c      |  4 ++++
+  1 file Added, 4 insertions(+)
 
-commit 6815eaa1
-Author: Shane P Drafahl <drafahls@gmail.com>
-Date:   Fri Sep 2 00:49:47 2016 -0500
+commit 1
+Author: Benjamin Trettin
+Date:   wed Aug 29 10:11:56 2018 -0500
 
-    Created Makefile, created dungeonGame327.c source file that will run the game, I also created mapInit.c and mapInit.h file to
-    encapsulate dungeon map code in a library for the main program to use
+    Create a Readme, Makefile, and CHANGELOG
 
-commit 9f84d9a7
-Author: Shane P Drafahl <drafahls@gmail.com>
-Date:   Fri Sep 2 00:45:49 2016 -0500
-
-    Added git ignore file
-(END)
-
+  trettin_benjamin.assignment-1.01/README.md      |  11 +++++++++++
+  trettin_benjamin.assignment-1.01/Makefile      |  9 +++++++++
+  trettin_benjamin.assignment-1.01/CHANGELOG.txt      |  1 +
+  2 files Added, 21 insertions(+)
