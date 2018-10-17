@@ -1,0 +1,4 @@
+All: mapInit.c
+    gcc -g -O -c mapInit.c
+    gcc -cvq gameMap.a mapInit.o
+    gcc -static -Wall -ggdb dungeonGame327.c -o run gameMap.a 

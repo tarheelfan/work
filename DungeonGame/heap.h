@@ -1,5 +1,5 @@
-#ifndef BIN
-# define BIN
+#ifndef BINHEAP_H
+# define BINHEAP_H
 
 # ifdef __cplusplus
 extern "C" {
