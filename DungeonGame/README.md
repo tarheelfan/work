@@ -1,13 +1,18 @@
-# DungeonGame
-Dungeon game written in C for COMS 327 at ISU
+Assignment 1.01 - Dungeon Generation
 
-This program works by a main method that controls the entire program and then each part of the program will be split into separate
-.a library files that will be compiled and run by the makefile.
+SETUP
 
-The important command for this release is --nummon <numberOFMonsters> will randomly generate the number of monsters
+Run 'make' inside the trettin_benjamin.assignment-1.05 directory to build the project.
+Can also run 'make Clean' to clean the repo.
 
-The mapinit.c file and its respective header files is responsible for generating the map.
+Running Source Code
 
-The cleanSlate.bash is a bash file that removes object files and compiled binaries.  
+The dungeon game can only be run using the ./run command with the --nummon switch. The switch includes a value for the number of monsters to be generated.
 
-This program has two switches on it, one is --save and the other is --load , these functions will load or save a file from your home file in a directory called .rlg327 in a file called Dungeon
+EXAMPLE: ./run --nummon 10
+
+The source code is located inside of the map.c, heap.c, monster.c, pcio.c and dungeonGame.c files.
+
+Notes
+
+The CHANGELOG file shows all of my commits for this project up to this point.

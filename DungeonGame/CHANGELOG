@@ -24,7 +24,7 @@
       finished some edge case issues and bugs with viewing ui
 
     trettin_benjamin.assignment-1.05/gameMap.h      |  12 ++++++++---
-    trettin_benjamin.assignment-1.05/mapInit.c     |  6 +++---
+    trettin_benjamin.assignment-1.05/map.c     |  6 +++---
     trettin_benjamin.assignment-1.05/pcio.c     |  10 ++++----
     3 files changed, 15 insertions(+), 13 deletions(-)
 
@@ -46,7 +46,7 @@ Date:   tues oct 9 17:23:02 2018 -0500
     some basic movement works and ui shows properly
 
   trettin_benjamin.assignment-1.05/main.c     | 2 ++
-  trettin_benjamin.assignment-1.05/mapInit.c    | 10 ++++++++--
+  trettin_benjamin.assignment-1.05/map.c    | 10 ++++++++--
   trettin_benjamin.assignment-1.05/monster.c     | 30 +++++++++++++++++--------
   trettin_benjamin.assignment-1.05/gameMap.c     | 11 ++++++++++
   4 files changed 44 insertions(+), 10 deletions(-)
@@ -60,7 +60,7 @@ Date:   tues oct 11 12:32:12 2018 -0500
  trettin_benjamin.assignment-1.05/Makefile      | 2 ++
  trettin_benjamin.assignment-1.05/install.bash      | 4 +++-
  trettin_benjamin.assignment-1.05/gameMap.c      | 15 +++++----------
- trettin_benjamin.assignment-1.05/mapInit.c      | 25 +++++++++++----------
+ trettin_benjamin.assignment-1.05/map.c      | 25 +++++++++++----------
  trettin_benjamin.assignment-1.05/pcio.c      | 8 ++++++++
  trettin_benjamin.assignment-1.05/main.c      | 4 ++--
  6 files changed, 35 insertions(+), 15 deletions(-)
@@ -72,7 +72,7 @@ Date:   tues oct 10 13:11:41 2018 -0500
     more UI code for various things
 
   trettin_benjamin.assignment-1.05/gameMap.h      |  22 ++++++++++++--------
-  trettin_benjamin.assignment-1.05/mapInit.c     |  16 +++++++++++++++
+  trettin_benjamin.assignment-1.05/map.c     |  16 +++++++++++++++
   trettin_benjamin.assignment-1.05/pcio.c     |  34 +++++++++++++++++++++++++
   3 files changed, 66 insertions(+), 6 deletions(-)
 
@@ -83,7 +83,7 @@ Date:   tues oct 10 13:11:41 2018 -0500
       added functionality for pc movement
 
     trettin_benjamin.assignment-1.05/gameMap.h      |  12 ++++++++++++
-    trettin_benjamin.assignment-1.05/mapInit.c     |  6 ++++++
+    trettin_benjamin.assignment-1.05/map.c     |  6 ++++++
     trettin_benjamin.assignment-1.05/pcio.c     |  10 +++++++++
     3 files changed, 28 insertions(+)
 
@@ -104,7 +104,7 @@ Date:   mon oct 8 10:23:02 2018 -0500
     added ncurse functionality
 
   trettin_benjamin.assignment-1.05/main.c     | 4 +++-
-  trettin_benjamin.assignment-1.05/mapInit.c    | 1 +
+  trettin_benjamin.assignment-1.05/map.c    | 1 +
   trettin_benjamin.assignment-1.05/monster.c     | 10 ++++++----
   trettin_benjamin.assignment-1.05/gameMap.c     | 14 ++++++++++++++++
   4 files changed 24 insertions(+), 5 deletions(-)
@@ -199,7 +199,7 @@ commit 29
 Author: Benjamin Trettin
 Date:   sun sep 30 5:12:51 2018 -0500
 
-    Implemented monster in the mapinit as well as the heap for it
+    Implemented monster in the map as well as the heap for it
 
   trettin_benjamin.assignment-1.04/dungeonGame.c     |  4 ++++
   trettin_benjamin.assignment-1.04/map.c     |  25 +++++++++++++++++++++

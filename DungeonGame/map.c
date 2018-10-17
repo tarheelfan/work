@@ -81,7 +81,7 @@ void playGame(){
                 }
             }
         }
-        
+
         if((*tem).alive){
             performAction(tem);
             tem->roundVal= tem->roundVal + tem->speed;
@@ -91,8 +91,8 @@ void playGame(){
         }else{
             deconstructor(tem);
         }
-        
-        
+
+
     }
 }
 
@@ -111,10 +111,10 @@ static struct xy getCoords(){
         }
     }
 }
-        
-    
+
+
     return coords;
-} 
+}
 static void initBorder(void){
     int count;
     srand(time(NULL));
@@ -123,10 +123,10 @@ static void initBorder(void){
     for(e=1;e<21;e++){
         for(ein=1;ein<80;ein++){
             if((*m).grid[e][ein]=='.' || (*m).grid[e][ein]=='#'){
-              (*m).hardness[e][ein]=0;  
+              (*m).hardness[e][ein]=0;
             }
             (*m).hardness[e][ein]=(rand()%243)+2;
-            
+
         }
     }
     for(count=0;count<80;count++){
@@ -172,14 +172,14 @@ static void analyzeDistancesPlus(void){
             distanceCell pass;
             pass.distance=10000;
             pass.yloc=yPre;/* 1000 will represent infinity */
-            pass.xloc=xPre; 
-            (*m).distanceGrid[yPre][xPre]=pass; 
+            pass.xloc=xPre;
+            (*m).distanceGrid[yPre][xPre]=pass;
         }
     }
     (*m).distanceGrid[(*m).thePlayer->yloc][(*m).thePlayer->xloc].distance=0;
     binheap_t heapcell;
     binheap_init(&heapcell,compare_cell,free);
-    
+
     distanceCell root = (*m).distanceGrid[(*m).thePlayer->yloc][(*m).thePlayer->xloc];
     root.distance=0;
     binheap_insert(&heapcell,&root);
@@ -191,9 +191,9 @@ static void analyzeDistancesPlus(void){
         tempx = (*temp).xloc;
         tempy = (*temp).yloc;
         int alt;
-        
+
         if((*m).grid[(*temp).yloc-1][(*temp).xloc]!='-' || (*m).grid[(*temp).yloc-1][(*temp).xloc]!='|'){/* top */
-                
+
                 alt = getWeight((*m).hardness[tempy-1][tempx]);
                 alt = alt + (*m).distanceGrid[tempy][tempx].distance;
                 if((*m).distanceGrid[tempy-1][tempx].distance>alt){
@@ -201,21 +201,21 @@ static void analyzeDistancesPlus(void){
                     distanceCell *temp0;
                     temp0 = &(*m).distanceGrid[tempy-1][tempx];
                     binheap_insert(&heapcell, temp0);
-                    
+
             }
-        } 
+        }
          if((*m).grid[(*temp).yloc+1][(*temp).xloc]!='-' || (*m).grid[(*temp).yloc+1][(*temp).xloc]!='|'){/* bottom */
-                
-                alt = getWeight((*m).hardness[tempy+1][tempx])+(*m).distanceGrid[tempy][tempx].distance; 
+
+                alt = getWeight((*m).hardness[tempy+1][tempx])+(*m).distanceGrid[tempy][tempx].distance;
                 if((*m).distanceGrid[tempy+1][tempx].distance>alt){
                     (*m).distanceGrid[tempy+1][tempx].distance=(*temp).distance+1;
                     distanceCell *temp1;
                     temp1 = &(*m).distanceGrid[tempy+1][tempx];
                     binheap_insert(&heapcell,temp1);
                 }
-        } 
+        }
          if((*m).grid[(*temp).yloc][(*temp).xloc+1]!='-' || (*m).grid[(*temp).yloc][(*temp).xloc+1]!='|'){/* right */
-                
+
                 alt = getWeight((*m).hardness[tempy][tempx+1])+(*m).distanceGrid[tempy][tempx].distance;
                 if((*m).distanceGrid[tempy][tempx+1].distance>alt){
                     (*m).distanceGrid[tempy][tempx+1].distance=(*temp).distance+1;
@@ -223,35 +223,35 @@ static void analyzeDistancesPlus(void){
                     temp2 = &(*m).distanceGrid[tempy][tempx+1];
                     binheap_insert(&heapcell,temp2);
                 }
-        } 
+        }
          if((*m).grid[(*temp).yloc][(*temp).xloc-1]!='-' || (*m).grid[(*temp).yloc][(*temp).xloc-1]!='|'){/* left */
-                
-                
+
+
                  alt = getWeight((*m).hardness[tempy][tempx])+(*m).distanceGrid[tempy][tempx].distance;
                 if((*m).distanceGrid[tempy][tempx-1].distance>alt){
                     (*m).distanceGrid[tempy][tempx-1].distance=alt;
                     distanceCell *temp3;
                     temp3 = &(*m).distanceGrid[tempy][tempx-1];
-                    binheap_insert(&heapcell,temp3);   
+                    binheap_insert(&heapcell,temp3);
                 }
         }
         if((*m).grid[(*temp).yloc-1][(*temp).xloc+1]!='-' || (*m).grid[(*temp).yloc-1][(*temp).xloc+1]!='|'){/* top right */
-            
-                
+
+
                 alt = getWeight((*m).hardness[tempy-1][tempx+1])+(*m).distanceGrid[tempy][tempx].distance;
                 if((*m).distanceGrid[tempy-1][tempx+1].distance>alt){
                     (*m).distanceGrid[tempy-1][tempx+1].distance=alt;
                     distanceCell *temp4;
                     temp4 = &(*m).distanceGrid[tempy-1][tempx+1];
                     binheap_insert(&heapcell,temp4);
-                    
+
                 }
 
-            
+
         }
         if((*m).grid[(*temp).yloc-1][(*temp).xloc-1]!='-' || (*m).grid[(*temp).yloc-1][(*temp).xloc-1]=='|'){/* top left */
-           
-                
+
+
                  alt = getWeight((*m).hardness[tempy-1][tempx-1])+(*m).distanceGrid[tempy][tempx].distance;
                 if((*m).distanceGrid[tempy-1][tempx-1].distance>alt){
                     (*m).distanceGrid[tempy-1][tempx-1].distance=alt;
@@ -260,36 +260,36 @@ static void analyzeDistancesPlus(void){
                    binheap_insert(&heapcell,temp5);
                 }
 
-            
+
         }
         if((*m).grid[(*temp).yloc+1][(*temp).xloc-1]!='-' || (*m).grid[(*temp).yloc+1][(*temp).xloc-1]!='|'){/* bottomLeft left */
-            
-                
+
+
                  alt = getWeight((*m).hardness[tempy+1][tempx-1])+(*m).distanceGrid[tempy][tempx].distance;
                 if((*m).distanceGrid[tempy+1][tempx-1].distance>alt){
                     (*m).distanceGrid[tempy+1][tempx-1].distance=alt;
                     distanceCell *temp6;
                     temp6 = &(*m).distanceGrid[tempy+1][tempx-1];
                     binheap_insert(&heapcell,temp6);
-                    
+
                 }
 
-            
+
         }
         if((*m).grid[(*temp).yloc+1][(*temp).xloc+1]!='-' || (*m).grid[(*temp).yloc+1][(*temp).xloc+1]!='|'){/* bottom right */
-            
-                
+
+
                  alt = getWeight((*m).hardness[tempy+1][tempx+1])+(*m).distanceGrid[tempy][tempx].distance;
                 if((*m).distanceGrid[tempy+1][tempx+1].distance>alt){
                     (*m).distanceGrid[tempy+1][tempx+1].distance=alt;
                     distanceCell *temp7;
                     temp7 = &(*m).distanceGrid[tempy+1][tempx+1];
                     binheap_insert(&heapcell,temp7);
-                    
+
                 }
         }
 
-       
+
     }
 }
 static void initRooms(void){
@@ -307,16 +307,16 @@ static void initRooms(void){
                  done='t';
                  size++;
                  break;
-            }    
+            }
             Room *p = createRoom();
-            
+
             int a;
             int col =0;
             for(a=0;a<size;a++){
                 Room *cvb = array[a];
                 if(collides(p,cvb,0)==1){
                     col=1;
-                    
+
                 }
             }
             if(col==0){
@@ -331,23 +331,23 @@ static void initRooms(void){
     }
 
     int er;
-    
-    
+
+
     for(er=0;er<7;er++){
         Room *temp = array[er];
-        
 
-    
+
+
     int height = (*temp).bottomLeft[0]-(*temp).topLeft[0];
     int width = (*temp).topright[1]-(*temp).topLeft[1];
     int co;
     int co2;
-    
+
     for(co=0;co<height;co++){
         for(co2=0;co2<width;co2++){
             (*m).grid[(*temp).topLeft[0]+co][(*temp).topLeft[1]+co2]='.';
         }
-    }  
+    }
    }
     int co;
     for(co=0;co<7;co++){
@@ -355,12 +355,12 @@ static void initRooms(void){
         char don='f';
         int incra=0;
         while(don!='t'){
-            
+
             if((*m).grid[(*tem).bottomLeft[0]+incra][(*tem).bottomLeft[1]+2]!='.'){
                 (*m).grid[(*tem).bottomLeft[0]+incra][(*tem).bottomLeft[1]+2]='#';
             }
 
-            
+
             incra++;
             if(incra+(*tem).bottomLeft[0]>19){
                 don='t';
@@ -379,7 +379,7 @@ static void initRooms(void){
                 dona='t';
                 break;
             }
-            
+
             if((*m).grid[(*tem).bottomLeft[0]-3][((*tem).bottomLeft[1])-(incraa)]=='|'){
                 dona='t';
                 break;
@@ -389,16 +389,16 @@ static void initRooms(void){
                 (*m).grid[(*tem).bottomLeft[0]-3][(*tem).bottomLeft[1]-incraa]='#';
             }
 
-            
+
             incraa++;
         }
-        
+
     }
     int climb;
     for(climb=1;climb<20;climb++){
         (*m).grid[climb][2]='#';
     }
-    
+
 int a;
 int g;
 for(a=0;a<21;a++){
@@ -422,13 +422,13 @@ Room* pointContains(int y,int x){
      Room *temp;
     int number = m->numOfRooms;
     for(xt=0;xt<number;xt++){
-       
+
         temp = &(m->rooms[xt]);
         if(y>=temp->topLeft[2]){
             if(y<=temp->bottomLeft[2]){
                 if(x>=temp->topLeft[1]){
                     if(x<=temp->topright[1]){
-                        return temp; 
+                        return temp;
                     }
                 }
             }
@@ -456,7 +456,7 @@ static int contains(Room *inside,Room *out){
     int pointy1 = (*inside).topLeft[1];
     int pointx2 = (*inside).bottomRight[0];
     int pointy2 = (*inside).bottomRight[1];
-    
+
     int pointx3 = (*inside).topright[0];
     int pointy3 = (*inside).topright[1];
 
@@ -554,8 +554,8 @@ static char getAsci(int num){
             distanceCell pass;
             pass.distance=1000;
             pass.yloc=yPre;/* 1000 will represent infinity */
-            pass.xloc=xPre; 
-            (*m).nonTunnelingDistanceGrid[yPre][xPre]=pass; 
+            pass.xloc=xPre;
+            (*m).nonTunnelingDistanceGrid[yPre][xPre]=pass;
         }
     }
     (*m).nonTunnelingDistanceGrid[(*m).thePlayer->yloc][(*m).thePlayer->xloc].distance=0;
@@ -578,7 +578,7 @@ static char getAsci(int num){
                     temp0 = &(*m).nonTunnelingDistanceGrid[tempy-1][tempx];
                     binheap_insert(&heap, temp0);
             }
-        } 
+        }
          if((*m).grid[(*temp).yloc+1][(*temp).xloc]=='.' || (*m).grid[(*temp).yloc+1][(*temp).xloc]=='#'){/* bottom */
                 tempx = (*temp).xloc;
                 tempy = (*temp).yloc;
@@ -588,7 +588,7 @@ static char getAsci(int num){
                     temp1 = &(*m).nonTunnelingDistanceGrid[tempy+1][tempx];
                     binheap_insert(&heap,temp1);
                 }
-        } 
+        }
          if((*m).grid[(*temp).yloc][(*temp).xloc+1]=='.' || (*m).grid[(*temp).yloc][(*temp).xloc+1]=='#'){/* right */
                 tempx = (*temp).xloc;
                 tempy = (*temp).yloc;
@@ -598,9 +598,9 @@ static char getAsci(int num){
                     temp2 = &(*m).nonTunnelingDistanceGrid[tempy][tempx+1];
                     binheap_insert(&heap,temp2);
                 }
-        } 
+        }
          if((*m).grid[(*temp).yloc][(*temp).xloc-1]=='.' || (*m).grid[(*temp).yloc][(*temp).xloc-1]=='#'){/* left */
-            
+
                 tempx = (*temp).xloc;
                 tempy = (*temp).yloc;
                 if((*m).nonTunnelingDistanceGrid[tempy][tempx-1].distance==1000){
@@ -608,22 +608,22 @@ static char getAsci(int num){
                     distanceCell *temp3;
                     temp3 = &(*m).nonTunnelingDistanceGrid[tempy][tempx-1];
                     binheap_insert(&heap,temp3);
-                    
+
                 }
         }
         if((*m).grid[(*temp).yloc-1][(*temp).xloc+1]=='.' || (*m).grid[(*temp).yloc-1][(*temp).xloc+1]=='#'){/* top right */
-            
+
                 tempx = (*temp).xloc;
                 tempy = (*temp).yloc;
                 if((*m).nonTunnelingDistanceGrid[tempy-1][tempx+1].distance==1000){
                     (*m).nonTunnelingDistanceGrid[tempy-1][tempx+1].distance=(*temp).distance+1;
                     distanceCell *temp4;
                     temp4 = &(*m).nonTunnelingDistanceGrid[tempy-1][tempx+1];
-                    binheap_insert(&heap,temp4);   
-                }            
+                    binheap_insert(&heap,temp4);
+                }
         }
         if((*m).grid[(*temp).yloc-1][(*temp).xloc-1]=='.' || (*m).grid[(*temp).yloc-1][(*temp).xloc-1]=='#'){/* top left */
-           
+
                 tempx = (*temp).xloc;
                 tempy = (*temp).yloc;
                 if((*m).nonTunnelingDistanceGrid[tempy-1][tempx-1].distance==1000){
@@ -634,7 +634,7 @@ static char getAsci(int num){
                 }
         }
         if((*m).grid[(*temp).yloc+1][(*temp).xloc-1]=='.' || (*m).grid[(*temp).yloc+1][(*temp).xloc-1]=='#'){/* bottomLeft left */
-            
+
                 tempx = (*temp).xloc;
                 tempy = (*temp).yloc;
                 if((*m).nonTunnelingDistanceGrid[tempy+1][tempx-1].distance==1000){
@@ -642,13 +642,13 @@ static char getAsci(int num){
                     distanceCell *temp6;
                     temp6 = &(*m).nonTunnelingDistanceGrid[tempy+1][tempx-1];
                     binheap_insert(&heap,temp6);
-                    
+
                 }
 
-            
+
         }
         if((*m).grid[(*temp).yloc+1][(*temp).xloc+1]=='.' || (*m).grid[(*temp).yloc+1][(*temp).xloc+1]=='#'){/* bottom right */
-            
+
                 tempx = (*temp).xloc;
                 tempy = (*temp).yloc;
                 if((*m).nonTunnelingDistanceGrid[tempy+1][tempx+1].distance==1000){
@@ -675,7 +675,7 @@ int initMap(int numOfMonster){
     numberOfMonster=numOfMonster;
     NUMBER_OF_MONSTERS = numberOfMonster;
     m = (Map*)malloc(sizeof(Map));
-   
+
     initBorder();
     initRooms();
     /*Stair Case Generation*/
@@ -692,7 +692,7 @@ int initMap(int numOfMonster){
                 (*m).grid[yrand][xrand]='>';
             }
             counter++;
-        } 
+        }
     }
     /****************************/
     int c;
@@ -725,7 +725,7 @@ void reInitMap(int num_of_mon){
                 (*m).grid[yrand][xrand]='>';
             }
             counter++;
-        } 
+        }
     }
     /****************************/
     int c;
@@ -752,7 +752,7 @@ void reInitMap(int num_of_mon){
             }
             Monster *tempMon;
             tempMon = monsterArray[i][j];
-               
+
                 if(tempMon!=NULL){
                     if(tempMon->bigPeople){
                         mvaddch(i+3,j,'P');
@@ -768,7 +768,7 @@ void reInitMap(int num_of_mon){
                     }
             }else{
                 mvaddch(i+3,j,temp[0]);
-            }   
+            }
         }
     }
 }
@@ -792,7 +792,7 @@ void printDistanceGrid(){
                         }
                         if(num<62 && num>9){
                             printf("%c",getAsci(num));
-                        }                    
+                        }
             }else{
                 printf("%c",' ');
             }
@@ -831,5 +831,5 @@ void printDistanceGridPlus(){
         }
         printf("%c\n",' ');
     }
-    
+
 }
