@@ -1,9 +1,9 @@
-Assignment 1.01 - Dungeon Generation
+Assignment 1.05 - User Interface with Ncurses
 
 SETUP
 
 Run 'make' inside the trettin_benjamin.assignment-1.05 directory to build the project.
-Can also run 'make Clean' to clean the repo.
+     --You can also run 'make Clean' to clean the repo--
 
 Running Source Code
 
@@ -11,7 +11,7 @@ The dungeon game can only be run using the ./run command with the --nummon switc
 
 EXAMPLE: ./run --nummon 10
 
-The source code is located inside of the map.c, heap.c, monster.c, pcio.c and dungeonGame.c files.
+The source code is located inside of the map.c, heap.c, monster.c, pcio.c and main.c files.
 
 Notes
 
