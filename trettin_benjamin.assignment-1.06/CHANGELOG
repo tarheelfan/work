@@ -1,0 +1,471 @@
+commit 48
+  Author: Benjamin Trettin
+  Date:   wed oct 17 12:43:17 2018 -0500
+
+    updated CHANGELOG and Readme
+
+  trettin_benjamin.assignment-1.05/CHANGELOG.txt      |  130 ++++++++++++++++++++++
+  trettin_benjamin.assignment-1.05/README.md     |  6 +++---
+  2 files changed, 133 insertions(+), 3 deletions(-)
+
+  commit 47
+  Author: Benjamin Trettin
+  Date:   tues oct 16 17:11:41 2018 -0500
+
+    fixed some compile issues and errors
+
+  trettin_benjamin.assignment-1.05/pcio.c     |  12 +++++------
+  1 file changed, 6 insertions(+), 6 deletions(-)
+
+  commit 46
+  Author: Benjamin Trettin
+  Date:   wed oct 9 16:21:44 2018 -0500
+
+      finished some edge case issues and bugs with viewing ui
+
+    trettin_benjamin.assignment-1.05/gameMap.h      |  12 ++++++++---
+    trettin_benjamin.assignment-1.05/map.c     |  6 +++---
+    trettin_benjamin.assignment-1.05/pcio.c     |  10 ++++----
+    3 files changed, 15 insertions(+), 13 deletions(-)
+
+
+commit 45
+Author: Benjamin Trettin
+Date:   tues oct 9 21:22:52 2018 -0500
+
+    started implementing printing of monsters and rest of ui
+
+  trettin_benjamin.assignment-1.05/pcio.c     |  23 +++++++++++++++++++++
+  trettin_benjamin.assignment-1.05/main.c     |  7 ++++++--
+  2 files changed, 28 insertions(+), 2 deletions(-)
+
+commit 44
+Author: Benjamin Trettin
+Date:   tues oct 9 17:23:02 2018 -0500
+
+    some basic movement works and ui shows properly
+
+  trettin_benjamin.assignment-1.05/main.c     | 2 ++
+  trettin_benjamin.assignment-1.05/map.c    | 10 ++++++++--
+  trettin_benjamin.assignment-1.05/monster.c     | 30 +++++++++++++++++--------
+  trettin_benjamin.assignment-1.05/gameMap.c     | 11 ++++++++++
+  4 files changed 44 insertions(+), 10 deletions(-)
+
+commit 43
+Author: Benjamin Trettin
+Date:   tues oct 11 12:32:12 2018 -0500
+
+    fixed a few edge cases for movement and update clean/make files
+
+ trettin_benjamin.assignment-1.05/Makefile      | 2 ++
+ trettin_benjamin.assignment-1.05/install.bash      | 4 +++-
+ trettin_benjamin.assignment-1.05/gameMap.c      | 15 +++++----------
+ trettin_benjamin.assignment-1.05/map.c      | 25 +++++++++++----------
+ trettin_benjamin.assignment-1.05/pcio.c      | 8 ++++++++
+ trettin_benjamin.assignment-1.05/main.c      | 4 ++--
+ 6 files changed, 35 insertions(+), 15 deletions(-)
+
+commit 42
+Author: Benjamin Trettin
+Date:   tues oct 10 13:11:41 2018 -0500
+
+    more UI code for various things
+
+  trettin_benjamin.assignment-1.05/gameMap.h      |  22 ++++++++++++--------
+  trettin_benjamin.assignment-1.05/map.c     |  16 +++++++++++++++
+  trettin_benjamin.assignment-1.05/pcio.c     |  34 +++++++++++++++++++++++++
+  3 files changed, 66 insertions(+), 6 deletions(-)
+
+  commit 41
+  Author: Benjamin Trettin
+  Date:   mon oct 8 23:21:44 2018 -0500
+
+      added functionality for pc movement
+
+    trettin_benjamin.assignment-1.05/gameMap.h      |  12 ++++++++++++
+    trettin_benjamin.assignment-1.05/map.c     |  6 ++++++
+    trettin_benjamin.assignment-1.05/pcio.c     |  10 +++++++++
+    3 files changed, 28 insertions(+)
+
+
+commit 40
+Author: Benjamin Trettin
+Date:   mon oct 8 15:22:52 2018 -0500
+
+    Added pcio.c file for pc control
+
+  trettin_benjamin.assignment-1.05/pcio.c     |  43 +++++++++++++++++++++++++
+  1 file added, 43 insertions(+)
+
+commit 39
+Author: Benjamin Trettin
+Date:   mon oct 8 10:23:02 2018 -0500
+
+    added ncurse functionality
+
+  trettin_benjamin.assignment-1.05/main.c     | 4 +++-
+  trettin_benjamin.assignment-1.05/map.c    | 1 +
+  trettin_benjamin.assignment-1.05/monster.c     | 10 ++++++----
+  trettin_benjamin.assignment-1.05/gameMap.c     | 14 ++++++++++++++++
+  4 files changed 24 insertions(+), 5 deletions(-)
+
+commit 38
+Author: Benjamin Trettin
+Date:   sat oct 6 12:32:12 2018 -0500
+
+    updated makefile for cleaning
+
+ trettin_benjamin.assignment-1.05/Makefile      | 5 +++++
+ 1 file changed, 5 insertions(+)
+
+commit 37
+Author: Benjamin Trettin
+Date:   sat oct 6 13:25:07 2018 -0500
+
+    Added gitignore for o and a files as well as a clean bash for easier cleaning of folder
+
+ trettin_benjamin.assignment-1.05/gitignore               |   3 +++
+ trettin_benjamin.assignment-1.05/install.bash             |   1 +
+ 2 files added, 4 insertions(+)
+
+commit 36
+Author: Benjamin Trettin
+Date:   wed oct 4 16:43:17 2018 -0500
+
+    updated changelog and readme
+
+  trettin_benjamin.assignment-1.05/CHANGELOG.txt      |  73 +++++++++++++++++
+  trettin_benjamin.assignment-1.05/README.md     |  6 +++---
+  2 files changed, 76 insertions(+), 3 deletions(-)
+
+commit 35
+Author: Benjamin Trettin
+Date:   tues oct 3 13:11:41 2018 -0500
+
+    fixed some final bugs with pc and monster and added to monster.h
+
+  trettin_benjamin.assignment-1.04/monster.c      |  144 ++++++++++++++++++--
+  trettin_benjamin.assignment-1.04/monster.h      |  3 +++
+  2 files changed, 143 insertions(+), 4 deletions(-)
+
+  commit 34
+  Author: Benjamin Trettin
+  Date:   tues oct 1 23:21:44 2018 -0500
+
+      moved a lot of the map info to a gameMap.h file
+
+    trettin_benjamin.assignment-1.04/gameMap.h      |  60 ++++++++++++++++++
+    trettin_benjamin.assignment-1.04/map.c     |  55 -----------------
+    2 files changed, 60 insertions(+), 55 deletions(-)
+
+
+commit 33
+Author: Benjamin Trettin
+Date:   tues oct 3 10:22:52 2018 -0500
+
+    Fixed some bugs with the monster attributes and some tunnelling
+
+  trettin_benjamin.assignment-1.04/monster.c     |  131 ++++++++++++++++++------
+  1 file changed, 121 insertions(+), 10 deletions(-)
+
+commit 32
+Author: Benjamin Trettin
+Date:   mon oct 2 15:23:02 2018 -0500
+
+    added more abilities for the monster in many functions
+
+  trettin_benjamin.assignment-1.04/monster.c     | 258 ++++++++++++++++++++++
+  1 file changed 258 insertions(+)
+
+commit 31
+Author: Benjamin Trettin
+Date:   mon oct 2 12:32:12 2018 -0500
+
+    Added nummon switch in dungeongame
+
+ trettin_benjamin.assignment-1.04/dungeonGame.c      | 18 ++++++++++++++++
+ 1 file changed, 18 insertions(+)
+
+commit 30
+Author: Benjamin Trettin
+Date:   Sat oct 1 13:25:07 2018 -0500
+
+    Added methods for monster to travel
+
+ trettin_benjamin.assignment-1.04/monster.c               |   28 ++++++++++++++++++++
+ 1 file changed, 28 insertions(+)
+
+commit 29
+Author: Benjamin Trettin
+Date:   sun sep 30 5:12:51 2018 -0500
+
+    Implemented monster in the map as well as the heap for it
+
+  trettin_benjamin.assignment-1.04/dungeonGame.c     |  4 ++++
+  trettin_benjamin.assignment-1.04/map.c     |  25 +++++++++++++++++++++
+  trettin_benjamin.assignment-1.04/monster.c      |  32 ++++++++++++++++++++---
+  trettin_benjamin.assignment-1.04/monster.h    |  5 +++++
+  4 files changed, 60 insertions(+), 3 deletions
+
+commit 28
+Author: Benjamin Trettin
+Date:   thur sep 27 10:52:21 2018 -0500
+
+    Added monster.c and monster.h files with some basic implementation
+
+  trettin_benjamin.assignment-1.04/monster.c      |  45 +++++++++++++++++++++++
+  trettin_benjamin.assignment-1.04/monster.h      |  3 +++
+  2 files added, 48 insertions(+)
+
+commit 27
+Author: Benjamin Trettin
+Date:   wed sep 26 18:54:21 2018 -0500
+
+    updated readme and changelog
+
+  trettin_benjamin.assignment-1.01/README.md      | 4 ++--
+  trettin_benjamin.assignment-1.01/CHANGELOG.txt     |  77 +++++++++++++++++++++
+  2 files changed, 79 insertions(+), 2 deletions(-)
+
+commit 26
+Author: Benjamin Trettin
+Date:   mon sep 24 21:23:01 2018 -0500
+
+    finished fixing bugs
+
+  trettin_benjamin.assignment-1.01/map.c     |  15 ++++++++++++++++++++--
+  1 file changed, 15 insertions(+), 2 deletions(-)
+
+commit 25
+Author: Benjamin Trettin
+Date:   wed sep 19 16:43:17 2018 -0500
+
+    Fixed bugs with djikstra for both and added weight method
+
+  trettin_benjamin.assignment-1.01/map.c      |  13 ++++++++++++++---
+  1 file changed, 13 insertions(+), 3 deletions(-)
+
+commit 24
+Author: Benjamin Trettin
+Date:   tues sep 18 13:11:41 2018 -0500
+
+    Added load and save functions. Very simple functionality.
+
+  trettin_benjamin.assignment-1.01/map.c      |  14 ++++++++++++++++++--
+  trettin_benjamin.assignment-1.03/dungeonGame.c      |  3 +++
+  2 files changed, 15 insertions(+), 2 deletions(-)
+
+commit 23
+Author: Benjamin Trettin
+Date:   tues sep 18 10:22:52 2018 -0500
+
+    Implemented some of djikstra for all map and created printing methods for map
+
+  trettin_benjamin.assignment-1.01/map.c      |  14 ++++++++++++++++++--
+  trettin_benjamin.assignment-1.03/dungeonGame.c      |  3 +++
+  2 files changed, 15 insertions(+), 2 deletions(-)
+
+commit 22
+Author: Benjamin Trettin
+Date:   mon Sep 17 15:23:02 2018 -0500
+
+    used heap to implemnet djikstra for cooridors
+
+  trettin_benjamin.assignment-1.03/map.c      | 18 +++++++++++--------
+  1 file changed 10 insertions(+), 8 deletions(-)
+
+commit 21
+Author: Benjamin Trettin
+Date:   Sun Sep 16 12:32:12 2018 -0500
+
+    Added heap from library and heap.h to use
+
+ trettin_benjamin.assignment-1.03/heap.c      | Bin 0 -> 45 bytes
+ trettin_benjamin.assignment-1.03/heap.h      | Bin 0 -> 6 bytes
+ 2 files Added
+
+commit 20
+Author: Benjamin Trettin
+Date:   Sat Sep 15 13:25:07 2018 -0500
+
+    created templates and based code for both algorithms
+
+ trettin_benjamin.assignment-1.03/map.c               |   18 ++++++++++++++++++++
+ trettin_benjamin.assignment-1.03/dungeonGame.c       |   4  ++++
+ 2 files changed, 16 insertions(+)
+
+commit 19
+Author: Benjamin Trettin
+Date:   wed sep 12 5:12:51 2018 -0500
+
+    finished changing readme and changelog
+
+  trettin_benjamin.assignment-1.01/README.md      |  12 ++++++++++++
+  trettin_benjamin.assignment-1.01/CHANGELOG.txt     |  85 +++++++++++++++++++++
+  2 files changed, 12 insertions(+)
+
+commit 18
+Author: Benjamin Trettin
+Date:   tues sep 11 10:54:21 2018 -0500
+
+    Fixed bugs in load method and added proper formatting of mapArray
+
+  trettin_benjamin.assignment-1.01/map.c      |  12 ++++++++++--
+  1 file changed, 10 insertions(+), 2 deletions(-)
+
+commit 17
+Author: Benjamin Trettin
+Date:   mon sep 10 21:23:01 2018 -0500
+
+    added functions in dungeonGame to return load or save depending on user input
+
+  trettin_benjamin.assignment-1.01/dungeonGame.c     |  15 ++++++++++++++++++++--
+  1 file changed, 15 insertions(+), 2 deletions(-)
+
+commit 16
+Author: Benjamin Trettin
+Date:   mon sep 10 14:43:27 2018 -0500
+
+    Added functions for fread and fwrite for load/save and create a createRoom function to implement load
+
+  trettin_benjamin.assignment-1.01/map.c      |  13 ++++++++++++++
+  1 file changed, 13 insertions(+)
+
+commit 15
+Author: Benjamin Trettin
+Date:   sat sep 7 13:11:41 2018 -0500
+
+    Added load and save functions. Very simple functionality.
+
+  trettin_benjamin.assignment-1.01/map.c      |  14 ++++++++++++++++++--
+  trettin_benjamin.assignment-1.01/dungeonGame.c      |  3 +++
+  2 files changed, 15 insertions(+), 2 deletions(-)
+
+commit 14
+Author: Benjamin Trettin
+Date:   sat sep 8 12:22:58 2018 -0500
+
+    Added hardness randomness and pc starting
+
+  trettin_benjamin.assignment-1.01/map.c      |  8 ++++++++
+  1 file changed, 8 insertions(+)
+
+commit 13
+Author: Benjamin Trettin
+Date:   fri Sep 7 18:33:02 2018 -0500
+
+    created main file called dungeonGame and moved some abstract functionality to it
+
+  trettin_benjamin.assignment-1.01/dungeonGame.c      |  7 +++++++
+  trettin_benjamin.assignment-1.01/maap.c      |  12 +++---------
+  1 file added, 1 file changed 10 insertions(+), 9 deletions(-)
+
+commit 12
+Author: Benjamin Trettin
+Date:   Wed Sep 5 19:37:17 2018 -0500
+
+    create zip file for assignment
+
+ trettin_benjamin.assignment-1.01.tar.gz      | Bin 0 -> 45 bytes
+ 1 file Added
+
+commit 11
+Author: Benjamin Trettin
+Date:   Wed Sep 5 18:25:07 2018 -0500
+
+    changed readme to account for this assignment
+
+ trettin_benjamin.assignment-1.01/README.md               |   4 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
+
+commit 10
+Author: Benjamin Trettin
+Date:   mon Sep 3 2:02:54 2018 -0500
+
+    Added first room top-left coordinate varaible and pc symbol
+
+  trettin_benjamin.assignment-1.01/map.c      |  12 ++++++++++++
+  1 file changed, 12 insertions(+)
+
+commit 9
+Author: Benjamin Trettin
+Date:   sat Sep 1 10:10:27 2018 -0500
+
+    Cleaned up code for calling functions in main method
+
+  trettin_benjamin.assignment-1.01/map.c      |  12 ++++++++++--
+  1 file changed, 10 insertions(+), 2 deletions(-)
+
+commit 8
+Author: Benjamin Trettin
+Date:   wed Aug 29 23:33:01 2018 -0500
+
+    Added algorithm for nearest path and implementation of cooridor connection
+
+  trettin_benjamin.assignment-1.01/map.c      |  19 +++++++++++++++++++
+  1 file changed, 19 insertions(+)
+
+commit 7
+Author: Benjamin Trettin
+Date:   wed Aug 29 22:05:07 2018 -0500
+
+    Added function for randomly generating number of rooms and set proper room sizes
+
+  trettin_benjamin.assignment-1.01/map.c      |  8 ++++++++
+  1 file changed, 8 insertions(+)
+
+commit 6
+Author: Benjamin Trettin
+Date:   wed Aug 29 21.04:11:14 2018 -0500
+
+    Added checks to make sure two rooms arent hitting each other, otherwhise regenerate a room.
+
+  trettin_benjamin.assignment-1.01/map.c      |  14 ++++++++++++--
+  1 file changed, 12 insertions(+), 2 deletions(-)
+
+commit 5
+Author: Benjamin Trettin
+Date:   wed Aug 29 20:25:32 2018 -0500
+
+    Creating struct for storing room coordinates and struct for storing the rooms
+
+  trettin_benjamin.assignment-1.01/map.c      |  4 ++++
+  1 file changed, 4 insertions(+)
+
+commit 4
+Author: Benjamin Trettin
+Date:   wed Aug 29 18:33:02 2018 -0500
+
+    Created algorithm for generating a single room.
+
+  trettin_benjamin.assignment-1.01/map.c      |  23 +++++++++++++++++++---
+  1 file changed, 20 insertions(+), 3 deletions(-)
+
+commit 3
+Author: Benjamin Trettin
+Date:   wed Aug 29 15:03:35 2018 -0500
+
+    Adding a mapArray, room parameters, and a main method
+
+  trettin_benjamin.assignment-1.01/map.c      |  16 ++++++++++++++++
+  1 file changed, 16 insertions(+)
+
+commit 2
+Author: Benjamin Trettin
+Date:   wed Aug 29 12:23:16 2018 -0500
+
+    Create a map.c file with #includes
+
+  trettin_benjamin.assignment-1.01/map.c      |  4 ++++
+  1 file Added, 4 insertions(+)
+
+commit 1
+Author: Benjamin Trettin
+Date:   wed Aug 29 10:11:56 2018 -0500
+
+    Create a Readme, Makefile, and CHANGELOG
+
+  trettin_benjamin.assignment-1.01/README.md      |  11 +++++++++++
+  trettin_benjamin.assignment-1.01/Makefile      |  9 +++++++++
+  trettin_benjamin.assignment-1.01/CHANGELOG.txt      |  1 +
+  2 files Added, 21 insertions(+)

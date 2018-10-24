@@ -1,0 +1,4 @@
+All: map.c
+    gcc -g -O -c map.c
+    gcc -cvq gameMap.a map.o
+    gcc -static -Wall -ggdb main.c -o run gameMap.a 

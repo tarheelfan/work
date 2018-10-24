@@ -1,0 +1,9 @@
+All: map.c
+	gcc -Wall -g -O -c map.c
+	gcc -Wall -g -O -c heap.c
+	gcc -Wall -g -O -c monster.c
+	ar -cvq heap.a heap.o
+	ar -cvq gameMap.a map.o monster.o
+	gcc -static -Wall -ggdb main.c run gameMap.a heap.a 
+Clean: run gameMap.a map.o
+	bash cleanSlate.bash
