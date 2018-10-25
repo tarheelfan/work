@@ -11,7 +11,7 @@ int removeFromList(struct list);
 void reset(struct list);
 
 
- 
+
 /*Public Class Monster */
 void initList(struct list dir){
     dir.size=0;
@@ -31,9 +31,9 @@ int removeFromList(struct list dir){
 }
 void reset(struct list dir){
     dir.size=0;
-} 
+}
 
-  
+
 /*Fields for Library*/
 static int maxMonsters;
 //static Map *m;
@@ -47,7 +47,7 @@ void initMonsterLib(Map *map, int numOfMax){
     srand(time(NULL));
     maxMonsters = numOfMax;
     //m=map;
-    
+
 }
 int getPCX(){
     return pcx;
@@ -63,7 +63,7 @@ Monster* MonsterInit(Map *map,int x,int y,int isPlayer){
     monster =(Monster*) malloc(sizeof(Monster));
     monster->monsterC = getObj(monster);
     if(isPlayer){
-        monster->thePlayer=1;   
+        monster->thePlayer=1;
         monster->speed=10;
         monster->roundVal=10;
         monster->xloc=x;
@@ -74,13 +74,13 @@ Monster* MonsterInit(Map *map,int x,int y,int isPlayer){
     }else{
     initList(monster->directions);
     monster->thePlayer=0;
-    
+
     monster->bigPeople=0;
     monster->dragon=0;
     monster->other=0;
     monster->patrolMode=1;
     monster->alive=1;
-    
+
     monster->characteristics = rand()%16;
     monster->modelNumber=numOfMonsters;
     monster->yloc=y;
@@ -99,7 +99,7 @@ Monster* MonsterInit(Map *map,int x,int y,int isPlayer){
             monster->other=1;
             break;
     }
-    
+
     if(!isPlayer){
         int spee = (rand()%19)+1;
         spee = 100 / spee;
@@ -110,7 +110,7 @@ Monster* MonsterInit(Map *map,int x,int y,int isPlayer){
     monster->roundVal=spee;
     monster->speed= spee;
     }
-    
+
     numOfMonsters++;
     }
 monsterArray[monster->yloc][monster->xloc]=monster;
@@ -130,15 +130,15 @@ void deconstructor(Monster *m){
     }
     int xtemp = (*mon).xloc;
     monsterArray[ytemp][xtemp]=NULL;/*y,x*/
-    
-    
+
+
     temp = monsterArray[ytemp-1][xtemp];
     if(temp!=NULL){
         (*temp).alive=0;
     }
     if(m->grid[ytemp-1][xtemp]==('#') || m->grid[ytemp-1][xtemp]==('.') || m->grid[ytemp-1][xtemp]==('<') || m->grid[ytemp-1][xtemp]==('>')){
        monsterArray[ytemp-1][xtemp] = mon;
-       (*mon).yloc=ytemp-1; 
+       (*mon).yloc=ytemp-1;
     }else{
         unsigned char hardness =m->hardness[ytemp-1][xtemp];
         if(hardness>85){
@@ -151,13 +151,13 @@ void deconstructor(Monster *m){
             monsterArray[ytemp-1][xtemp] = mon;
             (*mon).yloc=ytemp-1;
             if(m->grid[ytemp-1][xtemp]!='.'){
-            m->grid[ytemp-1][xtemp]='#'; 
+            m->grid[ytemp-1][xtemp]='#';
             }
         }else{
             monsterArray[ytemp][xtemp]=mon;
         }
     }
-    
+
     return 0;
 }
  int moveDown(Monster *mon){/*y+1,x*/
@@ -168,8 +168,8 @@ void deconstructor(Monster *m){
     }
     int xtemp = (*mon).xloc;
     monsterArray[ytemp][xtemp]=NULL;/*y,x*/
-    
-    
+
+
     temp = monsterArray[ytemp+1][xtemp];/*y+1,x*/
     if(temp!=NULL){
         (*temp).alive=0;
@@ -195,13 +195,13 @@ void deconstructor(Monster *m){
             monsterArray[ytemp][xtemp]=mon;
         }
     }
-    
+
     return 0;
 }
  int moveRight(Monster *mon){/*y,x+1*/
     Monster *temp;
     int ytemp = (*mon).yloc;
-    
+
     int xtemp = (*mon).xloc;
     if(xtemp==78){
         return 1;
@@ -232,20 +232,20 @@ void deconstructor(Monster *m){
             monsterArray[ytemp][xtemp]=mon;
         }
     }
-    
+
     return 0;
 }
  int moveLeft(Monster *mon){/*y,x-1*/
     Monster *temp;
     int ytemp = (*mon).yloc;
-    
+
     int xtemp = (*mon).xloc;
     if(xtemp==1){
         return 1;
     }
     monsterArray[ytemp][xtemp]=NULL;/*y,x*/
-    
-    
+
+
     temp = monsterArray[ytemp][xtemp-1];/*y,x-1*/
     if(temp!=NULL){
         (*temp).alive=0;
@@ -271,20 +271,20 @@ void deconstructor(Monster *m){
             monsterArray[ytemp][xtemp]=mon;
         }
     }
-    
+
     return 0;
 }
  int moveTopRight(Monster *mon){/*y-1,x+1*/
     Monster *temp;
     int ytemp = (*mon).yloc;
-    
+
     int xtemp = (*mon).xloc;
     if(ytemp==1 || xtemp==78){
         return 1;
     }
     monsterArray[ytemp][xtemp]=NULL;/*y,x*/
-    
-    
+
+
     temp = monsterArray[ytemp-1][xtemp+1];/*y-1,x+1*/
     if(temp!=NULL){
         (*temp).alive=0;
@@ -312,20 +312,20 @@ void deconstructor(Monster *m){
             monsterArray[ytemp][xtemp]=mon;
         }
     }
-    
+
     return 0;
 }
  int moveTopLeft(Monster *mon){/*y-1,x-1*/
         Monster *temp;
     int ytemp = (*mon).yloc;
-    
+
     int xtemp = (*mon).xloc;
     if(ytemp==1 || xtemp==1){
         return 1;
     }
     monsterArray[ytemp][xtemp]=NULL;/*y,x*/
-    
-    
+
+
     temp = monsterArray[ytemp-1][xtemp-1];/*y-1,x-1*/
     if(temp!=NULL){
         (*temp).alive=0;
@@ -353,20 +353,20 @@ void deconstructor(Monster *m){
             monsterArray[ytemp][xtemp]=mon;
         }
     }
-    
+
     return 0;
 }
  int moveBottomLeft(Monster *mon){/*y+1,x-1*/
         Monster *temp;
     int ytemp = (*mon).yloc;
-   
+
     int xtemp = (*mon).xloc;
      if(ytemp==78 || xtemp==1){
         return 1;
     }
     monsterArray[ytemp][xtemp]=NULL;/*y,x*/
-    
-    
+
+
     temp = monsterArray[ytemp+1][xtemp-1];/*y+1,x-1*/
     if(temp!=NULL){
         (*temp).alive=0;
@@ -394,7 +394,7 @@ void deconstructor(Monster *m){
             monsterArray[ytemp][xtemp]=mon;
         }
     }
-    
+
     return 0;
 }
  int moveBottomRight(Monster *mon){/*y+1,x+1*/
@@ -404,10 +404,10 @@ void deconstructor(Monster *m){
     if(ytemp==19 || xtemp==78){
         return 1;
     }
-    
+
     monsterArray[ytemp][xtemp]=NULL;/*y,x*/
-    
-    
+
+
     temp = monsterArray[ytemp+1][xtemp+1];/*y+1,x+1*/
     if(temp!=NULL){
         (*temp).alive=0;
@@ -435,7 +435,7 @@ void deconstructor(Monster *m){
             monsterArray[ytemp][xtemp]=mon;
         }
     }
-    
+
     return 0;
 }
  int isIntelegent(Monster *mon){
@@ -478,7 +478,7 @@ void performAction(Monster *mon){
             performWander(mon);
             return;
         }
-   
+
     if(isTelapathic(mon)){
         if(canTunnle(mon)){
             moveNearestTunneling(mon);
@@ -543,7 +543,7 @@ void performAction(Monster *mon){
                 }
 
             }
-        
+
 /*Helper Functions For Monsters */
 void readDirections(Monster *mon){
      int switchValue = removeFromList(mon->directions);
@@ -594,7 +594,7 @@ void getDirectionsTunneling(Monster *npc){
            unsigned int temp = m->distanceGrid[yhere-1][xhere-1].distance;
              if(temp==0){
                 done=1;
-            } 
+            }
             if(temp<=min){
                 min=temp;
                  topLeft=1;
@@ -606,7 +606,7 @@ void getDirectionsTunneling(Monster *npc){
                  bottom =0;
                  bottomRight=0;
             }
-                 
+
     }
     /*Top*/
     if(yhere-1!=0){
@@ -625,7 +625,7 @@ void getDirectionsTunneling(Monster *npc){
                  bottom =0;
                  bottomRight=0;
             }
-            
+
     }
     /*TopRight*/
     if(xhere+1!=79 && yhere-1!=0){
@@ -644,8 +644,8 @@ void getDirectionsTunneling(Monster *npc){
                  bottom =0;
                  bottomRight=0;
             }
-          
-            
+
+
     }
     /*Left*/
     if(xhere-1!=0){if(yhere==0){
@@ -665,7 +665,7 @@ void getDirectionsTunneling(Monster *npc){
                  bottomLeft =0;
                  bottom =0;
                  bottomRight=0;
-            }   
+            }
     }
     /*Right*/
     if(xhere+1!=79){
@@ -684,7 +684,7 @@ void getDirectionsTunneling(Monster *npc){
                  bottom =0;
                  bottomRight=0;
             }
-            
+
     }
     /*BottomLeft*/
     if(xhere-1!=0 && yhere+1!=20){
@@ -778,15 +778,15 @@ void getDirectionsTunneling(Monster *npc){
     }
     }
 }
- void getDirections(Monster *npc){/*Hey Shane please work here on this function and check for correct dimensions and terrain*/
+ void getDirections(Monster *npc){
     int done=0;
     volatile int xhere = npc->xloc;
     volatile int yhere = npc->yloc;
     while(!done){
 
-    
+
    volatile int min = 1000;
-    
+
     volatile int topLeft=0;
     volatile int top=0;
     volatile int topRight=0;
@@ -865,7 +865,7 @@ void getDirectionsTunneling(Monster *npc){
                  bottomLeft =0;
                  bottom =0;
                  bottomRight=0;
-            }   
+            }
     }
     /*Right*/
     if(xhere+1!=79 && (m->grid[yhere][xhere+1]==('#') || m->grid[yhere][xhere+1]==('.') || m->grid[yhere][xhere+1]==('>') || m->grid[yhere][xhere+1]==('<'))){
@@ -975,13 +975,13 @@ void getDirectionsTunneling(Monster *npc){
         yhere++;
         addToList(npc->directions,7);
     }
-    
+
     }
 }
 /*
     [1][2][3]
     [4][0][5]
-    [6][7][8]  
+    [6][7][8]
 
 */
 
@@ -991,7 +991,7 @@ void performWander(Monster *npc){
         while(1){
         control = rand()%8;
         switch(control){
-            
+
             case 0:/*Move Up*/
             if(npc->yloc-1>0){
             if(m->grid[npc->yloc-1][npc->xloc]==('#') || m->grid[npc->yloc-1][npc->xloc]==('.') || digSwitch){
@@ -1002,38 +1002,38 @@ void performWander(Monster *npc){
             }
         }
             break;
-            
+
             case 1:/*Move Down*/
             if(npc->yloc+1<20){
-            
+
                 if(m->grid[npc->yloc+1][npc->xloc]==('#') || m->grid[npc->yloc+1][npc->xloc]==('.') || digSwitch){
-                    
+
                     if(!moveDown(npc)){
                         return;
                     }
             }
             }
             break;
-            
+
             case 2:/*Move Right*/
-            
+
             if(npc->xloc+1<79){
-            
+
             if(m->grid[npc->yloc][npc->xloc+1]==('#') || m->grid[npc->yloc][npc->xloc+1]==('.') || digSwitch){
-                
+
                 if(!moveRight(npc)){
                     return;
                 }
             }
         }
             break;
-            
+
             case 3:/*Move Left*/
-             
+
              if(npc->xloc-1>0){
-             
+
              if(m->grid[npc->yloc][npc->xloc-1]==('#') || m->grid[npc->yloc][npc->xloc-1]==('.') || digSwitch){
-                
+
                 if(!moveLeft(npc)){
                     return;
                 }
@@ -1042,21 +1042,21 @@ void performWander(Monster *npc){
             break;
             case 4:/*Move TopRight*/
             if(npc->yloc-1>0 && npc->xloc+1<79){
-            
+
             if(m->grid[npc->yloc-1][npc->xloc+1]==('#') || m->grid[npc->yloc-1][npc->xloc+1]==('.') || digSwitch ){
-                
+
                 if(!moveTopRight(npc)){
                     return;
                 }
             }
             }
             break;
-            
+
             case 5:/*Move TopLeft*/
             if(npc->yloc-1>0 && npc->xloc-1>0){
-            
+
             if(m->grid[npc->yloc-1][npc->xloc-1]==('#') || m->grid[npc->yloc-1][npc->xloc-1]==('.') || digSwitch ){
-                
+
                 if(!moveTopLeft(npc)){
                     return;
                 }
@@ -1065,9 +1065,9 @@ void performWander(Monster *npc){
             break;
             case 6:/*Move BottomRight*/
              if(npc->yloc+1<20 && npc->xloc+1<79){
-             
+
              if(m->grid[npc->yloc+1][npc->xloc+1]==('#') || m->grid[npc->yloc+1][npc->xloc+1]==('.') || digSwitch){
-                
+
                 if(!moveBottomRight(npc)){
                     return;
                 }
@@ -1076,23 +1076,23 @@ void performWander(Monster *npc){
             break;
             case 7:/*Move BottomLeft*/
             if(npc->yloc+1<20 && npc->xloc-1>0){
-             
+
              if(m->grid[(npc->yloc)+1][npc->xloc-1]==('#') || m->grid[(npc->yloc)+1][npc->xloc-1]==('.') || digSwitch){
-                
+
                 if(!moveBottomLeft(npc)){
                     return;
                 }
                 break;
             }
         }
-}               
+}
         }
 }
 void moveNearestNonTunneling(Monster *npc){
     int min = 1000;
     int xhere = npc->xloc;
     int yhere = npc->yloc;
-    
+
 
     int topLeft=0;
     int top=0;
@@ -1303,9 +1303,9 @@ void moveNearestTunneling(Monster *npc){
                  bottomLeft =0;
                  bottom =0;
                  bottomRight=0;
-            
+
         }
-            
+
     }
     /*TopRight*/
     if(xhere+1!=79 && yhere-1!=0){
@@ -1335,7 +1335,7 @@ void moveNearestTunneling(Monster *npc){
                  bottomLeft =0;
                  bottom =0;
                  bottomRight=0;
-            }   
+            }
     }
     /*Right*/
     if(xhere+1!=79){
@@ -1439,12 +1439,12 @@ int scanArea(Monster *mon){
                 test=1;
             }
         }
-        
+
         if( test && (ytemp>0)){
             if(hasMonster(ytemp,xhere)){
                 Monster *temp;
                  temp = monsterArray[ytemp][xhere];
-                
+
                 if(temp->thePlayer){
                     mon->patrolMode=0;
                     done=1;
@@ -1555,4 +1555,3 @@ int hasMonster(int yl, int xl){
     }
     return 1;
 }
-
