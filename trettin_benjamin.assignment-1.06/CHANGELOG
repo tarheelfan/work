@@ -1,3 +1,90 @@
+  commit 55
+  Author: Benjamin Trettin
+  Date:   wed oct 24 19:49:16 2018 -0500
+
+    updated CHANGELOG and makefile
+
+    trettin_benjamin.assignment-1.06/Makefile      |  6 +++---
+    trettin_benjamin.assignment-1.06/CHANGELOG    |  87 +++++++++++++++++
+    2 files changed, 90 insertions(+), 3 deletions(-)
+
+  commit 54
+  Author: Benjamin Trettin
+  Date:   tues oct 23 18:23:45 2018 -0500
+
+    finished fog of war and other compiling issues
+
+    trettin_benjamin.assignment-1.06/gameMap.h      |  6 +++---
+    trettin_benjamin.assignment-1.06/pcio.cpp     |  10 ++++-----
+    trettin_benjamin.assignment-1.06/knowledgeMap.h      |  2 ++
+    trettin_benjamin.assignment-1.06/knowledgeMap.cpp   |  28 +++++++++++------
+    4 files changed, 32 insertions(+), 14 deletions(-)
+
+  commit 53
+  Author: Benjamin Trettin
+  Date:   tues oct 23 16:21:44 2018 -0500
+
+      implemented most of fog of war map
+
+    trettin_benjamin.assignment-1.06/gameMap.h      |  12 ++++++++++
+    trettin_benjamin.assignment-1.06/pcio.cpp     |  15 +++++++++----
+    trettin_benjamin.assignment-1.06/knowledgeMap.h      |  22 +++++++++++
+    trettin_benjamin.assignment-1.06/knowledgeMap.cpp   |  64 +++++++++++++++
+    4 files changed, 93 insertions(+), 4 deletions(-)
+
+  commit 52
+  Author: Benjamin Trettin
+  Date:   mon oct 22 22:06:13 2018 -0500
+
+      updated makefile
+
+    trettin_benjamin.assignment-1.06/Makfile      |  12 ++++++-----
+    1 file changed, 6 insertions(+), 6 deletions(-)
+
+
+  commit 51
+  Author: Benjamin Trettin
+  Date:   mon oct 22 19:12:07 2018 -0500
+
+      updated more of the cpp issues with compiling
+
+    trettin_benjamin.assignment-1.06/gameMap.h      |  14 ++++++++---
+    trettin_benjamin.assignment-1.06/pcio.cpp     |  15 ++++----
+    trettin_benjamin.assignment-1.06/main.h      |  10 +++++---
+    trettin_benjamin.assignment-1.06/mons.h   |  6 +++---
+    trettin_benjamin.assignment-1.06/monstruct.h     |  8 ++++----
+    trettin_benjamin.assignment-1.06/norMons.h      |  11 +++++-----
+    trettin_benjamin.assignment-1.06/map.cpp     |  1 +
+    trettin_benjamin.assignment-1.06/pcio.cpp     |  3 +++
+    8 files changed, 43 insertions(+), 31 deletions(-)
+
+
+  commit 50
+  Author: Benjamin Trettin
+  Date:   sat oct 20 16:21:44 2018 -0500
+
+      updated most of files to cpp
+
+    trettin_benjamin.assignment-1.06/gameMap.h      |  12 ++++++++---
+    trettin_benjamin.assignment-1.06/pcio.cpp     |  50 ++++----
+    trettin_benjamin.assignment-1.06/main.h      |  22 ++++++++---
+    trettin_benjamin.assignment-1.06/mons.h   |  16 +++---
+    trettin_benjamin.assignment-1.06/monstruct.h     |  23 ++++++++++++++++
+    trettin_benjamin.assignment-1.06/norMons.h      |  18 +++++++++++++
+    trettin_benjamin.assignment-1.06/map.cpp     |  116 +++++++++++---------
+    trettin_benjamin.assignment-1.06/pcio.cpp     |  10 +++++----
+    8 files changed, 175 insertions(+), 131 deletions(-)
+
+
+commit 49
+Author: Benjamin Trettin
+Date:   fri oct 19 21:22:52 2018 -0500
+
+    changed monster.c to monster.cpp and updated code
+
+  trettin_benjamin.assignment-1.06/monster.cpp     |  88 +++++++++++----------
+  2 files changed, 50 insertions(+), 38 deletions(-)
+
 commit 48
   Author: Benjamin Trettin
   Date:   wed oct 17 12:43:17 2018 -0500
