@@ -2,7 +2,7 @@
 #include <time.h>
 #include <stdlib.h>
 #include <stdio.h>
-#include "objectManager.h"
+
 
 
 void initList(struct list);
@@ -12,267 +12,7 @@ void reset(struct list);
 
 
  
-
-void equip(Item item){
-    int type = item.type;
-    switch(type){
-        case 0:/*Light*/
-            
-            if(!m->thePlayer->light.equiped){
-                m->thePlayer->light= item;
-                m->thePlayer->light.equiped=1;
-            }else{
-                std::vector<Item>::iterator it;
-                it = m->thePlayer->inventory.begin();
-                m->thePlayer->light.equiped=0;
-                m->thePlayer->inventory.insert(it+m->thePlayer->inventory.size(),m->thePlayer->light);
-                m->thePlayer->light=item;
-                m->thePlayer->light.equiped=1;
-            }
-            break;
-        case 1:/*ring*/
-            if(!m->thePlayer->ring1.equiped || !m->thePlayer->ring2.equiped){
-                if(!m->thePlayer->ring1.equiped){
-                    m->thePlayer->ring1= item;
-                    m->thePlayer->ring1.equiped=1;
-                }
-                if(!m->thePlayer->ring2.equiped){
-                    m->thePlayer->ring2= item;
-                    m->thePlayer->ring2.equiped=1;
-                }
-            }else{
-                std::vector<Item>::iterator it;
-                it = m->thePlayer->inventory.begin();
-                clear();
-                refresh();
-                string exam = "Which ring would you like to replace? enter 1 or 2, 1 is default ";
-                mvaddstr(0,0,exam.c_str());
-                unsigned int input = getch();
-                if(input==2){
-                    m->thePlayer->ring2.equiped=0;
-                    m->thePlayer->inventory.insert(it+m->thePlayer->inventory.size(),m->thePlayer->ring2);
-                    m->thePlayer->ring2=item;
-                    m->thePlayer->ring2.equiped=1;
-                }else{
-                    m->thePlayer->ring1.equiped=0;
-                    m->thePlayer->inventory.insert(it+m->thePlayer->inventory.size(),m->thePlayer->ring1);
-                    m->thePlayer->ring1=item;
-                    m->thePlayer->ring1.equiped=1;
-                }
-            }
-            break;
-        case 2:/*weapon*/
-            if(!m->thePlayer->weapon.equiped){
-                m->thePlayer->weapon= item;
-                m->thePlayer->weapon.equiped=1;
-            }else{
-                std::vector<Item>::iterator it;
-                it = m->thePlayer->inventory.begin();
-                m->thePlayer->weapon.equiped=0;
-                m->thePlayer->inventory.insert(it+m->thePlayer->inventory.size(),m->thePlayer->weapon);
-                m->thePlayer->weapon=item;
-                m->thePlayer->weapon.equiped=1;
-            }
-            break;
-        case 3:/*offhand*/
-            if(!m->thePlayer->offhand.equiped){
-                m->thePlayer->offhand= item;
-                m->thePlayer->offhand.equiped=1;
-            }else{
-                std::vector<Item>::iterator it;
-                it = m->thePlayer->inventory.begin();
-                m->thePlayer->offhand.equiped=0;
-                m->thePlayer->inventory.insert(it+m->thePlayer->inventory.size(),m->thePlayer->offhand);
-                m->thePlayer->offhand=item;
-                m->thePlayer->offhand.equiped=1;
-            }
-            break;
-        case 4:/*ranged*/
-            if(!m->thePlayer->ranged.equiped){
-                m->thePlayer->ranged= item;
-                m->thePlayer->ranged.equiped=1;
-            }else{
-                std::vector<Item>::iterator it;
-                it = m->thePlayer->inventory.begin();
-                m->thePlayer->ranged.equiped=0;
-                m->thePlayer->inventory.insert(it+m->thePlayer->inventory.size(),m->thePlayer->ranged);
-                m->thePlayer->ranged=item;
-                m->thePlayer->ranged.equiped=1;
-            }
-            break;
-        case 5:/*armor*/
-            if(!m->thePlayer->armor.equiped){
-                m->thePlayer->armor= item;
-                m->thePlayer->armor.equiped=1;
-            }else{
-                std::vector<Item>::iterator it;
-                m->thePlayer->armor.equiped=0;
-                it = m->thePlayer->inventory.begin();
-                m->thePlayer->inventory.insert(it+m->thePlayer->inventory.size(),m->thePlayer->armor);
-                m->thePlayer->armor=item;
-                m->thePlayer->armor.equiped=1;
-                
-            }
-            break;
-        case 6:/*helmet*/
-            if(!m->thePlayer->helmet.equiped){
-                m->thePlayer->helmet= item;
-                m->thePlayer->helmet.equiped=1;
-
-            }else{
-                std::vector<Item>::iterator it;
-                m->thePlayer->helmet.equiped=0;
-                it = m->thePlayer->inventory.begin();
-                m->thePlayer->inventory.insert(it+m->thePlayer->inventory.size(),m->thePlayer->helmet);
-                m->thePlayer->helmet=item;
-                m->thePlayer->helmet.equiped=1;
-            }
-            break;
-        case 7:/*cloak*/
-            if(!m->thePlayer->cloak.equiped){
-                m->thePlayer->cloak= item;
-                m->thePlayer->cloak.equiped=1;
-            }else{
-                std::vector<Item>::iterator it;
-                m->thePlayer->cloak.equiped=0;
-                it = m->thePlayer->inventory.begin();
-                m->thePlayer->inventory.insert(it+m->thePlayer->inventory.size(),m->thePlayer->cloak);
-                m->thePlayer->cloak=item;
-                m->thePlayer->cloak.equiped=1;
-            }
-            break;
-        case 8:/*gloves*/
-            if(!m->thePlayer->gloves.equiped){
-                m->thePlayer->gloves= item;
-                m->thePlayer->gloves.equiped=1;
-            }else{
-                std::vector<Item>::iterator it;
-                it = m->thePlayer->inventory.begin();
-                m->thePlayer->gloves.equiped=0;
-                m->thePlayer->inventory.insert(it+m->thePlayer->inventory.size(),m->thePlayer->gloves);
-                m->thePlayer->gloves=item;
-                m->thePlayer->gloves.equiped=1;
-            }
-            break;
-        case 9:/*boots*/
-            if(!m->thePlayer->boots.equiped){
-                m->thePlayer->boots= item;
-                m->thePlayer->boots.equiped=1;
-            }else{
-                std::vector<Item>::iterator it;
-                it = m->thePlayer->inventory.begin();
-                m->thePlayer->boots.equiped=0;
-                m->thePlayer->inventory.insert(it+m->thePlayer->inventory.size(),m->thePlayer->boots);
-                m->thePlayer->boots=item;
-                m->thePlayer->boots.equiped=1;
-            }
-            break;
-        case 10:/*amulet*/
-            if(!m->thePlayer->amulet.equiped){
-                m->thePlayer->amulet= item;
-                m->thePlayer->amulet.equiped=1;
-            }else{
-                std::vector<Item>::iterator it;
-                m->thePlayer->amulet.equiped=0;
-                it = m->thePlayer->inventory.begin();
-                m->thePlayer->inventory.insert(it+m->thePlayer->inventory.size(),m->thePlayer->amulet);
-                m->thePlayer->amulet=item;
-                m->thePlayer->amulet.equiped=1;
-            }
-            break;
-        case 11:/*scroll*/
-            if(!m->thePlayer->offhand.equiped){
-                m->thePlayer->offhand= item;
-                m->thePlayer->offhand.equiped=1;
-            }else{
-                std::vector<Item>::iterator it;
-                m->thePlayer->offhand.equiped=0;
-                it = m->thePlayer->inventory.begin();
-                m->thePlayer->inventory.insert(it+m->thePlayer->inventory.size(),m->thePlayer->offhand);
-                m->thePlayer->offhand=item;
-                m->thePlayer->offhand.equiped=1;
-            }
-            break;
-        case 12:/*book*/
-            if(!m->thePlayer->offhand.equiped){
-                m->thePlayer->offhand= item;
-                m->thePlayer->offhand.equiped=1;
-            }else{
-                std::vector<Item>::iterator it;
-                m->thePlayer->offhand.equiped=0;
-                it = m->thePlayer->inventory.begin();
-                m->thePlayer->inventory.insert(it+m->thePlayer->inventory.size(),m->thePlayer->offhand);
-                m->thePlayer->offhand=item;
-                m->thePlayer->offhand.equiped=1;
-            }
-            break;
-        case 13:/*flask*/
-            if(!m->thePlayer->offhand.equiped){
-                m->thePlayer->offhand= item;
-                m->thePlayer->offhand.equiped=1;
-            }else{
-                std::vector<Item>::iterator it;
-                m->thePlayer->offhand.equiped=0;
-                it = m->thePlayer->inventory.begin();
-                m->thePlayer->inventory.insert(it+m->thePlayer->inventory.size(),m->thePlayer->offhand);
-                m->thePlayer->offhand=item;
-                m->thePlayer->offhand.equiped=1;
-            }
-            break;
-        case 14:/*gold*/
-            if(!m->thePlayer->offhand.equiped){
-                m->thePlayer->offhand= item;
-                m->thePlayer->offhand.equiped=1;
-            }else{
-                std::vector<Item>::iterator it;
-                m->thePlayer->offhand.equiped=0;
-                it = m->thePlayer->inventory.begin();
-                m->thePlayer->inventory.insert(it+m->thePlayer->inventory.size(),m->thePlayer->offhand);
-                m->thePlayer->offhand=item;
-                m->thePlayer->offhand.equiped=1;
-            }
-            break;
-        case 15:/*ammunition*/
-            if(!m->thePlayer->offhand.equiped){
-                m->thePlayer->offhand = item;
-                m->thePlayer->offhand.equiped=1;
-            }else{
-                std::vector<Item>::iterator it;
-                m->thePlayer->offhand.equiped=0;
-                it = m->thePlayer->inventory.begin();
-                m->thePlayer->inventory.insert(it+m->thePlayer->inventory.size(),m->thePlayer->offhand);
-                m->thePlayer->offhand=item;
-                m->thePlayer->offhand.equiped=1;
-            }
-            break;
-        case 16:/*food*/
-            if(!m->thePlayer->offhand.equiped){
-                m->thePlayer->offhand= item;
-                m->thePlayer->offhand.equiped=1;
-            }else{
-                std::vector<Item>::iterator it;
-                m->thePlayer->offhand.equiped=0;
-                it = m->thePlayer->inventory.begin();
-                m->thePlayer->inventory.insert(it+m->thePlayer->inventory.size(),m->thePlayer->offhand);
-                m->thePlayer->offhand=item;
-                m->thePlayer->offhand.equiped=1;
-            }
-            break;
-        case 17: /*wand*/
-            if(!m->thePlayer->offhand.equiped){
-                m->thePlayer->offhand= item;
-                m->thePlayer->offhand.equiped=1;
-            }else{
-                std::vector<Item>::iterator it;
-                m->thePlayer->offhand.equiped=0;
-                it = m->thePlayer->inventory.begin();
-                m->thePlayer->inventory.insert(it+m->thePlayer->inventory.size(),m->thePlayer->offhand);
-                m->thePlayer->offhand=item;
-                m->thePlayer->offhand.equiped=1;
-            }
-            break;
-    }
-}
+/*Public Class Monster */
 
 void addToList(struct list dir,int num){
     dir.directions[dir.size]=num;
@@ -304,6 +44,7 @@ void initMonsterLib(Map *map, int numOfMax){
     srand(time(NULL));
     maxMonsters = numOfMax;
     //m=map;
+    
 }
 int getPCX(){
     return pcx;
@@ -315,162 +56,10 @@ int getPCY(){
 /*Deconstructor*/
 void deconstructor(Monster *ma){
     //decoStructorI(ma->monsterC);
-    delete ma;
+    free(ma);
 }
-static void bump(int xtemp,int ytemp,Monster* npc){
-    
-         int control = rand()%8;
-        int digSwitch = canTunnle(npc);
-        Monster *check;
-        while(1){
-        control = rand()%8;
-        switch(control){
-            
-            case 0:/*Move Up*/
-            {
-            check = monsterArray[ytemp-1][xtemp];
-            if(npc->yloc-1>0 && !check){
-            if(m->grid[npc->yloc-1][npc->xloc]==('#') || m->grid[npc->yloc-1][npc->xloc]==('.') || digSwitch){
-                int isd = moveUp(npc);
-                if(!isd){
-                    return;
-                }
-            }
-        }
-            break;
-            }
-            case 1:/*Move Down*/
-            {
-            check = monsterArray[ytemp+1][xtemp];
-            if(npc->yloc+1<20 && !check){
-            
-                if(m->grid[npc->yloc+1][npc->xloc]==('#') || m->grid[npc->yloc+1][npc->xloc]==('.') || digSwitch){
-                    
-                    if(!moveDown(npc)){
-                        return;
-                    }
-            }
-            }
-            break;
-            }
-            case 2:/*Move Right*/
-            {
-            check = monsterArray[ytemp][xtemp+1];
-            if(npc->xloc+1<79 && !check){
-            
-            if(m->grid[npc->yloc][npc->xloc+1]==('#') || m->grid[npc->yloc][npc->xloc+1]==('.') || digSwitch){
-                
-                if(!moveRight(npc)){
-                    return;
-                }
-            }
-        }
-            break;
-            }
-            case 3:/*Move Left*/
-             {
-             check = monsterArray[ytemp][xtemp-1];
-             if(npc->xloc-1>0 && !check){
-             
-             if(m->grid[npc->yloc][npc->xloc-1]==('#') || m->grid[npc->yloc][npc->xloc-1]==('.') || digSwitch){
-                
-                if(!moveLeft(npc)){
-                    return;
-                }
-            }
-             }
-            break;
-             }
-            case 4:/*Move TopRight*/
-            {
-            check = monsterArray[ytemp-1][xtemp+1];
-            if(npc->yloc-1>0 && npc->xloc+1<79 && !check){
-            
-            if(m->grid[npc->yloc-1][npc->xloc+1]==('#') || m->grid[npc->yloc-1][npc->xloc+1]==('.') || digSwitch ){
-                
-                if(!moveTopRight(npc)){
-                    return;
-                }
-            }
-            }
-            break;
-            }
-            case 5:/*Move TopLeft*/
-            {
-            check = monsterArray[ytemp-1][xtemp-1];
-            if(npc->yloc-1>0 && npc->xloc-1>0 && !check){
-            
-            if(m->grid[npc->yloc-1][npc->xloc-1]==('#') || m->grid[npc->yloc-1][npc->xloc-1]==('.') || digSwitch ){
-                
-                if(!moveTopLeft(npc)){
-                    return;
-                }
-            }
-        }
-            break;
-            }
-            case 6:/*Move BottomRight*/
-             {
-             check = monsterArray[ytemp+1][xtemp+1];
-             if(npc->yloc+1<20 && npc->xloc+1<79 && !check ){
-             
-             if(m->grid[npc->yloc+1][npc->xloc+1]==('#') || m->grid[npc->yloc+1][npc->xloc+1]==('.') || digSwitch){
-                
-                if(!moveBottomRight(npc)){
-                    return;
-                }
-            }
-        }
-            break;
-             }
-            case 7:/*Move BottomLeft*/
-            {
-            check = monsterArray[ytemp+1][xtemp-1];
-            if(npc->yloc+1<20 && npc->xloc-1>0 && !check){
-             
-             if(m->grid[(npc->yloc)+1][npc->xloc-1]==('#') || m->grid[(npc->yloc)+1][npc->xloc-1]==('.') || digSwitch){
-                
-                if(!moveBottomLeft(npc)){
-                    return;
-                }
-                
-             }
-            }
-        break;
-        }
-}               
-        }
-}
+/*Public Functions For Monsters*/
 
-static int attack(Monster* mon,Monster* player){
-    int damage = mon->dam.roleDice();
-    if(mon->weapon.equiped){
-        damage = mon->weapon.dam.roleDice();
-    }
-    int protec = 0;
-    if(player->armor.equiped){
-        protec+=player->armor.def;
-    }
-    if(player->helmet.equiped){
-        protec+=player->helmet.def;
-    }
-    if(player->gloves.equiped){
-        protec+=player->gloves.def;
-    }
-    damage = damage - protec;
-    if(damage<0){
-        damage=0;
-    } 
-    player->hp = player->hp - damage;
-    if(player->hp<0){
-        player->alive=0;
-        if(mon->thePlayer){
-            mon->kills++;
-        }
-        return 1;
-    }
-    return 0;
-}
  int moveUp(Monster *mon){/*y-1,x*/
     Monster *temp;
     int ytemp = (*mon).yloc;
@@ -480,39 +69,14 @@ static int attack(Monster* mon,Monster* player){
     int xtemp = (*mon).xloc;
     monsterArray[ytemp][xtemp]=NULL;/*y,x*/
     
+    
     temp = monsterArray[ytemp-1][xtemp];
     if(temp!=NULL){
-        if(temp->thePlayer  || mon->thePlayer){
-            if(!attack(mon,temp)){
-                monsterArray[ytemp][xtemp]=mon;
-                return 0;
-            }
-        }else{
-            bump(xtemp,ytemp,temp);
-        }
+        (*temp).alive=0;
     }
-    
-    if(!(*m).hardness[ytemp-1][xtemp]){
+    if(m->grid[ytemp-1][xtemp]==('#') || m->grid[ytemp-1][xtemp]==('.') || m->grid[ytemp-1][xtemp]==('<') || m->grid[ytemp-1][xtemp]==('>')){
        monsterArray[ytemp-1][xtemp] = mon;
        (*mon).yloc=ytemp-1; 
-       
-       if(mon->inventory.size()<9){
-       char pol = getCharacter(ytemp-1,xtemp);
-        if(pol!='0'){
-        while(pol!='0'){
-        Item temp = searchItem(ytemp-1, xtemp);
-        std::vector<Item>::iterator it;
-        it = (*mon).inventory.begin();
-        //int var = itemGrid[ytemp-1][xtemp].size(); /*Inserts Items*/
-        int var = (*mon).inventory.size();
-        (*mon).inventory.insert(it+var,temp);
-        pol = getCharacter(ytemp-1,xtemp);
-        }
-           itemGrid[ytemp-1][xtemp].clear();
-           //(*m).grid[ytemp-1][xtemp] = '.'; 
-        }
-       }
-    
     }else{
         unsigned char hardness =m->hardness[ytemp-1][xtemp];
         if(hardness>85){
@@ -543,45 +107,14 @@ static int attack(Monster* mon,Monster* player){
     int xtemp = (*mon).xloc;
     monsterArray[ytemp][xtemp]=NULL;/*y,x*/
     
-    temp = monsterArray[ytemp+1][xtemp];
-    if(temp!=NULL){
-        if(temp->thePlayer || mon->thePlayer){
-            if(!attack(mon,temp)){
-                monsterArray[ytemp][xtemp]=mon;
-                return 0;
-            }
-        }else{
-            bump(xtemp,ytemp,temp);
-        }
-    }
-
+    
     temp = monsterArray[ytemp+1][xtemp];/*y+1,x*/
     if(temp!=NULL){
         (*temp).alive=0;
     }
-    if(!(*m).hardness[ytemp+1][xtemp]){/*y+1,x*/
+    if(m->grid[ytemp+1][xtemp]==('#') || m->grid[ytemp+1][xtemp]==('.') || m->grid[ytemp+1][xtemp]==('<') || m->grid[ytemp+1][xtemp]==('>')){/*y+1,x*/
        monsterArray[ytemp+1][xtemp] = mon;/*y+1,x*/
        (*mon).yloc=ytemp+1; /*y+1,x*/
-       if(mon->thePlayer){
-       if(mon->inventory.size()<9){
-        char pol = getCharacter(ytemp+1,xtemp);
-        if(pol!='0'){
-        while(pol!='0'){
-        Item temp = searchItem(ytemp+1, xtemp);
-        std::vector<Item>::iterator it;
-        it = (*mon).inventory.begin();
-        //int var = itemGrid[ytemp+1][xtemp].size(); /*Inserts Items*/
-        int var = (*mon).inventory.size();
-        (*mon).inventory.insert(it+var,temp);
-        pol = getCharacter(ytemp+1,xtemp);
-        }
-           itemGrid[ytemp+1][xtemp].clear();
-           //(*m).grid[ytemp-1][xtemp] = '.'; 
-        }
-       }
-       }
-       
-    
     }else{
         unsigned char hardness =m->hardness[ytemp+1][xtemp];
         if(hardness>85){
@@ -612,44 +145,13 @@ static int attack(Monster* mon,Monster* player){
         return 1;
     }
     monsterArray[ytemp][xtemp]=NULL;/*y,x*/
-    
-    temp = monsterArray[ytemp][xtemp+1];
-    if(temp!=NULL){
-        if(temp->thePlayer  || mon->thePlayer){
-            if(!attack(mon,temp)){
-                monsterArray[ytemp][xtemp]=mon;
-                return 0;
-            }
-        }else{
-            bump(xtemp,ytemp,temp);
-        }
-    }
-    
     temp = monsterArray[ytemp][xtemp+1];/*y,x+1*/
     if(temp!=NULL){
         (*temp).alive=0;
     }
-    if(!(*m).hardness[ytemp][xtemp+1]){/*y,x+1*/
+    if(m->grid[ytemp][xtemp+1]==('#') || m->grid[ytemp][xtemp+1]==('.') || m->grid[ytemp][xtemp+1]==('<') || m->grid[ytemp][xtemp+1]==('>')){/*y,x+1*/
        monsterArray[ytemp][xtemp+1] = mon;/*y,x+1*/
        (*mon).xloc=xtemp+1; /*y,x+1*/
-    
-       if((mon->inventory.size()<9)){
-       char pol = getCharacter(ytemp,xtemp+1);
-        if(pol!='0'){
-        while(pol!='0'){
-        Item temp = searchItem(ytemp, xtemp+1);
-        std::vector<Item>::iterator it;
-        it = (*mon).inventory.begin();
-        //int var = itemGrid[ytemp][xtemp+1].size(); /*Inserts Items*/
-        int var = (*mon).inventory.size();
-        (*mon).inventory.insert(it+var,temp);
-        pol = getCharacter(ytemp,xtemp+1);
-        }
-           itemGrid[ytemp][xtemp+1].clear();
-           //(*m).grid[ytemp-1][xtemp] = '.'; 
-        }
-       }
-    
     }else{
         unsigned char hardness =m->hardness[ytemp][xtemp+1];
         if(hardness>85){
@@ -681,43 +183,14 @@ static int attack(Monster* mon,Monster* player){
     }
     monsterArray[ytemp][xtemp]=NULL;/*y,x*/
     
-    temp = monsterArray[ytemp][xtemp-1];
-    if(temp!=NULL){
-        if(temp->thePlayer || mon->thePlayer){
-            if(!attack(mon,temp)){
-                monsterArray[ytemp][xtemp]=mon;
-                return 0;
-            }
-        }else{
-            bump(xtemp,ytemp,temp);
-        }
-    }
     
     temp = monsterArray[ytemp][xtemp-1];/*y,x-1*/
     if(temp!=NULL){
         (*temp).alive=0;
     }
-    if(!(*m).hardness[ytemp][xtemp-1]){/*y,x-1*/
+    if(m->grid[ytemp][xtemp-1]==('#') || m->grid[ytemp][xtemp-1]==('.') || m->grid[ytemp][xtemp-1]==('>') || m->grid[ytemp][xtemp-1]==('<')){/*y,x-1*/
        monsterArray[ytemp][xtemp-1] = mon;/*y,x-1*/
        (*mon).xloc=xtemp-1; /*y,x-1*/
-    
-       if(mon->inventory.size()<9){
-        char pol = getCharacter(ytemp,xtemp-1);
-        if(pol!='0'){
-        while(pol!='0'){
-        Item temp = searchItem(ytemp, xtemp-1);
-        std::vector<Item>::iterator it;
-        it = (*mon).inventory.begin();
-        //int var = itemGrid[ytemp][xtemp-1].size(); /*Inserts Items*/
-        int var = (*mon).inventory.size();
-        (*mon).inventory.insert(it+var,temp);
-        pol = getCharacter(ytemp,xtemp-1);
-        }
-           itemGrid[ytemp][xtemp-1].clear();
-           //(*m).grid[ytemp-1][xtemp] = '.'; 
-        }
-       }
-    
     }else{
         unsigned char hardness =m->hardness[ytemp][xtemp-1];
         if(hardness>85){
@@ -749,44 +222,15 @@ static int attack(Monster* mon,Monster* player){
     }
     monsterArray[ytemp][xtemp]=NULL;/*y,x*/
     
-    temp = monsterArray[ytemp-1][xtemp+1];
-    if(temp!=NULL){
-        if(temp->thePlayer || mon->thePlayer){
-            if(!attack(mon,temp)){
-                monsterArray[ytemp][xtemp]=mon;
-                return 0;
-            }
-        }else{
-            bump(xtemp,ytemp,temp);
-        }
-    }
-
+    
     temp = monsterArray[ytemp-1][xtemp+1];/*y-1,x+1*/
     if(temp!=NULL){
         (*temp).alive=0;
     }
-    if(!(*m).hardness[ytemp-1][xtemp+1]){/*y-1,x+1*/
+    if(m->grid[ytemp-1][xtemp+1]==('#') || m->grid[ytemp-1][xtemp+1]==('.') || m->grid[ytemp-1][xtemp+1]==('>') || m->grid[ytemp-1][xtemp+1]==('<')){/*y-1,x+1*/
        monsterArray[ytemp-1][xtemp+1] = mon;/*y-1,x+1*/
        (*mon).yloc=ytemp-1;/*y-1,x+1*/
         (*mon).xloc=xtemp+1;
-    
-    if(mon->inventory.size()<9){
-      char pol = getCharacter(ytemp-1,xtemp+1);
-        if(pol!='0'){
-        while(pol!='0'){
-        Item temp = searchItem(ytemp-1, xtemp+1);
-        std::vector<Item>::iterator it;
-        it = (*mon).inventory.begin();
-        //int var = itemGrid[ytemp-1][xtemp+1].size(); /*Inserts Items*/
-        int var = (*mon).inventory.size();
-        (*mon).inventory.insert(it+var,temp);
-        pol = getCharacter(ytemp-1,xtemp+1);
-        }
-           itemGrid[ytemp-1][xtemp+1].clear();
-           //(*m).grid[ytemp-1][xtemp] = '.'; 
-        }
-    }
-        
     }else{
         unsigned char hardness =m->hardness[ytemp-1][xtemp+1];
         if(hardness>85){
@@ -819,44 +263,15 @@ static int attack(Monster* mon,Monster* player){
     }
     monsterArray[ytemp][xtemp]=NULL;/*y,x*/
     
-    temp = monsterArray[ytemp-1][xtemp-1];
-    if(temp!=NULL){
-        if(temp->thePlayer || mon->thePlayer){
-            if(!attack(mon,temp)){
-                monsterArray[ytemp][xtemp]=mon;
-                return 0;
-            }
-        }else{
-            bump(xtemp,ytemp,temp);
-        }
-    }
-
+    
     temp = monsterArray[ytemp-1][xtemp-1];/*y-1,x-1*/
     if(temp!=NULL){
         (*temp).alive=0;
     }
-    if(!(*m).hardness[ytemp-1][xtemp-1]){/*y-1,x-1*/
+    if(m->grid[ytemp-1][xtemp-1]==('#') || m->grid[ytemp-1][xtemp-1]==('.') || m->grid[ytemp-1][xtemp-1]==('<') || m->grid[ytemp-1][xtemp-1]==('>')){/*y-1,x-1*/
        monsterArray[ytemp-1][xtemp-1] = mon;/*y-1,x-1*/
        (*mon).yloc=ytemp-1;/*y-1,x-1*/
         (*mon).xloc=xtemp-1;
-    
-        if(mon->inventory.size()<9){
-        char pol = getCharacter(ytemp-1,xtemp-1);
-        if(pol!='0'){
-        while(pol!='0'){
-        Item temp = searchItem(ytemp-1, xtemp-1);
-        std::vector<Item>::iterator it;
-        it = (*mon).inventory.begin();
-        //int var = itemGrid[ytemp-1][xtemp-1].size(); /*Inserts Items*/
-        int var = (*mon).inventory.size();
-        (*mon).inventory.insert(it+var,temp);
-        pol = getCharacter(ytemp-1,xtemp-1);
-        }
-           itemGrid[ytemp-1][xtemp-1].clear();
-           //(*m).grid[ytemp-1][xtemp] = '.'; 
-        }
-        }
-        
     }else{
         unsigned char hardness =m->hardness[ytemp-1][xtemp-1];
         if(hardness>85){
@@ -889,44 +304,15 @@ static int attack(Monster* mon,Monster* player){
     }
     monsterArray[ytemp][xtemp]=NULL;/*y,x*/
     
-    temp = monsterArray[ytemp+1][xtemp-1];
-    if(temp!=NULL){
-        if(temp->thePlayer || mon->thePlayer){
-            if(!attack(mon,temp)){
-                monsterArray[ytemp][xtemp]=mon;
-                return 0;
-            }
-        }else{
-            bump(xtemp,ytemp,temp);
-        }
-    }
     
     temp = monsterArray[ytemp+1][xtemp-1];/*y+1,x-1*/
     if(temp!=NULL){
         (*temp).alive=0;
     }
-    if(!(*m).hardness[ytemp+1][xtemp-1]) {/*y+1,x-1*/
+    if(m->grid[ytemp+1][xtemp-1]==('#') || m->grid[ytemp+1][xtemp-1]==('.') || m->grid[ytemp+1][xtemp-1]==('>') || m->grid[ytemp+1][xtemp-1]==('<')) {/*y+1,x-1*/
        monsterArray[ytemp+1][xtemp-1] = mon;/*y+1,x-1*/
        (*mon).yloc=ytemp+1;/*y+1,x-1*/
         (*mon).xloc=xtemp-1;
-    
-        
-        if((mon->inventory.size()<9)){
-         char pol = getCharacter(ytemp+1,xtemp-1);
-        if(pol!='0'){
-        while(pol!='0'){
-        Item temp = searchItem(ytemp+1, xtemp-1);
-        std::vector<Item>::iterator it;
-        it = (*mon).inventory.begin();
-        //int var = itemGrid[ytemp+1][xtemp-1].size(); /*Inserts Items*/
-        int var = (*mon).inventory.size();
-        (*mon).inventory.insert(it+var,temp);
-        pol = getCharacter(ytemp+1,xtemp-1);
-        }
-           itemGrid[ytemp+1][xtemp-1].clear();
-           //(*m).grid[ytemp-1][xtemp] = '.'; 
-        }
-    }
     }else{
         unsigned char hardness =m->hardness[ytemp+1][xtemp-1];
         if(hardness>85){
@@ -959,42 +345,15 @@ static int attack(Monster* mon,Monster* player){
     
     monsterArray[ytemp][xtemp]=NULL;/*y,x*/
     
-    temp = monsterArray[ytemp+1][xtemp+1];
-    if(temp!=NULL){
-        if(temp->thePlayer || mon->thePlayer){
-            if(!attack(mon,temp)){
-                monsterArray[ytemp][xtemp]=mon;
-                return 0;
-            }
-        }else{
-            bump(xtemp,ytemp,temp);
-        }
-    }
     
     temp = monsterArray[ytemp+1][xtemp+1];/*y+1,x+1*/
     if(temp!=NULL){
         (*temp).alive=0;
     }
-    if(!(*m).hardness[ytemp+1][xtemp+1] ){/*y+1,x+1*/
+    if(m->grid[ytemp+1][xtemp+1]==('#') || m->grid[ytemp-1][xtemp]==('.') || m->grid[ytemp-1][xtemp]==('>') || m->grid[ytemp-1][xtemp]==('<')){/*y+1,x+1*/
        monsterArray[ytemp+1][xtemp+1] = mon;/*y+1,x+1*/
        (*mon).yloc=ytemp+1;/*y+1,x+1*/
         (*mon).xloc=xtemp+1;
-    if(mon->inventory.size()<9){
-     char pol = getCharacter(ytemp+1,xtemp+1);
-        if(pol!='0'){
-        while(pol!='0'){
-        Item temp = searchItem(ytemp+1, xtemp+1);
-        std::vector<Item>::iterator it;
-        it = (*mon).inventory.begin();
-        //int var = itemGrid[ytemp+1][xtemp+1].size(); /*Inserts Items*/
-        int var = (*mon).inventory.size();
-        (*mon).inventory.insert(it+var,temp);
-        pol = getCharacter(ytemp+1,xtemp+1);
-        }
-           itemGrid[ytemp+1][xtemp+1].clear();
-           //(*m).grid[ytemp-1][xtemp] = '.'; 
-        }
-    }
     }else{
         unsigned char hardness =m->hardness[ytemp+1][xtemp+1];
         if(hardness>85){
@@ -1357,9 +716,6 @@ void getDirectionsTunneling(Monster *npc){
     }
     }
 }
- static int isWalk(int x, int y){
-     return !(*m).hardness[x][y];
- }
  void getDirections(Monster *npc){/*Hey Shane please work here on this function and check for correct dimensions and terrain*/
     int done=0;
     volatile int xhere = npc->xloc;
@@ -1378,8 +734,7 @@ void getDirectionsTunneling(Monster *npc){
     volatile int bottom =0;
     volatile int bottomRight=0;
     /*Top Left*/
-    
-    if(isWalk(yhere-1,xhere-1)){
+    if(xhere-1!=0 && yhere-1!=0 && (m->grid[yhere-1][xhere-1]==('#') || m->grid[yhere-1][xhere-1]==('.') || m->grid[yhere-1][xhere-1]==('<') || m->grid[yhere-1][xhere-1]==('>'))){
             int temp = m->nonTunnelingDistanceGrid[yhere-1][xhere-1].distance;
             if(temp==0){
                 done=1;
@@ -1397,8 +752,7 @@ void getDirectionsTunneling(Monster *npc){
             }
     }
     /*Top*/
-    
-    if(isWalk(yhere-1,xhere)){
+    if(yhere-1!=0 && (m->grid[yhere-1][xhere]==('#') || m->grid[yhere-1][xhere]==('.') || m->grid[yhere-1][xhere]==('<') || m->grid[yhere-1][xhere]==('>'))){
             int temp = m->nonTunnelingDistanceGrid[yhere-1][xhere].distance;
             if(temp==0){
                 done=1;
@@ -1416,8 +770,7 @@ void getDirectionsTunneling(Monster *npc){
             }
     }
     /*TopRight*/
-    
-    if(isWalk(yhere-1,xhere+1)){
+    if((xhere+1!=79 && yhere-1!=0) && (m->grid[yhere-1][xhere+1]=='#' || m->grid[yhere-1][xhere+1]=='.' || m->grid[yhere-1][xhere+1]=='<' || m->grid[yhere-1][xhere+1]=='>'  )){
             int temp = m->nonTunnelingDistanceGrid[yhere-1][xhere+1].distance;
             if(temp==0){
                 done=1;
@@ -1435,8 +788,7 @@ void getDirectionsTunneling(Monster *npc){
             }
     }
     /*Left*/
-    
-    if(isWalk(yhere,xhere-1)){
+    if(xhere-1!=0 && (m->grid[yhere][xhere-1]==('#') || m->grid[yhere][xhere-1]==('.') || m->grid[yhere][xhere-1]==('>') || m->grid[yhere][xhere-1]==('<'))){
             int temp = m->nonTunnelingDistanceGrid[yhere][xhere-1].distance;
             if(temp==0){
                 done=1;
@@ -1454,8 +806,7 @@ void getDirectionsTunneling(Monster *npc){
             }   
     }
     /*Right*/
-    
-    if(isWalk(yhere,xhere+1)){
+    if(xhere+1!=79 && (m->grid[yhere][xhere+1]==('#') || m->grid[yhere][xhere+1]==('.') || m->grid[yhere][xhere+1]==('>') || m->grid[yhere][xhere+1]==('<'))){
             int temp = m->nonTunnelingDistanceGrid[yhere][xhere+1].distance;
             if(temp==0){
                 done=1;
@@ -1473,8 +824,7 @@ void getDirectionsTunneling(Monster *npc){
             }
     }
     /*BottomLeft*/
-    
-    if(isWalk(yhere+1,xhere-1)){
+    if(xhere-1!=0 && yhere+1!=20 && (m->grid[yhere+1][xhere-1]==('#') || m->grid[yhere+1][xhere-1]==('.') || m->grid[yhere+1][xhere-1]==('>') || m->grid[yhere+1][xhere-1]==('<'))){
             int temp = m->nonTunnelingDistanceGrid[yhere+1][xhere-1].distance;
             if(temp==0){
                 done=1;
@@ -1492,9 +842,7 @@ void getDirectionsTunneling(Monster *npc){
             }
     }
     /*Bottom*/
-    
-    
-    if(isWalk(yhere+1,xhere)){
+    if(yhere+1!=79 && (m->grid[yhere+1][xhere]==('#') || m->grid[yhere+1][xhere]==('.') || m->grid[yhere+1][xhere]==('>') || m->grid[yhere+1][xhere]==('<'))){
             int temp = m->nonTunnelingDistanceGrid[yhere+1][xhere].distance;
             if(temp==0){
                 done=1;
@@ -1512,8 +860,7 @@ void getDirectionsTunneling(Monster *npc){
             }
     }
     /*BottomRight*/
-    
-    if(isWalk(yhere+1,xhere+1)){
+    if(xhere+1!=79 && yhere+1!=20 && (m->grid[yhere+1][xhere+1]==('#') || m->grid[yhere+1][xhere+1]==('.') || m->grid[yhere+1][xhere+1]==('>') || m->grid[yhere+1][xhere+1]==('<'))){
             int temp = m->nonTunnelingDistanceGrid[yhere+1][xhere+1].distance;
             if(temp==0){
                 done=1;
@@ -1695,7 +1042,7 @@ void moveNearestNonTunneling(Monster *npc){
     int bottomRight=0;
     /*Top Left*/
     if(xhere-1!=0 && yhere-1!=0){
-        if(isWalk(yhere-1,xhere-1)){
+        if(m->grid[yhere-1][xhere-1]==('#') || m->grid[yhere-1][xhere-1]==('.')){
             int temp = m->nonTunnelingDistanceGrid[yhere-1][xhere-1].distance;
             if(temp<min){
                 min=temp;
@@ -1712,8 +1059,7 @@ void moveNearestNonTunneling(Monster *npc){
     }
     /*Top*/
     if(yhere-1!=0){
-        
-        if(isWalk(yhere-1,xhere)){
+        if(m->grid[yhere-1][xhere]==('#') || m->grid[yhere-1][xhere]==('.')){
             int temp = m->nonTunnelingDistanceGrid[yhere-1][xhere].distance;
             if(temp<min){
                 min=temp;
@@ -1730,7 +1076,7 @@ void moveNearestNonTunneling(Monster *npc){
     }
     /*TopRight*/
     if(xhere+1!=79 && yhere-1!=0){
-        if(isWalk(yhere-1,xhere+1)){
+        if(m->grid[yhere-1][xhere+1]==('#') || m->grid[yhere-1][xhere+1]==('.')){
             int temp = m->nonTunnelingDistanceGrid[yhere-1][xhere+1].distance;
             if(temp<min){
                 min=temp;
@@ -1747,8 +1093,8 @@ void moveNearestNonTunneling(Monster *npc){
     }
     /*Left*/
     if(xhere-1!=0){
-        if(isWalk(yhere,xhere-1)){
-            int temp = m->nonTunnelingDistanceGrid[yhere-1][xhere].distance;
+        if(m->grid[yhere][xhere-1]==('#') || m->grid[yhere][xhere-1]==('.')){
+            int temp = m->nonTunnelingDistanceGrid[yhere][xhere-1].distance;
             if(temp<min){
                 min=temp;
                 topLeft=0;
@@ -1764,9 +1110,8 @@ void moveNearestNonTunneling(Monster *npc){
     }
     /*Right*/
     if(xhere+1!=79){
-        
-        if(isWalk(yhere,xhere+1)){
-            int temp = m->nonTunnelingDistanceGrid[yhere][xhere+1].distance;
+        if(m->grid[yhere-1][xhere+1]==('#') || m->grid[yhere-1][xhere+1]==('.')){
+            int temp = m->nonTunnelingDistanceGrid[yhere-1][xhere+1].distance;
             if(temp<min){
                 min=temp;
                 topLeft=0;
@@ -1782,8 +1127,7 @@ void moveNearestNonTunneling(Monster *npc){
     }
     /*BottomLeft*/
     if(xhere-1!=0 && yhere+1!=20){
-        
-        if(isWalk(yhere+1,xhere-1)){
+        if(m->grid[yhere+1][xhere-1]==('#') || m->grid[yhere+1][xhere-1]==('.')){
             int temp = m->nonTunnelingDistanceGrid[yhere+1][xhere-1].distance;
             if(temp<min){
                 min=temp;
@@ -1800,8 +1144,7 @@ void moveNearestNonTunneling(Monster *npc){
     }
     /*Bottom*/
     if(yhere+1!=79){
-        
-        if(isWalk(yhere+1,xhere)){
+        if(m->grid[yhere+1][xhere]==('#') || m->grid[yhere+1][xhere]==('.')){
             int temp = m->nonTunnelingDistanceGrid[yhere+1][xhere].distance;
             if(temp<min){
                 min=temp;
@@ -1818,9 +1161,8 @@ void moveNearestNonTunneling(Monster *npc){
     }
     /*BottomRight*/
     if(xhere!=0 && yhere+1!=0){
-        
-        if(isWalk(yhere+1,xhere+1)){
-            int temp = m->nonTunnelingDistanceGrid[yhere+1][xhere+1].distance;
+        if(m->grid[yhere+1][xhere]==('#') || m->grid[yhere+1][xhere]==('.')){
+            int temp = m->nonTunnelingDistanceGrid[yhere+1][xhere].distance;
             if(temp<min){
                 min=temp;
                 topLeft=0;

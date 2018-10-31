@@ -1,5 +1,3 @@
-#ifndef ILIST
-#define ILIST
 struct ilist{
     int directions[1000];
     int size;
@@ -22,5 +20,3 @@ typedef struct{
      int searchLocationX;
      int searchLocationY;
 }iMonster;
-
-#endif

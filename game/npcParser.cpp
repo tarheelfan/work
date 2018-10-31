@@ -81,11 +81,14 @@ int getColorNPC(string c){
     if(!c.compare("GREEN")){
         return 5;
     }
-    if(!c.compare("CYAN")){
+    if(!c.compare("BLUE")){
         return 6;
     }
-    if(!c.compare("MAGENTA")){
+    if(!c.compare("CYAN")){
         return 7;
+    }
+    if(!c.compare("MAGENTA")){
+        return 8;
     }
     return 0;
 }

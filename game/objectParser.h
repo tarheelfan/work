@@ -11,9 +11,13 @@
 using namespace std;
 
 class objectInfo {
-    public:
+    private:
         string name;
         int type; 
+        /*
+        0=light
+        1=ring
+        */
         int weight;
         int color;
         Dice dodge;
@@ -24,6 +28,7 @@ class objectInfo {
         Dice speed;
         string desc;
         int attr;
+    public:
     objectInfo(string name,string type,string weight,
     string color,string dodge,string val, string dam,
     string def, string hit,string speed, string desc, string attr);

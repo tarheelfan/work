@@ -1,12 +1,10 @@
 #ifndef GAMEMAP
 #define GAMEMAP
-#include "objectManager.h"
+
 #include <ncurses.h>
 #include "heap.h"
 #include <string>
 #include "dice.h"
-#include <vector>
-
 using namespace std;
 
 typedef struct {
@@ -38,21 +36,6 @@ typedef struct{
      int searchLocationY;
      int hp;
      Dice dam;
-     vector<Item> inventory;
-      /*Slots*/
-     Item weapon;
-     Item offhand;
-     Item ranged;
-     Item armor;
-     Item helmet;
-     Item cloak;
-     Item gloves;
-     Item boots;
-     Item amulet;
-     Item light;
-     Item ring1;
-     Item ring2;
-     int kills;
 }Monster;
 typedef struct{
     int distance;
@@ -107,7 +90,6 @@ int getPCY();
 int32_t compare_monster(const void *key,const void *with);
 void analyzeDistances(void);
 Room* pointContains(int y,int x);
-void equip(Item item);
 
 int performPCMove(Monster *pci);
 extern Monster* monsterArray[21][80];
@@ -117,5 +99,5 @@ extern int NUMBER_OF_MONSTERS;
 extern binheap_t heap;
 extern int pcx;
 extern int pcy;
-extern vector<Item> itemGrid[21][80];
+
 #endif

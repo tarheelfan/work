@@ -1,0 +1,536 @@
+commit af8f0a24
+Author: Shane P Drafahl <sdrafahl@iastate.edu>
+Date:   Wed Nov 2 20:05:12 2016 -0500
+
+    added additional parsing features
+
+commit d2db39bc
+Author: Shane P Drafahl <sdrafahl@iastate.edu>
+Date:   Wed Nov 2 12:56:02 2016 -0500
+
+    Added further parsing code
+
+commit 1c04769e
+Author: Shane P Drafahl <sdrafahl@iastate.edu>
+Date:   Wed Nov 2 12:23:00 2016 -0500
+
+    Added code for formated output to terminal
+
+commit 563d3c93
+Author: Shane P Drafahl <sdrafahl@iastate.edu>
+Date:   Tue Nov 1 13:37:05 2016 -0500
+
+    added some code to take from .rlg327 file
+
+commit 2be4190f
+Author: Shane P Drafahl <sdrafahl@iastate.edu>
+Date:   Tue Nov 1 12:14:06 2016 -0500
+
+    added code to enable second level processing of data
+
+commit ccd93f59
+Author: Shane P Drafahl <sdrafahl@iastate.edu>
+Date:   Tue Nov 1 01:57:53 2016 -0500
+
+    added code for processing of information post parsing file
+
+commit 31326459
+Author: Shane P Drafahl <sdrafahl@iastate.edu>
+Date:   Mon Oct 31 18:30:46 2016 -0500
+
+    Added code to be able to parse a txt file
+
+commit 2d70e8bd
+Author: Shane P Drafahl <sdrafahl@iastate.edu>
+Date:   Mon Oct 31 15:15:21 2016 -0500
+
+    Added terminal output
+
+commit afe37281
+Author: Shane P Drafahl <sdrafahl@iastate.edu>
+Date:   Sun Oct 30 23:14:11 2016 -0500
+
+    added additional code to parser
+
+commit d04a46eb
+Author: Shane P Drafahl <sdrafahl@iastate.edu>
+Date:   Sun Oct 30 16:21:57 2016 -0500
+
+    added validSyntax function
+
+commit 9037f2fa
+Author: Shane P Drafahl <sdrafahl@iastate.edu>
+Date:   Sun Oct 30 16:09:45 2016 -0500
+
+    Added layout for parser code
+
+commit f2544c67
+Author: Shane P Drafahl <sdrafahl@iastate.edu>
+Date:   Sat Oct 29 14:35:09 2016 -0500
+
+    Changed C code to C++
+
+commit 234cde8b
+Author: Shane P Drafahl <sdrafahl@iastate.edu>
+Date:   Wed Oct 26 19:31:44 2016 -0500
+
+    re-added comandline functionality
+
+commit c7c154bc
+Author: Shane P Drafahl <sdrafahl@iastate.edu>
+Date:   Wed Oct 26 14:28:25 2016 -0500
+
+    added fog of war for enemies and for the map
+
+commit b941b18c
+Author: Shane P Drafahl <sdrafahl@iastate.edu>
+Date:   Wed Oct 26 02:01:57 2016 -0500
+
+    Got started on most of fog of war code, almost complete
+
+commit da609de0
+Author: Shane P Drafahl <sdrafahl@iastate.edu>
+Date:   Tue Oct 25 22:59:16 2016 -0500
+
+    Game works, added interface between c++ and c and vice versa for the MonsterClass to work correctly, need to add fog of war next
+
+commit 972958e5
+Author: Shane P Drafahl <sdrafahl@iastate.edu>
+Date:   Tue Oct 25 14:43:29 2016 -0500
+
+    finnished cpp file so now that it compiles, yet to integrate it into c code and add fog of war
+
+commit 81c4d7b6
+Author: Shane P Drafahl <sdrafahl@iastate.edu>
+Date:   Mon Oct 24 21:30:49 2016 -0500
+
+    updated makefile
+
+commit ab3a37df
+Author: Shane P Drafahl <sdrafahl@iastate.edu>
+Date:   Mon Oct 24 21:12:03 2016 -0500
+
+    added some c interface functions
+
+commit 5ea8c0ed
+Author: Shane P Drafahl <sdrafahl@iastate.edu>
+Date:   Mon Oct 24 11:10:54 2016 -0500
+
+    progress on MonsterClass and c interface functions
+
+commit 99ed196d
+Author: Shane P Drafahl <sdrafahl@iastate.edu>
+Date:   Fri Oct 21 19:26:26 2016 -0500
+
+    Created most of monster.cpp file
+
+commit 2cc6399f
+Author: Shane P Drafahl <sdrafahl@iastate.edu>
+Date:   Wed Oct 19 17:51:46 2016 -0500
+
+    Changed UI to be cleaner and fixed memmory corruption issues
+
+commit fec57eb3
+Author: Shane P Drafahl <sdrafahl@iastate.edu>
+Date:   Tue Oct 18 19:41:07 2016 -0500
+
+    Found work around for starting the game
+
+commit 1a079f20
+Author: Shane P Drafahl <sdrafahl@iastate.edu>
+Date:   Tue Oct 18 10:36:45 2016 -0500
+
+    scrolling functionality works better
+
+commit cc8d855a
+Author: Shane P Drafahl <sdrafahl@iastate.edu>
+Date:   Mon Oct 17 15:14:44 2016 -0500
+
+    added room for messages at top of the screen
+
+commit f53c58e2
+Author: Shane P Drafahl <sdrafahl@iastate.edu>
+Date:   Mon Oct 17 14:49:53 2016 -0500
+
+    Got game to print list of monsters and reprint the map to terminal correctly
+
+commit a513571c
+Author: Shane P Drafahl <sdrafahl@iastate.edu>
+Date:   Sun Oct 16 15:32:55 2016 -0500
+
+    Rest functionality works
+
+commit 4d405e10
+Author: Shane P Drafahl <sdrafahl@iastate.edu>
+Date:   Sun Oct 16 02:03:51 2016 -0500
+
+    I have gotten basic movement to work and movement from one level to the next, next I may work on more UI features
+
+commit bae9632d
+Author: Shane P Drafahl <sdrafahl@iastate.edu>
+Date:   Sat Oct 15 11:10:15 2016 -0500
+
+    fixed compiler issues
+
+commit 19857fc2
+Author: Shane P Drafahl <sdrafahl@iastate.edu>
+Date:   Sat Oct 15 09:34:39 2016 -0500
+
+    fixed case statement
+
+commit b9b55091
+Author: Shane P Drafahl <sdrafahl@iastate.edu>
+Date:   Fri Oct 14 16:57:03 2016 -0500
+
+    UI code
+
+commit c1a41cdf
+Author: Shane P Drafahl <sdrafahl@iastate.edu>
+Date:   Fri Oct 14 15:41:48 2016 -0500
+
+    Added code to enable pc control
+
+commit d33f12b3
+Author: Shane P Drafahl <sdrafahl@iastate.edu>
+Date:   Fri Oct 14 12:06:00 2016 -0500
+
+    added pcio.c file for pc control
+
+commit d1eb8832
+Author: Shane P Drafahl <sdrafahl@iastate.edu>
+Date:   Thu Oct 13 20:12:02 2016 -0500
+
+    Removed unsupported features and I now use ncurses display functions
+
+commit 8d7bbc4d
+Author: Shane P Drafahl <sdrafahl@iastate.edu>
+Date:   Wed Oct 5 10:55:13 2016 -0500
+
+    almost ready for release, fixed some bugs,basic testing left to determine if everythin works correctly
+
+commit 060c8102
+Author: Shane P Drafahl <sdrafahl@iastate.edu>
+Date:   Wed Oct 5 01:02:19 2016 -0500
+
+    Fixed most bugs as far as I can tell,behavior is improved, I always tell the truth,Even when I lie.
+
+commit c69eca0b
+Author: Shane P Drafahl <sdrafahl@iastate.edu>
+Date:   Tue Oct 4 10:51:23 2016 -0500
+
+    Fixed the rendering of the game map, program demonstrates basic interaction
+
+commit 674575bf
+Author: Shane P Drafahl <sdrafahl@iastate.edu>
+Date:   Mon Oct 3 12:46:30 2016 -0500
+
+    compiler issues resolved, segmentation faults to fix
+
+commit d0a0d728
+Author: Shane P Drafahl <sdrafahl@iastate.edu>
+Date:   Sun Oct 2 20:42:52 2016 -0500
+
+    Did some bug fixes
+
+commit 056cdac8
+Author: Shane P Drafahl <sdrafahl@iastate.edu>
+Date:   Sun Oct 2 18:42:29 2016 -0500
+
+    Fixed some bugs and combined two .c files into gameMap.a library
+
+commit cf51b1f9
+Author: Shane P Drafahl <sdrafahl@iastate.edu>
+Date:   Sun Oct 2 02:25:11 2016 -0500
+
+    finnished with rough draft of code
+
+commit c1b14424
+Author: Shane P Drafahl <sdrafahl@iastate.edu>
+Date:   Sun Oct 2 00:08:55 2016 -0500
+
+    Makefile changes
+
+commit 8c00d898
+Author: Shane P Drafahl <sdrafahl@iastate.edu>
+Date:   Sat Oct 1 12:42:33 2016 -0500
+
+    Finnished most of monster.c file
+
+commit ac296339
+Author: Shane P Drafahl <sdrafahl@iastate.edu>
+Date:   Sat Oct 1 02:09:19 2016 -0500
+
+    Lots of work on monster.c file in general, working on adding paths for the smart monsters
+
+commit 8db9e7e1
+Author: Shane P Drafahl <sdrafahl@iastate.edu>
+Date:   Fri Sep 30 23:42:04 2016 -0500
+
+    upgraded scanning, you require more vespene gas
+
+commit b71445b3
+Author: Shane P Drafahl <sdrafahl@iastate.edu>
+Date:   Fri Sep 30 23:25:28 2016 -0500
+
+    Added proper tunnle algorithm
+
+commit 06957c21
+Author: Shane P Drafahl <sdrafahl@iastate.edu>
+Date:   Fri Sep 30 17:57:51 2016 -0500
+
+    Added kill functionality to movement functions
+
+commit c1df57e0
+Author: Shane P Drafahl <sdrafahl@iastate.edu>
+Date:   Thu Sep 29 23:39:50 2016 -0500
+
+    I got started on performAction function
+
+commit d54b09e4
+Author: Shane P Drafahl <sdrafahl@iastate.edu>
+Date:   Thu Sep 29 22:15:40 2016 -0500
+
+    Created scanArea function
+
+commit cffb8f09
+Author: Shane P Drafahl <sdrafahl@iastate.edu>
+Date:   Thu Sep 29 20:01:18 2016 -0500
+
+    Added second heap to program
+
+commit 11455507
+Author: Shane P Drafahl <sdrafahl@iastate.edu>
+Date:   Thu Sep 29 19:58:30 2016 -0500
+
+    Added some more functionality to the monster library
+
+commit d60a025f
+Author: Shane P Drafahl <sdrafahl@iastate.edu>
+Date:   Thu Sep 29 00:44:04 2016 -0500
+
+    Did some more work on monster.c
+
+commit 1dcc371e
+Author: Shane P Drafahl <sdrafahl@iastate.edu>
+Date:   Wed Sep 28 21:32:55 2016 -0500
+
+    Added monster.c and monster.h to be a new library for mapInit library
+
+commit 7779a6d3
+Author: Shane P Drafahl <sdrafahl@iastate.edu>
+Date:   Mon Sep 26 14:30:35 2016 -0500
+
+    updated changelog
+
+commit c260c6d3
+Author: Shane P Drafahl <sdrafahl@iastate.edu>
+Date:   Mon Sep 26 14:27:12 2016 -0500
+
+    Finall touches
+
+commit e29abcb4
+Author: Shane P Drafahl <sdrafahl@iastate.edu>
+Date:   Sun Sep 25 16:15:14 2016 -0500
+
+    reconfigured printing functions and search algorithm with correct weights and added function static int getWeight(int num)
+
+commit 7f8b0420
+Merge: 7ac7953f 0da293b8
+Author: Shane P Drafahl <sdrafahl@iastate.edu>
+Date:   Sun Sep 25 02:25:58 2016 -0500
+
+    merge
+
+commit 7ac7953f
+Author: Shane P Drafahl <sdrafahl@iastate.edu>
+Date:   Sun Sep 25 02:17:46 2016 -0500
+
+    moved stuff around
+
+commit 0da293b8
+Author: Shane P Drafahl <sdrafahl@iastate.edu>
+Date:   Sun Sep 25 00:11:03 2016 -0500
+
+    Did some work on analyzeDistancesPlus
+
+commit fa3f6ed3
+Author: Shane P Drafahl <sdrafahl@iastate.edu>
+Date:   Sat Sep 24 15:43:14 2016 -0500
+
+    Distances are correct for non tunnling monseters
+
+commit fa5288a1
+Author: Shane P Drafahl <sdrafahl@iastate.edu>
+Date:   Sat Sep 24 15:07:01 2016 -0500
+
+    added function getAsci(int num)
+
+commit 945beec8
+Author: Shane P Drafahl <sdrafahl@iastate.edu>
+Date:   Fri Sep 23 22:03:31 2016 -0500
+
+    started working on correct assci rendering
+
+commit 26c26bc2
+Author: Shane P Drafahl <sdrafahl@iastate.edu>
+Date:   Fri Sep 23 19:23:39 2016 -0500
+
+    modification to asci rendering function
+
+commit 3e95fa25
+Author: Shane P Drafahl <sdrafahl@iastate.edu>
+Date:   Wed Sep 21 10:19:52 2016 -0500
+
+    able to print most distances but mising entire rooms and doesnt seem to get data from the heap, I also noticed that the initial cursor from the heap never changes coordinates
+
+commit 22fd0451
+Author: Shane P Drafahl <sdrafahl@iastate.edu>
+Date:   Wed Sep 21 00:00:44 2016 -0500
+
+    wrote most of BFS and function to print the graph with distances
+
+commit 47493966
+Author: Shane P Drafahl <sdrafahl@iastate.edu>
+Date:   Tue Sep 20 12:06:16 2016 -0500
+
+    changed code for analyzeDistance in new direction
+
+commit c20aa7f5
+Author: Shane P Drafahl <sdrafahl@iastate.edu>
+Date:   Tue Sep 20 00:51:23 2016 -0500
+
+    removed compiler issues, might change code out so commiting now
+
+commit 8b41d94f
+Author: Shane P Drafahl <sdrafahl@iastate.edu>
+Date:   Mon Sep 19 14:34:28 2016 -0500
+
+    added distanceGrid
+
+commit 9376c5f8
+Author: Shane P Drafahl <drafahls@gmail.com>
+Date:   Mon Sep 19 00:08:20 2016 -0500
+
+    Added binheap library
+
+commit af3f67c3
+Author: Shane P Drafahl <drafahls@gmail.com>
+Date:   Sun Sep 18 23:49:13 2016 -0500
+
+    some basic changes
+
+commit d45c7c3c
+Author: Shane P Drafahl <drafahls@gmail.com>
+Date:   Fri Sep 16 16:26:06 2016 -0500
+
+    removed comments
+
+commit ca955489
+Author: Shane P Drafahl <drafahls@gmail.com>
+Date:   Wed Sep 14 21:37:11 2016 -0500
+
+    finnal bug fixes
+
+commit 0ced654d
+Author: Shane P Drafahl <drafahls@gmail.com>
+Date:   Wed Sep 14 19:15:01 2016 -0500
+
+    bug fixes
+
+commit bdc2e70c
+Author: Shane P Drafahl <drafahls@gmail.com>
+Date:   Wed Sep 14 11:41:28 2016 -0500
+
+    fixed bugs enabling the ability to load files
+
+commit 62fa69f2
+Author: Shane P Drafahl <drafahls@gmail.com>
+Date:   Tue Sep 13 22:16:12 2016 -0500
+
+    bug fixes
+
+commit 610948f9
+Author: Shane P Drafahl <drafahls@gmail.com>
+Date:   Tue Sep 13 17:32:16 2016 -0500
+
+    fixed some compiler issues
+
+commit 2b06bc45
+Author: Shane P Drafahl <drafahls@gmail.com>
+Date:   Mon Sep 12 15:39:08 2016 -0500
+
+    Removed warnings and added hardness to map
+
+commit 1d8a0d1d
+Author: Shane P Drafahl <drafahls@gmail.com>
+Date:   Mon Sep 12 00:10:42 2016 -0500
+
+    started on saveGame function
+
+commit 0134f07c
+Author: Shane P Drafahl <drafahls@gmail.com>
+Date:   Sun Sep 11 21:50:04 2016 -0500
+
+    Added left path and made print grid public
+
+commit 11590f5f
+Author: Shane P Drafahl <drafahls@gmail.com>
+Date:   Sun Sep 11 19:21:12 2016 -0500
+
+    Made print grid public
+
+commit 2113ed65
+Author: Shane P Drafahl <drafahls@gmail.com>
+Date:   Sun Sep 11 18:01:07 2016 -0500
+
+    Added Connected path on left side of map
+
+commit a10fc5cf
+Author: Shane P Drafahl <drafahls@gmail.com>
+Date:   Mon Sep 5 15:27:00 2016 -0500
+
+    I have added paths in order to connect the different rooms together
+
+commit a8e88d12
+Author: Shane Drafahl <sdrafahl@iastate.edu>
+Date:   Mon Sep 5 00:22:01 2016 -0500
+
+    Create README.md
+
+commit 5cba6a85
+Author: Shane P Drafahl <drafahls@gmail.com>
+Date:   Mon Sep 5 00:20:32 2016 -0500
+
+    Modified collides function to make it work correctly, I also changed the Rooms to . from X, Also a few minor touches like correcting the size of the dungeon.
+
+commit 784b9470
+Author: Shane P Drafahl <drafahls@gmail.com>
+Date:   Sun Sep 4 01:22:43 2016 -0500
+
+    I did some work on initRooms and created the colides function that remains untested, currently does not display correct info but without memory issues or compilation issues
+
+commit 4632272b
+Author: Shane P Drafahl <drafahls@gmail.com>
+Date:   Sat Sep 3 14:29:53 2016 -0500
+
+    added function initRooms and createRoom, initRooms currently just inserts one room into the grid for testing purposes for the function createRoom
+
+commit 71a61276
+Author: Shane P Drafahl <drafahls@gmail.com>
+Date:   Fri Sep 2 11:51:43 2016 -0500
+
+    fixed some bugs with the display grid function
+
+commit 6815eaa1
+Author: Shane P Drafahl <drafahls@gmail.com>
+Date:   Fri Sep 2 00:49:47 2016 -0500
+
+    Created Makefile, created dungeonGame327.c source file that will run the game, I also created mapInit.c and mapInit.h file to
+    encapsulate dungeon map code in a library for the main program to use
+
+commit 9f84d9a7
+Author: Shane P Drafahl <drafahls@gmail.com>
+Date:   Fri Sep 2 00:45:49 2016 -0500
+
+    Added git ignore file
+(END)
