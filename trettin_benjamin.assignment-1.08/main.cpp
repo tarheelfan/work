@@ -41,7 +41,7 @@ int initGame(void){
      printf("Start readFile\n");
      readFile();
      printf("Completed Read Monsters\n");
-//     readFileObjects();
+     readFileObjects();
      printf("Completed Read Objects\n");
       if(1){
         printf("Started init Map\n");
