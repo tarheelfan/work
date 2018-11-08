@@ -39,7 +39,7 @@ int main (int argc, char* argv[]){
 }
 int initGame(void){
      readFile();
-     readFileObjects();
+//     readFileObjects();
       if(1){
         initMap(5);
       }else{
