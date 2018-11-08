@@ -165,7 +165,7 @@ void readFile(){
 
     char *se = getenv("HOME");
     string fileName(se);
-    fileName+="/302/work/trettin_benjamin.assignment-1.08/rlg327/monster_desc.txt";
+    fileName+="/.rlg327/monster_desc.txt";
     ifstream file (fileName.c_str());
     stringstream s;
     s << file.rdbuf();
