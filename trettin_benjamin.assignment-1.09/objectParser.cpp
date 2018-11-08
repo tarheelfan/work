@@ -238,7 +238,7 @@ Dice getDice(string spee){
 void readFileObjects(){
     char *se = getenv("HOME");
     string fileName(se);
-    fileName+="/302/work/trettin_benjamin.assignment-1.08/.rlg327/monster_desc.txt";
+    fileName+="/302/work/trettin_benjamin.assignment-1.08/rlg327/monster_desc.txt";
     ifstream file (fileName.c_str());
 
     vector<objectInfo> obs;

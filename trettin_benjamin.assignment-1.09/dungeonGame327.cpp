@@ -14,22 +14,22 @@ char* numberOfCritters = 0;
 int main (int argc, char* argv[]){
     int x;
     int eval;
-    
+
     for(x=1;x<argc;x++){
         eval=strcmp(argv[x],"--nummon");
         if(eval==0){
-            
+
             numberOfCritters = argv[x+1];
             numberOfCreatures = atoi(numberOfCritters);
             if(numberOfCreatures>=1680 || numberOfCreatures==0){
                 printf("What are you even doing bro");
                 return 1;
             }else{
-                
+
             }
         }
     }
-    
+
     if(initGame()){
         return 1;
     }
@@ -38,8 +38,11 @@ int main (int argc, char* argv[]){
     return 0;
 }
 int initGame(void){
+  printf("1 \n");
       readFile();
+      printf("2 \n");
      readFileObjects();
+     printf("3 \n");
       if(1){
         initMap(15);
       }else{
@@ -47,23 +50,23 @@ int initGame(void){
           return 1;
    }
     return 0;
-  
+
 }
 void StartGame(void){
     char ex;
    printw("Enter Any Key To Start");
    while(1){
         ex = getch();
-        
+
     if(ex){
         playGame();
         return;
     }
     }
-    
-    
+
+
 }
 void closeGame(void){
     endwin();
-    
+
 }
