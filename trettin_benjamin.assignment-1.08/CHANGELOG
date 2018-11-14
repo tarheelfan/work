@@ -1,108 +1,108 @@
     commit 73
     Author: Benjamin Trettin
-    Date:   Wed Nov 7 18:35:12 2016 -0500
+    Date:   Wed Nov 7 18:35:12 2018 -0500
 
       Finished compilation and ran properly
 
     commit 72
     Author: Benjamin Trettin
-    Date:   Wed Nov 7 11:56:02 2016 -0500
+    Date:   Wed Nov 7 11:56:02 2018 -0500
 
       Fixed a couple bugs with monster factory and color creation
 
     commit 71
     Author: Benjamin Trettin
-    Date:   Tue Nov 6 16:23:03 2016 -0500
+    Date:   Tue Nov 6 16:23:03 2018 -0500
 
       Fixed issue with loading game with monsters creation
 
     commit 70
     Author: Benjamin Trettin
-    Date:   Tue Nov 6 13:37:05 2016 -0500
+    Date:   Tue Nov 6 13:37:05 2018 -0500
 
       Modified code to take monsters from monster factory
 
     commit 69
     Author: Benjamin Trettin
-    Date:   Mon Nov 5 12:14:06 2016 -0500
+    Date:   Mon Nov 5 12:14:06 2018 -0500
 
       added code for dice.c and dice.h
 
     commit 68
     Author: Benjamin Trettin
-    Date:   Sat Nov 3 01:57:53 2016 -0500
+    Date:   Sat Nov 3 01:57:53 2018 -0500
 
       added code for monster factory
 
     commit 67
     Author: Benjamin Trettin
-    Date:   Fri Nov 2 18:30:46 2016 -0500
+    Date:   Fri Nov 2 18:30:46 2018 -0500
 
       Added code to parse object file
 
     commit 66
     Author: Benjamin Trettin
-    Date:   Wed Oct 31 20:05:12 2016 -0500
+    Date:   Wed Oct 31 20:05:12 2018 -0500
 
         added additional parsing features
 
     commit 65
     Author: Benjamin Trettin
-    Date:   Wed Oct 31 12:56:02 2016 -0500
+    Date:   Wed Oct 31 12:56:02 2018 -0500
 
         Added further parsing code
 
     commit 64
     Author: Benjamin Trettin
-    Date:   wed Oct 31 12:23:00 2016 -0500
+    Date:   wed Oct 31 12:23:00 2018 -0500
 
         Added code for formated output to terminal
 
     commit 63
     Author: Benjamin Trettin
-    Date:   Tue Oct 30 13:37:05 2016 -0500
+    Date:   Tue Oct 30 13:37:05 2018 -0500
 
         added some code to take from .rlg327 file
 
     commit 62
     Author: Benjamin Trettin
-    Date:   Tue Oct 30 12:14:06 2016 -0500
+    Date:   Tue Oct 30 12:14:06 2018 -0500
 
         added code to enable second level processing of data
 
     commit 61
     Author: Benjamin Trettin
-    Date:   Tue Oct 30 01:57:53 2016 -0500
+    Date:   Tue Oct 30 01:57:53 2018 -0500
 
         added code for processing of information post parsing file
 
     commit 60
     Author: Benjamin Trettin
-    Date:   Mon Oct 29 18:30:46 2016 -0500
+    Date:   Mon Oct 29 18:30:46 2018 -0500
 
         Added code to be able to parse a txt file
 
     commit 59
     Author: Benjamin Trettin
-    Date:   Mon Oct 29 15:15:21 2016 -0500
+    Date:   Mon Oct 29 15:15:21 2018 -0500
 
         Added terminal output
 
     commit 58
     Author: Benjamin Trettin
-    Date:   Sun Oct 28 23:14:11 2016 -0500
+    Date:   Sun Oct 28 23:14:11 2018 -0500
 
         added additional code to parser
 
     commit 57
     Author: Benjamin Trettin
-    Date:   Sun Oct 28 16:21:57 2016 -0500
+    Date:   Sun Oct 28 16:21:57 2018 -0500
 
         added validSyntax function
 
     commit 56
     Author: Benjamin Trettin
-    Date:   Sun Oct 28 16:09:45 2016 -0500
+    Date:   Sun Oct 28 16:09:45 2018 -0500
 
     Added layout for parser code
     commit 55

@@ -11,6 +11,8 @@ The dungeon game can only be run using the ./run command with the --nummon switc
 
 EXAMPLE: ./run --nummon 10
 
+IMPORTANT: For a game to start, press any game key twice for a player to appear.
+
 Notes
 
 The CHANGELOG file shows all of my commits for this project up to this point.
