@@ -101,10 +101,10 @@ void npcInfo::printInfo(){
             y=-1;
             cout << endl;
         }
-        y++; 
+        y++;
     }
     cout << endl;
-    
+
     cout << "Color Number: " << this->color << endl;
     cout << "Speed: " << this->speed_i << endl;
     cout << "HP: " << hp_i << endl;
@@ -137,7 +137,7 @@ int getCharacteristics(string desc){
         if(!buffer.compare("ERRATIC")){
             erratic=1;
         }
-        
+
         if(intelegent){
             character = character | 1;
         }
@@ -149,20 +149,20 @@ int getCharacteristics(string desc){
         }
         if(erratic){
             character = character | 8;
-        }   
+        }
     }
     return character;
 }
 Factory factory;
-void readFile(){    
+void readFile(){
 
     vector<npcInfo> monstersD;
     std::vector<npcInfo>::iterator it;
     it = monstersD.begin();
-    
+
     char *se = getenv("HOME");
     string fileName(se);
-    fileName+="/.rlg327/monster_desc.txt";
+    fileName+="/302/work/trettin_benjamin.assignment-1.08/rlg327/monster_desc.txt";
     ifstream file (fileName.c_str());
     stringstream s;
     s << file.rdbuf();
@@ -194,7 +194,7 @@ void readFile(){
     if(buffer.compare("1")){
         exit(1);
     }
-    
+
     while(s >> buffer){
         if(!buffer.compare("BEGIN")){
             if(!createMon){
@@ -209,7 +209,7 @@ void readFile(){
                 s >> buffer;
                 if(!buffer.compare("MONSTER")){
                     createMon=1;
-                    
+
                     namei=0;
                     colori=0;
                     desci=0;
@@ -246,7 +246,7 @@ void readFile(){
                         }
                         }
                     }
-                    
+
                     if(!buffer.compare("SYMB")){
                         continu=1;
                         while(1){
@@ -270,7 +270,7 @@ void readFile(){
                             }
                         }
                     }
-                    
+
                     if(!buffer.compare("COLOR")){
                         continu=1;
                         while(1){
@@ -294,7 +294,7 @@ void readFile(){
                             }
                         }
                     }
-                    
+
                     if(!buffer.compare("DESC")){
                         continu=1;
                         while(1){
@@ -303,7 +303,7 @@ void readFile(){
                                 break;
                             }
                         if(validSyntaxNPC(buffer)){
-                            
+
                             desc+=buffer;
                             desc+=" ";
                         }else{
@@ -325,16 +325,16 @@ void readFile(){
                                          y=-1;
                                          cout << endl;
                                      }
-                                    y++; 
+                                    y++;
                                  }
                                  cout << endl;
                              }
-                             
+
                              break;
                         }
                         }
                     }
-                   
+
                     if(!buffer.compare("SPEED")){
                         continu=1;
                         while(1){
@@ -353,7 +353,7 @@ void readFile(){
                                 speedi=1;
                                 cout << "Read Monster Speed: " << speed <<  endl;
                             }
-                            
+
                             break;
                         }
                         }
@@ -376,12 +376,12 @@ void readFile(){
                                 dami=1;
                                 cout << "Read Monster Damage: " << dam <<  endl;
                             }
-                            
+
                             break;
                         }
                         }
                     }
-                    
+
                     if(!buffer.compare("HP")){
                         continu=1;
                         while(1){
@@ -404,7 +404,7 @@ void readFile(){
                         }
                         }
                     }
-                    
+
                     if(!buffer.compare("ABIL")){
                         continu=1;
                         while(1){
@@ -424,7 +424,7 @@ void readFile(){
                                 abili=1;
                                 cout << "Read Monster Abilities: " << abil <<  endl;
                             }
-                            
+
                             break;
                         }
                         }
@@ -437,7 +437,7 @@ void readFile(){
                                 cout << "Object Info: " << endl;
                                 i.printInfo();
                                 it = monstersD.insert(it,i);
-                                
+
                             }else{
                                 cout << "Not Created" << endl;
                             }

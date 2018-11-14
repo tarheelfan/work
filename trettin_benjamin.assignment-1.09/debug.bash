@@ -1,1 +1,1 @@
-gdb --args ./ShaneDrafahl 
+gdb --args ./run 

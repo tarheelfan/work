@@ -26,7 +26,6 @@ void Factory::loaded(vector<objectInfo> v){
     int random = rand() % this->monstersD.size();
     npcInfo info = monstersD.at(random);
     Monster *monster = new Monster();
-    monster->kills=0;
    // monster =(Monster*) malloc(sizeof(Monster));
     if(isPlayer){
         monster->symbol='@';
@@ -36,13 +35,9 @@ void Factory::loaded(vector<objectInfo> v){
         monster->roundVal=10;
         monster->xloc=x;
         monster->yloc=y;
-        monster->hp=10000;
         pcx = x;
         pcy = y;
         monster->alive=1;
-        monster->dam = getDice("0+1d4");
-
-
     }else{
         initList(monster->directions);
         monster->thePlayer=0;
@@ -76,10 +71,12 @@ void Factory::loaded(vector<objectInfo> v){
  Item Factory::getItem(){
      int index = rand() % objectD.size();
      objectInfo temp = objectD.at(index);
-    Item send(temp.name,temp.type,temp.weight,temp.color,temp.dodge,temp.value,temp.dam,temp.def.roleDice(),temp.hit.roleDice(),temp.speed.roleDice(),temp.desc,temp.attr);
-     send.equiped=0;
-     return send;
-      
+    Item send(temp.type,temp.weight,temp.color,temp.dodge,temp.value,temp.dam,temp.def.roleDice(),temp.hit.roleDice(),temp.speed.roleDice(),temp.desc,temp.attr);
+      int cow =90;
+      if(cow==90){
+          return send;
+      }
+     
  }
 
  #endif

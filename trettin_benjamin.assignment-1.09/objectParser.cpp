@@ -81,29 +81,29 @@ Dice::~Dice(){}
 objectInfo::objectInfo(){};
 objectInfo::objectInfo(string name,string type,string weight,string color,string dodge,string val, string dam,string def, string hit,string speed, string desc, string attr){
     this->name= name;
-
+    
     this->type=getType(type);
-
+    
     this->weight= getDice(weight).roleDice();
-
+    
     this->color = getColor(color);
-
+    
     this->dodge = getDice(dodge);
-
+    
     this->value = getDice(val).roleDice();
-
+   
     this->dam = getDice(dam);
-
+    
     this->def = getDice(def);
-
+    
     this->hit = getDice(hit);
-
+    
     this->speed = getDice(speed);
-
+    
     this->desc = desc;
-
+    
     this->attr = getDice(attr).roleDice();
-
+    
 }
 int getType(string color){
     if(!color.compare("LIGHT")){
@@ -215,7 +215,7 @@ Dice getDice(string spee){
     int x=0;
     string baseNum;
     while(spee.at(x)!='+'){
-        x++;
+        x++;    
     }
     baseNum = spee.substr(0,x);
     int base = atoi(spee.c_str());
@@ -238,9 +238,9 @@ Dice getDice(string spee){
 void readFileObjects(){
     char *se = getenv("HOME");
     string fileName(se);
-    fileName+="/302/work/trettin_benjamin.assignment-1.08/rlg327/monster_desc.txt";
+    fileName+="/.rlg327/object_desc.txt";
     ifstream file (fileName.c_str());
-
+    
     vector<objectInfo> obs;
     std::vector<objectInfo>::iterator it;
     it = obs.begin();
@@ -279,7 +279,7 @@ void readFileObjects(){
     if(buffer.compare("1")){
         exit(1);
     }
-
+    
     while(s >> buffer){
         if(!buffer.compare("BEGIN")){
             if(!createMon){
@@ -301,7 +301,7 @@ void readFileObjects(){
 
                 if(!buffer.compare("OBJECT")){
                     createMon=1;
-
+                    
                     namei=0;
                     typei=0;
                     colori=0;
@@ -315,7 +315,7 @@ void readFileObjects(){
                     vali=0;
                     weighti =0;
                     attri=0;
-
+                    
                     s >> buffer;
                     int continu=0;
                     while(1){
@@ -344,7 +344,7 @@ void readFileObjects(){
                         }
                         }
                     }
-
+                    
                     if(!buffer.compare("TYPE")){
                         continu=1;
                         while(1){
@@ -368,7 +368,7 @@ void readFileObjects(){
                             }
                         }
                     }
-
+                    
                     if(!buffer.compare("COLOR")){
                         continu=1;
                         while(1){
@@ -392,7 +392,7 @@ void readFileObjects(){
                             }
                         }
                     }
-
+                    
                     if(!buffer.compare("DESC")){
                         continu=1;
                         while(1){
@@ -401,7 +401,7 @@ void readFileObjects(){
                                 break;
                             }
                         if(validSyntax(buffer)){
-
+                            
                             desc+=buffer;
                             desc+=" ";
                         }else{
@@ -423,16 +423,16 @@ void readFileObjects(){
                                          y=-1;
                                          cout << endl;
                                      }
-                                    y++;
+                                    y++; 
                                  }
                                  cout << endl;
                              }
-
+                             
                              break;
                         }
                         }
                     }
-
+                   
                     if(!buffer.compare("VAL")){
                         continu=1;
                         while(1){
@@ -451,7 +451,7 @@ void readFileObjects(){
                                 vali=1;
                                 cout << "Read Monster Speed: " << value <<  endl;
                             }
-
+                            
                             break;
                         }
                         }
@@ -474,7 +474,7 @@ void readFileObjects(){
                                 dodgei=1;
                                 cout << "Read Monster Speed: " << dodge <<  endl;
                             }
-
+                            
                             break;
                         }
                         }
@@ -497,13 +497,13 @@ void readFileObjects(){
                                 weighti=1;
                                 cout << "Read Monster Speed: " << weight <<  endl;
                             }
-
+                            
                             break;
                         }
                         }
                     }
-
-
+                    
+                    
                     if(!buffer.compare("SPEED")){
                         continu=1;
                         while(1){
@@ -522,7 +522,7 @@ void readFileObjects(){
                                 speedi=1;
                                 cout << "Read Monster Speed: " << speed <<  endl;
                             }
-
+                            
                             break;
                         }
                         }
@@ -545,7 +545,7 @@ void readFileObjects(){
                                 dami=1;
                                 cout << "Read Monster Damage: " << dam <<  endl;
                             }
-
+                            
                             break;
                         }
                         }
@@ -568,12 +568,12 @@ void readFileObjects(){
                                 attri=1;
                                 cout << "Read Monster Damage: " << attr <<  endl;
                             }
-
+                            
                             break;
                         }
                         }
                     }
-
+                    
                     if(!buffer.compare("DEF")){
                         continu=1;
                         while(1){
@@ -596,7 +596,7 @@ void readFileObjects(){
                         }
                         }
                     }
-
+                    
                     if(!buffer.compare("HIT")){
                         continu=1;
                         while(1){
@@ -615,7 +615,7 @@ void readFileObjects(){
                                 hiti=1;
                                 cout << "Read Monster Abilities: " << hit <<  endl;
                             }
-
+                            
                             break;
                         }
                         }
@@ -639,7 +639,7 @@ void readFileObjects(){
                                     objectInfo i(name,type,weight,color,dodge,value,dam, def,hit,speed,desc,attr);
                                     cout << endl;
                                     it = obs.insert(it,i);
-
+                                    
                             }else{
                                 cout << "Not Created" << endl;
                             }

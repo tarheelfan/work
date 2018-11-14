@@ -2,8 +2,7 @@
 #include "gameMap.h"
 
  static char convertType(int ty);
- Item::Item(string name,int type,int weight,int color,Dice dodge, int value,Dice dam, int def,int hit,int speed, string desc, int attr ){
-        this->name=name;
+ Item::Item(int type,int weight,int color,Dice dodge, int value,Dice dam, int def,int hit,int speed, string desc, int attr ){
         this->type=type;
         this->weight = weight;
         this->color= color;

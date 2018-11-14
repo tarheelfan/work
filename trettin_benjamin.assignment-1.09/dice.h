@@ -5,6 +5,8 @@
 #include <stdio.h> 
 #include <time.h> 
 #include <string>
+#include <sstream>
+using namespace std;
 class Dice{
       private:
         int base;
@@ -16,6 +18,12 @@ class Dice{
         Dice();
         ~Dice();
         int roleDice();
+
+        inline string getDescription(){
+          std::ostringstream stream;
+          stream << "BASE : " << base << " SIDES: " << sides << " NUM_OF_DICE: " << numDice;
+          return stream.str();
+        }
   };
   Dice getDice(std::string spee);
 
