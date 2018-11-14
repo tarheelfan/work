@@ -1,3 +1,51 @@
+commit 81
+Author: Benjamin Trettin
+Date:   Wed Nov 14 14:35:12 2018 -0500
+
+  Updated CHANGELOG and READ.me
+
+commit 80
+Author: Benjamin Trettin
+Date:   Wed Nov 14 11:56:02 2018 -0500
+
+  Final touches on UI and picking up equipment
+
+commit 79
+Author: Benjamin Trettin
+Date:   Tue Nov 13 16:23:03 2018 -0500
+
+  Fixed bug with loading game
+
+commit 78
+Author: Benjamin Trettin
+Date:    Mon Nov 12 23:37:05 2018 -0500
+
+  Finished adding combat and fixed compile errors.
+
+commit 77
+Author: Benjamin Trettin
+Date:   Mon Nov 12 16:14:06 2018 -0500
+
+  Fixed a few bugs with UI and damage
+
+commit 76
+Author: Benjamin Trettin
+Date:   Mon Nov 12 11:57:53 2018 -0500
+
+  Added more UI features and cleaner code for it
+
+commit 75
+Author: Benjamin Trettin
+Date:   Sun Nov 11 18:30:46 2018 -0500
+
+  Added Equipment Pickup and UI for displaying
+
+commit 74
+Author: Benjamin Trettin
+Date:   Sat Nov 10 20:05:12 2018 -0500
+
+    Added Health Feature
+
 commit 73
 Author: Benjamin Trettin
 Date:   Wed Nov 7 18:35:12 2018 -0500

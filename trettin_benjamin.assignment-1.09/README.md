@@ -1,9 +1,9 @@
-Assignment 1.09 - Adding Damage
+Assignment 1.09 - PC Equipment and Update Combat
 
 
 SETUP
 
-Run 'make' inside the trettin_benjamin.assignment-1.08 directory to build the project. --You can also run 'make Clean' to clean the repo--
+Run 'make' inside the trettin_benjamin.assignment-1.09 directory to build the project. --You can also run 'make Clean' to clean the repo--
 
 Running Source Code
 
